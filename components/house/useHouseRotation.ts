@@ -1,68 +1,66 @@
 'use client'
 
-import { useEffect, useRef, type RefObject } from 'react'
+import { useEffect, useRef } from 'react'
 import { prefersReducedMotion } from '@/lib/gsap'
 
-const MAX_DEG = 18
-const LERP = 0.055
+const MAX_RAD = 0.5 // ±~29° kolem osy Y
+const IDLE_MS = 2600 // po této době nečinnosti se spustí jemná auto-rotace
+
+export interface RotationState {
+  targetY: number // cílový úhel (rad), k němuž scéna lerpuje
+  lastActivity: number // performance.now() poslední interakce
+  reduced: boolean // prefers-reduced-motion
+}
 
 /**
- * Pseudo-3D rotace domu kolem osy Y.
- * Sdílená logika pro desktop (mousemove), mobil (touchmove + inertia)
- * a progresivní vylepšení přes DeviceOrientation (gyroskop).
+ * Drží cílovou Y-rotaci domu v ref (čte ji `useFrame` ve scéně).
+ * Zdroje vstupu: pohyb myši, dotyk, gyroskop (po `enableGyro`).
+ * Při `prefers-reduced-motion` se vstupy nenavazují a auto-rotace se vypne.
  *
- * Vrací `enableGyro` — funkci, kterou je potřeba zavolat z user gesta
- * (kvůli iOS `requestPermission`).
+ * Vrací:
+ *  - `rotationRef`  — sdílený stav rotace pro `useFrame`,
+ *  - `enableGyro`   — aktivace gyroskopu z user gesta (iOS `requestPermission`),
+ *  - `markActivity` — zaznamenání interakce (potlačí idle auto-rotaci).
  */
-export function useHouseRotation(targetRef: RefObject<HTMLElement | SVGElement>) {
+export function useHouseRotation() {
+  const rotationRef = useRef<RotationState>({
+    targetY: 0,
+    lastActivity: 0,
+    reduced: false,
+  })
   const enableGyroRef = useRef<() => void>(() => {})
 
   useEffect(() => {
-    const el = targetRef.current
-    if (!el || prefersReducedMotion()) return
+    const reduced = prefersReducedMotion()
+    rotationRef.current.reduced = reduced
+    rotationRef.current.lastActivity =
+      typeof performance !== 'undefined' ? performance.now() : 0
+    if (reduced) return
 
-    const state = { target: 0, current: 0 }
-    let velocity = 0
-    let lastTouchX: number | null = null
-    let lastTouchTime = 0
-    let inertiaActive = false
-    let rafId = 0
+    const state = rotationRef.current
+    const clamp = (v: number) => Math.max(-MAX_RAD, Math.min(MAX_RAD, v))
+    const fromRatio = (ratio: number) => clamp((ratio - 0.5) * 2 * MAX_RAD)
 
-    const clamp = (v: number) => Math.max(-MAX_DEG, Math.min(MAX_DEG, v))
-    const fromRatio = (ratio: number) => clamp((ratio - 0.5) * 2 * MAX_DEG)
+    const touch = () => {
+      state.lastActivity = performance.now()
+    }
 
-    /* ----- Desktop: pohyb myši ----- */
     const onMouseMove = (e: MouseEvent) => {
-      inertiaActive = false
-      state.target = fromRatio(e.clientX / window.innerWidth)
+      state.targetY = fromRatio(e.clientX / window.innerWidth)
+      touch()
     }
 
-    /* ----- Mobil: dotyk ----- */
     const onTouchMove = (e: TouchEvent) => {
-      const touch = e.touches[0]
-      if (!touch) return
-      inertiaActive = false
-      const now = performance.now()
-      state.target = fromRatio(touch.clientX / window.innerWidth)
-      if (lastTouchX !== null) {
-        const dt = Math.max(now - lastTouchTime, 1)
-        velocity = ((touch.clientX - lastTouchX) / window.innerWidth) * MAX_DEG * 2 * (16 / dt)
-      }
-      lastTouchX = touch.clientX
-      lastTouchTime = now
+      const t = e.touches[0]
+      if (!t) return
+      state.targetY = fromRatio(t.clientX / window.innerWidth)
+      touch()
     }
 
-    const onTouchEnd = () => {
-      lastTouchX = null
-      inertiaActive = true
-    }
-
-    /* ----- Progresivní: gyroskop ----- */
     const onOrientation = (e: DeviceOrientationEvent) => {
       if (e.gamma === null) return
-      inertiaActive = false
-      // gamma -90..90 → mapuj na -MAX..MAX
-      state.target = clamp((e.gamma / 90) * MAX_DEG)
+      state.targetY = clamp((e.gamma / 90) * MAX_RAD)
+      touch()
     }
 
     enableGyroRef.current = () => {
@@ -86,32 +84,23 @@ export function useHouseRotation(targetRef: RefObject<HTMLElement | SVGElement>)
       }
     }
 
-    /* ----- rAF lerp smyčka ----- */
-    const tick = () => {
-      if (inertiaActive && Math.abs(velocity) > 0.1) {
-        state.target = clamp(state.target + velocity)
-        velocity *= 0.92
-      } else if (inertiaActive) {
-        inertiaActive = false
-      }
-      state.current += (state.target - state.current) * LERP
-      el.style.transform = `rotateY(${state.current.toFixed(2)}deg)`
-      rafId = requestAnimationFrame(tick)
-    }
-    rafId = requestAnimationFrame(tick)
-
     window.addEventListener('mousemove', onMouseMove)
     window.addEventListener('touchmove', onTouchMove, { passive: true })
-    window.addEventListener('touchend', onTouchEnd)
 
     return () => {
-      cancelAnimationFrame(rafId)
       window.removeEventListener('mousemove', onMouseMove)
       window.removeEventListener('touchmove', onTouchMove)
-      window.removeEventListener('touchend', onTouchEnd)
       window.removeEventListener('deviceorientation', onOrientation)
     }
-  }, [targetRef])
+  }, [])
 
-  return { enableGyro: () => enableGyroRef.current() }
+  return {
+    rotationRef,
+    enableGyro: () => enableGyroRef.current(),
+    markActivity: () => {
+      if (typeof performance !== 'undefined')
+        rotationRef.current.lastActivity = performance.now()
+    },
+    IDLE_MS,
+  }
 }
