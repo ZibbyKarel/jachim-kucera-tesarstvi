@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { useTranslations } from 'next-intl'
 import { Link, useRouter } from '@/i18n/routing'
 import { gsap, prefersReducedMotion } from '@/lib/gsap'
 import { houseLabels } from '@/lib/constants'
@@ -126,9 +125,9 @@ const LAYOUT: Record<string, { anchor: [number, number]; point: [number, number]
   'g-chimney': { anchor: [314, 120], point: [232, 92], side: 'left' },
   'g-roof': { anchor: [340, 200], point: [190, 182], side: 'left' },
   'g-windows': { anchor: [386, 235], point: [190, 342], side: 'left' },
-  'g-truss': { anchor: [486, 250], point: [560, 214], side: 'right' },
-  'g-gutters': { anchor: [540, 296], point: [576, 332], side: 'right' },
-  'g-door': { anchor: [448, 300], point: [379, 452], side: 'bottom' },
+  'g-truss': { anchor: [486, 250], point: [560, 206], side: 'right' },
+  'g-gutters': { anchor: [540, 296], point: [576, 318], side: 'right' },
+  'g-door': { anchor: [452, 300], point: [566, 408], side: 'right' },
 }
 
 const VIEWBOX = '10 50 740 440'
@@ -136,7 +135,6 @@ const LABEL_W = 190
 const LABEL_H = 56
 
 export function IsometricHouse() {
-  const t = useTranslations()
   const router = useRouter()
   const containerRef = useRef<HTMLDivElement>(null)
   const [active, setActive] = useState<string | null>(null)
@@ -231,7 +229,7 @@ export function IsometricHouse() {
       {/* Mobilní textové menu (viditelné na malých displejích) */}
       <nav
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 bottom-24 flex flex-col items-center gap-2.5 md:hidden"
+        className="pointer-events-none absolute inset-x-0 bottom-28 flex flex-col items-center gap-2.5 md:hidden"
       >
         {houseLabels.map((label) => (
           <Link
@@ -260,12 +258,6 @@ export function IsometricHouse() {
         </ul>
       </nav>
 
-      {/* Nápověda */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-12 hidden justify-center md:flex">
-        <p className="font-body text-xs uppercase tracking-widest text-cream/40">
-          {t('home.hint')}
-        </p>
-      </div>
     </div>
   )
 }
