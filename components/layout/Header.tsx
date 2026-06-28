@@ -10,18 +10,27 @@ import { LanguageSwitcher } from './LanguageSwitcher'
 export function Header() {
   const t = useTranslations('common')
   const pathname = usePathname()
+  const isHome = pathname === '/'
+  const [pastHero, setPastHero] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
 
-  // Header je na homepage průhledný přes dům, po odscrollování ztmavne.
+  // Na homepage je menu skryté nad Hero sekcí (navigaci tam tvoří dům).
+  // Objeví se, jakmile uživatel odscrolluje pod Hero.
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40)
+    const onScroll = () => {
+      setScrolled(window.scrollY > 40)
+      setPastHero(window.scrollY > window.innerHeight - 140)
+    }
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
+    window.addEventListener('resize', onScroll)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+    }
   }, [])
 
-  // Zavřít menu při změně stránky a zamknout scroll, když je otevřené.
   useEffect(() => {
     setMenuOpen(false)
   }, [pathname])
@@ -33,10 +42,15 @@ export function Header() {
     }
   }, [menuOpen])
 
+  // Desktop navigace: na homepage až po Hero, jinde vždy.
+  const showNav = !isHome || pastHero
+  // Tmavé pozadí headeru: na homepage až po Hero, jinde po malém odscrollování.
+  const solid = (isHome ? pastHero : scrolled) || menuOpen
+
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-colors duration-500 ${
-        scrolled || menuOpen
+        solid
           ? 'border-b border-cream/10 bg-wood-dark/85 backdrop-blur-md'
           : 'bg-transparent'
       }`}
@@ -46,7 +60,9 @@ export function Header() {
 
         <nav
           aria-label="Hlavní navigace"
-          className="hidden items-center gap-8 lg:flex"
+          className={`hidden items-center gap-8 transition-opacity duration-500 lg:flex ${
+            showNav ? 'opacity-100' : 'pointer-events-none opacity-0'
+          }`}
         >
           {navLinks.map((link) => {
             const active = pathname.startsWith(link.href)
@@ -55,6 +71,7 @@ export function Header() {
                 key={link.href}
                 href={link.href}
                 aria-current={active ? 'page' : undefined}
+                tabIndex={showNav ? undefined : -1}
                 className={`link-underline font-body text-xs uppercase tracking-widest transition-colors duration-300 ${
                   active ? 'text-wood-amber' : 'text-cream/80 hover:text-cream'
                 }`}
@@ -63,40 +80,43 @@ export function Header() {
               </Link>
             )
           })}
-          <LanguageSwitcher className="ml-2" />
         </nav>
 
-        {/* Hamburger — mobil / tablet */}
-        <button
-          type="button"
-          onClick={() => setMenuOpen((o) => !o)}
-          aria-expanded={menuOpen}
-          aria-controls="mobile-menu"
-          aria-label={menuOpen ? t('close') : t('menu')}
-          className="relative z-50 flex h-10 w-10 items-center justify-center lg:hidden"
-        >
-          <span className="sr-only">{menuOpen ? t('close') : t('menu')}</span>
-          <div className="flex w-6 flex-col items-end gap-[6px]">
-            <span
-              className={`h-px bg-cream transition-all duration-300 ${
-                menuOpen ? 'w-6 translate-y-[7px] rotate-45' : 'w-6'
-              }`}
-            />
-            <span
-              className={`h-px bg-cream transition-all duration-300 ${
-                menuOpen ? 'w-0 opacity-0' : 'w-4'
-              }`}
-            />
-            <span
-              className={`h-px bg-cream transition-all duration-300 ${
-                menuOpen ? 'w-6 -translate-y-[7px] -rotate-45' : 'w-5'
-              }`}
-            />
-          </div>
-        </button>
+        <div className="flex items-center gap-5">
+          <LanguageSwitcher />
+
+          {/* Hamburger — mobil / tablet (vždy dostupný) */}
+          <button
+            type="button"
+            onClick={() => setMenuOpen((o) => !o)}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-menu"
+            aria-label={menuOpen ? t('close') : t('menu')}
+            className="relative z-50 flex h-10 w-8 items-center justify-center lg:hidden"
+          >
+            <span className="sr-only">{menuOpen ? t('close') : t('menu')}</span>
+            <div className="flex w-6 flex-col items-end gap-[6px]">
+              <span
+                className={`h-px bg-cream transition-all duration-300 ${
+                  menuOpen ? 'w-6 translate-y-[7px] rotate-45' : 'w-6'
+                }`}
+              />
+              <span
+                className={`h-px bg-cream transition-all duration-300 ${
+                  menuOpen ? 'w-0 opacity-0' : 'w-4'
+                }`}
+              />
+              <span
+                className={`h-px bg-cream transition-all duration-300 ${
+                  menuOpen ? 'w-6 -translate-y-[7px] -rotate-45' : 'w-5'
+                }`}
+              />
+            </div>
+          </button>
+        </div>
       </div>
 
-      {/* Fullscreen overlay menu */}
+      {/* Fullscreen overlay menu (mobil) */}
       <div
         id="mobile-menu"
         className={`fixed inset-0 z-40 flex flex-col bg-wood-dark transition-opacity duration-500 lg:hidden ${
@@ -113,6 +133,7 @@ export function Header() {
             <Link
               key={link.href}
               href={link.href}
+              tabIndex={menuOpen ? undefined : -1}
               className="font-display text-4xl italic text-cream transition-colors duration-300 hover:text-wood-amber"
               style={{
                 transitionDelay: menuOpen ? `${i * 40 + 100}ms` : '0ms',

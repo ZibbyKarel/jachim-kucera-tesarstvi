@@ -407,44 +407,54 @@ export function getProject(id: string): Project | undefined {
 /*  Labely na domě                                                             */
 /* -------------------------------------------------------------------------- */
 
+// Labely fungují jako hlavní navigace — každá položka menu odpovídá části domu.
+// `side` určuje, na kterou stranu od kotvy text vyrůstá (kvůli spojnici a zarovnání).
 export const houseLabels: HouseLabel[] = [
-  {
-    id: 'label-truss',
-    text: 'Krov',
-    subtext: 'Tesařství',
-    position: { x: '50%', y: '20%' },
-    groupId: 'g-truss',
-    href: '/sluzby/tesarstvi',
-  },
-  {
-    id: 'label-roof',
-    text: 'Střecha',
-    subtext: 'Pokrývačství',
-    position: { x: '72%', y: '34%' },
-    groupId: 'g-roof',
-    href: '/sluzby/pokryvacstvi',
-  },
-  {
-    id: 'label-gutters',
-    text: 'Okapy',
-    subtext: 'Klempířství',
-    position: { x: '20%', y: '52%' },
-    groupId: 'g-gutters',
-    href: '/sluzby/klempirstvi',
-  },
   {
     id: 'label-chimney',
     text: 'O nás',
-    subtext: 'Kdo jsme',
-    position: { x: '40%', y: '12%' },
+    subtext: 'Komín — kdo jsme',
+    position: { x: '40%', y: '13%' },
     groupId: 'g-chimney',
     href: '/o-nas',
   },
   {
+    id: 'label-roof',
+    text: 'Pokrývačství',
+    subtext: 'Střecha',
+    position: { x: '17%', y: '28%' },
+    groupId: 'g-roof',
+    href: '/sluzby/pokryvacstvi',
+  },
+  {
+    id: 'label-truss',
+    text: 'Tesařství',
+    subtext: 'Krov',
+    position: { x: '80%', y: '33%' },
+    groupId: 'g-truss',
+    href: '/sluzby/tesarstvi',
+  },
+  {
+    id: 'label-gutters',
+    text: 'Klempířství',
+    subtext: 'Okapy a svody',
+    position: { x: '13%', y: '52%' },
+    groupId: 'g-gutters',
+    href: '/sluzby/klempirstvi',
+  },
+  {
+    id: 'label-windows',
+    text: 'Realizace',
+    subtext: 'Co jsme postavili',
+    position: { x: '19%', y: '70%' },
+    groupId: 'g-windows',
+    href: '/realizace',
+  },
+  {
     id: 'label-door',
     text: 'Kontakt',
-    subtext: 'Ozvěte se',
-    position: { x: '50%', y: '78%' },
+    subtext: 'Vstup — ozvěte se',
+    position: { x: '53%', y: '82%' },
     groupId: 'g-door',
     href: '/kontakt',
   },

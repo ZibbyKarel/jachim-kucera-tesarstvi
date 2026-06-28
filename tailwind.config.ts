@@ -9,19 +9,25 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // Paleta odvozená z loga: antická mosazná zlatá + uhlový charcoal + krém.
         wood: {
-          dark: '#1a1410', // pozadí — spálené dřevo
-          medium: '#2C1F14', // sekundární pozadí
-          warm: '#8B5E3C', // primární dřevo
-          light: '#C4955A', // světlé dřevo, hover
-          amber: '#D47F3A', // akcent, CTA
+          dark: '#1b1a17', // pozadí — uhlový charcoal (z loga)
+          medium: '#242019', // sekundární pozadí
+          warm: '#a98545', // ztlumená mosaz (čísla, sekundární akcent)
+          light: '#d9bd84', // světlá zlatá — hover
+          amber: '#c49a4c', // mosazná zlatá — primární akcent / CTA (z loga)
+        },
+        // Uhlová z loga (tmavý text na světlém pozadí, ikony).
+        charcoal: {
+          DEFAULT: '#2d2b28',
+          light: '#3a3833',
         },
         steel: {
           dark: '#2D3748',
           medium: '#4A5568',
           light: '#718096',
         },
-        cream: '#F5ECD7', // text, linky (sepia)
+        cream: '#f3ecdd', // text, linky — teplá bílá (pozadí loga)
       },
       fontFamily: {
         display: ['var(--font-display)', 'Georgia', 'serif'],

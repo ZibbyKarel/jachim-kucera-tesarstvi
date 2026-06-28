@@ -4,15 +4,16 @@
 
 :root {
   /* Design tokeny zrcadlí tailwind.config.ts — pro použití mimo utility třídy. */
-  --wood-dark: #1a1410;
-  --wood-medium: #2c1f14;
-  --wood-warm: #8b5e3c;
-  --wood-light: #c4955a;
-  --wood-amber: #d47f3a;
+  --wood-dark: #1b1a17;
+  --wood-medium: #242019;
+  --wood-warm: #a98545;
+  --wood-light: #d9bd84;
+  --wood-amber: #c49a4c;
+  --charcoal: #2d2b28;
   --steel-dark: #2d3748;
   --steel-medium: #4a5568;
   --steel-light: #718096;
-  --cream: #f5ecd7;
+  --cream: #f3ecdd;
 }
 
 @layer base {
