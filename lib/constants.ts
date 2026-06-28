@@ -412,11 +412,11 @@ export function getProject(id: string): Project | undefined {
 export const houseLabels: HouseLabel[] = [
   {
     id: 'label-chimney',
-    text: 'O nás',
-    subtext: 'Komín — kdo jsme',
+    text: 'Realizace',
+    subtext: 'Komín — co jsme postavili',
     position: { x: '40%', y: '13%' },
     groupId: 'g-chimney',
-    href: '/o-nas',
+    href: '/realizace',
   },
   {
     id: 'label-roof',
@@ -444,11 +444,11 @@ export const houseLabels: HouseLabel[] = [
   },
   {
     id: 'label-windows',
-    text: 'Realizace',
-    subtext: 'Co jsme postavili',
+    text: 'O nás',
+    subtext: 'Okna — kdo jsme',
     position: { x: '19%', y: '70%' },
     groupId: 'g-windows',
-    href: '/realizace',
+    href: '/o-nas',
   },
   {
     id: 'label-door',
