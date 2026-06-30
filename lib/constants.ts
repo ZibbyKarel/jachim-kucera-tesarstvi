@@ -1,9 +1,9 @@
 import type {
-  Service,
-  Project,
-  HouseLabel,
-  TimelineMilestone,
   CompanyValue,
+  HouseLabel,
+  Project,
+  Service,
+  TimelineMilestone,
 } from './types'
 
 export const SITE = {
@@ -473,7 +473,6 @@ export const aboutStory: string[] = [
 export const aboutStats: { value: string; label: string }[] = [
   { value: '20+', label: 'let praxe' },
   { value: '150+', label: 'realizací' },
-  { value: '100%', label: 'Plzeňský kraj a okolí' },
 ]
 
 export const timeline: TimelineMilestone[] = [

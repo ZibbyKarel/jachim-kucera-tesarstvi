@@ -14,98 +14,86 @@ import { houseLabels } from '@/lib/constants'
 /*  i přímo na odpovídající část domu — vede na stejnou stránku.                */
 /* -------------------------------------------------------------------------- */
 
-/* Izometrické cesty (čáry obrysu). */
+/* Barva čar i stínování — jedna inkoustová (charcoal). */
+const INK = '#2d2b28'
+
+/* Izometrické cesty (čáry obrysu). Generováno z 3D iso projekce —
+   všechny stěny sdílí přesné vrcholy, takže nic „nezalézá" do domu. */
 const PATHS = {
   foundation: [
-    'M350 256.7 L532.9 362.3 L532.9 355.6 L350 250 Z',
-    'M532.9 362.3 L408.2 434.3 L408.2 427.6 L532.9 355.6 Z',
+    'M238.6 327 L417 430 L417 418.6 L238.6 315.6 Z',
+    'M417 430 L535.9 361.3 L535.9 349.9 L417 418.6 Z',
   ],
   walls: [
-    'M350 250 L532.9 355.6 L532.9 230.8 L350 125.2 Z',
-    'M532.9 355.6 L408.2 427.6 L408.2 302.8 L470.6 214 L532.9 230.8 Z',
-    'M350 187.6 L532.9 293.2 L408.2 365.2',
-    'M532.9 230.8 L408.2 302.8',
+    'M238.6 315.6 L417 418.6 L417 319.4 L238.6 216.4 Z',
+    'M417 418.6 L535.9 349.9 L535.9 250.7 L476.5 220.2 L417 319.4 Z',
   ],
   roof: [
-    'M350 122.4 L551.2 238.5 L479.7 219.3 L278.5 103.1 Z',
-    'M278.5 103.1 L479.7 219.3 L408.2 321.1 L207 204.9 Z',
-    'M278.5 103.1 L479.7 219.3',
-    'M350 122.4 L278.5 103.1',
-    'M310.7 111.8 L511.9 227.9',
+    'M290.8 113 L483.7 224.4 L417 327.8 L224.1 216.4 Z',
+    'M476.5 220.2 L483.7 224.4',
+    'M417 319.4 L417 327.8',
   ],
   truss: [
-    'M532.9 230.8 L408.2 302.8',
-    'M532.9 230.8 L470.6 214',
-    'M408.2 302.8 L470.6 214',
-    'M470.6 266.8 L470.6 214',
-    'M501.7 248.8 L484.3 229.1',
-    'M439.4 284.8 L456.8 245',
+    'M535.9 250.7 L417 319.4',
+    'M476.5 285 L476.5 220.2',
+    'M506.2 267.9 L495.5 233.9',
+    'M446.7 302.2 L457.4 255.8',
   ],
   gutters: [
-    'M350 124.8 L551.2 240.9',
-    'M551.2 243.3 L537.1 235.6 L537.1 355.6',
+    'M417 327.8 L224.1 216.4',
+    'M417 327.8 L417 426.9',
   ],
   chimney: [
-    'M314.7 157.3 L333.4 168.1 L333.4 122.8 L314.7 112 Z',
-    'M333.4 168.1 L314.7 194.7 L314.7 133.6 L333.4 122.8 Z',
-    'M314.7 112 L333.4 122.8 L314.7 133.6 L296 122.8 Z',
-    'M314.7 108.6 L339.2 122.8 L314.7 137 L290.1 122.8 Z',
+    'M322.8 110 L339.4 119.5 L324.5 128.1 L308 118.6 Z',
+    'M308 118.6 L324.5 128.1 L324.5 184.4 L308 174.8 Z',
+    'M322.8 110 L308 118.6 L308 174.8 L322.8 150.1 Z',
   ],
   windows: [
-    'M372.9 241.6 L399.9 257.2 L399.9 226 L372.9 210.4 Z',
-    'M386.4 249.4 L386.4 218.2',
-    'M372.9 226 L399.9 241.6',
-    'M483 305.2 L510 320.8 L510 289.6 L483 274 Z',
-    'M496.5 313 L496.5 281.8',
-    'M483 289.6 L510 305.2',
-    'M372.9 184 L399.9 199.6 L399.9 168.4 L372.9 152.8 Z',
-    'M386.4 191.8 L386.4 160.6',
-    'M372.9 168.4 L399.9 184',
-    'M483 247.6 L510 263.2 L510 232 L483 216.4 Z',
-    'M496.5 255.4 L496.5 224.2',
-    'M483 232 L510 247.6',
-    'M486.3 248.1 L454.8 266.3 L454.8 236.6 L486.3 218.3 Z',
+    'M271.6 304.1 L296.4 318.4 L296.4 280.3 L271.6 266 Z',
+    'M284 311.3 L284 273.1',
+    'M271.6 285 L296.4 299.4',
+    'M324.5 334.6 L349.3 348.9 L349.3 310.8 L324.5 296.5 Z',
+    'M336.9 341.8 L336.9 303.6',
+    'M324.5 315.6 L349.3 329.9',
+    'M370.8 361.3 L395.5 375.6 L395.5 337.5 L370.8 323.2 Z',
+    'M383.1 368.5 L383.1 330.3',
+    'M370.8 342.3 L395.5 356.6',
   ],
   door: [
-    'M433.1 298 L464.3 316 L464.3 241.6 L433.1 223.6 Z',
-    'M437.3 295.6 L460.2 308.8 L460.2 244 L437.3 230.8 Z',
-    'M448.7 302.2 L448.7 237.4',
-    'M456 277.6 L456 269.9',
+    'M491.3 375.6 L461.6 392.8 L461.6 322.2 L491.3 305.1 Z',
+    'M486.4 378.5 L466.6 389.9 L466.6 325.1 L486.4 313.7 Z',
+    'M476.5 384.2 L476.5 319.4',
   ],
 }
 
-/* Plochy pro jemné stínování (vyplněné polygony pod čarami). */
-const SHADE: { d: string; fill: string }[] = [
+/* Plochy pro jemné stínování — stejná inkoustová barva, jen různá průhlednost. */
+const SHADE: { d: string; o: number }[] = [
   // základ
-  { d: 'M350 256.7 L532.9 362.3 L532.9 355.6 L350 250 Z', fill: '#6b5f51' },
-  { d: 'M532.9 362.3 L408.2 434.3 L408.2 427.6 L532.9 355.6 Z', fill: '#5d5246' },
-  // stěny: boční (přivrácená ke světlu) + čelní štít (ve stínu)
-  { d: 'M350 250 L532.9 355.6 L532.9 230.8 L350 125.2 Z', fill: '#e7dcc2' },
-  { d: 'M532.9 355.6 L408.2 427.6 L408.2 302.8 L470.6 214 L532.9 230.8 Z', fill: '#d2c4a3' },
-  // střecha: dvě roviny
-  { d: 'M350 122.4 L551.2 238.5 L479.7 219.3 L278.5 103.1 Z', fill: '#8a5736' },
-  { d: 'M278.5 103.1 L479.7 219.3 L408.2 321.1 L207 204.9 Z', fill: '#724529' },
-  // komín
-  { d: 'M314.7 157.3 L333.4 168.1 L333.4 122.8 L314.7 112 Z', fill: '#9a5238' },
-  { d: 'M333.4 168.1 L314.7 194.7 L314.7 133.6 L333.4 122.8 Z', fill: '#7d4029' },
-  { d: 'M314.7 108.6 L339.2 122.8 L314.7 137 L290.1 122.8 Z', fill: '#a9603f' },
+  { d: 'M238.6 327 L417 430 L417 418.6 L238.6 315.6 Z', o: 0.16 },
+  { d: 'M417 430 L535.9 361.3 L535.9 349.9 L417 418.6 Z', o: 0.22 },
+  // stěny: boční (ke světlu) + čelní štít (jemně ve stínu)
+  { d: 'M238.6 315.6 L417 418.6 L417 319.4 L238.6 216.4 Z', o: 0.05 },
+  { d: 'M417 418.6 L535.9 349.9 L535.9 250.7 L476.5 220.2 L417 319.4 Z', o: 0.1 },
+  // střecha
+  { d: 'M290.8 113 L483.7 224.4 L417 327.8 L224.1 216.4 Z', o: 0.14 },
+  // komín (dvě boční stěny)
+  { d: 'M308 118.6 L324.5 128.1 L324.5 184.4 L308 174.8 Z', o: 0.16 },
+  { d: 'M322.8 110 L308 118.6 L308 174.8 L322.8 150.1 Z', o: 0.1 },
   // dveře
-  { d: 'M433.1 298 L464.3 316 L464.3 241.6 L433.1 223.6 Z', fill: '#4a3322' },
+  { d: 'M491.3 375.6 L461.6 392.8 L461.6 322.2 L491.3 305.1 Z', o: 0.13 },
   // skla oken
-  { d: 'M372.9 241.6 L399.9 257.2 L399.9 226 L372.9 210.4 Z', fill: '#9fc4d6' },
-  { d: 'M483 305.2 L510 320.8 L510 289.6 L483 274 Z', fill: '#9fc4d6' },
-  { d: 'M372.9 184 L399.9 199.6 L399.9 168.4 L372.9 152.8 Z', fill: '#9fc4d6' },
-  { d: 'M483 247.6 L510 263.2 L510 232 L483 216.4 Z', fill: '#9fc4d6' },
-  { d: 'M486.3 248.1 L454.8 266.3 L454.8 236.6 L486.3 218.3 Z', fill: '#9fc4d6' },
+  { d: 'M271.6 304.1 L296.4 318.4 L296.4 280.3 L271.6 266 Z', o: 0.08 },
+  { d: 'M324.5 334.6 L349.3 348.9 L349.3 310.8 L324.5 296.5 Z', o: 0.08 },
+  { d: 'M370.8 361.3 L395.5 375.6 L395.5 337.5 L370.8 323.2 Z', o: 0.08 },
 ]
 
 /* Neviditelné hit-area polygony pro snadný klik na tenké tahy. */
 const HIT: Record<string, string> = {
-  'g-roof': 'M350 122.4 L551.2 238.5 L479.7 219.3 L278.5 103.1 Z',
-  'g-truss': 'M532.9 230.8 L408.2 302.8 L470.6 214 Z',
-  'g-gutters': 'M348 116 L552 233 L552 251 L350 134 Z',
-  'g-chimney': 'M290 120 L340 120 L333 169 L315 159 Z',
-  'g-door': 'M433.1 298 L464.3 316 L464.3 241.6 L433.1 223.6 Z',
+  'g-roof': 'M290.8 113 L483.7 224.4 L417 327.8 L224.1 216.4 Z',
+  'g-truss': 'M535.9 250.7 L476.5 220.2 L417 319.4 Z',
+  'g-gutters': 'M224.1 216.4 L417 327.8 L417 426.9 Z',
+  'g-chimney': 'M322.8 110 L339.4 119.5 L324.5 128.1 L308 118.6 Z',
+  'g-door': 'M491.3 375.6 L461.6 392.8 L461.6 322.2 L491.3 305.1 Z',
   'g-windows': '', // okenní rámy jsou klikatelné samy
 }
 
@@ -122,12 +110,12 @@ const STROKE_W: Record<string, number> = {
 /* Rozvržení spojnic + labelů (souřadnice ve viewBoxu). */
 type Side = 'left' | 'right' | 'bottom'
 const LAYOUT: Record<string, { anchor: [number, number]; point: [number, number]; side: Side }> = {
-  'g-chimney': { anchor: [314, 120], point: [232, 92], side: 'left' },
-  'g-roof': { anchor: [340, 200], point: [190, 182], side: 'left' },
-  'g-windows': { anchor: [386, 235], point: [190, 342], side: 'left' },
-  'g-truss': { anchor: [486, 250], point: [560, 206], side: 'right' },
-  'g-gutters': { anchor: [540, 296], point: [576, 318], side: 'right' },
-  'g-door': { anchor: [452, 300], point: [566, 408], side: 'right' },
+  'g-chimney': { anchor: [323, 112], point: [250, 86], side: 'left' },
+  'g-roof': { anchor: [300, 150], point: [150, 132], side: 'left' },
+  'g-windows': { anchor: [284, 311], point: [150, 392], side: 'left' },
+  'g-truss': { anchor: [476, 240], point: [600, 214], side: 'right' },
+  'g-gutters': { anchor: [417, 360], point: [600, 372], side: 'right' },
+  'g-door': { anchor: [476, 360], point: [600, 432], side: 'right' },
 }
 
 const VIEWBOX = '10 50 740 440'
@@ -184,18 +172,18 @@ export function IsometricHouse() {
         </defs>
         <ellipse cx="400" cy="452" rx="180" ry="26" fill="url(#house-shadow)" opacity="0.5" />
 
-        {/* Stínování (vyplněné plochy) */}
+        {/* Stínování (vyplněné plochy) — vše ve stejné inkoustové barvě */}
         <g className="house-shade" style={{ pointerEvents: 'none' }}>
           {SHADE.map((s, i) => (
-            <path key={i} d={s.d} fill={s.fill} stroke="none" />
+            <path key={i} d={s.d} fill={INK} fillOpacity={s.o} stroke="none" />
           ))}
         </g>
 
         {/* Neinteraktivní obrys */}
-        <g stroke="#a07d33" strokeWidth={0.9} opacity={0.6} style={{ pointerEvents: 'none' }}>
+        <g stroke={INK} strokeWidth={0.9} opacity={0.55} style={{ pointerEvents: 'none' }}>
           <DrawPaths d={PATHS.foundation} />
         </g>
-        <g stroke="#2d2b28" strokeWidth={1} opacity={0.85} style={{ pointerEvents: 'none' }}>
+        <g stroke={INK} strokeWidth={1} opacity={0.85} style={{ pointerEvents: 'none' }}>
           <DrawPaths d={PATHS.walls} />
         </g>
 
@@ -237,7 +225,7 @@ export function IsometricHouse() {
             href={label.href}
             tabIndex={-1}
             onTouchStart={() => setActive(label.groupId)}
-            className="pointer-events-auto text-center text-cream"
+            className="pointer-events-auto rounded-full border border-cream/10 bg-wood-medium/90 px-5 py-2 text-center text-cream shadow-sm backdrop-blur-sm"
             style={{ color: active === label.groupId ? 'var(--wood-amber)' : undefined }}
           >
             <span className="font-display text-lg italic leading-none">{label.text}</span>

@@ -1,11 +1,11 @@
-import { setRequestLocale } from 'next-intl/server'
-import { getTranslations } from 'next-intl/server'
-import { SITE } from '@/lib/constants'
-import { IsometricHouse } from '@/components/house/IsometricHouse'
-import { ServicesScroll } from '@/components/sections/ServicesScroll'
-import { ProjectsPreview } from '@/components/sections/ProjectsPreview'
+import { HeroScroll } from '@/components/house/HeroScroll'
 import { AboutSection } from '@/components/sections/AboutSection'
 import { ContactSection } from '@/components/sections/ContactSection'
+import { ProjectsPreview } from '@/components/sections/ProjectsPreview'
+import { ServicesScroll } from '@/components/sections/ServicesScroll'
+import { Link } from '@/i18n/routing'
+import { houseLabels } from '@/lib/constants'
+import { setRequestLocale } from 'next-intl/server'
 
 export default async function HomePage({
   params,
@@ -14,28 +14,28 @@ export default async function HomePage({
 }) {
   const { locale } = await params
   setRequestLocale(locale)
-  const t = await getTranslations('common')
 
   return (
     <>
-      {/* 1A — Interaktivní dům přes celý viewport */}
+      {/* 1A — Hero: celoobrazovkový interaktivní dům „na papíře" se scroll efektem */}
       <section
         aria-label="Rozcestník — interaktivní dům"
         className="relative bg-wood-dark"
       >
-        <IsometricHouse />
+        <HeroScroll />
 
-        {/* Spodní lišta přes dům */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10">
-          <div className="container-content flex items-center justify-between border-t border-cream/10 bg-gradient-to-t from-wood-dark to-transparent py-5">
-            <p className="font-display text-lg italic text-cream md:text-xl">
-              &bdquo;{SITE.tagline}&ldquo;
-            </p>
-            <p className="font-body text-xs uppercase tracking-widest text-wood-warm">
-              {t('region')}
-            </p>
-          </div>
-        </div>
+        {/* Přístupná / crawlovatelná navigace (vždy v SSR HTML, vizuálně skrytá). */}
+        <nav aria-label="Rozcestník — části domu" className="sr-only">
+          <ul>
+            {houseLabels.map((label) => (
+              <li key={label.id}>
+                <Link href={label.href}>
+                  {label.text} — {label.subtext}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
       </section>
 
       {/* 1B — Služby (horizontální scroll) */}

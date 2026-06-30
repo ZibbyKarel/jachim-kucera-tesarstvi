@@ -44,8 +44,9 @@ export function Header() {
 
   // Desktop navigace: na homepage až po Hero, jinde vždy.
   const showNav = !isHome || pastHero
-  // Tmavé pozadí headeru: na homepage až po Hero, jinde po malém odscrollování.
-  const solid = (isHome ? pastHero : scrolled) || menuOpen
+  // Plné pozadí headeru: na homepage až po Hero, jinde po malém odscrollování.
+  // Při otevřeném menu zůstane průhledný — splyne s tmavým fullscreen overlayem.
+  const solid = !menuOpen && (isHome ? pastHero : scrolled)
 
   return (
     <header
@@ -56,7 +57,7 @@ export function Header() {
       }`}
     >
       <div className="container-content flex items-center justify-between py-4">
-        <Logo />
+        <Logo light={menuOpen} />
 
         <nav
           aria-label="Hlavní navigace"
@@ -83,7 +84,7 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-5">
-          <LanguageSwitcher />
+          <LanguageSwitcher light={menuOpen} />
 
           {/* Hamburger — mobil / tablet (vždy dostupný) */}
           <button
@@ -97,18 +98,18 @@ export function Header() {
             <span className="sr-only">{menuOpen ? t('close') : t('menu')}</span>
             <div className="flex w-6 flex-col items-end gap-[6px]">
               <span
-                className={`h-px bg-cream transition-all duration-300 ${
-                  menuOpen ? 'w-6 translate-y-[7px] rotate-45' : 'w-6'
+                className={`h-px transition-all duration-300 ${
+                  menuOpen ? 'w-6 translate-y-[7px] rotate-45 bg-wood-medium' : 'w-6 bg-cream'
                 }`}
               />
               <span
-                className={`h-px bg-cream transition-all duration-300 ${
-                  menuOpen ? 'w-0 opacity-0' : 'w-4'
+                className={`h-px transition-all duration-300 ${
+                  menuOpen ? 'w-0 opacity-0 bg-wood-medium' : 'w-4 bg-cream'
                 }`}
               />
               <span
-                className={`h-px bg-cream transition-all duration-300 ${
-                  menuOpen ? 'w-6 -translate-y-[7px] -rotate-45' : 'w-5'
+                className={`h-px transition-all duration-300 ${
+                  menuOpen ? 'w-6 -translate-y-[7px] -rotate-45 bg-wood-medium' : 'w-5 bg-cream'
                 }`}
               />
             </div>
@@ -116,10 +117,10 @@ export function Header() {
         </div>
       </div>
 
-      {/* Fullscreen overlay menu (mobil) */}
+      {/* Fullscreen overlay menu (mobil) — tmavé pozadí přes celou obrazovku */}
       <div
         id="mobile-menu"
-        className={`fixed inset-0 z-40 flex flex-col bg-wood-dark transition-opacity duration-500 lg:hidden ${
+        className={`fixed inset-0 z-40 flex h-[100dvh] w-screen flex-col bg-charcoal transition-opacity duration-300 lg:hidden ${
           menuOpen
             ? 'pointer-events-auto opacity-100'
             : 'pointer-events-none opacity-0'
@@ -127,30 +128,24 @@ export function Header() {
       >
         <nav
           aria-label="Mobilní navigace"
-          className="flex flex-1 flex-col justify-center gap-2 px-8"
+          className="flex flex-1 flex-col items-center justify-center gap-4 px-8 text-center"
         >
-          {navLinks.map((link, i) => (
+          {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               tabIndex={menuOpen ? undefined : -1}
-              className="font-display text-4xl italic text-cream transition-colors duration-300 hover:text-wood-amber"
-              style={{
-                transitionDelay: menuOpen ? `${i * 40 + 100}ms` : '0ms',
-                transform: menuOpen ? 'translateY(0)' : 'translateY(12px)',
-                opacity: menuOpen ? 1 : 0,
-                transitionProperty: 'opacity, transform, color',
-              }}
+              className="font-display text-4xl italic text-wood-medium transition-colors duration-300 hover:text-wood-amber"
             >
               {link.label}
             </Link>
           ))}
         </nav>
-        <div className="flex items-center justify-between border-t border-cream/10 px-8 py-6">
-          <span className="font-body text-xs uppercase tracking-widest text-wood-warm">
+        <div className="flex items-center justify-between border-t border-wood-medium/10 px-8 py-6">
+          <span className="font-body text-xs uppercase tracking-widest text-wood-light">
             {t('region')}
           </span>
-          <LanguageSwitcher />
+          <LanguageSwitcher light />
         </div>
       </div>
     </header>

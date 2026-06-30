@@ -1,11 +1,11 @@
 'use client'
 
-import { useTranslations } from 'next-intl'
-import { aboutStory, aboutStats } from '@/lib/constants'
-import { ImageFrame } from '@/components/ui/ImageFrame'
+import { Arrow, Button } from '@/components/ui/Button'
 import { Counter } from '@/components/ui/Counter'
+import { ImageFrame } from '@/components/ui/ImageFrame'
 import { Reveal } from '@/components/ui/Reveal'
-import { Button, Arrow } from '@/components/ui/Button'
+import { aboutStats, aboutStory } from '@/lib/constants'
+import { useTranslations } from 'next-intl'
 
 export function AboutSection() {
   const t = useTranslations('home')
@@ -49,7 +49,7 @@ export function AboutSection() {
 
           <div
             data-reveal-item
-            className="mt-10 grid grid-cols-3 gap-4 border-y border-cream/10 py-8"
+            className="mt-10 grid grid-cols-2 gap-4 border-y border-cream/10 py-8"
           >
             {aboutStats.map((s) => (
               <Counter key={s.label} value={s.value} label={s.label} />
