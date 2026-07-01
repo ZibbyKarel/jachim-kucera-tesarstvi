@@ -17,7 +17,7 @@ sekce webu.
 | Jazyk         | TypeScript (strict)                          |
 | Styly         | Tailwind CSS v3 + CSS custom properties      |
 | Animace       | GSAP + ScrollTrigger + DrawSVGPlugin         |
-| E-mail        | Resend (kontaktní formulář)                  |
+| E-mail        | Web3Forms (kontaktní formulář)               |
 | i18n          | next-intl (cs / en, zatím jen české texty)   |
 | Obrázky       | next/image + Sharp                           |
 
@@ -27,7 +27,7 @@ sekce webu.
 
 ```bash
 npm install
-cp .env.example .env.local   # doplň RESEND_API_KEY
+cp .env.example .env.local   # doplň WEB3FORMS_KEY
 npm run dev                  # http://localhost:3000
 ```
 
@@ -46,22 +46,21 @@ npm run lint       # ESLint
 
 Zkopíruj `.env.example` do `.env.local` a vyplň:
 
-| Proměnná               | Popis                                                  |
-| ---------------------- | ------------------------------------------------------ |
-| `RESEND_API_KEY`       | API klíč z [resend.com](https://resend.com/api-keys).  |
-| `NEXT_PUBLIC_SITE_URL` | Veřejná URL webu (sitemap, robots, canonical).         |
+| Proměnná               | Popis                                                        |
+| ---------------------- | ------------------------------------------------------------ |
+| `WEB3FORMS_KEY`        | Access Key z [web3forms.com](https://web3forms.com).         |
+| `NEXT_PUBLIC_SITE_URL` | Veřejná URL webu (sitemap, robots, canonical).               |
 
-> **Bez `RESEND_API_KEY` ve vývoji** se formulář tváří úspěšně a poptávku jen
-> vypíše do konzole, takže jde testovat UI bez nastavené Resend domény.
+> **Bez `WEB3FORMS_KEY` ve vývoji** se formulář tváří úspěšně a poptávku jen
+> vypíše do konzole, takže jde testovat UI bez nastaveného klíče.
 
-### Nastavení Resend domény
+### Nastavení Web3Forms
 
-1. V Resendu přidej doménu `jachim-kucera-tesarstvi.cz` a ověř ji DNS záznamy
-   (SPF, DKIM, DMARC), které Resend vygeneruje.
-2. Odesílací adresa (`web@jachim-kucera-tesarstvi.cz`) a cílová adresa
-   (`info@jachim-kucera-tesarstvi.cz`) jsou v `app/api/contact/route.ts` —
-   uprav podle reálných schránek.
-3. Vytvoř API klíč a vlož ho do `.env.local` (a do prostředí produkce).
+1. Zaregistruj se na [web3forms.com](https://web3forms.com) — stačí e-mail,
+   na který mají chodit notifikace z formuláře.
+2. Z dashboardu zkopíruj **Access Key** a vlož ho do `WEB3FORMS_KEY` v
+   `.env.local` (a do prostředí produkce).
+3. Žádná konfigurace domény ani DNS záznamy nejsou potřeba.
 
 ---
 
@@ -77,7 +76,7 @@ app/
     o-nas/page.tsx          příběh, timeline, hodnoty
     kontakt/page.tsx        formulář + kontaktní info + mapa
     not-found.tsx           lokalizovaná 404
-  api/contact/route.ts      odeslání formuláře přes Resend
+  api/contact/route.ts      odeslání formuláře přes Web3Forms
   sitemap.ts / robots.ts    technické SEO
 components/
   house/                    IsometricHouse, HouseSection, useHouseRotation
