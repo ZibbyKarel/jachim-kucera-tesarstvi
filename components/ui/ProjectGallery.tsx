@@ -6,13 +6,7 @@ import { gsap, prefersReducedMotion } from '@/lib/gsap'
 import type { Project, ProjectCategory } from '@/lib/types'
 import { ImageFrame } from './ImageFrame'
 
-const categoryLabels: Record<ProjectCategory, string> = {
-  tesarstvi: 'Tesařství',
-  pokryvacstvi: 'Pokrývačství',
-  klempirstvi: 'Klempířství',
-}
-
-type Filter = ProjectCategory | 'vse'
+type Filter = ProjectCategory | 'all'
 
 export function ProjectGallery({
   projects,
@@ -22,12 +16,13 @@ export function ProjectGallery({
   enableFilter?: boolean
 }) {
   const t = useTranslations('projects')
-  const [filter, setFilter] = useState<Filter>('vse')
+  const tFull = useTranslations()
+  const [filter, setFilter] = useState<Filter>('all')
   const [selected, setSelected] = useState<Project | null>(null)
   const gridRef = useRef<HTMLDivElement>(null)
 
   const visible =
-    filter === 'vse' ? projects : projects.filter((p) => p.category === filter)
+    filter === 'all' ? projects : projects.filter((p) => p.category === filter)
 
   // Animace přechodu mezi filtry.
   useEffect(() => {
@@ -51,10 +46,10 @@ export function ProjectGallery({
   }, [filter])
 
   const filters: { key: Filter; label: string }[] = [
-    { key: 'vse', label: t('filterAll') },
-    { key: 'tesarstvi', label: categoryLabels.tesarstvi },
-    { key: 'pokryvacstvi', label: categoryLabels.pokryvacstvi },
-    { key: 'klempirstvi', label: categoryLabels.klempirstvi },
+    { key: 'all', label: t('filterAll') },
+    { key: 'tesarstvi', label: tFull('services.tesarstvi.title') },
+    { key: 'pokryvacstvi', label: tFull('services.pokryvacstvi.title') },
+    { key: 'klempirstvi', label: tFull('services.klempirstvi.title') },
   ]
 
   return (
@@ -62,7 +57,7 @@ export function ProjectGallery({
       {enableFilter && (
         <div
           role="tablist"
-          aria-label="Filtr realizací"
+          aria-label={t('filterAria')}
           className="mb-10 flex flex-wrap gap-3"
         >
           {filters.map((f) => {
@@ -90,40 +85,44 @@ export function ProjectGallery({
         ref={gridRef}
         className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3"
       >
-        {visible.map((project, i) => (
-          <article
-            key={project.id}
-            data-project-card
-            className={
-              // jemný masonry rytmus — každá třetí karta vyšší
-              i % 5 === 0 ? 'sm:row-span-2' : ''
-            }
-          >
-            <button
-              onClick={() => setSelected(project)}
-              className="group block w-full text-left"
-              aria-label={`${project.title}, ${project.location} ${project.year} — zobrazit detail`}
+        {visible.map((project, i) => {
+          const title = tFull(`projectsData.${project.id}.title`)
+          const location = tFull(`projectsData.${project.id}.location`)
+          return (
+            <article
+              key={project.id}
+              data-project-card
+              className={
+                // jemný masonry rytmus — každá třetí karta vyšší
+                i % 5 === 0 ? 'sm:row-span-2' : ''
+              }
             >
-              <ImageFrame
-                src={project.thumbnail}
-                alt={`${project.title} — ${project.location}`}
-                aspect={i % 5 === 0 ? '3/4' : '4/3'}
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              />
-              <div className="mt-3 flex items-baseline justify-between gap-4">
-                <h3 className="font-display text-xl italic text-cream transition-colors group-hover:text-wood-amber">
-                  {project.title}
-                </h3>
-                <span className="shrink-0 font-body text-xs uppercase tracking-widest text-cream/40">
-                  {project.year}
-                </span>
-              </div>
-              <p className="mt-1 font-body text-xs uppercase tracking-widest text-wood-warm">
-                {categoryLabels[project.category]} · {project.location}
-              </p>
-            </button>
-          </article>
-        ))}
+              <button
+                onClick={() => setSelected(project)}
+                className="group block w-full text-left"
+                aria-label={`${title}, ${location} ${project.year} — ${t('viewDetailAria')}`}
+              >
+                <ImageFrame
+                  src={project.thumbnail}
+                  alt={`${title} — ${location}`}
+                  aspect={i % 5 === 0 ? '3/4' : '4/3'}
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                />
+                <div className="mt-3 flex items-baseline justify-between gap-4">
+                  <h3 className="font-display text-xl italic text-cream transition-colors group-hover:text-wood-amber">
+                    {title}
+                  </h3>
+                  <span className="shrink-0 font-body text-xs uppercase tracking-widest text-cream/40">
+                    {project.year}
+                  </span>
+                </div>
+                <p className="mt-1 font-body text-xs uppercase tracking-widest text-wood-warm">
+                  {tFull(`services.${project.category}.title`)} · {location}
+                </p>
+              </button>
+            </article>
+          )
+        })}
       </div>
 
       {selected && (
@@ -141,7 +140,11 @@ function ProjectModal({
   onClose: () => void
 }) {
   const t = useTranslations('projects')
+  const tFull = useTranslations()
   const dialogRef = useRef<HTMLDivElement>(null)
+  const title = tFull(`projectsData.${project.id}.title`)
+  const location = tFull(`projectsData.${project.id}.location`)
+  const description = tFull(`projectsData.${project.id}.description`)
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -161,12 +164,12 @@ function ProjectModal({
       className="fixed inset-0 z-[80] flex items-center justify-center p-4 md:p-10"
       role="dialog"
       aria-modal="true"
-      aria-label={project.title}
+      aria-label={title}
     >
       <button
         className="absolute inset-0 bg-charcoal/70 backdrop-blur-sm"
         onClick={onClose}
-        aria-label="Zavřít detail"
+        aria-label={t('closeDetailAria')}
         tabIndex={-1}
       />
       <div
@@ -177,7 +180,7 @@ function ProjectModal({
         <button
           onClick={onClose}
           className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full border border-cream/20 text-cream transition-colors hover:border-wood-amber hover:text-wood-amber"
-          aria-label="Zavřít"
+          aria-label={tFull('common.close')}
         >
           <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
             <path
@@ -190,13 +193,13 @@ function ProjectModal({
         </button>
 
         <span className="eyebrow">
-          {categoryLabels[project.category]} · {project.location} · {project.year}
+          {tFull(`services.${project.category}.title`)} · {location} · {project.year}
         </span>
         <h2 className="mt-3 font-display text-4xl italic text-cream">
-          {project.title}
+          {title}
         </h2>
         <p className="mt-4 max-w-2xl font-body text-sm leading-relaxed text-cream/70">
-          {project.description}
+          {description}
         </p>
 
         <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -204,7 +207,7 @@ function ProjectModal({
             <ImageFrame
               key={img}
               src={img}
-              alt={`${project.title} — foto ${i + 1}`}
+              alt={`${title} — ${t('photoAlt')} ${i + 1}`}
               aspect="4/3"
               aged={false}
             />
@@ -216,7 +219,7 @@ function ProjectModal({
             <dt className="text-xs uppercase tracking-widest text-cream/40">
               {t('location')}
             </dt>
-            <dd className="mt-1 text-cream">{project.location}</dd>
+            <dd className="mt-1 text-cream">{location}</dd>
           </div>
           <div>
             <dt className="text-xs uppercase tracking-widest text-cream/40">

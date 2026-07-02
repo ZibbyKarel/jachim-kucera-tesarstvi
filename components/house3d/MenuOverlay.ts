@@ -14,6 +14,11 @@ export interface ProjectedAnchor {
   visible: boolean
 }
 
+export interface MenuLabelText {
+  service: string
+  element: string
+}
+
 interface OverlayHandlers {
   onHover: (id: MenuId | null) => void
   onSelect: (id: MenuId) => void
@@ -28,6 +33,13 @@ interface LabelEntry {
 
 const SVG_NS = 'http://www.w3.org/2000/svg'
 
+/* Pevné pořadí chipů na mobilu (zleva doprava): Tesařství, Pokrývačství, Klempířství. */
+const MOBILE_ORDER: Partial<Record<MenuId, number>> = {
+  pergola: 0,
+  roof: 1,
+  gutters: 2,
+}
+
 export class MenuOverlay {
   private container: HTMLElement
   private layer: HTMLDivElement
@@ -36,7 +48,11 @@ export class MenuOverlay {
   private entries = new Map<MenuId, LabelEntry>()
   private active: MenuId | null = null
 
-  constructor(container: HTMLElement, private handlers: OverlayHandlers) {
+  constructor(
+    container: HTMLElement,
+    private handlers: OverlayHandlers,
+    private labels: Record<MenuId, MenuLabelText>
+  ) {
     this.container = container
 
     this.layer = document.createElement('div')
@@ -81,7 +97,8 @@ export class MenuOverlay {
     btn.type = 'button'
     btn.className = `h3d-label h3d-${item.side}`
     btn.setAttribute('data-id', item.id)
-    btn.innerHTML = `<span class="h3d-service">${item.service}</span><span class="h3d-element">${item.element}</span>`
+    const label = this.labels[item.id]
+    btn.innerHTML = `<span class="h3d-service">${label.service}</span><span class="h3d-element">${label.element}</span>`
 
     // svislá pozice ve sloupci (rovnoměrné rozmístění)
     const top = ((item.slot + 0.5) / count) * 64 + 16 // 16 %..80 %
@@ -126,15 +143,15 @@ export class MenuOverlay {
     // Mobil: labely jsou „chipy" v řádku pod domem → čára vychází z horního středu
     // chipu nahoru ke kotvě. Desktop: z vnitřní (boční) hrany labelu ve sloupci.
     const mobile = size.w <= 768
-    // Seřaď chipy zleva doprava dle promítnuté X kotvy → spojnice se nekříží.
+    // Pořadí chipů zleva doprava odpovídá promítnutým kotvám při hero pohledu
+    // (pergola je vlevo vpředu, střecha uprostřed, okapy vpravo) → spojnice se
+    // nekříží. Pevné pořadí je stabilní (kotvy pergoly a střechy mají skoro
+    // totožné X a dynamické řazení mezi nimi poblikávalo a křížilo čáry).
     if (mobile) {
-      const ranked = [...this.entries.values()]
-        .map((e) => ({ e, x: anchors.get(e.item.id)?.x ?? 0 }))
-        .sort((p, q) => p.x - q.x)
-      ranked.forEach(({ e }, i) => {
-        const v = String(i)
+      for (const e of this.entries.values()) {
+        const v = String(MOBILE_ORDER[e.item.id] ?? e.item.slot)
         if (e.root.style.order !== v) e.root.style.order = v
-      })
+      }
     }
     for (const [id, e] of this.entries) {
       const a = anchors.get(id)

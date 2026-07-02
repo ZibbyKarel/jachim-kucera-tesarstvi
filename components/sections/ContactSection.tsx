@@ -24,7 +24,7 @@ export function ContactSection() {
             id="contact-cta-heading"
             className="mt-4 font-display text-4xl italic text-cream md:text-5xl"
           >
-            Zavolejte nebo napište. Domluvíme se.
+            {t('home.contactHeadline')}
           </h2>
           <a
             href={`tel:${SITE.phoneHref}`}
@@ -33,7 +33,7 @@ export function ContactSection() {
             {SITE.phone}
           </a>
           <p className="mt-4 font-body text-sm uppercase tracking-widest text-cream/50">
-            {SITE.region}
+            {t('common.region')}
           </p>
         </Reveal>
 

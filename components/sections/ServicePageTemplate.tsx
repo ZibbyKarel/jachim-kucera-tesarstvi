@@ -7,6 +7,12 @@ import { SITE } from '@/lib/constants'
 
 export function ServicePageTemplate({ service }: { service: Service }) {
   const t = useTranslations('service')
+  const tCommon = useTranslations('common')
+  const tService = useTranslations(`services.${service.slug}`)
+  const title = tService('title')
+  const longDescription = tService.raw('longDescription') as string[]
+  const workItems = tService.raw('workItems') as { title: string; description: string }[]
+  const galleryAlt = tService.raw('galleryAlt') as string[]
 
   return (
     <article>
@@ -14,7 +20,7 @@ export function ServicePageTemplate({ service }: { service: Service }) {
       <header className="relative h-[72vh] min-h-[460px] w-full overflow-hidden">
         <ImageFrame
           src={service.heroImage}
-          alt={`${service.title} — realizace`}
+          alt={`${tCommon('serviceLabel')} — ${title}`}
           aspect="16/9"
           aged={false}
           rounded={false}
@@ -25,12 +31,12 @@ export function ServicePageTemplate({ service }: { service: Service }) {
         <div className="absolute inset-0 bg-gradient-to-t from-wood-dark via-wood-dark/50 to-wood-dark/20" />
         <div className="container-content absolute inset-x-0 bottom-0">
           <div className="pb-14">
-            <span className="eyebrow">Služba · {SITE.region}</span>
+            <span className="eyebrow">{tCommon('serviceLabel')} · {tCommon('region')}</span>
             <h1 className="mt-3 font-display text-6xl italic leading-none text-cream md:text-8xl">
-              {service.title}
+              {title}
             </h1>
             <p className="mt-4 max-w-md font-body text-lg text-cream/70">
-              {service.tagline}
+              {tService('tagline')}
             </p>
           </div>
         </div>
@@ -38,17 +44,17 @@ export function ServicePageTemplate({ service }: { service: Service }) {
 
       {/* 2 — Popis */}
       <section
-        aria-label="Popis služby"
+        aria-label={t('descriptionAria')}
         className="bg-wood-dark py-20 md:py-28"
       >
         <div className="container-content grid gap-10 md:grid-cols-[1fr_1.4fr] md:gap-16">
           <Reveal>
             <p className="font-display text-2xl italic leading-snug text-wood-amber md:sticky md:top-28">
-              {service.shortDescription}
+              {tService('shortDescription')}
             </p>
           </Reveal>
           <Reveal stagger className="space-y-5">
-            {service.longDescription.map((p) => (
+            {longDescription.map((p) => (
               <p
                 key={p.slice(0, 24)}
                 data-reveal-item
@@ -74,14 +80,14 @@ export function ServicePageTemplate({ service }: { service: Service }) {
             {t('includesHeading')}
           </h2>
           <Reveal stagger className="mt-12 grid gap-px overflow-hidden rounded-sm border border-cream/10 bg-cream/10 sm:grid-cols-2">
-            {service.workItems.map((item) => (
+            {workItems.map((item, i) => (
               <div
-                key={item.number}
+                key={item.title}
                 data-reveal-item
                 className="group flex gap-6 bg-wood-medium p-8 transition-colors duration-500 hover:bg-wood-dark md:p-10"
               >
                 <span className="font-display text-4xl italic text-wood-warm transition-colors duration-500 group-hover:text-wood-amber">
-                  {item.number}
+                  {service.workItemNumbers[i]}
                 </span>
                 <div>
                   <h3 className="font-display text-2xl italic text-cream">
@@ -113,11 +119,11 @@ export function ServicePageTemplate({ service }: { service: Service }) {
             stagger
             className="mt-12 grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6"
           >
-            {service.gallery.map((img) => (
+            {service.gallery.map((img, i) => (
               <div data-reveal-item key={img.src}>
                 <ImageFrame
                   src={img.src}
-                  alt={img.alt}
+                  alt={galleryAlt[i]}
                   aspect="4/3"
                   sizes="(max-width: 768px) 50vw, 33vw"
                 />
@@ -140,7 +146,7 @@ export function ServicePageTemplate({ service }: { service: Service }) {
           </div>
           <div className="flex flex-wrap gap-4">
             <Button href="/kontakt" size="lg">
-              Nezávazná poptávka <Arrow />
+              {tCommon('nonbindingInquiry')} <Arrow />
             </Button>
             <a
               href={`tel:${SITE.phoneHref}`}

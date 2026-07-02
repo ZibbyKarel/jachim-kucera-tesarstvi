@@ -1,10 +1,18 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import { useTranslations } from 'next-intl'
 import { gsap, ScrollTrigger, prefersReducedMotion } from '@/lib/gsap'
-import { timeline } from '@/lib/constants'
+
+interface Milestone {
+  year: string
+  title: string
+  description: string
+}
 
 export function Timeline() {
+  const t = useTranslations('about')
+  const timeline = t.raw('timeline') as Milestone[]
   const ref = useRef<HTMLOListElement>(null)
 
   useEffect(() => {

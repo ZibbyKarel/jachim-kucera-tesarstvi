@@ -15,10 +15,9 @@ export type LabelSide = 'left' | 'right'
 
 export interface MenuItem {
   id: MenuId
-  /** Služba (hlavní text labelu). */
-  service: string
-  /** Část domu (podtext). */
-  element: string
+  /** Slug služby — hlavní text labelu se bere z messages.services.<slug>.title. */
+  serviceSlug: 'pokryvacstvi' | 'tesarstvi' | 'klempirstvi'
+  /** Podtext (část domu) se bere z messages.house3dMenu.<id>. */
   side: LabelSide
   /** Pořadí ve sloupci (0 = nahoře). */
   slot: number
@@ -58,16 +57,16 @@ export const DIM = {
 } as const
 
 /** Menu — pořadí, strana a kotvy. Pořadí dle spec.
-    Pozn.: Truhlářství = pergola + dětská prolézačka, Klempířství = okapy/svody +
+    Pozn.: Tesařství = pergola + dětská prolézačka, Klempířství = okapy/svody +
     oplechování komínu. Druhá část každé dvojice je geometrie sloučená do téhož
     ArchElementu (rozsvítí se společně a vede na stejnou stránku), takže nemá
     vlastní spojnici — kotva míří na hlavní část. */
 export const MENU: MenuItem[] = [
   // Levý sloupec — řazeno shora dolů dle výšky kotvy.
-  { id: 'roof', service: 'Pokrývačství', element: 'Střecha', side: 'left', slot: 0, anchor: [-1.8, 4.35, 0.1] },
-  { id: 'pergola', service: 'Truhlářství', element: 'Pergola a prolézačka', side: 'left', slot: 1, anchor: [-1.7, 2.62, 4.9] },
+  { id: 'roof', serviceSlug: 'pokryvacstvi', side: 'left', slot: 0, anchor: [-1.8, 4.35, 0.1] },
+  { id: 'pergola', serviceSlug: 'tesarstvi', side: 'left', slot: 1, anchor: [-1.7, 2.62, 4.9] },
   // Pravý sloupec.
-  { id: 'gutters', service: 'Klempířství', element: 'Okapy, svody a komín', side: 'right', slot: 0, anchor: [3.3, 3.05, 3.42] },
+  { id: 'gutters', serviceSlug: 'klempirstvi', side: 'right', slot: 0, anchor: [3.3, 3.05, 3.42] },
 ]
 
 /** Kam se dívá kamera + úhel (30° horizontálně, 20° vertikálně). */

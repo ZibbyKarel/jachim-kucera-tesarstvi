@@ -1,17 +1,23 @@
 import type { Metadata } from 'next'
 import { setRequestLocale, getTranslations } from 'next-intl/server'
-import { aboutStory, values, aboutStats, SITE } from '@/lib/constants'
 import { ImageFrame } from '@/components/ui/ImageFrame'
 import { Reveal } from '@/components/ui/Reveal'
 import { Counter } from '@/components/ui/Counter'
 import { Timeline } from '@/components/sections/Timeline'
 import { Button, Arrow } from '@/components/ui/Button'
 
-export const metadata: Metadata = {
-  title: 'O nás — Tesaři z Plzeňského kraje',
-  description:
-    'Jsme Jáchim a Kučera. Tesařině, pokrývačství a klempířství se věnujeme přes dvacet let. Poctivá řemeslná práce v Plzeňském kraji.',
-  alternates: { canonical: '/o-nas' },
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'seo.onas' })
+  return {
+    title: t('title'),
+    description: t('description'),
+    alternates: { canonical: '/o-nas' },
+  }
 }
 
 export default async function ONasPage({
@@ -22,6 +28,12 @@ export default async function ONasPage({
   const { locale } = await params
   setRequestLocale(locale)
   const t = await getTranslations('about')
+  const tCommon = await getTranslations('common')
+  const tNav = await getTranslations('nav')
+  const aboutStory = t.raw('story') as string[]
+  const aboutStats = t.raw('stats') as { value: string; label: string }[]
+  const values = t.raw('values') as { title: string; description: string }[]
+  const certificates = t.raw('certificates') as string[]
 
   return (
     <div className="bg-wood-dark">
@@ -29,7 +41,7 @@ export default async function ONasPage({
       <header className="relative h-[70vh] min-h-[440px] w-full overflow-hidden">
         <ImageFrame
           src="/images/tym/tym-portret.jpg"
-          alt="Jáchim a Kučera před rozestavěnou střechou"
+          alt={t('heroAlt')}
           aspect="16/9"
           aged={false}
           rounded={false}
@@ -40,21 +52,20 @@ export default async function ONasPage({
         <div className="absolute inset-0 bg-gradient-to-t from-wood-dark via-wood-dark/55 to-wood-dark/25" />
         <div className="container-content absolute inset-x-0 bottom-0">
           <div className="pb-14">
-            <span className="eyebrow">O nás · {SITE.region}</span>
+            <span className="eyebrow">{tNav('about')} · {tCommon('region')}</span>
             <h1 className="mt-3 font-display text-5xl italic leading-none text-cream md:text-8xl">
-              Kdo to staví
+              {t('heroTitle')}
             </h1>
           </div>
         </div>
       </header>
 
       {/* Příběh */}
-      <section aria-label="Příběh firmy" className="py-20 md:py-28">
+      <section aria-label={t('storyAria')} className="py-20 md:py-28">
         <div className="container-content grid gap-10 md:grid-cols-[1fr_1.3fr] md:gap-16">
           <Reveal>
             <p className="font-display text-3xl italic leading-snug text-wood-amber md:sticky md:top-28">
-              Nejsme velká firma a nechceme být. Děláme tolik, kolik zvládneme
-              udělat pořádně.
+              {t('heroQuote')}
             </p>
           </Reveal>
           <Reveal stagger className="space-y-5">
@@ -136,25 +147,23 @@ export default async function ONasPage({
             {t('certificatesHeading')}
           </h2>
           <Reveal stagger className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-4">
-            {['ČKAIT', 'Zelená úsporám', 'Pojištění odpovědnosti', 'Záruka 10 let'].map(
-              (c) => (
-                <div
-                  key={c}
-                  data-reveal-item
-                  className="flex aspect-[3/2] items-center justify-center rounded-sm border border-cream/10 bg-wood-dark p-6 text-center font-body text-xs uppercase tracking-widest text-cream/50"
-                >
-                  {c}
-                </div>
-              )
-            )}
+            {certificates.map((c) => (
+              <div
+                key={c}
+                data-reveal-item
+                className="flex aspect-[3/2] items-center justify-center rounded-sm border border-cream/10 bg-wood-dark p-6 text-center font-body text-xs uppercase tracking-widest text-cream/50"
+              >
+                {c}
+              </div>
+            ))}
           </Reveal>
 
           <div className="mt-16 flex flex-col items-start gap-6 border-t border-cream/10 pt-12 md:flex-row md:items-center md:justify-between">
             <p className="max-w-md font-display text-2xl italic text-cream">
-              Potřebujete střechu, na kterou se dá spolehnout?
+              {t('ctaText')}
             </p>
             <Button href="/kontakt" size="lg">
-              Ozvěte se nám <Arrow />
+              {t('ctaButton')} <Arrow />
             </Button>
           </div>
         </div>

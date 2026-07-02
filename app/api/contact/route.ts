@@ -12,7 +12,6 @@ export async function POST(req: Request) {
 
   const name = String(body.name ?? '').trim()
   const phone = String(body.phone ?? '').trim()
-  const service = String(body.service ?? '').trim()
   const message = String(body.message ?? '').trim()
   const honeypot = String(body.website ?? '').trim()
 
@@ -28,8 +27,8 @@ export async function POST(req: Request) {
   if (!phone || !PHONE_RE.test(phone)) {
     return Response.json({ error: 'phone_invalid' }, { status: 422 })
   }
-  if (!service) {
-    return Response.json({ error: 'service_required' }, { status: 422 })
+  if (!message) {
+    return Response.json({ error: 'message_required' }, { status: 422 })
   }
 
   const accessKey = process.env.WEB3FORMS_KEY
@@ -38,7 +37,6 @@ export async function POST(req: Request) {
       console.info('[contact] WEB3FORMS_KEY chybí — poptávka:', {
         name,
         phone,
-        service,
         message,
       })
       return Response.json({ success: true, dev: true })
@@ -52,12 +50,11 @@ export async function POST(req: Request) {
       headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
       body: JSON.stringify({
         access_key: accessKey,
-        subject: `Nová poptávka — ${service} — ${name}`,
+        subject: `Nová poptávka — ${name}`,
         from_name: 'Web — Jáchim & Kučera',
         name,
         phone,
-        service,
-        message: message || '—',
+        message,
         botcheck: '', // Web3Forms honeypot must be empty
       }),
     })

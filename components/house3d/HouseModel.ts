@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import { LineMaterial } from 'three/examples/jsm/lines/LineMaterial.js'
+import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js'
 import { ArchElement } from './ArchElement'
 import { COLORS, DIM, MENU, type MenuId } from './config'
 
@@ -15,15 +16,18 @@ export class HouseModel {
   readonly root = new THREE.Group()
   readonly elements = new Map<MenuId, ArchElement>()
   readonly all: ArchElement[] = []
+  /** Plaňkový plot — svítí s Tesařstvím, jen na desktopu (viz SceneManager.resize). */
+  readonly fence: ArchElement
 
   constructor() {
     this.root.name = 'house'
     this.buildFacade()
     this.buildRoof()
     this.buildGutters() // okapy/svody + oplechování komínu (Klempířství)
-    this.buildPergola() // pergola + dětská prolézačka (Truhlářství)
+    this.buildPergola() // pergola + dětská prolézačka (Tesařství)
     this.buildWindows()
     this.buildEntrance() // vstupní dveře (dekor — Kontakt řeší CTA tlačítko)
+    this.fence = this.buildFence() // plot — tesařská práce, jen desktop
     for (const el of this.all) this.root.add(el.group)
   }
 
@@ -136,13 +140,13 @@ export class HouseModel {
         { thin: true }
       )
     }
-    // dětská prolézačka v pravém předzahradí (truhlářská práce → také Truhlářství)
+    // dětská prolézačka v pravém předzahradí (tesařská práce → také Tesařství)
     this.buildPlayground(el)
     this.register(el)
   }
 
   /* ---- Dětská prolézačka: skluzavka + houpačka --------------------------- */
-  /*  Sloučená do pergolového ArchElementu — rozsvítí se i klikne jako Truhlářství.
+  /*  Sloučená do pergolového ArchElementu — rozsvítí se i klikne jako Tesařství.
       Dvě jednoznačně dětské hmoty: otevřená plošina se žebříkem a skluzem, vedle  */
   /*  A-rám houpačky se sedátkem. Žádná stříška (ať to nečte jako bouda).          */
   private buildPlayground(el: ArchElement): void {
@@ -300,6 +304,85 @@ export class HouseModel {
       new THREE.BoxGeometry(1.6, 0.12, 0.7).translate(cx, 2.45, zFront + 0.25)
     )
     this.register(el)
+  }
+
+  /* ---- Plaňkový plot okolo předzahrádky (tesařská práce) ------------------ */
+  /*  Svislé plaňky + dvě vodorovné příčle po obvodu, s brankou vpředu u vstupu.
+      Celý plot sloučíme do JEDNÉ geometrie (jeden mesh + jedny obrysy) — desítky
+      planěk jinak zbytečně násobí draw-cally. menuId 'pergola' → rozsvítí se
+      společně s Tesařstvím. Do `elements` ho ale NEregistrujeme, aby nepřepsal
+      kotvu/spojnici pergoly. Viditelnost řídí SceneManager (jen desktop).        */
+  private buildFence(): ArchElement {
+    const el = new ArchElement('pergola', this.anchorOf('pergola'))
+    const parts: THREE.BufferGeometry[] = []
+
+    const H = 1.0 // výška plaňky
+    const pw = 0.09 // šířka plaňky (podél plotu)
+    const pt = 0.03 // tloušťka plaňky
+    const pitch = 0.28 // rozteč planěk
+    const railY = [0.34, 0.8] // výšky příčlí
+    const railH = 0.06
+    const railT = 0.05
+
+    // Plot obepíná CELÝ pozemek — musí ležet VNĚ všeho ostatního: dům + přesah
+    // střechy (±3.25), pergola (vlevo vpředu, z až 5.5) i dětská prolézačka
+    // (vpravo vpředu, x až ~4.6, skluz z až ~5.8). Volíme obálku s rezervou ~0.65,
+    // takže do žádného prvku nezasahuje.
+    const xMin = -3.9
+    const xMax = 5.3
+    const zMin = -3.9
+    const zMax = 6.5
+    const gate: [number, number] = [0.1, 1.9] // branka vpředu (na ose vstupu)
+
+    const picket = (x: number, z: number, along: 'x' | 'z') => {
+      const g =
+        along === 'x'
+          ? new THREE.BoxGeometry(pw, H, pt)
+          : new THREE.BoxGeometry(pt, H, pw)
+      g.translate(x, H / 2, z)
+      parts.push(g)
+    }
+    const run = (
+      from: number,
+      to: number,
+      fixed: number,
+      axis: 'x' | 'z',
+      skip?: [number, number]
+    ) => {
+      for (let p = from; p <= to + 1e-6; p += pitch) {
+        if (skip && p > skip[0] - 1e-6 && p < skip[1] + 1e-6) continue
+        axis === 'x' ? picket(p, fixed, 'x') : picket(fixed, p, 'z')
+      }
+    }
+    const rail = (x0: number, z0: number, x1: number, z1: number) => {
+      const len = Math.hypot(x1 - x0, z1 - z0)
+      const horizontal = Math.abs(x1 - x0) > Math.abs(z1 - z0)
+      for (const y of railY) {
+        const g = horizontal
+          ? new THREE.BoxGeometry(len, railH, railT)
+          : new THREE.BoxGeometry(railT, railH, len)
+        g.translate((x0 + x1) / 2, y, (z0 + z1) / 2)
+        parts.push(g)
+      }
+    }
+
+    run(xMin, xMax, zMax, 'x', gate) // přední (s brankou)
+    run(xMin, xMax, zMin, 'x') // zadní
+    run(zMin, zMax, xMin, 'z') // levá
+    run(zMin, zMax, xMax, 'z') // pravá
+
+    rail(xMin, zMax, gate[0], zMax) // přední vlevo od branky
+    rail(gate[1], zMax, xMax, zMax) // přední vpravo od branky
+    rail(xMin, zMin, xMax, zMin) // zadní
+    rail(xMin, zMin, xMin, zMax) // levá
+    rail(xMax, zMin, xMax, zMax) // pravá
+
+    const merged = mergeGeometries(parts, false)
+    parts.forEach((g) => g.dispose())
+    el.addSolid(merged, { thin: true })
+
+    this.all.push(el) // do render/hover/intro seznamu, ale NE do `elements`
+    return el
   }
 
   /* ------------------------------------------------------------------------ */

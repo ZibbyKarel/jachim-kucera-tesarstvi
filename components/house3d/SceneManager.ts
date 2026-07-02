@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { ArchElement } from './ArchElement'
 import { HouseModel } from './HouseModel'
-import { MenuOverlay, type ProjectedAnchor } from './MenuOverlay'
+import { MenuOverlay, type ProjectedAnchor, type MenuLabelText } from './MenuOverlay'
 import { CAMERA, COLORS, MENU, type MenuId } from './config'
 
 /* -------------------------------------------------------------------------- */
@@ -23,6 +23,8 @@ const FIT_MARGIN_SOLO = 1.5
 
 export interface SceneOptions {
   onMenuSelect: (id: MenuId) => void
+  /** Přeložené texty menu labelů (service/element) — přichází z React vrstvy. */
+  labels: Record<MenuId, MenuLabelText>
   /** Průhledné pozadí (scéna „leží" na papírovém panelu za canvasem). */
   transparent?: boolean
   /** Přehrát úvodní „vykreslení"? Při false se dům rovnou plně vykreslí. */
@@ -138,10 +140,14 @@ export class SceneManager {
     this.scene.add(this.house.root)
 
     // ---- overlay ----
-    this.overlay = new MenuOverlay(this.container, {
-      onHover: (id) => this.setHover(id),
-      onSelect: opts.onMenuSelect,
-    })
+    this.overlay = new MenuOverlay(
+      this.container,
+      {
+        onHover: (id) => this.setHover(id),
+        onSelect: opts.onMenuSelect,
+      },
+      opts.labels
+    )
 
     this.prepareIntro()
 
@@ -258,6 +264,18 @@ export class SceneManager {
     this.raycaster.setFromCamera(this.pointer, this.camera)
     const hits = this.raycaster.intersectObject(this.house.root, true)
     for (const h of hits) {
+      // Raycaster netestuje `visible` → skrytý plot (mobil) by jinak byl klikací.
+      let vis: THREE.Object3D | null = h.object
+      let hidden = false
+      while (vis) {
+        if (vis.visible === false) {
+          hidden = true
+          break
+        }
+        vis = vis.parent
+      }
+      if (hidden) continue
+
       let o: THREE.Object3D | null = h.object
       while (o) {
         const id = o.userData?.menuId as MenuId | undefined
@@ -396,6 +414,10 @@ export class SceneManager {
     const dpr = Math.min(window.devicePixelRatio, 2)
     this.renderer.setPixelRatio(dpr)
     for (const m of this.lineMats) m.resolution.set(w, h)
+
+    // Plot je jen pro desktop (mobil: bez plotu). Scéna se staví jednou, resize
+    // běží i při startu i při rotaci/změně velikosti → tady je správné místo.
+    this.house.fence.group.visible = w > 768
 
     // přepočítej fit-vzdálenost a limity zoomu pro nový poměr stran
     this.distance = this.fitDistance(w / h)

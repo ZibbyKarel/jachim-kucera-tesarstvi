@@ -4,11 +4,13 @@ import { Arrow, Button } from '@/components/ui/Button'
 import { Counter } from '@/components/ui/Counter'
 import { ImageFrame } from '@/components/ui/ImageFrame'
 import { Reveal } from '@/components/ui/Reveal'
-import { aboutStats, aboutStory } from '@/lib/constants'
 import { useTranslations } from 'next-intl'
 
 export function AboutSection() {
   const t = useTranslations('home')
+  const tAbout = useTranslations('about')
+  const story = tAbout.raw('story') as string[]
+  const stats = tAbout.raw('stats') as { value: string; label: string }[]
 
   return (
     <section
@@ -21,7 +23,7 @@ export function AboutSection() {
         <Reveal>
           <ImageFrame
             src="/images/tym/tym-01.jpg"
-            alt="Jáchim a Kučera se svou partou na střeše"
+            alt={tAbout('teamAlt')}
             aspect="4/5"
             sizes="(max-width: 768px) 100vw, 45vw"
           />
@@ -36,9 +38,9 @@ export function AboutSection() {
             data-reveal-item
             className="mt-4 font-display text-4xl italic leading-tight text-cream md:text-5xl"
           >
-            Stavíme střechy, jako by byly naše vlastní
+            {t('aboutHeadline')}
           </h2>
-          {aboutStory.slice(0, 2).map((p) => (
+          {story.slice(0, 2).map((p) => (
             <p
               key={p.slice(0, 24)}
               data-reveal-item
@@ -52,14 +54,14 @@ export function AboutSection() {
             data-reveal-item
             className="mt-10 grid grid-cols-2 gap-4 border-y border-cream/10 py-8"
           >
-            {aboutStats.map((s) => (
+            {stats.map((s) => (
               <Counter key={s.label} value={s.value} label={s.label} />
             ))}
           </div>
 
           <div data-reveal-item className="mt-8">
             <Button href="/o-nas" variant="outline">
-              Náš příběh <Arrow />
+              {t('aboutCta')} <Arrow />
             </Button>
           </div>
         </Reveal>

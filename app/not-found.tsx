@@ -1,10 +1,12 @@
 import Link from 'next/link'
 
-// Globální 404 mimo lokalizovaný segment — má vlastní <html>,
-// protože nad ním není žádný root layout.
+// Globální 404 mimo lokalizovaný segment — má vlastní <html>, protože nad ním
+// není žádný root layout, a proto nemá přístup k next-intl kontextu locale
+// segmentu. Text je záměrně anglický jako univerzální fallback pro tento
+// okrajový případ (matcher middlewaru zachytí prakticky vše ostatní).
 export default function GlobalNotFound() {
   return (
-    <html lang="cs">
+    <html lang="en">
       <body
         style={{
           margin: 0,
@@ -20,9 +22,9 @@ export default function GlobalNotFound() {
           padding: '0 1.5rem',
         }}
       >
-        <h1 style={{ fontSize: '2rem', margin: 0 }}>404 — Stránka nenalezena</h1>
+        <h1 style={{ fontSize: '2rem', margin: 0 }}>404 — Page not found</h1>
         <p style={{ color: 'rgba(45,43,40,0.7)', marginTop: '1rem' }}>
-          Tahle stránka tu není.
+          This page doesn&apos;t exist.
         </p>
         <Link
           href="/"
@@ -37,7 +39,7 @@ export default function GlobalNotFound() {
             fontSize: '0.85rem',
           }}
         >
-          Zpět domů
+          Back home
         </Link>
       </body>
     </html>

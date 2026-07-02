@@ -27,74 +27,83 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }))
 }
 
-export const metadata: Metadata = {
-  metadataBase: new URL(SITE.url),
-  title: {
-    default: `${SITE.name} | ${SITE.region}`,
-    template: `%s | ${SITE.shortName}`,
-  },
-  description:
-    'Tesařství, pokrývačství a klempířství v Plzeňském kraji. Stavíme krovy, pokládáme střechy a děláme okapy. Přes 20 let poctivé řemeslné práce.',
-  keywords: [
-    'tesařství',
-    'pokrývačství',
-    'klempířství',
-    'krovy',
-    'střechy',
-    'Plzeňský kraj',
-    'Plzeň',
-  ],
-  authors: [{ name: SITE.shortName }],
-  openGraph: {
-    type: 'website',
-    locale: 'cs_CZ',
-    url: SITE.url,
-    siteName: SITE.name,
-    title: `${SITE.name} | ${SITE.region}`,
-    description:
-      'Tesařství, pokrývačství a klempířství v Plzeňském kraji. Poctivá řemeslná práce, přes 20 let zkušeností.',
-    images: [
-      {
-        url: '/images/og-default.jpg',
-        width: 1200,
-        height: 630,
-        alt: SITE.name,
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: `${SITE.name} | ${SITE.region}`,
-    description: 'Tesařství, pokrývačství a klempířství v Plzeňském kraji.',
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'common' })
+  const tSeo = await getTranslations({ locale, namespace: 'seo' })
+
+  return {
+    metadataBase: new URL(SITE.url),
+    title: {
+      default: `${SITE.name} | ${t('region')}`,
+      template: `%s | ${SITE.shortName}`,
+    },
+    description: tSeo('siteDescription'),
+    keywords: tSeo.raw('keywords') as string[],
+    authors: [{ name: SITE.shortName }],
+    openGraph: {
+      type: 'website',
+      locale: tSeo('ogLocale'),
+      url: SITE.url,
+      siteName: SITE.name,
+      title: SITE.name,
+      description: tSeo('siteDescription'),
+      images: [
+        {
+          url: '/logo.jpg',
+          width: 1200,
+          height: 1200,
+          alt: SITE.name,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: SITE.name,
+      description: tSeo('siteDescription'),
+      images: ['/logo.jpg'],
+    },
+    robots: {
+      index: true,
+      follow: true,
+    },
+  }
 }
 
-const jsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'LocalBusiness',
-  '@id': `${SITE.url}/#business`,
-  name: SITE.name,
-  description: 'Tesařství, pokrývačství a klempířství v Plzeňském kraji',
-  url: SITE.url,
-  telephone: SITE.phone,
-  email: SITE.email,
-  image: `${SITE.url}/images/og-default.jpg`,
-  priceRange: '$$',
-  address: {
-    '@type': 'PostalAddress',
-    addressRegion: 'Plzeňský kraj',
-    addressCountry: 'CZ',
-  },
-  areaServed: {
-    '@type': 'AdministrativeArea',
-    name: 'Plzeňský kraj',
-  },
-  serviceType: ['Tesařství', 'Pokrývačství', 'Klempířství', 'Čištění střech'],
-  knowsLanguage: ['cs', 'en'],
+interface SeoTranslator {
+  (key: string): string
+  raw: (key: string) => unknown
+}
+
+function buildJsonLd(tSeo: SeoTranslator, locale: string) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'LocalBusiness',
+    '@id': `${SITE.url}/#business`,
+    name: SITE.name,
+    description: tSeo('jsonLdDescription'),
+    url: SITE.url,
+    telephone: SITE.phone,
+    email: SITE.email,
+    image: `${SITE.url}/logo.jpg`,
+    priceRange: '$$',
+    address: {
+      '@type': 'PostalAddress',
+      addressRegion: tSeo('addressRegion'),
+      addressCountry: 'CZ',
+    },
+    areaServed: {
+      '@type': 'AdministrativeArea',
+      name: tSeo('addressRegion'),
+    },
+    serviceType: tSeo.raw('serviceTypes') as string[],
+    knowsLanguage: ['cs', 'en'],
+    inLanguage: locale,
+  }
 }
 
 export default async function LocaleLayout({
@@ -113,6 +122,8 @@ export default async function LocaleLayout({
   setRequestLocale(locale)
   const messages = await getMessages()
   const t = await getTranslations('common')
+  const tSeo = (await getTranslations('seo')) as unknown as SeoTranslator
+  const jsonLd = buildJsonLd(tSeo, locale)
 
   return (
     <html

@@ -7,7 +7,16 @@
     "allProjects": "Všechny realizace",
     "moreAbout": "Více o službě",
     "nonbindingInquiry": "Nezávazná poptávka",
-    "region": "Plzeňský kraj a okolí"
+    "region": "Plzeňský kraj a okolí",
+    "serviceLabel": "Služba",
+    "mainNavAria": "Hlavní navigace",
+    "mobileNavAria": "Mobilní navigace",
+    "footerNavAria": "Patička — navigace",
+    "houseNavAria": "Rozcestník — části domu",
+    "navigationHeading": "Navigace",
+    "footerDescription": "Poctivá tesařská, pokrývačská a klempířská práce v Plzeňském kraji. Stavíme střechy, jako by byly naše vlastní.",
+    "allRightsReserved": "Všechna práva vyhrazena.",
+    "companyIdLabel": "IČO 000 00 000 · Plzeňský kraj"
   },
   "nav": {
     "home": "Domů",
@@ -21,16 +30,21 @@
     "heroEyebrow": "Tesařství · Pokrývačství · Klempířství",
     "heroTitle": "Poctivá řemeslná práce",
     "heroCta": "Nezávazně poptat",
+    "heroAria": "Rozcestník — interaktivní dům",
     "scrollCue": "Posuňte níž",
     "servicesHeading": "Co umíme",
     "servicesIntro": "Od krovu po poslední okap. Čtyři řemesla pod jednou střechou.",
     "projectsHeading": "Vybrané realizace",
     "projectsIntro": "Část toho, co jsme za poslední roky postavili po Plzeňském kraji.",
     "aboutHeading": "Kdo to staví",
-    "contactHeading": "Pojďme se domluvit"
+    "aboutHeadline": "Stavíme střechy, jako by byly naše vlastní",
+    "aboutCta": "Náš příběh",
+    "contactHeading": "Pojďme se domluvit",
+    "contactHeadline": "Zavolejte nebo napište. Domluvíme se."
   },
   "contact": {
     "title": "Kontakt",
+    "heroTitle": "Pojďme se domluvit",
     "intro": "Napište nám pár slov o vaší střeše. Ozveme se a domluvíme se na prohlídce — nezávazně a zdarma.",
     "name": "Jméno",
     "phone": "Telefon",
@@ -41,23 +55,82 @@
     "serviceOther": "Jiné",
     "submit": "Odeslat poptávku",
     "submitting": "Odesílám…",
+    "submitAnother": "Odeslat další poptávku",
+    "namePlaceholder": "Jan Novák",
+    "messagePlaceholder": "Co byste potřebovali? Napište nám pár slov o střeše…",
     "success": "Děkujeme! Ozveme se vám co nejdříve.",
     "errors": {
       "nameRequired": "Vyplňte prosím jméno.",
       "phoneRequired": "Vyplňte prosím telefon.",
       "phoneInvalid": "Zadejte telefon ve formátu +420 777 123 456.",
-      "serviceRequired": "Vyberte prosím službu.",
+      "messageRequired": "Napište prosím krátkou zprávu.",
       "generic": "Zprávu se nepodařilo odeslat. Zavolejte nám prosím přímo na {phone}."
     },
     "infoHeading": "Kde nás zastihnete",
-    "areaLabel": "Provozní oblast"
+    "areaLabel": "Provozní oblast",
+    "mapAriaLabel": "Mapa provozní oblasti — Plzeňský kraj",
+    "mapCityLabel": "Plzeň"
   },
   "about": {
+    "heroTitle": "Kdo to staví",
+    "heroQuote": "Nejsme velká firma a nechceme být. Děláme tolik, kolik zvládneme udělat pořádně.",
+    "storyAria": "Příběh firmy",
+    "teamAlt": "Jáchim a Kučera se svou partou na střeše",
+    "heroAlt": "Jáchim a Kučera před rozestavěnou střechou",
+    "story": [
+      "Jmenujeme se Jáchim a Kučera a střechám se věnujeme přes patnáct let. Začínali jsme jako vyučení tesaři v Plzeňském kraji a dnes vedeme vlastní partu, na kterou se můžete spolehnout. Každou střechu stavíme tak, jako by byla naše vlastní.",
+      "Postupem let jsme k tesařině přidali pokrývačství a klempířství, abychom mohli zákazníkovi předat hotovou střechu od krovu po poslední okap — bez toho, aby musel shánět tři různé firmy a hlídat, kdo za co odpovídá. Vše máme pod jednou střechou, doslova.",
+      "Nejsme velká firma a nechceme být. Děláme tolik zakázek, kolik zvládneme udělat pořádně. Na stavbu chodíme my, ne anonymní poddodavatelé, a stojíme si za svou prací i po letech. Když něco slíbíme, platí to."
+    ],
+    "stats": [
+      { "value": "15+", "label": "let praxe" },
+      { "value": "150+", "label": "realizací" }
+    ],
     "valuesHeading": "Na čem si zakládáme",
+    "values": [
+      {
+        "title": "Poctivost",
+        "description": "Říkáme férově, co dává smysl a co ne. Neúčtujeme zbytečnou práci a nepoužíváme materiál, kterému sami nevěříme. Co slíbíme, to platí."
+      },
+      {
+        "title": "Spolehlivost",
+        "description": "Přijdeme, kdy řekneme, a dokončíme, co začneme. Za svou prací si stojíme i po letech a vždy se k ní rádi vrátíme, kdyby bylo potřeba."
+      },
+      {
+        "title": "Lokální znalost",
+        "description": "Známe Plzeňský kraj, jeho počasí i typické domy. Víme, co na zdejší střechy sedí a co tu vydrží. Jsme od vás kousek, ne z druhého konce republiky."
+      }
+    ],
     "timelineHeading": "Naše cesta",
-    "certificatesHeading": "Certifikáty a reference"
+    "timeline": [
+      {
+        "year": "2003",
+        "title": "Vyučeni jako tesaři",
+        "description": "Začínáme jako vyučení tesaři u zavedených mistrů v Plzeňském kraji. Učíme se řemeslo od základu — od ručního opracování dřeva po čtení statiky krovu."
+      },
+      {
+        "year": "2008",
+        "title": "Vlastní firma",
+        "description": "Zakládáme vlastní tesařskou partu. První velké zakázky na krovy rodinných domů a rekonstrukce historických střech v okolí Plzně."
+      },
+      {
+        "year": "2015",
+        "title": "Rozšíření o klempířství",
+        "description": "Přidáváme pokrývačství a klempířství, abychom mohli předávat kompletní střechu. Investujeme do vybavení i do lidí, kteří řemeslo umí."
+      },
+      {
+        "year": "2024",
+        "title": "150+ realizací",
+        "description": "Za sebou máme přes sto padesát hotových střech po celém Plzeňském kraji. A pořád nás to baví stejně jako na začátku."
+      }
+    ],
+    "certificatesHeading": "Certifikáty a reference",
+    "certificates": ["ČKAIT", "Zelená úsporám", "Pojištění odpovědnosti", "Záruka 10 let"],
+    "ctaText": "Potřebujete střechu, na kterou se dá spolehnout?",
+    "ctaButton": "Ozvěte se nám"
   },
   "service": {
+    "descriptionAria": "Popis služby",
     "includesHeading": "Co zahrnuje",
     "galleryHeading": "Z naší práce",
     "ctaHeading": "Potřebujete poradit?",
@@ -65,7 +138,232 @@
   },
   "projects": {
     "filterAll": "Vše",
+    "filterAria": "Filtr realizací",
+    "closeDetailAria": "Zavřít detail",
+    "viewDetailAria": "zobrazit detail",
+    "photoAlt": "foto",
     "year": "Rok",
     "location": "Lokalita"
+  },
+  "realizacePage": {
+    "heroTitle": "Co jsme postavili",
+    "heroIntro": "Výběr z toho, na čem jsme za poslední roky pracovali. Od krovů přes kompletní střechy až po klempířské detaily — všechno v Plzeňském kraji a okolí."
+  },
+  "nahled3d": {
+    "heading": "Jáchim & Kučera — 3D rozcestník",
+    "hint": "Najeďte na prvek nebo label · klik vybere"
+  },
+  "notFound": {
+    "title": "Tahle střecha tu není",
+    "description": "Stránku, kterou hledáte, jsme nenašli. Třeba ji odnesl vítr — vraťte se prosím na začátek.",
+    "backHome": "Zpět domů"
+  },
+  "seo": {
+    "siteDescription": "Tesařství, pokrývačství a klempířství v Plzeňském kraji. Stavíme krovy, pokládáme střechy a děláme okapy. Přes 15 let poctivé řemeslné práce.",
+    "keywords": ["tesařství", "pokrývačství", "klempířství", "krovy", "střechy", "Plzeňský kraj", "Plzeň"],
+    "ogLocale": "cs_CZ",
+    "jsonLdDescription": "Tesařství, pokrývačství a klempířství v Plzeňském kraji",
+    "addressRegion": "Plzeňský kraj",
+    "serviceTypes": ["Tesařství", "Pokrývačství", "Klempířství", "Čištění střech"],
+    "kontakt": {
+      "title": "Kontakt — Nezávazná poptávka",
+      "description": "Napište nebo zavolejte. Domluvíme se na nezávazné prohlídce střechy v Plzeňském kraji. Tesařství, pokrývačství a klempířství."
+    },
+    "onas": {
+      "title": "O nás — Tesaři z Plzeňského kraje",
+      "description": "Jsme Jáchim a Kučera. Tesařině, pokrývačství a klempířství se věnujeme přes patnáct let. Poctivá řemeslná práce v Plzeňském kraji."
+    },
+    "realizace": {
+      "title": "Realizace — Naše střechy v Plzeňském kraji",
+      "description": "Vybrané realizace tesařských, pokrývačských a klempířských prací po celém Plzeňském kraji. Krovy, střechy, okapy a rekonstrukce."
+    },
+    "nahled3d": {
+      "title": "3D rozcestník — náhled"
+    }
+  },
+  "houseLabels": {
+    "chimney": "Komín — co jsme postavili",
+    "roof": "Střecha",
+    "truss": "Krov",
+    "gutters": "Okapy a svody",
+    "windows": "Okna — kdo jsme",
+    "door": "Vstup — ozvěte se"
+  },
+  "house3dMenu": {
+    "roof": "Střecha",
+    "pergola": "Pergola a prolézačka",
+    "gutters": "Okapy, svody a komín"
+  },
+  "services": {
+    "tesarstvi": {
+      "title": "Tesařství",
+      "tagline": "Krovy, které drží generace",
+      "shortDescription": "Stavíme a rekonstruujeme krovy, dřevěné stropy a pergoly. Každý spoj řešíme tak, aby vydržel desítky let — od ručního opracování po moderní tesařské kování.",
+      "longDescription": [
+        "Tesařina je řemeslo, u kterého jsme začínali a které nás drží dodnes. Stavíme nové krovy na rodinné domy i rekonstruujeme historické konstrukce, kde je potřeba cit pro původní práci a zároveň znalost dnešních norem. Než položíme první trám, projdeme s vámi projekt a navrhneme řešení, které sedí na váš dům i rozpočet.",
+        "Dřevo vybíráme s rozmyslem — sušené, kvalitní řezivo s certifikátem, které se nekroutí a nepraská. Spoje navrhujeme tak, aby přenášely zatížení tam, kam mají, a aby konstrukce dýchala. U rekonstrukcí citlivě vyměníme jen to, co je opravdu napadené, a zbytek zachováme.",
+        "Pracujeme s tesařským kováním i klasickými plátovanými spoji. U pohledových krovů a stropů dbáme na detail — hrany, fazety i povrchovou úpravu, protože takový strop pak v interiéru zůstává na očích roky.",
+        "Postavíme vám i pergolu, carport nebo přístřešek na míru. Od jednoduchého zastřešení terasy po samostatně stojící konstrukci, která vydrží sníh i vítr a hezky zestárne."
+      ],
+      "workItems": [
+        { "title": "Krovové konstrukce", "description": "Nové krovy i kompletní rekonstrukce. Vaznicové, hambálkové i složitější soustavy podle tvaru střechy a zatížení." },
+        { "title": "Dřevěné a trámové stropy", "description": "Pohledové trámové stropy, záklopy a podbití. Statika i estetika v jednom — strop, který zdobí interiér." },
+        { "title": "Pergoly, carporty, přístřešky", "description": "Zastřešení teras, stání pro auta i zahradní přístřešky na míru. Robustní konstrukce s čistým detailem." },
+        { "title": "Bednění a fasádní dřevo", "description": "Podstřešní bednění, palubkové podhledy a dřevěné fasády. Provětrávané systémy s dlouhou životností." }
+      ],
+      "galleryAlt": [
+        "Nový krov rodinného domu v Plzni",
+        "Rekonstrukce historického krovu v Klatovech",
+        "Pohledový trámový strop",
+        "Dřevěná pergola u rodinného domu",
+        "Carport z masivního dřeva",
+        "Detail tesařského spoje krovu"
+      ],
+      "seoTitle": "Tesařství — Krovové konstrukce a dřevěné práce | Plzeňský kraj",
+      "seoDescription": "Stavíme a rekonstruujeme krovy, dřevěné stropy a pergoly v Plzeňském kraji. Přes 15 let zkušeností, poctivá práce, férová cena."
+    },
+    "pokryvacstvi": {
+      "title": "Pokrývačství",
+      "tagline": "Střecha, která vás přečká",
+      "shortDescription": "Pokládáme pálenou i betonovou krytinu, plech i šindel. Postaráme se o hydroizolaci, parotěsné zábrany i čisté detaily hřebenů a úžlabí.",
+      "longDescription": [
+        "Střecha je to, co dům chrání nejvíc — a taky to, na čem se nejvíc šetří špatně. My pokládáme krytinu tak, aby pod ní bylo sucho i za třicet let. Začínáme správně navrženou skladbou: pojistná hydroizolace, kontralatě, laťování a teprve potom krytina.",
+        "Pracujeme se vším, co dnešní střechy potřebují — pálené tašky, betonová krytina, falcovaný plech i tradiční šindel. Poradíme, co se hodí na váš sklon střechy, lokalitu i styl domu, a řekneme férově, co dává smysl a co je zbytečný luxus.",
+        "Velký důraz klademe na detaily, kde střechy nejčastěji zatékají — úžlabí, nároží, prostupy a napojení na komín. Tady se pozná rozdíl mezi rychlou prací a poctivým řemeslem. Parotěsné a difuzní fólie řešíme tak, aby konstrukce neplesnivěla a střecha dýchala.",
+        "U rekonstrukcí nejdřív zjistíme stav bednění a laťování a vyměníme, co je potřeba. Nepokládáme novou krytinu na shnilé latě jen proto, aby to bylo rychle hotové."
+      ],
+      "workItems": [
+        { "title": "Pálená a betonová krytina", "description": "Klasické skládané krytiny pro šikmé střechy. Přesná pokládka, správné překrytí a větrání hřebene." },
+        { "title": "Bobrovka, šindel, plech", "description": "Tradiční bobrovka, dřevěný i asfaltový šindel a falcovaný plech. Řešení pro památky i moderní domy." },
+        { "title": "Hydroizolace a parotěsné zábrany", "description": "Správná skladba střešního pláště — pojistná hydroizolace, difuzní a parotěsné fólie bez tepelných mostů." },
+        { "title": "Hřebeny, nároží, úžlabí", "description": "Detaily, kde střechy zatékají nejčastěji. Děláme je tak, aby držely vodu i za extrémního počasí." }
+      ],
+      "galleryAlt": [
+        "Pálená krytina na rodinném domě v Plzni",
+        "Falcovaná plechová střecha",
+        "Tradiční bobrovka na rekonstruované střeše",
+        "Detail úžlabí střechy",
+        "Větraný hřeben střechy",
+        "Rekonstrukce střešního pláště"
+      ],
+      "seoTitle": "Pokrývačství — Pokládka střešní krytiny | Plzeňský kraj",
+      "seoDescription": "Pokládáme pálenou a betonovou krytinu, plech i šindel v Plzeňském kraji. Hydroizolace, detaily hřebenů a úžlabí. Střecha, která vydrží."
+    },
+    "klempirstvi": {
+      "title": "Klempířství",
+      "tagline": "Detail, který odvede vodu",
+      "shortDescription": "Vyrábíme a montujeme okapové systémy, oplechování komínů, parapetů a říms. Pracujeme s pozinkem, titanzinkem i mědí.",
+      "longDescription": [
+        "Klempířina je o detailech, které nejsou vidět, dokud nezačnou zlobit. My je děláme tak, aby zlobit nezačaly. Okapy, svody, oplechování a lemování jsou to, co střechu doplňuje a chrání zdivo i základy před vodou.",
+        "Okapové systémy montujeme z pozinkovaného plechu, titanzinku i mědi — podle toho, co se hodí k domu a jak dlouho mají vydržet. Titanzinek i měď nabízíme i v provedení, které krásně stárne a získává patinu. Spády a dimenze žlabů navrhujeme podle plochy střechy, ne od oka.",
+        "Oplechování komínů, atik, parapetů a říms vyrábíme na míru přímo na stavbě. Spoje falcujeme a lepíme tak, aby byly těsné a zároveň umožnily dilataci plechu při změnách teploty.",
+        "Postaráme se i o klempířské detaily kolem střešních prostupů, ventilací a prostupů antén. Jsou to maličkosti, ale právě ony rozhodují o tom, jestli střecha těsní."
+      ],
+      "workItems": [
+        { "title": "Okapové systémy", "description": "Žlaby a svody z pozinku, titanzinku i mědi. Správné spády, dimenze a kotvení pro bezúdržbový odvod vody." },
+        { "title": "Oplechování říms, parapetů, komínů", "description": "Lemování a oplechování na míru přímo na stavbě. Falcované spoje, které těsní a počítají s dilatací." },
+        { "title": "Střešní prostupy a ventilace", "description": "Těsné napojení komínů, ventilací a prostupů. Detaily, na kterých střechy nejčastěji selhávají." },
+        { "title": "Klempířské detaily", "description": "Lemování zdí, závětrné lišty, okapnice a další prvky, které drží vodu tam, kam patří." }
+      ],
+      "galleryAlt": [
+        "Měděný okapový systém",
+        "Okapy z titanzinku",
+        "Oplechování komínu",
+        "Oplechování parapetů",
+        "Detail svodu okapu",
+        "Lemování napojení střechy na zeď"
+      ],
+      "seoTitle": "Klempířství — Okapy a oplechování | Plzeňský kraj",
+      "seoDescription": "Okapové systémy, oplechování komínů a parapetů z pozinku, titanzinku i mědi. Klempířské práce v Plzeňském kraji s důrazem na detail."
+    },
+    "cisteni-strech": {
+      "title": "Čištění střech",
+      "tagline": "Vraťte střeše roky života",
+      "shortDescription": "Odstraníme mech, lišejníky a nečistoty, ošetříme krytinu a vyčistíme okapy. Údržba, která prodlouží životnost střechy bez nutnosti rekonstrukce.",
+      "longDescription": [
+        "Ne každá zašlá střecha potřebuje vyměnit. Často stačí ji pořádně vyčistit a ošetřit — a získá tím klidně dalších deset let života. Mech a lišejníky zadržují vlhkost a postupně rozrušují povrch krytiny; čím dřív se odstraní, tím líp.",
+        "Krytinu čistíme tlakovou vodou s ohledem na její typ a stáří, abychom povrch nepoškodili. Po vyčištění naneseme preventivní nátěr nebo impregnaci, která zpomalí opětovný růst mechu a obnoví barvu i hydrofobní vlastnosti tašek.",
+        "Při čištění vždy zkontrolujeme stav krytiny, hřebenů a oplechování a upozorníme vás na místa, která by mohla v budoucnu dělat problém. Levnější je opravit detail včas než řešit zatékání.",
+        "Nezapomínáme ani na okapy — zanesené žlaby přetékají a vlhko pak putuje do fasády a základů. Vyčištění okapů zařadíme rovnou do prohlídky střechy."
+      ],
+      "workItems": [
+        { "title": "Odstranění mechů a lišejníků", "description": "Šetrné mechanické i tlakové odstranění porostu, který drží vlhkost a ničí povrch krytiny." },
+        { "title": "Tlakové mytí krytiny", "description": "Čištění přizpůsobené typu a stáří krytiny tak, aby se obnovil povrch a nepoškodil materiál." },
+        { "title": "Preventivní nátěry a impregnace", "description": "Ochranný nátěr, který zpomalí návrat mechu, obnoví barvu a vrátí taškám odpudivost vůči vodě." },
+        { "title": "Čištění okapů", "description": "Vyčištění žlabů a svodů, aby voda odtékala, kam má, a nezatékala do fasády a základů." }
+      ],
+      "galleryAlt": [
+        "Střecha před a po vyčištění",
+        "Odstranění mechu ze střešní krytiny",
+        "Tlakové mytí střešní krytiny",
+        "Nanášení ochranného nátěru na krytinu",
+        "Čištění okapů",
+        "Vyčištěná střecha rodinného domu"
+      ],
+      "seoTitle": "Čištění střech — Mech, mytí a impregnace | Plzeňský kraj",
+      "seoDescription": "Odstraníme mech a lišejníky, vyčistíme krytinu i okapy a ošetříme střechu preventivním nátěrem. Údržba střech v Plzeňském kraji."
+    }
+  },
+  "projectsData": {
+    "krov-rodinny-dum-plzen": {
+      "title": "Nový krov rodinného domu",
+      "location": "Plzeň-sever",
+      "description": "Kompletní vaznicový krov novostavby rodinného domu. Sušené řezivo, tesařské kování a pohledové prvky nad terasou."
+    },
+    "rekonstrukce-krovu-klatovy": {
+      "title": "Rekonstrukce historického krovu",
+      "location": "Klatovy",
+      "description": "Záchrana původního krovu měšťanského domu. Výměna napadených částí, protézování a zpevnění při zachování historické konstrukce."
+    },
+    "pergola-rokycany": {
+      "title": "Pergola se zastřešením terasy",
+      "location": "Rokycany",
+      "description": "Samostatně stojící pergola z masivního dřeva s polykarbonátovým zastřešením a integrovaným osvětlením."
+    },
+    "tramovy-strop-susice": {
+      "title": "Pohledový trámový strop",
+      "location": "Sušice",
+      "description": "Pohledový trámový strop v rekonstruovaném podkroví. Ručně opracované hrany a olejovaný povrch."
+    },
+    "strecha-palena-plzen": {
+      "title": "Pálená krytina na novostavbě",
+      "location": "Plzeň-jih",
+      "description": "Kompletní střešní plášť novostavby — pojistná hydroizolace, laťování a pálená krytina včetně větraného hřebene."
+    },
+    "plechova-strecha-domazlice": {
+      "title": "Falcovaná plechová střecha",
+      "location": "Domažlice",
+      "description": "Falcovaná střecha z titanzinku na zemědělské usedlosti. Dlouhé pásy bez příčných spojů a čisté detaily úžlabí."
+    },
+    "bobrovka-stribro": {
+      "title": "Rekonstrukce střechy bobrovkou",
+      "location": "Stříbro",
+      "description": "Výměna krytiny historického domu za tradiční režnou bobrovku korunové kladení, včetně nového laťování."
+    },
+    "strecha-rekonstrukce-nepomuk": {
+      "title": "Rekonstrukce střešního pláště",
+      "location": "Nepomuk",
+      "description": "Kompletní rekonstrukce střechy rodinného domu — nové bednění, fólie, laťování a betonová krytina."
+    },
+    "medene-okapy-plzen": {
+      "title": "Měděný okapový systém",
+      "location": "Plzeň-město",
+      "description": "Kompletní měděné okapy a svody na vile v historické čtvrti. Pájené spoje a oplechování říms ze stejného materiálu."
+    },
+    "oplechovani-komin-tachov": {
+      "title": "Oplechování komínu a atik",
+      "location": "Tachov",
+      "description": "Oplechování komínového tělesa a atik z titanzinku, vyrobené na míru přímo na stavbě s falcovanými spoji."
+    },
+    "titanzinek-okapy-horsovsky-tyn": {
+      "title": "Okapy z titanzinku",
+      "location": "Horšovský Týn",
+      "description": "Nový okapový systém z titanzinku na rodinném domě, navržené spády a dimenze žlabů podle plochy střechy."
+    },
+    "strecha-okapy-prestice": {
+      "title": "Střecha a klempířina v jednom",
+      "location": "Přeštice",
+      "description": "Zakázka od krovu po okapy — nová střecha s betonovou krytinou a kompletní klempířské prvky z pozinku."
+    }
   }
 }

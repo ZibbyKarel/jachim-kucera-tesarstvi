@@ -3,11 +3,18 @@ import { setRequestLocale, getTranslations } from 'next-intl/server'
 import { SITE } from '@/lib/constants'
 import { ContactForm } from '@/components/ui/ContactForm'
 
-export const metadata: Metadata = {
-  title: 'Kontakt — Nezávazná poptávka',
-  description:
-    'Napište nebo zavolejte. Domluvíme se na nezávazné prohlídce střechy v Plzeňském kraji. Tesařství, pokrývačství a klempířství.',
-  alternates: { canonical: '/kontakt' },
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'seo.kontakt' })
+  return {
+    title: t('title'),
+    description: t('description'),
+    alternates: { canonical: '/kontakt' },
+  }
 }
 
 export default async function KontaktPage({
@@ -18,13 +25,14 @@ export default async function KontaktPage({
   const { locale } = await params
   setRequestLocale(locale)
   const t = await getTranslations('contact')
+  const tCommon = await getTranslations('common')
 
   return (
     <div className="bg-wood-dark">
       <header className="container-content pb-12 pt-36 md:pt-44">
         <span className="eyebrow">{t('title')}</span>
         <h1 className="mt-3 max-w-3xl font-display text-5xl italic leading-tight text-cream md:text-7xl">
-          Pojďme se domluvit
+          {t('heroTitle')}
         </h1>
         <p className="mt-5 max-w-xl font-body text-base leading-relaxed text-cream/70">
           {t('intro')}
@@ -59,14 +67,14 @@ export default async function KontaktPage({
             <h3 className="font-body text-xs uppercase tracking-widest text-cream/50">
               {t('areaLabel')}
             </h3>
-            <p className="mt-2 font-body text-base text-cream">{SITE.region}</p>
+            <p className="mt-2 font-body text-base text-cream">{tCommon('region')}</p>
           </div>
 
           {/* Statická „mapa" ve světlém stylu (placeholder pro Mapbox) */}
           <div
             className="relative aspect-[4/3] overflow-hidden rounded-sm border border-cream/10"
             role="img"
-            aria-label="Mapa provozní oblasti — Plzeňský kraj"
+            aria-label={t('mapAriaLabel')}
           >
             <div
               className="absolute inset-0"
@@ -107,7 +115,7 @@ export default async function KontaktPage({
               />
             </svg>
             <span className="absolute bottom-3 left-3 font-display text-xl italic text-cream">
-              Plzeň
+              {t('mapCityLabel')}
             </span>
           </div>
         </aside>

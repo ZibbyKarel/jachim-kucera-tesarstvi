@@ -1,9 +1,19 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { Link, useRouter } from '@/i18n/routing'
 import { gsap, prefersReducedMotion } from '@/lib/gsap'
 import { houseLabels } from '@/lib/constants'
+import type { HouseLabel, NavLink } from '@/lib/types'
+
+function labelText(t: (key: string) => string, source: NavLink['textSource']) {
+  return source.ns === 'service' ? t(`services.${source.slug}.title`) : t(`nav.${source.key}`)
+}
+
+function labelSubtext(t: (key: string) => string, label: HouseLabel) {
+  return t(`houseLabels.${label.key}`)
+}
 
 /* -------------------------------------------------------------------------- */
 /*  Izometrická skica domu (čáry + jemné stínování)                            */
@@ -123,6 +133,7 @@ const LABEL_W = 190
 const LABEL_H = 56
 
 export function IsometricHouse() {
+  const t = useTranslations()
   const router = useRouter()
   const containerRef = useRef<HTMLDivElement>(null)
   const [active, setActive] = useState<string | null>(null)
@@ -204,8 +215,8 @@ export function IsometricHouse() {
             <ConnectedLabel
               key={label.groupId}
               groupId={label.groupId}
-              text={label.text}
-              subtext={label.subtext}
+              text={labelText(t, label.textSource)}
+              subtext={labelSubtext(t, label)}
               href={label.href}
               active={active === label.groupId}
               onHover={setActive}
@@ -228,18 +239,20 @@ export function IsometricHouse() {
             className="pointer-events-auto rounded-full border border-cream/10 bg-wood-medium/90 px-5 py-2 text-center text-cream shadow-sm backdrop-blur-sm"
             style={{ color: active === label.groupId ? 'var(--wood-amber)' : undefined }}
           >
-            <span className="font-display text-lg italic leading-none">{label.text}</span>
+            <span className="font-display text-lg italic leading-none">
+              {labelText(t, label.textSource)}
+            </span>
           </Link>
         ))}
       </nav>
 
       {/* Přístupná / crawlovatelná navigace (vždy v DOM, vizuálně skrytá). */}
-      <nav aria-label="Rozcestník — části domu" className="sr-only">
+      <nav aria-label={t('common.houseNavAria')} className="sr-only">
         <ul>
           {houseLabels.map((label) => (
             <li key={label.id}>
               <Link href={label.href}>
-                {label.text} — {label.subtext}
+                {labelText(t, label.textSource)} — {labelSubtext(t, label)}
               </Link>
             </li>
           ))}

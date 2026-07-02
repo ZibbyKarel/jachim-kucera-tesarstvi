@@ -1,8 +1,10 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import type { MenuId } from './config'
+import { useTranslations } from 'next-intl'
+import { MENU, type MenuId } from './config'
 import { SceneManager } from './SceneManager'
+import type { MenuLabelText } from './MenuOverlay'
 
 /* -------------------------------------------------------------------------- */
 /*  House3DScene — React mount pro vanilla Three.js scénu                       */
@@ -31,12 +33,25 @@ export function House3DScene({
   playIntro,
   onIntroDone,
 }: House3DSceneProps) {
+  const t = useTranslations()
+  const labels: Record<MenuId, MenuLabelText> = Object.fromEntries(
+    MENU.map((item) => [
+      item.id,
+      {
+        service: t(`services.${item.serviceSlug}.title`),
+        element: t(`house3dMenu.${item.id}`),
+      },
+    ])
+  ) as Record<MenuId, MenuLabelText>
+
   const containerRef = useRef<HTMLDivElement>(null)
   // drž poslední callbacky bez restartu scény
   const cbRef = useRef(onMenuSelect)
   cbRef.current = onMenuSelect
   const introDoneRef = useRef(onIntroDone)
   introDoneRef.current = onIntroDone
+  const labelsRef = useRef(labels)
+  labelsRef.current = labels
 
   useEffect(() => {
     const container = containerRef.current
@@ -44,11 +59,13 @@ export function House3DScene({
 
     const manager = new SceneManager(container, {
       onMenuSelect: (id) => cbRef.current?.(id),
+      labels: labelsRef.current,
       transparent,
       playIntro,
       onIntroDone: () => introDoneRef.current?.(),
     })
     return () => manager.dispose()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [transparent, playIntro])
 
   return (

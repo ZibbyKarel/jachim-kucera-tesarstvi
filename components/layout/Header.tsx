@@ -4,11 +4,17 @@ import { useEffect, useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { Link, usePathname } from '@/i18n/routing'
 import { navLinks } from '@/lib/constants'
+import type { NavLink } from '@/lib/types'
 import { Logo } from './Logo'
 import { LanguageSwitcher } from './LanguageSwitcher'
 
+function navLabel(t: (key: string) => string, source: NavLink['textSource']) {
+  return source.ns === 'service' ? t(`services.${source.slug}.title`) : t(`nav.${source.key}`)
+}
+
 export function Header() {
   const t = useTranslations('common')
+  const tFull = useTranslations()
   const pathname = usePathname()
   const isHome = pathname === '/'
   const [pastHero, setPastHero] = useState(false)
@@ -60,7 +66,7 @@ export function Header() {
         <Logo light={menuOpen} />
 
         <nav
-          aria-label="Hlavní navigace"
+          aria-label={t('mainNavAria')}
           className={`hidden items-center gap-8 transition-opacity duration-500 lg:flex ${
             showNav ? 'opacity-100' : 'pointer-events-none opacity-0'
           }`}
@@ -77,7 +83,7 @@ export function Header() {
                   active ? 'text-wood-amber' : 'text-cream/80 hover:text-cream'
                 }`}
               >
-                {link.label}
+                {navLabel(tFull, link.textSource)}
               </Link>
             )
           })}
@@ -127,7 +133,7 @@ export function Header() {
         }`}
       >
         <nav
-          aria-label="Mobilní navigace"
+          aria-label={t('mobileNavAria')}
           className="flex flex-1 flex-col items-center justify-center gap-4 px-8 text-center"
         >
           {navLinks.map((link) => (
@@ -137,7 +143,7 @@ export function Header() {
               tabIndex={menuOpen ? undefined : -1}
               className="font-display text-4xl italic text-wood-medium transition-colors duration-300 hover:text-wood-amber"
             >
-              {link.label}
+              {navLabel(tFull, link.textSource)}
             </Link>
           ))}
         </nav>

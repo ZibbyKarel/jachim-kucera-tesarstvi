@@ -1,10 +1,18 @@
 import type { Metadata } from 'next'
-import { setRequestLocale } from 'next-intl/server'
+import { setRequestLocale, getTranslations } from 'next-intl/server'
 import { House3DPreview } from './House3DPreview'
 
-export const metadata: Metadata = {
-  title: '3D rozcestník — náhled',
-  robots: { index: false, follow: false },
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'seo.nahled3d' })
+  return {
+    title: t('title'),
+    robots: { index: false, follow: false },
+  }
 }
 
 export default async function House3DPreviewPage({

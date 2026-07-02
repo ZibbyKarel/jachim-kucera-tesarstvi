@@ -1,20 +1,27 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { setRequestLocale } from 'next-intl/server'
+import { setRequestLocale, getTranslations } from 'next-intl/server'
 import { getService } from '@/lib/constants'
 import { ServicePageTemplate } from '@/components/sections/ServicePageTemplate'
 
-const service = getService('klempirstvi')!
+const SLUG = 'klempirstvi'
 
-export const metadata: Metadata = {
-  title: service.seo.title,
-  description: service.seo.description,
-  alternates: { canonical: '/sluzby/klempirstvi' },
-  openGraph: {
-    title: service.seo.title,
-    description: service.seo.description,
-    images: [{ url: service.heroImage }],
-  },
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: `services.${SLUG}` })
+  const service = getService(SLUG)!
+  const title = t('seoTitle')
+  const description = t('seoDescription')
+  return {
+    title,
+    description,
+    alternates: { canonical: `/sluzby/${SLUG}` },
+    openGraph: { title, description, images: [{ url: service.heroImage }] },
+  }
 }
 
 export default async function Page({
@@ -24,6 +31,7 @@ export default async function Page({
 }) {
   const { locale } = await params
   setRequestLocale(locale)
+  const service = getService(SLUG)
   if (!service) notFound()
   return <ServicePageTemplate service={service} />
 }

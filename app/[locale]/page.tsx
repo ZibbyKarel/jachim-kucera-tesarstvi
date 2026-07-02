@@ -6,7 +6,16 @@ import { ServicesScroll } from '@/components/sections/ServicesScroll'
 import { StackCover } from '@/components/sections/StackCover'
 import { Link } from '@/i18n/routing'
 import { houseLabels } from '@/lib/constants'
-import { setRequestLocale } from 'next-intl/server'
+import type { HouseLabel, NavLink } from '@/lib/types'
+import { setRequestLocale, getTranslations } from 'next-intl/server'
+
+function labelText(t: (key: string) => string, source: NavLink['textSource']) {
+  return source.ns === 'service' ? t(`services.${source.slug}.title`) : t(`nav.${source.key}`)
+}
+
+function labelSubtext(t: (key: string) => string, label: HouseLabel) {
+  return t(`houseLabels.${label.key}`)
+}
 
 export default async function HomePage({
   params,
@@ -15,6 +24,7 @@ export default async function HomePage({
 }) {
   const { locale } = await params
   setRequestLocale(locale)
+  const t = await getTranslations()
 
   return (
     <>
@@ -22,18 +32,18 @@ export default async function HomePage({
           z-0: papírový panel na konci dráhy odplyne a navazující sekce (z-10)
           ho plynule překryje („je tu víc"). */}
       <section
-        aria-label="Rozcestník — interaktivní dům"
+        aria-label={t('home.heroAria')}
         className="relative z-0 bg-wood-dark"
       >
         <HeroScroll />
 
         {/* Přístupná / crawlovatelná navigace (vždy v SSR HTML, vizuálně skrytá). */}
-        <nav aria-label="Rozcestník — části domu" className="sr-only">
+        <nav aria-label={t('common.houseNavAria')} className="sr-only">
           <ul>
             {houseLabels.map((label) => (
               <li key={label.id}>
                 <Link href={label.href}>
-                  {label.text} — {label.subtext}
+                  {labelText(t, label.textSource)} — {labelSubtext(t, label)}
                 </Link>
               </li>
             ))}

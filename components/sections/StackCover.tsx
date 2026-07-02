@@ -37,46 +37,54 @@ export function StackCover({
   pin = true,
   className = '',
 }: StackCoverProps) {
-  const wrapRef = useRef<HTMLDivElement>(null)
+  // VNĚJŠÍ obal drží React (přímý potomek <main>) — nikdy se nepřerodičuje.
+  // VNITŘNÍ div je to, co GSAP pinne a obalí do .pin-spaceru. Díky tomu React při
+  // navigaci odebírá jen vnější obal jedním removeChildem a přerodičení pinu uvnitř
+  // ho nezajímá (jinak: „removeChild — node is not a child of this node").
+  const outerRef = useRef<HTMLDivElement>(null)
+  const pinRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const wrap = wrapRef.current
-    if (!wrap) return
+    const outer = outerRef.current
+    const pinned = pinRef.current
+    if (!outer || !pinned) return
     if (prefersReducedMotion()) return // klidový režim: prostý tok, žádné překrytí
 
     const apply = () => {
       // 100vh v px (clientHeight = CSS vh, bez scrollbaru) → climb i pin sedí na sebe.
       const vh = document.documentElement.clientHeight
-      wrap.style.marginTop = climb ? `-${vh}px` : ''
+      outer.style.marginTop = climb ? `-${vh}px` : ''
     }
     apply()
 
     const ctx = gsap.context(() => {
       if (pin) {
         ScrollTrigger.create({
-          trigger: wrap,
+          trigger: outer,
           start: 'bottom bottom',
           end: () => '+=' + document.documentElement.clientHeight,
-          pin: wrap,
+          pin: pinned,
           pinSpacing: true,
           anticipatePin: 1,
           invalidateOnRefresh: true,
         })
       }
-    }, wrapRef)
+    }, outerRef)
 
     const onResize = () => apply()
     window.addEventListener('resize', onResize)
     return () => {
       window.removeEventListener('resize', onResize)
       ctx.revert()
-      wrap.style.marginTop = ''
+      outer.style.marginTop = ''
     }
   }, [climb, pin, z])
 
   return (
-    <div ref={wrapRef} className={`relative ${className}`} style={{ zIndex: z }}>
-      {children}
+    <div ref={outerRef} className="relative" style={{ zIndex: z }}>
+      <div ref={pinRef} className={className}>
+        {children}
+      </div>
     </div>
   )
 }

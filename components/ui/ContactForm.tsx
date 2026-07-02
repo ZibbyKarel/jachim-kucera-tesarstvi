@@ -2,9 +2,9 @@
 
 import { useId, useRef, useState } from 'react'
 import { useTranslations } from 'next-intl'
-import { SITE, services } from '@/lib/constants'
+import { SITE } from '@/lib/constants'
 
-type FieldErrors = Partial<Record<'name' | 'phone' | 'service', string>>
+type FieldErrors = Partial<Record<'name' | 'phone' | 'message', string>>
 
 // Volné CZ/SK telefonní formáty: +420 777 123 456, 777123456, 00420…
 const PHONE_RE = /^(\+|00)?\d[\d\s/-]{7,15}$/
@@ -17,7 +17,6 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
   const [values, setValues] = useState({
     name: '',
     phone: '',
-    service: '',
     message: '',
     website: '', // honeypot
   })
@@ -35,7 +34,7 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
       if (!value.trim()) return t('errors.phoneRequired')
       if (!PHONE_RE.test(value.trim())) return t('errors.phoneInvalid')
     }
-    if (name === 'service' && !value) return t('errors.serviceRequired')
+    if (name === 'message' && !value.trim()) return t('errors.messageRequired')
     return ''
   }
 
@@ -56,10 +55,10 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
     const next: FieldErrors = {
       name: validateField('name', values.name) || undefined,
       phone: validateField('phone', values.phone) || undefined,
-      service: validateField('service', values.service) || undefined,
+      message: validateField('message', values.message) || undefined,
     }
     setErrors(next)
-    if (next.name || next.phone || next.service) {
+    if (next.name || next.phone || next.message) {
       const firstInvalid = formRef.current?.querySelector<HTMLElement>(
         '[aria-invalid="true"]'
       )
@@ -80,7 +79,7 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
         throw new Error(data?.error || 'send_failed')
       }
       setStatus('success')
-      setValues({ name: '', phone: '', service: '', message: '', website: '' })
+      setValues({ name: '', phone: '', message: '', website: '' })
     } catch {
       setStatus('error')
       setServerError(t('errors.generic', { phone: SITE.phone }))
@@ -116,7 +115,7 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
           onClick={() => setStatus('idle')}
           className="font-body text-xs uppercase tracking-widest text-wood-amber hover:text-wood-warm"
         >
-          Odeslat další poptávku
+          {t('submitAnother')}
         </button>
       </div>
     )
@@ -160,7 +159,7 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
             aria-invalid={errors.name ? 'true' : undefined}
             aria-describedby={errors.name ? fid('name-err') : undefined}
             className={inputClass(!!errors.name)}
-            placeholder="Jan Novák"
+            placeholder={t('namePlaceholder')}
           />
           {errors.name && (
             <p id={fid('name-err')} className="mt-1 text-sm text-red-700">
@@ -200,44 +199,10 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
 
       <div>
         <label
-          htmlFor={fid('service')}
-          className="mb-1 block font-body text-xs uppercase tracking-widest text-cream/60"
-        >
-          {t('service')} *
-        </label>
-        <select
-          id={fid('service')}
-          name="service"
-          value={values.service}
-          onChange={(e) => onChange('service', e.target.value)}
-          onBlur={() => onBlur('service')}
-          aria-invalid={errors.service ? 'true' : undefined}
-          aria-describedby={errors.service ? fid('service-err') : undefined}
-          className={`${inputClass(!!errors.service)} cursor-pointer [&>option]:bg-wood-dark`}
-        >
-          <option value="" disabled>
-            {t('selectService')}
-          </option>
-          {services.map((s) => (
-            <option key={s.slug} value={s.title}>
-              {s.title}
-            </option>
-          ))}
-          <option value="Jiné">{t('serviceOther')}</option>
-        </select>
-        {errors.service && (
-          <p id={fid('service-err')} className="mt-1 text-sm text-red-700">
-            {errors.service}
-          </p>
-        )}
-      </div>
-
-      <div>
-        <label
           htmlFor={fid('message')}
           className="mb-1 block font-body text-xs uppercase tracking-widest text-cream/60"
         >
-          {t('messageOptional')}
+          {t('message')} *
         </label>
         <textarea
           id={fid('message')}
@@ -245,9 +210,17 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
           rows={compact ? 3 : 4}
           value={values.message}
           onChange={(e) => onChange('message', e.target.value)}
-          className={`${inputClass()} resize-none`}
-          placeholder="Co byste potřebovali? Napište nám pár slov o střeše…"
+          onBlur={() => onBlur('message')}
+          aria-invalid={errors.message ? 'true' : undefined}
+          aria-describedby={errors.message ? fid('message-err') : undefined}
+          className={`${inputClass(!!errors.message)} resize-none`}
+          placeholder={t('messagePlaceholder')}
         />
+        {errors.message && (
+          <p id={fid('message-err')} className="mt-1 text-sm text-red-700">
+            {errors.message}
+          </p>
+        )}
       </div>
 
       {serverError && (
