@@ -192,8 +192,11 @@ export class MenuOverlay {
 .h3d-dot{fill:${COLORS.inkSoft};transition:fill .3s ease,r .3s ease;}
 .h3d-dot.is-active{fill:${COLORS.accent};r:4;}
 .h3d-label{position:absolute;pointer-events:auto;background:none;border:0;cursor:pointer;display:flex;flex-direction:column;gap:.15rem;padding:.35rem .5rem;line-height:1;transition:transform .35s cubic-bezier(.22,1,.36,1),color .3s ease;color:${COLORS.ink};}
-.h3d-label.h3d-left{left:3%;align-items:flex-start;text-align:left;transform:translateX(0);}
-.h3d-label.h3d-right{right:3%;align-items:flex-end;text-align:right;transform:translateX(0);}
+/* left/right: 3 % od okraje na běžných šířkách; na velkých monitorech by ale
+   3 % ujíždělo od domu (ten se šířkou neroztahuje, drží se výšky viewportu),
+   proto od jisté šířky zamrzne na pevné vzdálenosti od středu. */
+.h3d-label.h3d-left{left:max(3%,calc(50% - 1180px));align-items:flex-start;text-align:left;transform:translateX(0);}
+.h3d-label.h3d-right{right:max(3%,calc(50% - 1180px));align-items:flex-end;text-align:right;transform:translateX(0);}
 .h3d-label:hover,.h3d-label.is-active{color:${COLORS.accent};}
 .h3d-label.h3d-left:hover,.h3d-label.h3d-left.is-active{transform:translateX(6px);}
 .h3d-label.h3d-right:hover,.h3d-label.h3d-right.is-active{transform:translateX(-6px);}

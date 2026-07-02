@@ -347,9 +347,11 @@ export class HouseModel {
       to: number,
       fixed: number,
       axis: 'x' | 'z',
-      skip?: [number, number]
+      skip?: [number, number],
+      stepOverride?: number
     ) => {
-      for (let p = from; p <= to + 1e-6; p += pitch) {
+      const step = stepOverride ?? pitch
+      for (let p = from; p <= to + 1e-6; p += step) {
         if (skip && p > skip[0] - 1e-6 && p < skip[1] + 1e-6) continue
         axis === 'x' ? picket(p, fixed, 'x') : picket(fixed, p, 'z')
       }
@@ -366,10 +368,16 @@ export class HouseModel {
       }
     }
 
+    // Pravá strana je z výchozí kamery skoro čelem k pohledu (jde téměř podél
+    // paprsku kamery) → planěk se opticky nakupí mnohem hustěji než na levé
+    // straně, ač je rozteč stejná. Dáváme jí širší rozteč, aby po zvýraznění
+    // (Tesařství) obě strany vypadaly opticky stejně husté.
+    const pitchRight = pitch * 1.9
+
     run(xMin, xMax, zMax, 'x', gate) // přední (s brankou)
     run(xMin, xMax, zMin, 'x') // zadní
     run(zMin, zMax, xMin, 'z') // levá
-    run(zMin, zMax, xMax, 'z') // pravá
+    run(zMin, zMax, xMax, 'z', undefined, pitchRight) // pravá
 
     rail(xMin, zMax, gate[0], zMax) // přední vlevo od branky
     rail(gate[1], zMax, xMax, zMax) // přední vpravo od branky
