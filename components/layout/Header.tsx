@@ -63,7 +63,16 @@ export function Header() {
       }`}
     >
       <div className="container-content flex items-center justify-between py-4">
-        <Logo light={menuOpen} />
+        {/* Logo je na homepage nad Hero redundantní (nese ho i dům) — objeví se
+            zároveň s horní navigací (po Hero / na podstránkách), menší. */}
+        <div
+          className={`transition-opacity duration-500 ${
+            showNav ? 'opacity-100' : 'pointer-events-none opacity-0'
+          }`}
+          aria-hidden={!showNav}
+        >
+          <Logo size={56} tabIndex={showNav ? undefined : -1} />
+        </div>
 
         <nav
           aria-label={t('mainNavAria')}

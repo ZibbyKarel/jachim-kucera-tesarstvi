@@ -195,15 +195,15 @@ export class MenuOverlay {
 /* left/right: 3 % od okraje na běžných šířkách; na velkých monitorech by ale
    3 % ujíždělo od domu (ten se šířkou neroztahuje, drží se výšky viewportu),
    proto od jisté šířky zamrzne na pevné vzdálenosti od středu. */
-.h3d-label.h3d-left{left:max(3%,calc(50% - 1180px));align-items:flex-start;text-align:left;transform:translateX(0);}
-.h3d-label.h3d-right{right:max(3%,calc(50% - 1180px));align-items:flex-end;text-align:right;transform:translateX(0);}
+.h3d-label.h3d-left{left:max(6.5%,calc(50% - 1080px));align-items:flex-start;text-align:left;transform:translateX(0);}
+.h3d-label.h3d-right{right:max(6.5%,calc(50% - 1080px));align-items:flex-end;text-align:right;transform:translateX(0);}
 .h3d-label:hover,.h3d-label.is-active{color:${COLORS.accent};}
 .h3d-label.h3d-left:hover,.h3d-label.h3d-left.is-active{transform:translateX(6px);}
 .h3d-label.h3d-right:hover,.h3d-label.h3d-right.is-active{transform:translateX(-6px);}
-.h3d-service{font-family:var(--font-display,Georgia,serif);font-style:italic;font-weight:500;font-size:1.8rem;letter-spacing:.01em;}
-.h3d-element{font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.2em;opacity:.7;}
+.h3d-service{font-family:var(--font-display,Georgia,serif);font-style:italic;font-weight:500;font-size:2.1rem;letter-spacing:.01em;}
+.h3d-element{font-size:.76rem;font-weight:600;text-transform:uppercase;letter-spacing:.2em;opacity:.7;}
 .h3d-label:focus-visible{outline:2px solid ${COLORS.accent};outline-offset:3px;border-radius:3px;}
-@media (max-width:1024px){.h3d-service{font-size:1.4rem;}.h3d-element{font-size:.6rem;}}
+@media (max-width:1024px){.h3d-service{font-size:1.6rem;}.h3d-element{font-size:.66rem;}}
 /* Mobil: dům vyplní šířku → labely jako řádek „chipů" pod domem, spojnice z horního
    středu chipu nahoru ke kotvě (viz layout()). */
 @media (max-width:768px){

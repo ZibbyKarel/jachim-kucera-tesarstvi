@@ -13,17 +13,20 @@ export function Logo({
   /** Ponecháno kvůli zpětné kompatibilitě volání (obrázek se nepřebarvuje). */
   light: _light = false,
   size = 88,
+  tabIndex,
 }: {
   className?: string;
   light?: boolean;
   /** Hrana odznaku v px. */
   size?: number;
+  tabIndex?: number;
 }) {
   const t = useTranslations("nav");
   return (
     <Link
       href="/"
       aria-label={`${SITE.name} — ${t("home")}`}
+      tabIndex={tabIndex}
       className={`group inline-flex items-center ${className}`}
     >
       <Image

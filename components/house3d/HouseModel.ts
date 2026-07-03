@@ -78,7 +78,63 @@ export class HouseModel {
       geo.translate(0, midY, (sign * eaveZ) / 2)
       el.addSolid(geo, { edgeAngle: 20 })
     }
+
+    // Firemní značka „namalovaná" na přední (k divákovi obrácené) rovině střechy.
+    // Nátěr leží PŘESNĚ v rovině slaby: vlastní skupina zdědí sklon i posun slaby
+    // (rotateX(angle) + posun na střed přední roviny), texturovaný list se pak už
+    // jen položí naplocho (rotateX(-90°)) těsně nad povrch. Díky tomu značka drží
+    // sklon i orientaci střechy a čte se vzhůru ke hřebeni.
+    this.addRoofDecal(el, angle, midY, eaveZ, slabW, slopeLen, slab)
+
     this.register(el)
+  }
+
+  private addRoofDecal(
+    el: ArchElement,
+    angle: number,
+    midY: number,
+    eaveZ: number,
+    slabW: number,
+    slopeLen: number,
+    slab: number
+  ): void {
+    const tex = new THREE.TextureLoader().load('/logo_2.png')
+    tex.colorSpace = THREE.SRGBColorSpace
+    tex.anisotropy = 8 // čitelnost pod ostrým úhlem pohledu na střechu
+
+    const LOGO_AR = 867 / 463 // poměr stran zdrojového PNG
+    const planeW = slabW * 0.72 // ~72 % šířky střešní roviny (vzduch po stranách)
+    const planeH = planeW / LOGO_AR
+    // pojistka, ať se výška vejde do délky slaby (od okapu ke hřebeni)
+    const h = Math.min(planeH, slopeLen * 0.82)
+    const w = h * LOGO_AR
+
+    const mat = new THREE.MeshStandardMaterial({
+      map: tex,
+      transparent: true,
+      opacity: 1,
+      roughness: 1,
+      metalness: 0,
+      depthWrite: false, // nezapisuje hloubku → žádné řazení proti slabě
+      polygonOffset: true, // a ještě drobný offset, ať vždy vyhraje nad povrchem
+      polygonOffsetFactor: -2,
+      polygonOffsetUnits: -2,
+    })
+
+    const mesh = new THREE.Mesh(new THREE.PlaneGeometry(w, h), mat)
+    mesh.rotation.x = -Math.PI / 2 // list položený naplocho (normála vzhůru)
+    mesh.position.y = slab / 2 + 0.015 // těsně nad horní líc slaby
+    mesh.renderOrder = 2
+    mesh.receiveShadow = true // stín komínu/stromu dopadne i na malbu
+
+    // Skupina = přesná transformace přední slaby (sklon + posun na střed roviny).
+    const paint = new THREE.Group()
+    paint.rotation.x = angle
+    paint.position.set(0, midY, eaveZ / 2)
+    paint.add(mesh)
+
+    // prvek střechy drží celou obalovou skupinu (intro/idle/klik jdou s ním)
+    el.addDecal(mesh, paint)
   }
 
   /* ---- Okapy a svody ------------------------------------------------------ */

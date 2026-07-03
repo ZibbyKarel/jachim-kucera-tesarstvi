@@ -32,6 +32,11 @@ export class ArchElement {
   private faceMats: THREE.MeshStandardMaterial[] = []
   private lineMats: LineMaterial[] = []
   private lineBaseW: number[] = []
+  // „Nátěry" na plochách (např. logo namalované na střeše): jen se s prvkem
+  // objeví v intru a zmizí v úklidu — highlight je nepřebarvuje a zůstávají
+  // průhledné (nesou vlastní alfa masku), takže je revealComplete neztuhne.
+  private decalMats: THREE.Material[] = []
+  private decalBaseOpacity: number[] = []
 
   /** highlight: 0 = klid, 1 = aktivní. */
   private hl = 0
@@ -107,6 +112,23 @@ export class ArchElement {
     return this
   }
 
+  /** Přidá „nátěr" na plochu prvku — texturovaný mesh, který se v intru objeví
+      spolu s prvkem, ale nikdy se nepřebarvuje ani neztuhne (drží si alfa masku).
+      Klik na něj vede na stejnou stránku jako klik na samotný prvek. */
+  addDecal(
+    mesh: THREE.Mesh<THREE.BufferGeometry, THREE.Material>,
+    mount: THREE.Object3D = mesh
+  ): this {
+    const mat = mesh.material
+    mat.transparent = true
+    if (this.menuId) mesh.userData.menuId = this.menuId
+    this.decalBaseOpacity.push(mat.opacity)
+    mat.opacity = 0
+    this.decalMats.push(mat)
+    this.group.add(mount) // `mount` může být obalová skupina (např. sklon střechy)
+    return this
+  }
+
   /** Zaregistruje materiály fat-line pro update rozlišení (resize). */
   collectLineMaterials(out: LineMaterial[]): void {
     out.push(...this.lineMats)
@@ -122,6 +144,10 @@ export class ArchElement {
     const fp = Math.max(0, (p - 0.2) / 0.8) // výplň s drobným zpožděním
     for (const m of this.lineMats) m.opacity = lp
     for (const m of this.faceMats) m.opacity = fp
+    // nátěry dotahují za výplní (jako by se malba objevila na hotové ploše)
+    for (let i = 0; i < this.decalMats.length; i++) {
+      this.decalMats[i].opacity = this.decalBaseOpacity[i] * fp
+    }
   }
 
   /** Dokončí intro: plná krytí + zpět na opaque (ostré čáry, žádné řazení). */
@@ -135,6 +161,10 @@ export class ArchElement {
       m.opacity = 1
       m.transparent = false
       m.needsUpdate = true
+    }
+    // nátěry zůstávají transparentní (nesou alfa masku) — jen dorovnáme krytí
+    for (let i = 0; i < this.decalMats.length; i++) {
+      this.decalMats[i].opacity = this.decalBaseOpacity[i]
     }
   }
 
@@ -170,6 +200,11 @@ export class ArchElement {
     })
     this.faceMats.forEach((m) => m.dispose())
     this.lineMats.forEach((m) => m.dispose())
+    this.decalMats.forEach((m) => {
+      const map = (m as THREE.MeshStandardMaterial).map
+      map?.dispose()
+      m.dispose()
+    })
   }
 }
 
