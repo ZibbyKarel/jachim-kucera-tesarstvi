@@ -1,6 +1,6 @@
 import { useTranslations } from 'next-intl'
 import { Link } from '@/i18n/routing'
-import { SITE, navLinks } from '@/lib/constants'
+import { SITE, contacts, navLinks } from '@/lib/constants'
 import type { NavLink } from '@/lib/types'
 import { Logo } from './Logo'
 
@@ -42,14 +42,16 @@ export function Footer() {
         <div className="space-y-4">
           <h2 className="eyebrow">{t('nav.contact')}</h2>
           <ul className="space-y-2 font-body text-sm text-cream/70">
-            <li>
-              <a
-                href={`tel:${SITE.phoneHref}`}
-                className="link-underline transition-colors hover:text-cream"
-              >
-                {SITE.phone}
-              </a>
-            </li>
+            {contacts.map((contact) => (
+              <li key={contact.phoneHref}>
+                <a
+                  href={`tel:${contact.phoneHref}`}
+                  className="link-underline transition-colors hover:text-cream"
+                >
+                  {contact.name} — {contact.phone}
+                </a>
+              </li>
+            ))}
             <li>
               <a
                 href={`mailto:${SITE.email}`}
@@ -67,7 +69,12 @@ export function Footer() {
         <p>
           © {year} {SITE.name}. {t('common.allRightsReserved')}
         </p>
-        <p>{t('common.companyIdLabel')}</p>
+        <p>
+          {contacts
+            .map((contact) => `${contact.name} ${t('common.icoLabel')} ${contact.ic}`)
+            .join(' · ')}{' '}
+          · {t('common.region')}
+        </p>
       </div>
     </footer>
   )
