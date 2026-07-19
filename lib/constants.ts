@@ -4,10 +4,29 @@ export const SITE = {
   name: 'Jáchim & Kučera — Tesařství',
   shortName: 'Jáchim & Kučera',
   url: 'https://jachim-kucera-tesarstvi.cz',
-  phone: '+420 777 123 456',
-  phoneHref: '+420777123456',
+  phone: '+420 608 212 410',
+  phoneHref: '+420608212410',
   email: 'info@jachim-kucera-tesarstvi.cz',
 } as const
+
+/* -------------------------------------------------------------------------- */
+/*  Kontaktní osoby — dva společníci, každý se svým IČ a telefonem            */
+/* -------------------------------------------------------------------------- */
+
+export const contacts = [
+  {
+    name: 'Petr Jáchim',
+    ic: '47748303',
+    phone: '+420 608 212 410',
+    phoneHref: '+420608212410',
+  },
+  {
+    name: 'Milan Kučera',
+    ic: '29640113',
+    phone: '+420 725 443 271',
+    phoneHref: '+420725443271',
+  },
+] as const
 
 /* -------------------------------------------------------------------------- */
 /*  Služby — texty žijí v messages/{locale}.json pod services.<slug>          */

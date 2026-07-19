@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { setRequestLocale, getTranslations } from 'next-intl/server'
-import { SITE } from '@/lib/constants'
+import { SITE, contacts } from '@/lib/constants'
 import { ContactForm } from '@/components/ui/ContactForm'
 
 export async function generateMetadata({
@@ -49,15 +49,22 @@ export default async function KontaktPage({
         <aside className="order-1 space-y-10 md:order-2">
           <div>
             <h2 className="eyebrow mb-4">{t('infoHeading')}</h2>
-            <a
-              href={`tel:${SITE.phoneHref}`}
-              className="block font-display text-4xl italic text-wood-amber transition-colors hover:text-wood-warm"
-            >
-              {SITE.phone}
-            </a>
+            <div className="space-y-5">
+              {contacts.map((contact) => (
+                <div key={contact.phoneHref}>
+                  <p className="font-body text-sm text-cream/60">{contact.name}</p>
+                  <a
+                    href={`tel:${contact.phoneHref}`}
+                    className="block font-display text-3xl italic text-wood-amber transition-colors hover:text-wood-warm md:text-4xl"
+                  >
+                    {contact.phone}
+                  </a>
+                </div>
+              ))}
+            </div>
             <a
               href={`mailto:${SITE.email}`}
-              className="link-underline mt-3 inline-block font-body text-base text-cream/80 hover:text-cream"
+              className="link-underline mt-5 inline-block font-body text-base text-cream/80 hover:text-cream"
             >
               {SITE.email}
             </a>
