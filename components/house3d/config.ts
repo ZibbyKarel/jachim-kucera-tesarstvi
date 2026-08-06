@@ -5,6 +5,20 @@
 /*  z těchto konstant, takže scéna jde ladit z jednoho místa.                  */
 /* -------------------------------------------------------------------------- */
 
+import { PALETTE, HOUSE3D_FACE } from '@/lib/palette'
+
+/** Hex string ('#rrggbb') → Three.js formát barvy (číslo 0xrrggbb). */
+const toThreeColor = (hex: string): number => parseInt(hex.slice(1), 16)
+
+/** Hex string ('#rrggbb') → 'rgba(r, g, b, alpha)' string pro CSS overlay (SVG/DOM). */
+const toRgba = (hex: string, alpha: number): string => {
+  const h = hex.slice(1)
+  const r = parseInt(h.slice(0, 2), 16)
+  const g = parseInt(h.slice(2, 4), 16)
+  const b = parseInt(h.slice(4, 6), 16)
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`
+}
+
 /** Architektonický prvek = jedna položka menu napojená na část domu. */
 export type MenuId =
   | 'roof'
@@ -26,25 +40,28 @@ export interface MenuItem {
 }
 
 /** "Materiály řemesla" paleta - steel/zinek, břidlice, patina mědi.
- *  emissiveHover/accent = #486c5a, WCAG-AA doladěný `patina` token z
- *  tailwind.config.ts (Task 1) - tmavší než výchozí hex zadání #5b8a72. */
+ *  emissiveHover/accent = patina token z lib/palette.ts (jediný zdroj pravdy,
+ *  viz D-003), WCAG-AA doladěný - tmavší než původní (méně kontrastní) hex
+ *  z designového zadání. */
 export const COLORS = {
-  background: 0xeef0ef, // paper
-  line: 0x2a3136, // slate-soft - obrysové linky
-  lineHover: 0x1c2226, // slate - tmavší při hoveru pro kontrast
-  face: 0xdfe2e1, // paper-dim/steel mix - plochy stěn/střechy
-  faceHover: 0xeef0ef, // paper - zesvětlá při hoveru
-  emissiveHover: 0x486c5a, // patina - jediný akcent, hover/aktivní stav
-  ground: 0xeef0ef, // paper
+  background: toThreeColor(PALETTE.paper.DEFAULT), // paper
+  line: toThreeColor(PALETTE.slate.soft), // slate-soft - obrysové linky
+  lineHover: toThreeColor(PALETTE.slate.DEFAULT), // slate - tmavší při hoveru pro kontrast
+  face: toThreeColor(HOUSE3D_FACE), // paper-dim/steel mix - plochy stěn/střechy
+  faceHover: toThreeColor(PALETTE.paper.DEFAULT), // paper - zesvětlá při hoveru
+  emissiveHover: toThreeColor(PALETTE.patina.DEFAULT), // patina - jediný akcent, hover/aktivní stav
+  ground: toThreeColor(PALETTE.paper.DEFAULT), // paper
   // Neutrální bílá pro Three.js světla (Hemisphere/Directional/Ambient) - drží
   // je mimo paletu domu, ať zůstanou skutečně bílá i po výměně palety za
   // "dřevěnou". Beze změny při ladění palety, proto zůstává samostatně od
   // face/background (i když má stejnou logiku "žádný raw hex mimo config.ts").
+  // Záměrně NENÍ v lib/palette.ts - je to jediná barva, která se výměnou
+  // palety nesmí změnit.
   white: 0xffffff,
   /* DOM/overlay (CSS) */
-  ink: '#1c2226', // slate
-  inkSoft: 'rgba(28, 34, 38, 0.55)',
-  accent: '#486c5a', // patina - jediný akcent
+  ink: PALETTE.slate.DEFAULT, // slate
+  inkSoft: toRgba(PALETTE.slate.DEFAULT, 0.55),
+  accent: PALETTE.patina.DEFAULT, // patina - jediný akcent
 } as const
 
 export const LINE = {

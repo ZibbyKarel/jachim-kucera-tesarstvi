@@ -183,7 +183,7 @@ export class MenuOverlay {
 
   private injectStyles(): void {
     const css = `
-.h3d-overlay{position:absolute;inset:0;pointer-events:none;font-family:var(--font-body,system-ui,sans-serif);z-index:5;opacity:0;transition:opacity .7s ease;}
+.h3d-overlay{position:absolute;inset:0;pointer-events:none;font-family:var(--font-sans,system-ui,sans-serif);z-index:5;opacity:0;transition:opacity .7s ease;}
 .h3d-overlay.is-ready{opacity:1;}
 .h3d-svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;}
 .h3d-labels{position:absolute;inset:0;}
