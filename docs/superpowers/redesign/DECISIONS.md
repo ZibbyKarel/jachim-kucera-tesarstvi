@@ -396,3 +396,28 @@ uživatelovy výhrady z [[D-032]]: i po zviditelnění loga bylo „jméno firmy
 nepřítomné. `Logo` má nově prop `wordmark`: odznak + `SITE.shortName` vysázený
 v display písmu vedle něj. Odznak dostal `alt=""`, jméno nese `aria-label` odkazu
 a viditelný text — jinak by ho odečítač hlásil dvakrát.
+
+## D-039 — Dotykový cíl: 44px na ovládací prvky, 24px stačí na textové odkazy
+**Datum:** 2026-08-06 · **Rozhodl:** Claude (opus), měření na 281px viewportu
+Spec psal plošně „cíle ≥ 44px". Měření ukázalo, že to nesplňují textová CTA
+(„Nezávazně poptat →", „Všechny realizace →", „Náš příběh →") — mají 24px, protože
+je to řádkový box textu, ne tlačítko.
+**Nedoplácávám je.** WCAG 2.2 SC 2.5.8 (AA) požaduje 24×24 CSS px a tyhle odkazy ho
+splňují přesně. 44×44 je až SC 2.5.5 (AAA). Odsazení, které by je na 44px natáhlo, by
+z textového odkazu udělalo skryté tlačítko a rozbilo by to vizuální jazyk, kde vyplněné
+tlačítko schválně nikde není ([[D-032]]).
+**Doplácal jsem jednu věc:** odkazy v mobilním fullscreen menu měly 40px. Na mobilu je
+to jediná navigace, tam se 44px vyplatí — přidáno `min-h-11` a vodorovné odsazení.
+**Pravidlo:** 44px vymáhej u ovládacích prvků (tlačítka, ikonová tlačítka, pole
+formuláře, přepínač jazyka, řádky rejstříku služeb). U textových odkazů stačí 24px.
+
+## D-040 — Chybové barvy formuláře zůstávají mimo paletu
+**Datum:** 2026-08-06 · **Rozhodl:** Claude (opus), na základě nálezu z auditu
+`ContactForm` používá `text-red-700` a `border-red-600` z výchozí Tailwind palety, ne
+z `lib/palette.ts`. Formálně je to porušení pravidla o jediném zdroji hex hodnot.
+**Nechávám to tak.** Chybový stav je sémantická barva, ne barva značky — kdyby se
+tahala z dřevěné palety, splynul by s akcentem `ember` (terakota), což je přesně ta
+barva, kterou web používá pro *pozitivní* akcenty a CTA. Uživatel by nerozeznal chybu
+od zvýraznění. Výměna palety za jinou ([[D-003]]) se téhle barvy nesmí dotknout, a to
+je argument pro to, aby v tom souboru nebyla.
+Kontrast ověřen: `text-red-700` na papíru 5.44:1, `border-red-600/85` 3.50:1. Obojí projde.
