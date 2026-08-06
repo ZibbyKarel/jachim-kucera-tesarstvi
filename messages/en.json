@@ -12,7 +12,7 @@
     "mainNavAria": "Main navigation",
     "mobileNavAria": "Mobile navigation",
     "footerNavAria": "Footer navigation",
-    "houseNavAria": "Site map — parts of the house",
+    "houseNavAria": "Site map: parts of the house",
     "mobileServicesNavAria": "Mobile services menu",
     "navigationHeading": "Navigation",
     "footerDescription": "Honest carpentry, roofing and tinsmith work in the Pilsen region. We build roofs as if they were our own.",
@@ -31,7 +31,7 @@
     "heroEyebrow": "Carpentry · Roofing · Tinsmithing",
     "heroTitle": "Honest craftsmanship",
     "heroCta": "Request a quote",
-    "heroAria": "Site map — interactive house",
+    "heroAria": "Site map: interactive house",
     "scrollCue": "Scroll down",
     "servicesHeading": "What we do",
     "servicesIntro": "From the truss to the last gutter. Four crafts under one roof.",
@@ -80,7 +80,7 @@
     "heroAlt": "Jáchim and Kučera in front of a roof under construction",
     "story": [
       "We're Jáchim and Kučera, and we've been working on roofs for over fifteen years. We started out as trained carpenters in the Pilsen region, and today we run our own crew you can rely on. We build every roof as if it were our own.",
-      "Over the years we added roofing and tinsmithing to our carpentry work, so we can hand a customer a finished roof from the truss to the last gutter — without them having to chase down three different companies and keep track of who's responsible for what. It's all under one roof, literally.",
+      "Over the years we added roofing and tinsmithing to our carpentry work, so we can hand a customer a finished roof from the truss to the last gutter, without them having to chase down three different companies and keep track of who's responsible for what. It's all under one roof, literally.",
       "We're not a big company, and we don't want to be. We take on only as much work as we can do properly. We show up on site ourselves, not anonymous subcontractors, and we stand behind our work for years afterwards. When we promise something, it holds."
     ],
     "stats": [
@@ -107,7 +107,7 @@
       {
         "year": "2003",
         "title": "Trained as carpenters",
-        "description": "We start out as trained carpenters under established masters in the Pilsen region. We learn the craft from the ground up — from hand-finishing timber to reading a truss's structural loads."
+        "description": "We start out as trained carpenters under established masters in the Pilsen region. We learn the craft from the ground up: from hand-finishing timber to reading a truss's structural loads."
       },
       {
         "year": "2008",
@@ -148,15 +148,15 @@
   },
   "realizacePage": {
     "heroTitle": "What we've built",
-    "heroIntro": "A selection of what we've worked on in recent years. From roof trusses through complete roofs to tinsmith details — all across the Pilsen region and beyond."
+    "heroIntro": "A selection of what we've worked on in recent years. From roof trusses through complete roofs to tinsmith details, all across the Pilsen region and beyond."
   },
   "nahled3d": {
-    "heading": "Jáchim & Kučera — 3D site map",
+    "heading": "Jáchim & Kučera: 3D site map",
     "hint": "Hover an element or label · click to select"
   },
   "notFound": {
     "title": "This roof isn't here",
-    "description": "We couldn't find the page you're looking for. Maybe the wind carried it off — please head back to the start.",
+    "description": "We couldn't find the page you're looking for. Maybe the wind carried it off. Please head back to the start.",
     "backHome": "Back home"
   },
   "seo": {
@@ -171,24 +171,24 @@
       "description": "Write or call. We'll arrange a free, no-obligation roof inspection in the Pilsen region. Carpentry, roofing and tinsmithing."
     },
     "onas": {
-      "title": "About Us — Carpenters from the Pilsen Region",
+      "title": "About Us: Carpenters from the Pilsen Region",
       "description": "We're Jáchim and Kučera. We've been doing carpentry, roofing and tinsmithing for over fifteen years. Honest craftsmanship in the Pilsen region."
     },
     "realizace": {
-      "title": "Projects — Our Roofs in the Pilsen Region",
+      "title": "Projects: Our Roofs in the Pilsen Region",
       "description": "Selected carpentry, roofing and tinsmith projects across the Pilsen region. Roof trusses, roofs, gutters and reconstructions."
     },
     "nahled3d": {
-      "title": "3D House Map — Preview"
+      "title": "3D House Map: Preview"
     }
   },
   "houseLabels": {
-    "chimney": "Chimney — what we've built",
+    "chimney": "Chimney: what we've built",
     "roof": "Roof",
     "truss": "Truss",
     "gutters": "Gutters and downspouts",
-    "windows": "Windows — who we are",
-    "door": "Entrance — reach out"
+    "windows": "Windows: who we are",
+    "door": "Entrance: reach out"
   },
   "house3dMenu": {
     "roof": "Roof",
@@ -199,16 +199,16 @@
     "tesarstvi": {
       "title": "Carpentry",
       "tagline": "Roof trusses built to last generations",
-      "shortDescription": "We build and reconstruct roof trusses, timber ceilings and pergolas. We design every joint to last decades — from hand-finished joinery to modern carpentry connectors.",
+      "shortDescription": "We build and reconstruct roof trusses, timber ceilings and pergolas. We design every joint to last decades: from hand-finished joinery to modern carpentry connectors.",
       "longDescription": [
         "Carpentry is the craft we started with, and it's still what holds us together today. We build new trusses for family homes and reconstruct historic structures that call for a feel for the original work alongside knowledge of today's standards. Before we lay the first beam, we walk through the project with you and design a solution that fits your house and your budget.",
-        "We choose timber with care — kiln-dried, certified lumber that won't warp or crack. We design joints to carry loads exactly where they should, so the structure can breathe. On reconstructions, we sensitively replace only what's genuinely damaged and preserve the rest.",
-        "We work with both modern carpentry connectors and traditional scarf joints. On exposed trusses and ceilings we pay close attention to detail — edges, chamfers and surface finish — because a ceiling like that stays in view, in the interior, for years.",
+        "We choose timber with care: kiln-dried, certified lumber that won't warp or crack. We design joints to carry loads exactly where they should, so the structure can breathe. On reconstructions, we sensitively replace only what's genuinely damaged and preserve the rest.",
+        "We work with both modern carpentry connectors and traditional scarf joints. On exposed trusses and ceilings we pay close attention to detail: edges, chamfers and surface finish, because a ceiling like that stays in view, in the interior, for years.",
         "We'll also build you a custom pergola, carport or shelter. From a simple terrace roof to a freestanding structure that holds up to snow and wind and ages beautifully."
       ],
       "workItems": [
         { "title": "Roof truss structures", "description": "New trusses and complete reconstructions. Purlin, collar-beam and more complex systems, matched to the roof shape and load." },
-        { "title": "Timber and beam ceilings", "description": "Exposed beam ceilings, boarding and soffits. Structure and aesthetics in one — a ceiling that decorates the interior." },
+        { "title": "Timber and beam ceilings", "description": "Exposed beam ceilings, boarding and soffits. Structure and aesthetics in one: a ceiling that decorates the interior." },
         { "title": "Pergolas, carports, shelters", "description": "Terrace roofs, car shelters and garden structures, custom-built. Robust construction with a clean finish." },
         { "title": "Sheathing and facade timber", "description": "Roof sheathing, tongue-and-groove soffits and timber facades. Ventilated systems with a long service life." }
       ],
@@ -220,7 +220,7 @@
         "Carport built from solid timber",
         "Detail of a carpentry joint in a roof truss"
       ],
-      "seoTitle": "Carpentry — Roof Trusses and Timber Work | Pilsen Region",
+      "seoTitle": "Carpentry: Roof Trusses and Timber Work | Pilsen Region",
       "seoDescription": "We build and reconstruct roof trusses, timber ceilings and pergolas in the Pilsen region. Over 15 years of experience, honest work, fair prices."
     },
     "pokryvacstvi": {
@@ -228,15 +228,15 @@
       "tagline": "A roof that will outlast you",
       "shortDescription": "We lay clay and concrete tiles, sheet metal and shingles. We handle waterproofing, vapor barriers and clean ridge and valley details.",
       "longDescription": [
-        "The roof protects the house more than anything else — and it's also what gets shortchanged most often. We lay roofing so it stays dry underneath even thirty years from now. We start with the right build-up: a safety waterproofing membrane, counter-battens, battens, and only then the roofing itself.",
-        "We work with everything today's roofs need — clay tiles, concrete roofing, standing-seam metal and traditional shingles. We'll advise what suits your roof pitch, location and house style, and tell you honestly what makes sense and what's an unnecessary luxury.",
-        "We put a strong emphasis on the details where roofs leak most often — valleys, hips, penetrations and chimney flashing. This is where the difference between rushed work and honest craft shows. We design vapor and breather membranes so the structure doesn't grow mould and the roof can breathe.",
+        "The roof protects the house more than anything else, and it's also what gets shortchanged most often. We lay roofing so it stays dry underneath even thirty years from now. We start with the right build-up: a safety waterproofing membrane, counter-battens, battens, and only then the roofing itself.",
+        "We work with everything today's roofs need: clay tiles, concrete roofing, standing-seam metal and traditional shingles. We'll advise what suits your roof pitch, location and house style, and tell you honestly what makes sense and what's an unnecessary luxury.",
+        "We put a strong emphasis on the details where roofs leak most often: valleys, hips, penetrations and chimney flashing. This is where the difference between rushed work and honest craft shows. We design vapor and breather membranes so the structure doesn't grow mould and the roof can breathe.",
         "On reconstructions, we first check the condition of the sheathing and battens and replace what's needed. We don't lay new roofing over rotten battens just to get the job done quickly."
       ],
       "workItems": [
         { "title": "Clay and concrete roofing", "description": "Classic interlocking tiles for pitched roofs. Precise laying, correct overlap and ridge ventilation." },
         { "title": "Beaver-tail tiles, shingles, sheet metal", "description": "Traditional beaver-tail tiles, timber and asphalt shingles, and standing-seam metal. Solutions for heritage buildings and modern homes alike." },
-        { "title": "Waterproofing and vapor barriers", "description": "The right roof build-up — safety waterproofing membrane, breather and vapor barrier foils without thermal bridges." },
+        { "title": "Waterproofing and vapor barriers", "description": "The right roof build-up: safety waterproofing membrane, breather and vapor barrier foils without thermal bridges." },
         { "title": "Ridges, hips, valleys", "description": "The details where roofs leak most often. We build them to hold water back even in extreme weather." }
       ],
       "galleryAlt": [
@@ -247,7 +247,7 @@
         "Ventilated roof ridge",
         "Reconstruction of a roof envelope"
       ],
-      "seoTitle": "Roofing — Roof Covering Installation | Pilsen Region",
+      "seoTitle": "Roofing: Roof Covering Installation | Pilsen Region",
       "seoDescription": "We lay clay and concrete roofing, sheet metal and shingles in the Pilsen region. Waterproofing, ridge and valley details. A roof that lasts."
     },
     "klempirstvi": {
@@ -256,7 +256,7 @@
       "shortDescription": "We fabricate and install gutter systems, flashing for chimneys, sills and cornices. We work with galvanized steel, titanium zinc and copper.",
       "longDescription": [
         "Tinsmithing is about the details you don't notice until they start causing trouble. We build them so they never do. Gutters, downspouts, flashing and edging are what complete the roof and protect the masonry and foundations from water.",
-        "We fabricate gutter systems from galvanized sheet, titanium zinc and copper — chosen to suit the house and to last as long as needed. We also offer titanium zinc and copper finishes that age beautifully and develop a patina. We size gutter falls and dimensions to the roof area, not by eye.",
+        "We fabricate gutter systems from galvanized sheet, titanium zinc and copper, chosen to suit the house and to last as long as needed. We also offer titanium zinc and copper finishes that age beautifully and develop a patina. We size gutter falls and dimensions to the roof area, not by eye.",
         "We fabricate flashing for chimneys, parapets, sills and cornices to measure, directly on site. We fold and seal joints so they stay watertight while still allowing the metal to expand and contract with temperature.",
         "We also handle the tinsmith details around roof penetrations, vents and antenna feed-throughs. They're small things, but they're exactly what decides whether a roof stays watertight."
       ],
@@ -274,7 +274,7 @@
         "Downspout detail",
         "Wall-to-roof edging"
       ],
-      "seoTitle": "Tinsmithing — Gutters and Flashing | Pilsen Region",
+      "seoTitle": "Tinsmithing: Gutters and Flashing | Pilsen Region",
       "seoDescription": "Gutter systems and flashing for chimneys and sills in galvanized steel, titanium zinc and copper. Tinsmith work in the Pilsen region with an eye for detail."
     },
     "cisteni-strech": {
@@ -282,10 +282,10 @@
       "tagline": "Give your roof years of life back",
       "shortDescription": "We remove moss, lichen and debris, treat the roofing and clean the gutters. Maintenance that extends a roof's life without the need for reconstruction.",
       "longDescription": [
-        "Not every weathered roof needs replacing. Often a thorough clean and treatment is enough — and it can add another ten years of life. Moss and lichen trap moisture and gradually break down the roofing surface; the sooner it's removed, the better.",
+        "Not every weathered roof needs replacing. Often a thorough clean and treatment is enough. It can easily add another ten years of life. Moss and lichen trap moisture and gradually break down the roofing surface; the sooner it's removed, the better.",
         "We clean roofing with pressure water suited to its type and age, so the surface isn't damaged. After cleaning, we apply a preventive coating or impregnation that slows the moss from coming back and restores the tiles' colour and water-repellent properties.",
         "During cleaning we always check the condition of the roofing, ridges and flashing and flag anything that could become a problem down the line. Fixing a detail early is cheaper than dealing with a leak later.",
-        "We don't forget the gutters either — clogged troughs overflow, and the damp then finds its way into the facade and foundations. We include gutter cleaning as part of the roof inspection."
+        "We don't forget the gutters either, because clogged troughs overflow, and the damp then finds its way into the facade and foundations. We include gutter cleaning as part of the roof inspection."
       ],
       "workItems": [
         { "title": "Moss and lichen removal", "description": "Gentle mechanical and pressure removal of growth that traps moisture and damages the roofing surface." },
@@ -301,7 +301,7 @@
         "Gutter cleaning",
         "Cleaned roof of a family home"
       ],
-      "seoTitle": "Roof Cleaning — Moss Removal, Washing and Impregnation | Pilsen Region",
+      "seoTitle": "Roof Cleaning: Moss Removal, Washing and Impregnation | Pilsen Region",
       "seoDescription": "We remove moss and lichen, clean roofing and gutters, and treat the roof with a preventive coating. Roof maintenance in the Pilsen region."
     }
   },
@@ -329,7 +329,7 @@
     "strecha-palena-plzen": {
       "title": "Clay roofing on a new-build",
       "location": "Pilsen-South",
-      "description": "Complete roof envelope for a new-build home — safety waterproofing membrane, battens and clay roofing, including a ventilated ridge."
+      "description": "Complete roof envelope for a new-build home: safety waterproofing membrane, battens and clay roofing, including a ventilated ridge."
     },
     "plechova-strecha-domazlice": {
       "title": "Standing-seam metal roof",
@@ -344,7 +344,7 @@
     "strecha-rekonstrukce-nepomuk": {
       "title": "Roof envelope reconstruction",
       "location": "Nepomuk",
-      "description": "Complete roof reconstruction of a family home — new sheathing, membranes, battens and concrete roofing."
+      "description": "Complete roof reconstruction of a family home: new sheathing, membranes, battens and concrete roofing."
     },
     "medene-okapy-plzen": {
       "title": "Copper gutter system",
@@ -364,7 +364,7 @@
     "strecha-okapy-prestice": {
       "title": "Roof and tinsmith work in one",
       "location": "Přeštice",
-      "description": "A project spanning truss to gutters — a new roof with concrete tiles and complete tinsmith elements in galvanized steel."
+      "description": "A project spanning truss to gutters: a new roof with concrete tiles and complete tinsmith elements in galvanized steel."
     }
   }
 }
