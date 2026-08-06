@@ -142,7 +142,10 @@ export function Header() {
               href={link.href}
               tabIndex={menuOpen ? undefined : -1}
               aria-current={pathname.startsWith(link.href) ? 'page' : undefined}
-              className="font-display text-4xl text-paper transition-colors duration-300 hover:text-ember-soft"
+              /* min-h-11 + px-4: řádkový box textu má 40px, což je pod dotykovým
+                 cílem. Na mobilu je tohle jediná navigace, takže se doplácá
+                 odsazením na 44px. */
+              className="flex min-h-11 items-center justify-center px-4 font-display text-4xl text-paper transition-colors duration-300 hover:text-ember-soft"
             >
               {navLabel(tFull, link.textSource)}
             </Link>
