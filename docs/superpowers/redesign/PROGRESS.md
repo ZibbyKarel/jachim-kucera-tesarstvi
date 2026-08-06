@@ -33,10 +33,13 @@ Seznam se doplní po finalizaci plánu.
 - [ ] Task 11 — Content sweep: em-dashe, zbylé hex literály, mrtvý kód
 - [ ] Task 12 — Závěrečný pass: kontrast, reduced-motion, anti-slop, build
 
-## Otevřené vůči klientovi
+## Pre-launch checklist — MUSÍ se vyřešit před nasazením
 
-- [ ] **Skutečné IČO** — v patičce bylo vymyšlené `000 00 000`, odstraněno (D-015).
-      Bez dodané hodnoty zůstane vynechané.
+- [ ] **Skutečné IČO** — v patičce je na každé stránce vymyšlené `000 00 000`
+      (`messages/cs.json` → `companyIdLabel`, totéž v `en.json`). Ponecháno jako placeholder
+      na rozhodnutí uživatele (D-019, ruší D-015). V repu není žádná skutečná hodnota.
+      **Nesmí jít do produkce.** IČO je v ČR povinný údaj na webu firmy a vymyšlená hodnota
+      působí hůř než žádná.
 - [ ] **Reálné fotky** — web běží na placeholderech. `ImageFrame` má konstantu
       `hasRealAsset`; po dodání souborů do `public/images/` se přepne.
 
