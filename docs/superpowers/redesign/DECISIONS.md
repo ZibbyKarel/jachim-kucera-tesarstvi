@@ -196,3 +196,28 @@ hodnota působí na návštěvníka hůř než žádná — proto to nesmí proj
 Idle float/breathing/light-drift smyčka 3D domu nemá guard; má ho jen úvodní animace.
 **Proč:** spec vyžaduje respektování `prefers-reduced-motion` všude. Není to nová
 funkcionalita, je to oprava existující vady odhalené auditem. Řeší Task 4.
+
+## D-024 — Paleta má mít jediný zdroj pravdy (`lib/palette.ts`)
+**Datum:** 2026-08-06 · **Rozhodl:** Claude (opus), z vlastní kontroly
+Po Tasku 8 jsem zjistil, že stejné hex hodnoty palety žijí ve **třech** kopiích:
+`tailwind.config.ts` (`theme.extend.colors`), `app/globals.css` (`:root` blok, jehož
+komentář sám přiznává „zrcadlí tailwind.config.ts") a `components/house3d/config.ts`
+(`COLORS`).
+**Proč to vadí:** uživatel schválil tuhle paletu jen podmíněně — chtěl „dřevěné" barvy a
+přijal materiálovou s tím, že tokeny jdou vyměnit. Výměna palety proto musí být úprava
+jednoho souboru. Tři kopie znamenají tři místa na drift a trojúpravu.
+**Řešení:** `lib/palette.ts` jako jediný zdroj hex hodnot; `tailwind.config.ts` a
+`house3d/config.ts` z něj importují; `:root` v `globals.css` se ruší a jeho konzumenti
+přecházejí na Tailwind funkci `theme()`.
+**Výjimka:** `COLORS.white = 0xffffff` zůstává mimo paletu — je to neutrální bílá pro
+Three.js světla, která nemá zteplat spolu s dřevěnou paletou.
+**Poznámka k mému vlastnímu procesu:** tuhle duplicitu jsem schválil už v Tasku 1. Vzniklo to
+tím, že jsem kontroloval *hodnoty* (kontrast seděl přesně), ne *počet míst, kde hodnoty žijí*.
+Kontrola tokenů musí zahrnovat i otázku „kolik souborů se musí změnit při výměně palety".
+
+## D-025 — `--font-body` je mrtvá proměnná v 3D overlayi
+**Datum:** 2026-08-06 · **Rozhodl:** Claude (opus)
+`components/house3d/MenuOverlay.ts` sahá po `var(--font-body, system-ui, sans-serif)`, jenže
+`--font-body` nikde neexistuje (Task 1 zavedl `--font-sans` a `--font-mono`). Overlay tedy
+tiše renderuje system-ui místo Archivo. Fallback maskuje vadu, takže se to vizuálně jeví jako
+„skoro správně". Opravuje se spolu s D-024.
