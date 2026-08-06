@@ -27,7 +27,11 @@ Seznam se doplní po finalizaci plánu.
       dvojice ověřeny že opravdu padají. typecheck + lint čisté.
       **Pozn.:** web je od tohoto commitu vizuálně rozbitý (staré třídy `wood-*` už
       neexistují) — je to záměr, opraví se průběžně v Tascích 2-10.
-- [ ] Task 2 — Sdílené UI primitivy (Button, ImageFrame, Counter)
+- [x] Task 2 — Sdílené UI primitivy (Button, ImageFrame, Counter) → `6d0345e`
+      `ImageFrame` placeholder přepsán na technický/materiálový vzor (kótovací značky +
+      `tech-grid`), odstraněny 2 hex literály. `Counter` číslice na `font-mono`.
+      Prop `aged` ponechán jako inertní no-op, call sites se ruší v Tascích 6/8/9.
+      typecheck + lint čisté, žádný hex ani mrtvá třída v dotčených souborech.
 - [ ] Task 3 — Layout chrome (Header, Footer, Logo, LanguageSwitcher)
 - [ ] Task 4 — 3D dům retheme desktop + oprava reduced-motion (viz D-018)
 - [ ] Task 5 — Mobilní fallback domu: mřížka karet služeb
