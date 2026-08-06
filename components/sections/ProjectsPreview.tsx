@@ -13,7 +13,7 @@ export function ProjectsPreview() {
   return (
     <section
       aria-labelledby="projects-heading"
-      className="relative min-h-[100dvh] bg-paper py-24 shadow-[0_-30px_60px_-30px_rgba(28,34,38,0.14)] md:py-32"
+      className="relative min-h-[100dvh] bg-paper py-24 shadow-panel-14 md:py-32"
     >
       <div className="container-content">
         <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">

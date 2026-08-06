@@ -104,6 +104,21 @@
       linear-gradient(90deg, rgba(28, 34, 38, 0.06) 1px, transparent 1px);
     background-size: 24px 24px;
   }
+
+  /* Panel-lift stín nad střídavými sekcemi (About/Services/Contact/Projects).
+     Barva vychází vždy z --slate přes color-mix, takže výměna palety
+     (viz D-003) zůstává jednosouborová úprava — mění se jen síla (opacity),
+     ne barva samotná. color-mix(in srgb, var(--slate) N%, transparent) je
+     matematicky ekvivalentní rgba(28, 34, 38, N/100). */
+  .shadow-panel-12 {
+    box-shadow: 0 -30px 60px -30px color-mix(in srgb, var(--slate) 12%, transparent);
+  }
+  .shadow-panel-14 {
+    box-shadow: 0 -30px 60px -30px color-mix(in srgb, var(--slate) 14%, transparent);
+  }
+  .shadow-panel-20 {
+    box-shadow: 0 -30px 60px -30px color-mix(in srgb, var(--slate) 20%, transparent);
+  }
 }
 
 @layer utilities {

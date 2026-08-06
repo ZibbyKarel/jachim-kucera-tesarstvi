@@ -15,7 +15,7 @@ export function AboutSection() {
   return (
     <section
       aria-labelledby="about-heading"
-      className="relative min-h-[100dvh] overflow-hidden bg-paper-dim py-24 shadow-[0_-30px_60px_-30px_rgba(28,34,38,0.2)] md:py-32"
+      className="relative min-h-[100dvh] overflow-hidden bg-paper-dim py-24 shadow-panel-20 md:py-32"
     >
       <div className="grain absolute inset-0" aria-hidden="true" />
       <div className="container-content relative grid items-center gap-12 md:grid-cols-2 md:gap-16">
