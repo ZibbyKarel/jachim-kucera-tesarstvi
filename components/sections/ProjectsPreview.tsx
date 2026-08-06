@@ -1,67 +1,87 @@
 import { useTranslations } from 'next-intl'
 import { Link } from '@/i18n/routing'
 import { projects } from '@/lib/constants'
+import type { Project } from '@/lib/types'
 import { ImageFrame } from '@/components/ui/ImageFrame'
 import { Reveal } from '@/components/ui/Reveal'
 import { Arrow } from '@/components/ui/Button'
 
+/* -------------------------------------------------------------------------- */
+/*  ProjectsPreview — realizace, paper pole                                     */
+/*                                                                              */
+/*  Asymetrická sazba na 12 sloupcích (spec §4): první realizace col-span-7     */
+/*  s vysokým rámem (4/5), další dvě naskládané pod sebou v col-span-5 (4/3).   */
+/*  Na mobilu jeden sloupec, pořadí zůstává. Popiska pod každým rámem je mono,  */
+/*  hairline oddělená shora, ve tvaru LOKALITA / ROK / KATEGORIE - lokalita a   */
+/*  rok jdou z lib/constants.ts + messages projectsData.<id>, kategorie z       */
+/*  services.<slug>.title. Žádné číslo/rok se nevymýšlí, vše je existující       */
+/*  obsah.                                                                     */
+/* -------------------------------------------------------------------------- */
+
+function ProjectFrame({
+  project,
+  aspect,
+  t,
+}: {
+  project: Project
+  aspect: string
+  t: ReturnType<typeof useTranslations>
+}) {
+  const title = t(`projectsData.${project.id}.title`)
+  const location = t(`projectsData.${project.id}.location`)
+  const categoryTitle = t(`services.${project.category}.title`)
+
+  return (
+    <Link href="/realizace" className="group block">
+      <ImageFrame
+        src={project.thumbnail}
+        alt={`${title}, ${location}`}
+        aspect={aspect}
+        sizes="(max-width: 768px) 100vw, 50vw"
+      />
+      <p className="mt-3 border-t border-timber/20 pt-3 font-mono text-xs uppercase tracking-widest text-oak">
+        {location} / {project.year} / {categoryTitle}
+      </p>
+    </Link>
+  )
+}
+
 export function ProjectsPreview() {
   const t = useTranslations('home')
   const tFull = useTranslations()
-  const newest = [...projects].sort((a, b) => b.year - a.year).slice(0, 4)
+  const featured = [...projects].sort((a, b) => b.year - a.year).slice(0, 3)
+  const [main, ...rest] = featured
 
   return (
-    <section
-      aria-labelledby="projects-heading"
-      className="relative min-h-[100dvh] bg-paper py-24 shadow-panel-14 md:py-32"
-    >
+    <section aria-labelledby="projects-heading" className="bg-paper py-24 md:py-32">
       <div className="container-content">
-        <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
-          <div>
-            <h2
-              id="projects-heading"
-              className="max-w-xl font-display text-4xl italic text-timber md:text-5xl"
-            >
-              {t('projectsIntro')}
-            </h2>
-          </div>
+        <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
+          <h2
+            id="projects-heading"
+            className="max-w-xl font-display text-3xl text-timber md:text-4xl"
+          >
+            {t('projectsIntro')}
+          </h2>
           <Link
             href="/realizace"
-            className="group inline-flex shrink-0 items-center gap-3 font-body text-xs uppercase tracking-widest text-ember transition-colors hover:text-ember-dim"
+            className="group link-underline inline-flex shrink-0 items-center gap-2 font-body text-timber"
           >
             {tFull('common.allProjects')}
-            <Arrow className="transition-transform duration-500 ease-craft group-hover:translate-x-1" />
+            <Arrow className="transition-transform duration-300 ease-craft group-hover:translate-x-1" />
           </Link>
         </div>
 
-        <Reveal stagger className="mt-14 grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
-          {newest.map((project, i) => {
-            const title = tFull(`projectsData.${project.id}.title`)
-            const location = tFull(`projectsData.${project.id}.location`)
-            return (
-              <Link
-                key={project.id}
-                href="/realizace"
-                data-reveal-item
-                className={`group block ${i % 4 === 0 ? 'row-span-2' : ''}`}
-              >
-                <ImageFrame
-                  src={project.thumbnail}
-                  alt={`${title}, ${location}`}
-                  aspect={i % 4 === 0 ? '3/4' : '4/3'}
-                  sizes="(max-width: 768px) 50vw, 33vw"
-                />
-                <div className="mt-3">
-                  <h3 className="font-display text-lg italic text-timber transition-colors group-hover:text-ember">
-                    {title}
-                  </h3>
-                  <p className="mt-1 font-mono text-[0.65rem] uppercase tracking-widest text-oak">
-                    {tFull(`services.${project.category}.title`)} · {location}
-                  </p>
-                </div>
-              </Link>
-            )
-          })}
+        <Reveal stagger className="mt-14 grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-8">
+          {main && (
+            <div data-reveal-item className="md:col-span-7">
+              <ProjectFrame project={main} aspect="4/5" t={tFull} />
+            </div>
+          )}
+          <div data-reveal-item className="flex flex-col gap-10 md:col-span-5 md:gap-8">
+            {rest.map((project) => (
+              <ProjectFrame key={project.id} project={project} aspect="4/3" t={tFull} />
+            ))}
+          </div>
         </Reveal>
       </div>
     </section>

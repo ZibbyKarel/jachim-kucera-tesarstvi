@@ -31,6 +31,27 @@
     "openerCtaProjects": "See our work",
     "serviceIndexHeading": "Crafts",
     "projectsIntro": "A part of what we have built across the Pilsen region in recent years.",
+    "process": {
+      "heading": "How the job runs",
+      "steps": [
+        {
+          "title": "Site visit and survey",
+          "text": "We come to you, inspect the roof or truss and measure what needs repairing or building."
+        },
+        {
+          "title": "Design and quote",
+          "text": "We design a solution that fits your house and prepare a price quote."
+        },
+        {
+          "title": "Construction",
+          "text": "We're the ones on site, our own crew, not anonymous subcontractors."
+        },
+        {
+          "title": "Handover and warranty",
+          "text": "We hand over the finished work and stand behind it for years afterwards."
+        }
+      ]
+    },
     "aboutHeadline": "We build roofs as if they were our own",
     "aboutCta": "Our story",
     "contactHeadline": "Call or write. Let's talk it through."
@@ -41,6 +62,7 @@
     "intro": "Tell us a few words about your roof. We'll get back to you and arrange a visit, free and with no obligation.",
     "name": "Name",
     "phone": "Phone",
+    "emailLabel": "Email",
     "service": "Service",
     "message": "Message",
     "messageOptional": "Message (optional)",

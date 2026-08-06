@@ -31,6 +31,27 @@
     "openerCtaProjects": "Prohlédnout realizace",
     "serviceIndexHeading": "Řemesla",
     "projectsIntro": "Část toho, co jsme za poslední roky postavili po Plzeňském kraji.",
+    "process": {
+      "heading": "Jak zakázka probíhá",
+      "steps": [
+        {
+          "title": "Prohlídka a zaměření",
+          "text": "Přijedeme na místo, prohlédneme střechu nebo krov a zaměříme, co je potřeba opravit nebo postavit."
+        },
+        {
+          "title": "Návrh a cenová nabídka",
+          "text": "Navrhneme řešení, které sedí na váš dům, a připravíme cenovou nabídku."
+        },
+        {
+          "title": "Realizace",
+          "text": "Na stavbu chodíme my, naše vlastní parta, ne anonymní subdodavatelé."
+        },
+        {
+          "title": "Předání a záruka",
+          "text": "Dílo vám předáme a stojíme si za svou prací i po letech."
+        }
+      ]
+    },
     "aboutHeadline": "Stavíme střechy, jako by byly naše vlastní",
     "aboutCta": "Náš příběh",
     "contactHeadline": "Zavolejte nebo napište. Domluvíme se."
@@ -41,6 +62,7 @@
     "intro": "Napište nám pár slov o vaší střeše. Ozveme se a domluvíme se na prohlídce, nezávazně a zdarma.",
     "name": "Jméno",
     "phone": "Telefon",
+    "emailLabel": "E-mail",
     "service": "Služba",
     "message": "Zpráva",
     "messageOptional": "Zpráva (nepovinné)",
