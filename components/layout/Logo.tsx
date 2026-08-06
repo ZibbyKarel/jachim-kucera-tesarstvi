@@ -3,62 +3,61 @@ import { Link } from "@/i18n/routing";
 import { SITE } from "@/lib/constants";
 import Image from "next/image";
 
+// Intrinsic poměr stran zdrojového PNG (public/logo_2.png je 867×463 px) —
+// širokoúhlý lockup kresby domu a vysázeného jména firmy, ne čtvercový
+// odznak. Šířka se z výšky dopočítává tímhle poměrem, ať next/image dostane
+// vždy správné rozměry a obrázek se nezkresluje.
+const LOGO_ASPECT_RATIO = 867 / 463;
+
 /**
- * Logo Jáchim & Kučera — kruhový odznak se štítovou střechou, volitelně
- * doplněný vysázenou slovní značkou.
+ * Logo Jáchim & Kučera — širokoúhlý lockup (kresba domu + vysázené jméno
+ * firmy + "TESAŘSTVÍ"), ne kulatý odznak. Jméno firmy je součástí obrázku
+ * samotného, takže se vedle něj už nevysazuje žádný samostatný text.
  *
- * Odznak sám nese jméno firmy jen jako součást kresby, a pod ~64 px je
- * nečitelný — v hlavičce tedy funguje jako značka, ne jako jméno. Proto
- * `wordmark`: odznak + vysázené jméno vedle sebe. Uživatel si stěžoval, že
- * na titulní stránce byl výraznější odkaz na poptávku než logo firmy; jméno
- * musí být čitelné, ne jen naznačené.
+ * Sizuje se podle výšky (`height`), ne podle hrany čtverce — při fixní
+ * výšce next/image dopočítá šířku podle LOGO_ASPECT_RATIO, takže lockup
+ * nikdy nevypadá stlačený ani neoříznutý.
  *
- * Obrázek má `alt=""` záměrně: jméno firmy nese `aria-label` odkazu, a když
- * je zapnutý `wordmark`, i viditelný text. Popisný `alt` by ho hlásil dvakrát.
+ * `light` přepíná mezi dvěma PNG soubory, ne mezi CSS barvami: inkoust
+ * lockupu je rastrový (kresba + písmo v jednom obrázku), takže "světlá
+ * varianta" znamená jiný soubor (public/logo-paper.png, vygenerovaný
+ * scripts/generate-logo-paper.mjs), ne přebarvení textu.
+ *
+ * Obrázek má `alt=""` záměrně: jméno firmy nese `aria-label` odkazu (jediný
+ * nositel jména po odstranění vysázené slovní značky vedle obrázku).
+ * Popisný `alt` by ho hlásil dvakrát.
  */
 export function Logo({
   className = "",
-  /** Světlá varianta slovní značky (na tmavém pozadí). Odznak se nepřebarvuje. */
+  /** Světlá varianta loga (na tmavém poli, např. patička). */
   light = false,
-  /** Hrana odznaku v px. */
-  size = 88,
-  /** Vysázet vedle odznaku i jméno firmy. */
-  wordmark = false,
+  /** Výška loga v px — šířka se dopočítá z LOGO_ASPECT_RATIO. */
+  height = 88,
   tabIndex,
 }: {
   className?: string;
   light?: boolean;
-  size?: number;
-  wordmark?: boolean;
+  height?: number;
   tabIndex?: number;
 }) {
   const t = useTranslations("nav");
+  const width = Math.round(height * LOGO_ASPECT_RATIO);
   return (
     <Link
       href="/"
       aria-label={`${SITE.name}, ${t("home")}`}
       tabIndex={tabIndex}
-      className={`group inline-flex items-center gap-3 ${className}`}
+      className={`group inline-flex items-center ${className}`}
     >
       <Image
-        src="/logo_2.png"
+        src={light ? "/logo-paper.png" : "/logo_2.png"}
         alt=""
-        width={size}
-        height={size}
+        width={width}
+        height={height}
         priority
-        className="shrink-0 rounded-full object-contain transition-transform duration-500 ease-craft group-hover:scale-105"
-        style={{ width: size, height: size }}
+        className="shrink-0 object-contain transition-transform duration-500 ease-craft group-hover:scale-105"
+        style={{ width, height }}
       />
-      {wordmark && (
-        <span
-          aria-hidden="true"
-          className={`hidden whitespace-nowrap font-display text-base leading-none tracking-tight transition-colors duration-300 sm:inline ${
-            light ? "text-paper" : "text-timber"
-          }`}
-        >
-          {SITE.shortName}
-        </span>
-      )}
     </Link>
   );
 }
