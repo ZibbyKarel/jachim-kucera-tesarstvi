@@ -1,7 +1,7 @@
 import type { HouseLabel, NavLink, Project, Service } from './types'
 
 export const SITE = {
-  name: 'Jáchim & Kučera - Tesařství',
+  name: 'Jáchim & Kučera, tesařství',
   shortName: 'Jáchim & Kučera',
   url: 'https://jachim-kucera-tesarstvi.cz',
   phone: '+420 608 212 410',

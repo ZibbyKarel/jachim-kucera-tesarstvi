@@ -25,7 +25,7 @@ export function Logo({
   return (
     <Link
       href="/"
-      aria-label={`${SITE.name} - ${t("home")}`}
+      aria-label={`${SITE.name}, ${t("home")}`}
       tabIndex={tabIndex}
       className={`group inline-flex items-center ${className}`}
     >

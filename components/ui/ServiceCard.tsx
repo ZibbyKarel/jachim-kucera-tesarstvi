@@ -28,7 +28,7 @@ export function ServiceCard({ service }: { service: Service }) {
       <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-700 ease-craft group-hover:opacity-100">
         <ImageFrame
           src={service.heroImage}
-          alt={`${t('nav.projects')} - ${title}`}
+          alt={`${t('nav.projects')}, ${title}`}
           aspect="3/4"
           rounded={false}
           className="!absolute inset-0 h-full w-full"

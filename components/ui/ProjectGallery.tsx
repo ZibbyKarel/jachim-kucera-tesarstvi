@@ -100,11 +100,11 @@ export function ProjectGallery({
               <button
                 onClick={() => setSelected(project)}
                 className="group block w-full text-left"
-                aria-label={`${title}, ${location} ${project.year} - ${t('viewDetailAria')}`}
+                aria-label={`${title}, ${location}, ${project.year}, ${t('viewDetailAria')}`}
               >
                 <ImageFrame
                   src={project.thumbnail}
-                  alt={`${title} - ${location}`}
+                  alt={`${title}, ${location}`}
                   aspect={i % 5 === 0 ? '3/4' : '4/3'}
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 />
@@ -207,7 +207,7 @@ function ProjectModal({
             <ImageFrame
               key={img}
               src={img}
-              alt={`${title} - ${t('photoAlt')} ${i + 1}`}
+              alt={`${title}, ${t('photoAlt')} ${i + 1}`}
               aspect="4/3"
             />
           ))}
