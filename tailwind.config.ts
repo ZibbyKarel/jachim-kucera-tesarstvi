@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss'
+import { PALETTE } from './lib/palette'
 
 const config: Config = {
   content: [
@@ -10,28 +11,14 @@ const config: Config = {
     extend: {
       colors: {
         // "Materiály řemesla" paleta — steel/zinek, slate, patina (jediný akcent), paper.
-        // Hex hodnoty jsou WCAG AA doladěné (viz tabulka tokenů v sekci "Design
-        // tokens: WCAG contrast verification" plánu) — steel/patina/patina-dim jsou
-        // ztmavené oproti výchozím hex hodnotám z designového zadání konkrétně proto,
-        // aby každé použití jako text prošlo 4.5:1 na paper/paper-dim. Ladit dál lze
-        // beze změny kódu komponent (viz spec §3.1), ale je nutné znovu ověřit kontrast.
-        paper: {
-          DEFAULT: '#eef0ef', // primární světlé pozadí
-          dim: '#e2e5e3', // sekundární světlé pozadí (střídavé panely)
-        },
-        slate: {
-          DEFAULT: '#1c2226', // primární tmavé pozadí / inkoust (text na paper)
-          soft: '#2a3136', // sekundární tmavé pozadí (overlaye, střídavé panely)
-        },
-        steel: {
-          DEFAULT: '#5f666a', // text/čísla/labely na SVĚTLÉM pozadí + obecné bordery (5.10:1 na paper, 4.60:1 na paper-dim)
-          soft: '#b7bcbe', // text/bordery na TMAVÉM pozadí (8.38:1 na slate) — nepoužívat na světlém pozadí, jako text tam nedostatečný kontrast
-        },
-        patina: {
-          DEFAULT: '#486c5a', // JEDINÝ akcent na SVĚTLÉM pozadí — CTA, odkazy, aktivní/hover stav, nadpisy, focus ring (5.14:1 na paper, 4.64:1 na paper-dim)
-          dim: '#3a5648', // ztmavený akcent pro hover/pressed stavy akcentu samotného, na světlém pozadí (7.04:1 jako výplň tlačítka při hoveru)
-          soft: '#74a48c', // stejný odstín akcentu, zesvětlený, pro text/hover/aktivní stav/focus ring na TMAVÉM pozadí (5.69:1 na slate, 4.67:1 na slate-soft — viz párovací matice v Global Constraints) — nepoužívat na světlém pozadí
-        },
+        // Hex hodnoty a WCAG kontrastní poznámky ke každému tokenu žijí v
+        // lib/palette.ts (jediný zdroj pravdy, viz D-003) — tady se jen mapují
+        // na strukturu Tailwind tokenů, aby zůstaly beze změny utility třídy
+        // jako bg-paper, text-patina, bg-slate-soft apod.
+        paper: PALETTE.paper,
+        slate: PALETTE.slate,
+        steel: PALETTE.steel,
+        patina: PALETTE.patina,
       },
       fontFamily: {
         display: ['var(--font-sans)', 'ui-sans-serif', 'system-ui', 'sans-serif'],

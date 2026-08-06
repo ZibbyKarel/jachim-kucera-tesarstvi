@@ -2,22 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  /* Design tokeny zrcadlí tailwind.config.ts — pro použití mimo utility třídy.
-     steel/patina/patina-dim jsou WCAG-AA doladěné (tmavší než výchozí hex
-     hodnoty ze zadání); patina-soft je nový token — viz tabulka tokenů v sekci
-     "Design tokens: WCAG contrast verification" plánu. */
-  --paper: #eef0ef;
-  --paper-dim: #e2e5e3;
-  --slate: #1c2226;
-  --slate-soft: #2a3136;
-  --steel: #5f666a;
-  --steel-soft: #b7bcbe;
-  --patina: #486c5a;
-  --patina-dim: #3a5648;
-  --patina-soft: #74a48c;
-}
-
 @layer base {
   html {
     scroll-behavior: smooth;
@@ -30,28 +14,28 @@
   }
 
   ::selection {
-    background-color: var(--patina);
-    color: var(--paper);
+    background-color: theme('colors.patina.DEFAULT');
+    color: theme('colors.paper.DEFAULT');
   }
 
   /* Viditelný a konzistentní focus ring napříč webem. */
   :focus-visible {
-    outline: 2px solid var(--patina);
+    outline: 2px solid theme('colors.patina.DEFAULT');
     outline-offset: 3px;
     border-radius: 2px;
   }
 
   /* SVG skupiny / canvas overlaye nemají vlastní border-radius, ale focus ring chceme. */
   [tabindex]:focus-visible {
-    outline: 2px solid var(--patina);
+    outline: 2px solid theme('colors.patina.DEFAULT');
     outline-offset: 4px;
   }
 
-  /* Dark mobile-menu panel (#mobile-menu, viz Header.tsx) sedí na --slate, kde
-     výchozí --patina focus ring padá na ~2.8:1 a neprojde AA. Uvnitř panelu
-     přepínáme na --patina-soft (5.69:1 na slate). */
+  /* Dark mobile-menu panel (#mobile-menu, viz Header.tsx) sedí na slate, kde
+     výchozí patina focus ring padá na ~2.8:1 a neprojde AA. Uvnitř panelu
+     přepínáme na patina-soft (5.69:1 na slate). */
   #mobile-menu :focus-visible {
-    outline-color: var(--patina-soft);
+    outline-color: theme('colors.patina.soft');
   }
 
   h1,
@@ -97,27 +81,31 @@
     @apply origin-left scale-x-100;
   }
 
-  /* Technický "konstrukční" rastr — pro ImageFrame placeholder a kontakt mapu. */
+  /* Technický "konstrukční" rastr — pro ImageFrame placeholder a kontakt mapu.
+     color-mix(in srgb, theme('colors.slate.DEFAULT') N%, transparent) je
+     matematicky ekvivalentní zápisu se stejným RGB a alfa = N/100 (viz
+     odůvodnění u .shadow-panel-* níže), takže i tady je barva odvozená
+     z tokenu, ne napsaná natvrdo. */
   .tech-grid {
     background-image:
-      linear-gradient(0deg, rgba(28, 34, 38, 0.06) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(28, 34, 38, 0.06) 1px, transparent 1px);
+      linear-gradient(0deg, color-mix(in srgb, theme('colors.slate.DEFAULT') 6%, transparent) 1px, transparent 1px),
+      linear-gradient(90deg, color-mix(in srgb, theme('colors.slate.DEFAULT') 6%, transparent) 1px, transparent 1px);
     background-size: 24px 24px;
   }
 
   /* Panel-lift stín nad střídavými sekcemi (About/Services/Contact/Projects).
-     Barva vychází vždy z --slate přes color-mix, takže výměna palety
+     Barva vychází vždy z tokenu slate přes color-mix, takže výměna palety
      (viz D-003) zůstává jednosouborová úprava — mění se jen síla (opacity),
-     ne barva samotná. color-mix(in srgb, var(--slate) N%, transparent) je
-     matematicky ekvivalentní rgba(28, 34, 38, N/100). */
+     ne barva samotná. color-mix(in srgb, theme('colors.slate.DEFAULT') N%, transparent)
+     je matematicky ekvivalentní zápisu se stejným RGB a alfa = N/100. */
   .shadow-panel-12 {
-    box-shadow: 0 -30px 60px -30px color-mix(in srgb, var(--slate) 12%, transparent);
+    box-shadow: 0 -30px 60px -30px color-mix(in srgb, theme('colors.slate.DEFAULT') 12%, transparent);
   }
   .shadow-panel-14 {
-    box-shadow: 0 -30px 60px -30px color-mix(in srgb, var(--slate) 14%, transparent);
+    box-shadow: 0 -30px 60px -30px color-mix(in srgb, theme('colors.slate.DEFAULT') 14%, transparent);
   }
   .shadow-panel-20 {
-    box-shadow: 0 -30px 60px -30px color-mix(in srgb, var(--slate) 20%, transparent);
+    box-shadow: 0 -30px 60px -30px color-mix(in srgb, theme('colors.slate.DEFAULT') 20%, transparent);
   }
 }
 
