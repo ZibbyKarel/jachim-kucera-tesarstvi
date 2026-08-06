@@ -8,6 +8,20 @@ import { ImageFrame } from './ImageFrame'
 
 type Filter = ProjectCategory | 'all'
 
+/** Focusovatelné potomky uvnitř kontejneru, ve skutečném pořadí v DOM.
+ *  Filtrováno přes `tabIndex` (DOM property, ne atribut) - zachytí i
+ *  `tabIndex={-1}` nastavený přes React props (zavírací overlay tlačítko,
+ *  samotný dialog kontejner), což čistě atributový CSS selektor nezachytí
+ *  spolehlivě u prvků, které jsou nativně focusovatelné bez [tabindex]. */
+function getFocusable(container: HTMLElement): HTMLElement[] {
+  const nodes = container.querySelectorAll<HTMLElement>(
+    'a[href], button, textarea, input, select, [tabindex]'
+  )
+  return Array.from(nodes).filter(
+    (el) => !el.hasAttribute('disabled') && el.tabIndex !== -1
+  )
+}
+
 export function ProjectGallery({
   projects,
   enableFilter = true,
@@ -20,6 +34,13 @@ export function ProjectGallery({
   const [filter, setFilter] = useState<Filter>('all')
   const [selected, setSelected] = useState<Project | null>(null)
   const gridRef = useRef<HTMLDivElement>(null)
+  // Tlačítko, které modal otevřelo - fokus se na něj musí vrátit po zavření.
+  const triggerRef = useRef<HTMLElement | null>(null)
+
+  const closeModal = () => {
+    setSelected(null)
+    triggerRef.current?.focus()
+  }
 
   const visible =
     filter === 'all' ? projects : projects.filter((p) => p.category === filter)
@@ -98,7 +119,10 @@ export function ProjectGallery({
               }
             >
               <button
-                onClick={() => setSelected(project)}
+                onClick={(e) => {
+                  triggerRef.current = e.currentTarget
+                  setSelected(project)
+                }}
                 className="group block w-full text-left"
                 aria-label={`${title}, ${location}, ${project.year}, ${t('viewDetailAria')}`}
               >
@@ -125,9 +149,7 @@ export function ProjectGallery({
         })}
       </div>
 
-      {selected && (
-        <ProjectModal project={selected} onClose={() => setSelected(null)} />
-      )}
+      {selected && <ProjectModal project={selected} onClose={closeModal} />}
     </div>
   )
 }
@@ -148,7 +170,32 @@ function ProjectModal({
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose()
+      if (e.key === 'Escape') {
+        onClose()
+        return
+      }
+      // Focus trap: Tab/Shift+Tab nesmí uniknout ze stránky pod modalem.
+      if (e.key === 'Tab') {
+        const dialog = dialogRef.current
+        if (!dialog) return
+        const focusable = getFocusable(dialog)
+        if (focusable.length === 0) {
+          e.preventDefault()
+          return
+        }
+        const first = focusable[0]
+        const last = focusable[focusable.length - 1]
+        const active = document.activeElement
+        if (e.shiftKey) {
+          if (active === first || !dialog.contains(active)) {
+            e.preventDefault()
+            last.focus()
+          }
+        } else if (active === last || !dialog.contains(active)) {
+          e.preventDefault()
+          first.focus()
+        }
+      }
     }
     document.addEventListener('keydown', onKey)
     document.body.style.overflow = 'hidden'
