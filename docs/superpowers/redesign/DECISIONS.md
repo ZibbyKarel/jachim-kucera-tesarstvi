@@ -250,3 +250,16 @@ dvě konvence vedle sebe (`Kontakt - Nezávazná poptávka` se spojovníkem vs.
 nahrazen**, a jestli náhrada není stejně mechanická. Jinak se jen přesune symptom.
 **Poznámka:** `Kontakt - Nezávazná poptávka` byl pozůstatek mechanické náhrady už z Tasku 1.
 Spojovník s mezerami je v české sazbě chyba, ne stylová volba.
+
+## D-028 — Mechanická náhrada z Tasku 1 přežila ve skládaných řetězcích
+**Datum:** 2026-08-06 · **Rozhodl:** Claude (opus)
+Task 1 nahradil em-dashe spojovníkem (`SITE.name` a spol.). Ta náhrada přežila v **osmi**
+šablonových literálech v komponentách — `alt` texty, `aria-label`y a jeden odkaz v skryté
+navigaci. Mezerníkový spojovník je v české sazbě chyba, ne stylová volba.
+**Proč to uniklo dvanáct tasků:** všechny moje kontroly pomlček mířily na `messages/*.json`
+a hledaly znaky `—` a `–`. Tyhle řetězce se skládají až v komponentě z několika `t()` volání,
+takže v message souborech nejsou, a hledaný znak v nich není — je tam jeho **náhrada**.
+Grep na symptom nenajde vadu, kterou jsem si sám vyrobil při jeho odstraňování.
+**Pravidlo:** po každé plošné náhradě znaku se musí hledat i **nový** znak v té samé funkci,
+a to i v místech, kde se text skládá za běhu, ne jen ve zdrojích textu.
+Souvisí s [[D-027]]. Opravuje se v Tasku 12, část A.
