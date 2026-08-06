@@ -124,6 +124,26 @@ navigaci. Rozšíření na 6 je práce v Three.js modelu — mimo rozsah tohoto 
 Audit potvrdil nula importérů. Obsahuje navíc hardcoded hex barvy, které by jinak zůstaly
 v repu jako matoucí falešná stopa při příští výměně palety.
 
+## D-020 — Tokeny mají závaznou párovací matici, ne jen seznam hodnot
+**Datum:** 2026-08-06 · **Rozhodl:** Claude (opus)
+Nezávislé přeměření potvrdilo všech 7 poměrů, které plán tvrdil (přesně na setiny), ale
+odhalilo tři dvojice, které plán neuvádí a které padají:
+
+| dvojice | poměr | verdikt |
+|---|---|---|
+| `steel` na `slate` | 2,75:1 | propadá i pro velký text |
+| `patina` na `slate` | 2,73:1 | propadá i pro velký text |
+| `patina-soft` na `slate-soft` | 3,79:1 | propadá pro běžný text, projde pro velký |
+
+**Proč to vadí:** `steel` a `patina` jsou laděné na světlé pozadí, `*-soft` varianty na tmavé.
+Nic ale nevynucuje, aby se nepoužily obráceně. `patina-soft` na `slate-soft` je navíc velmi
+pravděpodobná kombinace (akcentový text na vyvýšené tmavé kartě) a tichý propadák.
+**Řešení:**
+1. `patina-soft` se posouvá `#61947a → #74a48c` (4,67:1 na `slate-soft`, 5,69:1 na `slate`).
+2. Plán musí obsahovat **párovací matici** — které tokeny popředí jsou legální na kterých
+   pozadích — jako globální omezení, které dodržuje každý task. Nestačí seznam hex hodnot.
+**Poznámka:** ověřovací skript nepatří do repa; kontrola se opakuje v Tasku 12.
+
 ## D-019 — Placeholder IČO zůstává (RUŠÍ D-015)
 **Datum:** 2026-08-06 · **Rozhodl:** uživatel
 Ověřeno grepem: skutečné IČO se v repu nikde nevyskytuje, jediný výskyt je placeholder
