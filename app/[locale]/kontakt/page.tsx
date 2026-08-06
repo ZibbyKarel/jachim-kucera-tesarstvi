@@ -73,7 +73,7 @@ export default async function KontaktPage({
           </div>
 
           <div>
-            <h3 className="font-body text-xs uppercase tracking-widest text-slate/50">
+            <h3 className="font-body text-xs uppercase tracking-widest text-slate/65">
               {t('areaLabel')}
             </h3>
             <p className="mt-2 font-body text-base text-slate">{tCommon('region')}</p>

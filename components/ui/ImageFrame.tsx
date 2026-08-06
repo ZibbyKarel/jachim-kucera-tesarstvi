@@ -76,7 +76,7 @@ export function ImageFrame({
               strokeLinejoin="round"
             />
           </svg>
-          <span className="max-w-[80%] font-mono text-[0.65rem] uppercase tracking-widest text-slate/45">
+          <span className="max-w-[80%] font-mono text-[0.65rem] uppercase tracking-widest text-slate/70">
             {alt}
           </span>
         </div>

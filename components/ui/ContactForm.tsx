@@ -128,8 +128,12 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
   }
 
   const inputClass = (invalid?: boolean) =>
+    // border-slate/25 measured 1.65-1.66:1 against both paper and the
+    // paper-dim/60-over-paper ContactSection card - well under the 3:1 non-text
+    // UI threshold for a field boundary that's the input's only visible edge
+    // (underline style, no fill). /55 clears 3:1 in every context it's used.
     `w-full rounded-sm border-b bg-transparent py-3 font-body text-slate placeholder-slate/30 outline-none transition-colors duration-300 focus:border-patina ${
-      invalid ? 'border-red-600/70' : 'border-slate/25'
+      invalid ? 'border-red-600/85' : 'border-slate/55'
     }`
 
   return (
@@ -150,7 +154,7 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
         <div>
           <label
             htmlFor={fid('name')}
-            className="mb-1 block font-body text-xs uppercase tracking-widest text-slate/60"
+            className="mb-1 block font-body text-xs uppercase tracking-widest text-slate/70"
           >
             {t('name')}{' '}
             <span aria-hidden="true" className="text-patina">
@@ -181,7 +185,7 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
         <div>
           <label
             htmlFor={fid('phone')}
-            className="mb-1 block font-body text-xs uppercase tracking-widest text-slate/60"
+            className="mb-1 block font-body text-xs uppercase tracking-widest text-slate/70"
           >
             {t('phone')}{' '}
             <span aria-hidden="true" className="text-patina">
@@ -214,7 +218,7 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
       <div>
         <label
           htmlFor={fid('message')}
-          className="mb-1 block font-body text-xs uppercase tracking-widest text-slate/60"
+          className="mb-1 block font-body text-xs uppercase tracking-widest text-slate/70"
         >
           {t('message')}{' '}
           <span aria-hidden="true" className="text-patina">

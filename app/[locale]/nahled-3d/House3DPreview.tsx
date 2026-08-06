@@ -27,7 +27,7 @@ export function House3DPreview() {
         </p>
       </div>
 
-      <p className="pointer-events-none absolute inset-x-0 bottom-5 text-center font-mono text-[0.65rem] uppercase tracking-[0.2em] text-slate/40">
+      <p className="pointer-events-none absolute inset-x-0 bottom-5 text-center font-mono text-[0.65rem] uppercase tracking-[0.2em] text-slate/70">
         {t('nahled3d.hint')}
       </p>
     </main>

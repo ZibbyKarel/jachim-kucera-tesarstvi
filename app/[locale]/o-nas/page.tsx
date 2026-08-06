@@ -147,7 +147,7 @@ export default async function ONasPage({
               <div
                 key={c}
                 data-reveal-item
-                className="flex aspect-[3/2] items-center justify-center rounded-sm border border-slate/10 bg-paper p-6 text-center font-body text-xs uppercase tracking-widest text-slate/50"
+                className="flex aspect-[3/2] items-center justify-center rounded-sm border border-slate/10 bg-paper p-6 text-center font-body text-xs uppercase tracking-widest text-slate/65"
               >
                 {c}
               </div>
