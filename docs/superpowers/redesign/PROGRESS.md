@@ -36,9 +36,34 @@ faktické údaje. Řídící dokumenty:
       - `ServiceCard` smazán (nikdo neimportoval), `Timeline` přepsán do jazyka
         sekce Postup, filtr realizací z pilulek na textové odkazy
       - **k ověření:** že se výchozí render `ContactSection` na homepage nezměnil
-- [~] **v2/T6+T7** — 404, `/nahled-3d`, úklid mrtvého kódu + závěrečný audit
+- [x] **v2/T6+T7** — 404, `/nahled-3d`, úklid mrtvého kódu + závěrečný audit
       (kontrasty všech reálně použitých dvojic, mrtvé utility a proměnné, pomlčky,
-      přístupnost, konzistence)
+      přístupnost, konzistence) · `7cf01d1` (A), viz report (B)
+      - A1/A2: `app/[locale]/not-found.tsx`, `app/not-found.tsx` a `/nahled-3d`
+        + `components/house3d/*` už byly v souladu, beze změny.
+      - A3: smazán `Counter.tsx`, mrtvá komponenta `Button` z `Button.tsx`, prop
+        `aged` z `ImageFrame`, nepoužívané exporty z `Reveal.tsx`/`lib/gsap.ts`,
+        `HouseLabel`/`houseLabels`, `houseGroup`/`featured` ze `Service`, 9
+        osiřelých i18n klíčů (mj. `about.heroAlt`, `about.teamAlt`) z obou jazyků.
+      - B1: přeměřeny všechny reálně použité dvojice barev včetně průhledných
+        variant, žádný nález nevyžadoval opravu.
+      - B3: pomlčky beze změny (D-027/D-028 se nevrátily), jediné nalezené
+        em/en-dashe byly v českých/jednom anglickém komentáři (D-021 výjimka).
+      - B4: zobecněn focus ring na tmavém pozadí z `#mobile-menu` na
+        `.bg-timber :focus-visible` (dřív 2,54:1, teď `ember-soft`), doplněny
+        chybějící `aria-label` na landmarky (header, main, footer), opraveny tři
+        dotykové cíle pod 44px (`LanguageSwitcher`, `ProjectGallery` zavírací
+        tlačítko, `ContactForm` „odeslat další"), opraven i18n bug v
+        `LanguageSwitcher` (aria-label byl natvrdo česky bez ohledu na locale).
+      - B5: žádný hex mimo `lib/palette.ts`, žádné `slate`/`steel`/`patina`,
+        sady klíčů `cs.json`/`en.json` identické, SEO/JSON-LD beze změny.
+      - **Nalezeno, neopraveno (mimo rozsah):** vnořený `<main>` na `/nahled-3d`
+        (`House3DPreview` má vlastní `<main>` uvnitř layoutového `<main>`) - mimo
+        rozsah „jen barvy a písma" pro tuto stránku. `text-red-700` v
+        `ContactForm.tsx` pro chybové stavy formuláře čerpá z Tailwind výchozí
+        palety, ne z `lib/palette.ts` - kontrast ověřen (5,65:1 na `paper`), ale
+        formálně mimo jediný zdroj pravdy; ponecháno, protože sémantická barva
+        chyby by neměla splývat s dřevěnou paletou.
 
 ---
 

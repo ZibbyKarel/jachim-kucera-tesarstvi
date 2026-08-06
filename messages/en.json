@@ -6,9 +6,13 @@
     "allProjects": "All projects",
     "region": "Pilsen region and surroundings",
     "serviceLabel": "Service",
+    "siteHeaderAria": "Site header",
+    "mainContentAria": "Main content",
+    "siteFooterAria": "Site footer",
     "mainNavAria": "Main navigation",
     "mobileNavAria": "Mobile navigation",
     "footerNavAria": "Footer navigation",
+    "languageSwitcherAria": "Language choice",
     "allRightsReserved": "All rights reserved.",
     "icoLabel": "Company ID"
   },

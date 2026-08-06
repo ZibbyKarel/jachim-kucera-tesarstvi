@@ -165,7 +165,9 @@ export default async function LocaleLayout({
             {t('skipToContent')}
           </a>
           <Header />
-          <main id="main-content">{children}</main>
+          <main id="main-content" aria-label={t('mainContentAria')}>
+            {children}
+          </main>
           <Footer />
         </NextIntlClientProvider>
       </body>

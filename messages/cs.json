@@ -6,9 +6,13 @@
     "allProjects": "Všechny realizace",
     "region": "Plzeňský kraj a okolí",
     "serviceLabel": "Služba",
+    "siteHeaderAria": "Hlavička webu",
+    "mainContentAria": "Hlavní obsah",
+    "siteFooterAria": "Patička webu",
     "mainNavAria": "Hlavní navigace",
     "mobileNavAria": "Mobilní navigace",
     "footerNavAria": "Navigace patičky",
+    "languageSwitcherAria": "Volba jazyka",
     "allRightsReserved": "Všechna práva vyhrazena.",
     "icoLabel": "IČO"
   },

@@ -119,7 +119,7 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
         <p className="font-display text-2xl italic text-timber">{t('success')}</p>
         <button
           onClick={() => setStatus('idle')}
-          className="rounded-sm font-body text-xs uppercase tracking-widest text-ember transition-colors hover:text-ember-dim"
+          className="inline-flex min-h-11 items-center rounded-sm font-body text-xs uppercase tracking-widest text-ember transition-colors hover:text-ember-dim"
         >
           {t('submitAnother')}
         </button>
