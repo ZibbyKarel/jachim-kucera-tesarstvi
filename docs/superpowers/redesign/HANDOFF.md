@@ -52,19 +52,27 @@ npm run dev         # http://localhost:3000
 
 **Poslední aktualizace:** 2026-08-06
 
-**Fáze:** Příprava — plán se generuje.
+**Fáze:** Příprava — plán se reviduje podle rozhodnutí z auditu.
 
 **Hotovo:**
-- Design spec napsaný a schválený, commitnutý (`docs/superpowers/specs/2026-08-06-website-redesign-design.md`).
-- Recovery infrastruktura založená (tento soubor + DECISIONS.md).
+- Design spec napsaný a schválený, commitnutý.
+- Recovery infrastruktura (DECISIONS.md, PROGRESS.md, tento soubor).
+- Audit kódové báze sonnet subagentem. Klíčové nálezy: Tailwind v3.4.10, současné písmo je
+  serif (Cormorant Garamond) který musí pryč, 22 souborů používá staré barevné třídy,
+  8 souborů má hex literály, 3D dům je raw Three.js (ne R3F), 72 em-dashů v `messages/*.json`,
+  mrtvý kód `IsometricHouse.tsx`, chybějící reduced-motion guard u idle animace domu.
+- Rozhodnutí k nálezům: D-011 až D-018 v DECISIONS.md.
 
 **Právě probíhá:**
-- Sonnet subagent auditoval kódovou bázi a píše implementační plán do
-  `docs/superpowers/plans/2026-08-06-website-redesign.md`. Plán ještě NENÍ zreviewovaný
-  ani commitnutý.
+- Sonnet subagent reviduje plán (`docs/superpowers/plans/2026-08-06-website-redesign.md`):
+  výběr písem s ověřenou českou diakritikou, přesun kontroly kontrastu do Tasku 1,
+  přepis Tasku 6 na statický bento grid.
+- Plán ještě NENÍ zreviewovaný opusem ani commitnutý.
 
 **Další krok:**
-- Opus zreviewuje plán, vyřeší flagnuté nejasnosti, commitne plán.
-- Pak se spouští implementace task po tasku přes sonnet subagenty.
+- Opus zreviewuje revidovaný plán a commitne ho.
+- Pak implementace task po tasku přes sonnet subagenty, s review mezi tasky.
 
 **Blokery:** žádné.
+
+**Čeká se na klienta:** skutečné IČO (viz PROGRESS.md), reálné fotky realizací.
