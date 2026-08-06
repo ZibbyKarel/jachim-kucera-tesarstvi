@@ -30,7 +30,7 @@ export function ServicesGrid() {
   return (
     <section
       aria-labelledby="services-heading"
-      className="relative bg-paper py-24 shadow-[0_-30px_60px_-30px_rgba(28,34,38,0.12)] md:py-32"
+      className="relative bg-paper py-24 shadow-panel-12 md:py-32"
     >
       <div className="container-content">
         <h2
