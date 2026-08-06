@@ -72,6 +72,8 @@ export class SceneManager {
   private raf = 0
   private resizeObs: ResizeObserver
   private disposed = false
+  private reducedMotionMQ: MediaQueryList | null = null
+  private reducedMotion = false
 
   // reusable temporaries
   private _v = new THREE.Vector3()
@@ -149,6 +151,12 @@ export class SceneManager {
       opts.labels
     )
 
+    if (typeof window !== 'undefined' && window.matchMedia) {
+      this.reducedMotionMQ = window.matchMedia('(prefers-reduced-motion: reduce)')
+      this.reducedMotion = this.reducedMotionMQ.matches
+      this.reducedMotionMQ.addEventListener('change', this.onReducedMotionChange)
+    }
+
     this.prepareIntro()
 
     // ---- events ----
@@ -193,10 +201,10 @@ export class SceneManager {
   }
 
   private setupLights(): void {
-    const hemi = new THREE.HemisphereLight(0xffffff, 0xe6e4de, 2.1)
+    const hemi = new THREE.HemisphereLight(COLORS.white, COLORS.face, 2.1)
     this.scene.add(hemi)
 
-    this.dirLight = new THREE.DirectionalLight(0xffffff, 1.5)
+    this.dirLight = new THREE.DirectionalLight(COLORS.white, 1.5)
     this.dirLight.position.copy(this.dirBase)
     this.dirLight.castShadow = true
     this.dirLight.shadow.mapSize.set(2048, 2048)
@@ -215,7 +223,7 @@ export class SceneManager {
     this.scene.add(this.dirLight)
     this.scene.add(this.dirLight.target)
 
-    const amb = new THREE.AmbientLight(0xffffff, 1.1)
+    const amb = new THREE.AmbientLight(COLORS.white, 1.1)
     this.scene.add(amb)
   }
 
@@ -228,6 +236,12 @@ export class SceneManager {
     ground.receiveShadow = true
     ground.position.y = 0
     this.scene.add(ground)
+  }
+
+  // Živá změna OS nastavení prefers-reduced-motion → jen přepíše cached hodnotu,
+  // kterou tick() čte (žádné volání matchMedia v hot path).
+  private onReducedMotionChange = (e: MediaQueryListEvent): void => {
+    this.reducedMotion = e.matches
   }
 
   /* ---- interakce ---------------------------------------------------------- */
@@ -363,19 +377,26 @@ export class SceneManager {
     // přepsal highlight nastavený hoverem labelu (canvas→prvek vs label→prvek)
     if (this.pointerOnCanvas) this.setHover(this.pickHover())
 
-    // idle: jemné vznášení domu (čistě klidová animace, žádné scroll „usazení")
-    this.house.root.position.y = this.floatAmp * Math.sin(t * 0.6)
-
-    // idle: dýchání kamery (fov)
-    this.camera.fov = this.baseFov + this.fovAmp * Math.sin(t * 0.25)
-    this.camera.updateProjectionMatrix()
-
-    // idle: pohyb světla → měkký posun stínu
-    this.dirLight.position.set(
-      this.dirBase.x + 1.3 * Math.sin(t * 0.13),
-      this.dirBase.y,
-      this.dirBase.z + 1.1 * Math.cos(t * 0.11)
-    )
+    // idle: jemné vznášení domu / dýchání kamery / posun světla - jen bez reduced-motion.
+    // this.reducedMotion je čtený z MediaQueryList vytvořeného JEDNOU v konstruktoru
+    // (ne window.matchMedia() volaného každý frame - to by v hot path 60x/s zbytečně
+    // alokovalo nový MediaQueryList). Živá změna OS nastavení se promítne přes
+    // onReducedMotionChange (addEventListener('change', ...)), bez reloadu.
+    if (!this.reducedMotion) {
+      this.house.root.position.y = this.floatAmp * Math.sin(t * 0.6)
+      this.camera.fov = this.baseFov + this.fovAmp * Math.sin(t * 0.25)
+      this.camera.updateProjectionMatrix()
+      this.dirLight.position.set(
+        this.dirBase.x + 1.3 * Math.sin(t * 0.13),
+        this.dirBase.y,
+        this.dirBase.z + 1.1 * Math.cos(t * 0.11)
+      )
+    } else {
+      this.house.root.position.y = 0
+      this.camera.fov = this.baseFov
+      this.camera.updateProjectionMatrix()
+      this.dirLight.position.set(this.dirBase.x, this.dirBase.y, this.dirBase.z)
+    }
 
     this.house.update(dt)
     this.controls.update()
@@ -435,6 +456,7 @@ export class SceneManager {
     this.renderer.domElement.removeEventListener('pointermove', this.onPointerMove)
     this.renderer.domElement.removeEventListener('pointerleave', this.onPointerLeave)
     this.renderer.domElement.removeEventListener('click', this.onClick)
+    this.reducedMotionMQ?.removeEventListener('change', this.onReducedMotionChange)
     this.controls.dispose()
     this.overlay.dispose()
     this.house.dispose()

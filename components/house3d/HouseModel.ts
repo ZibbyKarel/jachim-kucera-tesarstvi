@@ -314,7 +314,7 @@ export class HouseModel {
     ]
     const winGeo = new THREE.BoxGeometry(1.0, 1.15, 0.09)
     const winMat = new THREE.MeshStandardMaterial({
-      color: 0xe9eaeb,
+      color: COLORS.face,
       roughness: 0.6,
       metalness: 0,
       emissive: new THREE.Color(COLORS.emissiveHover),
