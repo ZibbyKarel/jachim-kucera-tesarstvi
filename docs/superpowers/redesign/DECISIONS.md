@@ -421,3 +421,85 @@ barva, kterou web používá pro *pozitivní* akcenty a CTA. Uživatel by neroze
 od zvýraznění. Výměna palety za jinou ([[D-003]]) se téhle barvy nesmí dotknout, a to
 je argument pro to, aby v tom souboru nebyla.
 Kontrast ověřen: `text-red-700` na papíru 5.44:1, `border-red-600/85` 3.50:1. Obojí projde.
+
+## D-041 — Logo je širokoúhlý lockup, ne kulatý odznak
+**Datum:** 2026-08-06 · **Rozhodl:** Claude (opus), na základě uživatelovy stížnosti
+„logo v patičce není dobře čitelné"
+`public/logo_2.png` je **867×463 px**, tedy poměr 1,872 — kresba střechy a pod ní
+vysázené „Jáchim & Kučera" / „TESAŘSTVÍ". `Logo.tsx` ho ale renderoval jako čtvercový
+odznak (`width={size} height={size}` + `rounded-full` + `object-contain`), takže se
+lockup do boxu vepsal na poloviční výšku: při `size={44}` se kresba vykreslila 44×23 px
+a „TESAŘSTVÍ" vyšlo na 2,5 px.
+Sizing je nově **podle výšky** (`LOGO_ASPECT_RATIO = 867/463`), `rounded-full` je pryč.
+Naměřené pásy inkoustu (podíl na celkové výšce obrázku), ať se to nemusí odhadovat:
+kresba střechy 40,0 %, „Jáchim & Kučera" 21,0 %, linka 2,4 %, „TESAŘSTVÍ" 9,5 %.
+**Důsledek pro [[D-038]]:** samostatná vysázená slovní značka byla náplast právě na
+tuhle vadu a je odstraněná — lockup jméno firmy obsahuje sám. Vedlejší přínos: pod
+breakpointem `sm` se jméno firmy dřív neukazovalo vůbec (`hidden sm:inline`), teď je
+čitelné i na mobilu. `alt=""` na obrázku zůstává, jméno nese `aria-label` odkazu.
+
+## D-042 — Světlá varianta loga je vygenerovaný soubor, ne CSS filtr
+**Datum:** 2026-08-06 · **Rozhodl:** Claude (opus)
+Inkoust lockupu je antracitový; na `bg-timber` (#241c14) má kontrast kolem 1,2:1, takže
+v patičce logo prakticky mizelo. To byla hlavní příčina uživatelovy stížnosti.
+Inkoust je **rastrový** (kresba i písmo v jednom PNG), takže „světlá varianta" nemůže
+být přebarvení přes `currentColor`. `filter: invert()` odpadá, protože by zlatý
+ampersand a linky u „TESAŘSTVÍ" převrátil do modré.
+**Řešení:** `scripts/generate-logo-paper.mjs` (sharp, už je v `node_modules` jako
+tranzitivní závislost Nextu — **záměrně nepřidáno do `package.json`**, je to vývojářský
+nástroj, ne runtime kód). Skript rozliší pixely podle saturace (práh 0,2; inkoust má
+saturaci ~0, zlatá ~0,6 — mezi tím je velká mezera), nízko saturované přebarví na
+`paper.DEFAULT`, zlaté nechá být, alfy se nedotkne. Hex čte z `lib/palette.ts`, takže
+[[D-024]] (jediný zdroj hex hodnot) platí i pro obrázky. Při výměně palety stačí skript
+pustit znovu. `Logo` přepíná `src`, ne CSS barvu.
+
+## D-043 — Dekorativní 3D dům má vlastní fit margin
+**Datum:** 2026-08-06 · **Rozhodl:** Claude (opus)
+Dům se vrací na homepage jako **dekorace** (zadání uživatele: „mohl by se tam dát
+zmenšený 3D dům který nebude interaktivní… na mobilu asi nepřidávat"). Navigaci drží
+dál `ServiceIndex`, dům není klikací a je `aria-hidden`.
+`SceneManager` má nově `interactive` (default `true`): při `false` se `MenuOverlay`
+vůbec nezakládá, neregistrují se pointer listenery, neběží raycast v render smyčce,
+`OrbitControls` jsou vypnuté a canvas má `pointer-events: none`.
+**Podstatné zjištění:** `FIT_MARGIN_HERO = 2.25` existuje proto, aby kolem domu zbylo
+místo na **menu labely v pevných sloupcích**. Dekorativní dům labely nemá, takže si
+rezervoval místo pro nic — kresba zabírala jen 1/2,25 = 44 % rámu a při canvasu
+274×195 px vycházel dům na ~120×86 px, což je prakticky neviditelné. Přidána
+`FIT_MARGIN_DECOR = 1.3` (~77 % rámu). Tři hodnoty jsou správně tři: `SOLO` 1.5 pro
+`/nahled-3d`, `HERO` 2.25 pro interaktivní dům na papírovém panelu, `DECOR` 1.3 pro
+dekoraci bez labelů.
+**Mobil:** samotné `hidden lg:block` komponentu stejně namountuje a WebGL kontext
+vznikne — jen ho není vidět. Gate je proto `matchMedia('(min-width: 1024px)')`
+v `OpenerHouse.tsx` (`useState` + `useEffect`, ne čtení v renderu, kvůli hydrataci).
+Ověřeno instrumentací `HTMLCanvasElement.prototype.getContext`: na 390 px žádný canvas
+a žádné volání `getContext`.
+
+## D-044 — Dekorace se váže na textový sloupec, ne na okraj okna
+**Datum:** 2026-08-06 · **Rozhodl:** Claude (opus), na základě screenshotu na 1920 px
+První umístění domu bylo `absolute bottom-0 right-0` na sekci. Do ~1440 px to vypadalo
+dobře, ale nad šířkou `max-w-content` (1200 px) dům odplul do prázdné mrže vpravo od
+sazby, ztratil na ni vazbu a na 1920 px ho pravý okraj okna ořízl (sazba končí na
+1520 px, canvas začínal na 1620 px a končil na 1920 px).
+Vrstva leží nově uvnitř `container-content` a `ml-auto` srovná pravou hranu domu
+s pravou hranou textu. Ověřeno na 1024/1280/1440/1920 v cs i en:
+`canvasRight - textRight = 0` na všech osmi kombinacích, nikde průnik s nadpisem,
+podtitulkem, statistikami ani řádkem CTA; při výšce viewportu 720 px je pata vrstvy
+vždy nad ohybem (600,9 / 652,5 / 684,5 / 693,1 px).
+**Velikost zůstává `clamp(240px,20vw,300px)`.** Svislé pásmo mezi patou `<h1>` a řádkem
+CTA má konstantních 249 px (pevné px odstupy v `Opener.tsx`, ne `vw`), takže při
+poměru 7:5 je strop kolem 300×214 px. Zvětšovat dál by znamenalo přestavět rozestupy
+hero sekce — a uživatel psal „zmenšený dům", takže je to akcent, ne hlavní grafika.
+
+## D-045 — V automatizovaném prohlížeči neběží requestAnimationFrame
+**Datum:** 2026-08-06 · **Zjistil:** Claude (opus), měřením
+`/nahled-3d` mi vykreslilo místo domu roztříštěné fragmenty a tečky. Než jsem to nahlásil
+jako regresi, vrátil jsem `components/house3d` na stav před oběma commity — render vypadal
+**úplně stejně**. Příčina se pak našla měřením: rAF smyčka se v CDP prohlížeči za 45 sekund
+neposunula ani o jeden snímek. Scéna tedy zamrzne uprostřed úvodního rozkreslení
+(`introDur` 1,7 s) a screenshot ukazuje polotovar. GPU je přitom skutečná
+(ANGLE Metal, Apple M5), takže renderer za to nemůže.
+**Rozšíření pravidla z HANDOFF.md:** past se netýká jen GSAP revealů. **Nic, co je
+řízené `requestAnimationFrame`, se v tomhle prohlížeči vizuálně posoudit nedá.**
+Layout a rozměry ověřuj čísly (`getBoundingClientRect`), vzhled 3D scény si nech
+vyrenderovat subagentem s vlastním Playwrightem (tam rAF běží) a **počkej po načtení
+alespoň 3 sekundy**, než screenshotuješ.

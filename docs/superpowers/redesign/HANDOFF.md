@@ -82,7 +82,9 @@ ale dům žádný wordmark nenese — nad ohybem tedy značka nebyla vůbec.)
 - `docs/superpowers/plans/2026-08-06-redesign-v2.md` — plán T1–T7
 - `docs/superpowers/redesign/PALETTE-WOOD.md` — dřevěná paleta + kontrastní tabulka
 
-**Postup v2:** T1 (paleta + písma) dispatchnut. T2–T7 čekají.
+**Postup v2:** T1–T7 hotové a commitnuté. Následovalo doladění po zpětné vazbě
+uživatele (čitelnost loga, dekorativní 3D dům v hero) — detail v PROGRESS.md,
+rozhodnutí D-041 až D-045.
 
 Paleta v2 je **teplá dřevěná**: `paper / timber / oak / ember`. Všech 14 povinných
 kontrastních dvojic ověřeno výpočtem a nezávisle přepočítáno (nejtěsnější `ember` na
@@ -129,6 +131,14 @@ Než něco prohlásíš za vadu, **ověř to čtením DOM** (počet prvků, `gri
 `getBoundingClientRect`), ne pohledem na screenshot. Pro pravdivý screenshot jde dočasně
 vložit `<style>` s `main *, section *, footer * { opacity:1 !important; transform:none !important }`
 — reveal animuje jen tyhle dvě vlastnosti, takže je to věrný obraz usazeného stavu.
+
+**3. `requestAnimationFrame` v tomhle prohlížeči vůbec neběží.** Měřeno: smyčka se
+za 45 sekund neposunula ani o snímek. Trojrozměrná scéna proto zamrzne uprostřed
+úvodního rozkreslení a screenshot ukazuje roztříštěné fragmenty a tečky, které vypadají
+jako vada, ale nejsou (ověřeno návratem kódu na starší commit — vypadal stejně). GPU je
+skutečná (ANGLE Metal, Apple M5), takže renderer za to nemůže. **Vzhled čehokoli
+řízeného rAF si nech vyrenderovat subagentem s vlastním Playwrightem a počkej po načtení
+alespoň 3 sekundy.** Viz D-045.
 
 **2. `npm run build` v subagentovi rozbije běžící dev server.** Sdílejí `.next`.
 Projev: stránka se načte (curl vrací 200), ale renderer v prohlížeči zamrzne a
