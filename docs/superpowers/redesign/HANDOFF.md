@@ -114,3 +114,24 @@ z landing page na `/nahled-3d`.
 
 **Čeká se na klienta:** skutečné IČO (placeholder zatím zůstává, viz D-019 a pre-launch
 checklist v PROGRESS.md), reálné fotky realizací.
+
+---
+
+## Kontrola v prohlížeči — dvě pasti, na které jsem narazil
+
+**1. Screenshoty systematicky podceňují stránku.** GSAP `Reveal` animuje `gsap.from`
+(obsah je v SSR HTML viditelný, animace ho jen rozjíždí). V automatizovaném prohlížeči
+ale animace neběží plynule — screenshot pak ukazuje prázdné nebo poloprůhledné sekce,
+které ve skutečnosti fungují. Stejně tak `transition-colors` na hlavičce zamrzne
+uprostřed a `getComputedStyle` vrátí mezihodnotu (`bg-paper/90` se čte jako alfa 0.133).
+
+Než něco prohlásíš za vadu, **ověř to čtením DOM** (počet prvků, `gridTemplateColumns`,
+`getBoundingClientRect`), ne pohledem na screenshot. Pro pravdivý screenshot jde dočasně
+vložit `<style>` s `main *, section *, footer * { opacity:1 !important; transform:none !important }`
+— reveal animuje jen tyhle dvě vlastnosti, takže je to věrný obraz usazeného stavu.
+
+**2. `npm run build` v subagentovi rozbije běžící dev server.** Sdílejí `.next`.
+Projev: stránka se načte (curl vrací 200), ale renderer v prohlížeči zamrzne a
+`Page.captureScreenshot` spadne na timeout. Léčba: `rm -rf .next` a restart dev serveru.
+Stalo se to v tomhle běhu potřetí — do zadání subagentů proto patří poznámka, že dev
+server běží.

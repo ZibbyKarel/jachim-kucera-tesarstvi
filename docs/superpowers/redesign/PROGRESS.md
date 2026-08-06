@@ -22,10 +22,15 @@ faktické údaje. Řídící dokumenty:
       - review našel dvě věci, opraveno v `f123f36`:
         `--font-sans` utržený v `MenuOverlay.ts` (D-034) a plošné zvednutí
         dekorativních linek na `timber/50` (D-035, rozsah pravidla upřesněn ve specu)
-- [~] **v2/T2+T3** — hlavička, patička, otvírák, rejstřík služeb, přepis `page.tsx`
-      (sloučeno do jednoho tasku, je to jedna obrazovka)
-- [ ] **v2/T4** — homepage: realizace, postup, o nás, kontakt (split)
-- [ ] **v2/T5** — podstránky (služby, realizace, o nás, kontakt)
+- [x] **v2/T2+T3** — hlavička, patička, otvírák, rejstřík služeb, přepis `page.tsx`
+      (sloučeno do jednoho tasku, je to jedna obrazovka) · `ea3c333`
+      - review v prohlížeči našlo tři věci, opraveno v `4ceeed1`:
+        mrtvá utilita `border-timber/12` (D-036), Fraunces s vlasovými tahy kvůli
+        `font-optical-sizing: auto` (D-037), nečitelná značka v hlavičce (D-038)
+- [x] **v2/T4** — homepage: realizace, postup (nová sekce), o nás, kontakt (split) · `34c1f67`
+      - ověřeno v prohlížeči: všechny čtyři kroky postupu, split kontakt, faktické
+        údaje v mono na tmavém poli
+- [~] **v2/T5** — podstránky (služby, realizace, o nás, kontakt)
 - [ ] **v2/T6** — 404, `/nahled-3d`, úklid mrtvých komponent
 - [ ] **v2/T7** — audit: kontrasty včetně `/N` variant, pomlčky, mrtvé `var()` a `theme()`
 
