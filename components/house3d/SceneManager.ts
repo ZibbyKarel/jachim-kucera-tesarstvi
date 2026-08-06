@@ -16,10 +16,21 @@ import { CAMERA, COLORS, MENU, type MenuId } from './config'
 const DEG = Math.PI / 180
 
 /* Rezerva kolem domu při „fitu" do viewportu. Vyšší číslo = kamera couvne dál =
-   dům menší a víc papíru kolem (labely zůstanou v pevných sloupcích u kraje).
-   Hero chce dům cca na 60 % plochy, samostatný /nahled-3d ho chce co největší. */
+   dům menší a víc papíru kolem. Tři různé hodnoty podle toho, co tu rezervu
+   spotřebuje:
+   - FIT_MARGIN_SOLO: samostatný /nahled-3d, žádná rezerva na nic navíc -
+     dům chce co největší.
+   - FIT_MARGIN_HERO: transparentní A interaktivní varianta (menu labely by
+     bydlely v pevných sloupcích u kraje - dnes nepoužito, ale rezervováno).
+   - FIT_MARGIN_DECOR: dekorativní hero dům (`interactive === false`,
+     OpenerHouse) - žádné labely, žádný overlay, takže ta rezerva by šla
+     doslova na nic. Menší než HERO, ale pořád o kus víc než SOLO, ať dům
+     nesedí nalepený na hraně svého rámu jako oříznutý.
+   Pořadí konstant je: interaktivita (SOLO/HERO) > co je vlastně dekorace
+   (DECOR) - viz `this.fitMargin` v konstruktoru. */
 const FIT_MARGIN_HERO = 2.25
 const FIT_MARGIN_SOLO = 1.5
+const FIT_MARGIN_DECOR = 1.3
 
 export interface SceneOptions {
   onMenuSelect: (id: MenuId) => void
@@ -94,8 +105,16 @@ export class SceneManager {
     this.introActive = opts.playIntro !== false
     this.onIntroDone = opts.onIntroDone
     this.interactive = opts.interactive ?? true
-    // Hero (transparent) chce menší dům + víc papíru; samostatný náhled co největší.
-    this.fitMargin = this.transparent ? FIT_MARGIN_HERO : FIT_MARGIN_SOLO
+    // Dekorativní dům (žádné menu, žádný overlay) má vlastní - menší - rezervu
+    // (FIT_MARGIN_DECOR), protože rezerva HERO je propočítaná na labely,
+    // které tu nejsou. Zbylé dvě větve beze změny: transparentní+interaktivní
+    // (dnes nepoužito) chce menší dům + víc papíru na labely; samostatný
+    // náhled (/nahled-3d) chce dům co největší.
+    this.fitMargin = !this.interactive
+      ? FIT_MARGIN_DECOR
+      : this.transparent
+        ? FIT_MARGIN_HERO
+        : FIT_MARGIN_SOLO
     if (this.transparent) {
       this.floatAmp = 0.012
       this.fovAmp = 0.12
