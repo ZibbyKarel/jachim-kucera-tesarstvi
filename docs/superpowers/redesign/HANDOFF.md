@@ -63,21 +63,44 @@ obsazuje jiná aplikace. Pro vizuální kontrolu spusť dev server ručně na vo
 
 **Poslední aktualizace:** 2026-08-06
 
-**Fáze:** Implementace hotová. **Všech 12 tasků commitnuto**, plus 6 oprav mimo plán.
-Zbývá vyřešit pre-launch checklist v PROGRESS.md.
+**Fáze: REDESIGN v2.** Verze 1 (12 tasků, 42 commitů) je hotová a commitnutá, ale
+uživatel ji odmítl jako nedostatečnou: *„myslel sem ze vymyslíš úplně jiný design a né
+jen upravíš barvy na designu co byl."* Měl pravdu — kostra homepage zůstala původní
+(scroll-jacking `StackCover`, stejné pořadí sekcí, 3D dům jako hero i navigace).
+Změnily se jen barvy, písma, texty a jedna sekce.
 
-Písma: **Archivo** (display) + **IBM Plex Mono**. Česká diakritika ověřena inspekcí cmap
-tabulek stažených `.ttf` přes `fontTools`, ne odhadem.
+**Nové zadání uživatele (verbatim):** „Hele klidně zapomeň na dům nech ho někde dostupný
+na schované URL ale nemusí vůbec být na landing page. Zkus vymyslet kompletně nový design
+vubec se neomezuj tím co v projektu teď je. Jen nech faktické údaje."
 
-**Blokery pro nasazení** (detail v PROGRESS.md): skutečné IČO, reálné fotky,
-**nevykreslující se 3D dům (D-029)**, ověření oficiálního názvu firmy, potvrzení tvrzení
-„Záruka 10 let", vizuální kontrola na mobilu.
+Druhá výhrada: na titulní stránce bylo tlačítko „Nezávazně poptat" výraznější než logo
+firmy. (Příčina: `Header.tsx` schovával wordmark nad hero s odůvodněním „nese ho i dům",
+ale dům žádný wordmark nenese — nad ohybem tedy značka nebyla vůbec.)
 
-**Stav kódové báze po redesignu:**
-- Jediný soubor s hex hodnotami palety je `lib/palette.ts` (D-024). Výměna palety za
-  „dřevěnou" je úprava jednoho souboru, jak si uživatel vymínil.
+**Řídící dokumenty v2:**
+- `docs/superpowers/specs/2026-08-06-redesign-v2-drevo.md` — spec
+- `docs/superpowers/plans/2026-08-06-redesign-v2.md` — plán T1–T7
+- `docs/superpowers/redesign/PALETTE-WOOD.md` — dřevěná paleta + kontrastní tabulka
+
+**Postup v2:** T1 (paleta + písma) dispatchnut. T2–T7 čekají.
+
+Paleta v2 je **teplá dřevěná**: `paper / timber / oak / ember`. Všech 14 povinných
+kontrastních dvojic ověřeno výpočtem a nezávisle přepočítáno (nejtěsnější `ember` na
+`paper.dim` = 4.85:1). Minimální průhlednosti: `timber/N` text ≥65, linka ≥50;
+`paper/N` text na timber ≥50, linka ≥40.
+
+Písma v2: **Fraunces** (display) + Archivo (body) + IBM Plex Mono (čísla/popisky).
+Česká diakritika se ověřuje inspekcí cmap tabulky staženého `.ttf` přes `fontTools`,
+ne odhadem.
+
+**Blokery pro nasazení** (detail v PROGRESS.md): skutečné IČO, reálné fotky, ověření
+oficiálního názvu firmy, potvrzení tvrzení „Záruka 10 let", vizuální kontrola na mobilu.
+3D dům (D-029) se mezitím **rozjel a vykresluje se správně** — a stejně odchází
+z landing page na `/nahled-3d`.
+
+**Stav kódové báze:**
+- Jediný soubor s hex hodnotami palety je `lib/palette.ts` (D-024).
 - Žádné legacy třídy `wood-*`/`cream`/`charcoal`, žádné pomlčky v uživatelském textu.
-- Všech ~20 kontrastních dvojic s průhledností přeměřeno a opraveno (Task 12).
 
 ## Jak se ověřuje cizí práce (poučení, ne teorie)
 

@@ -282,3 +282,52 @@ plné krytí nastavuje až `revealComplete()` volaný z intro animace v `SceneMa
 buď nedostanou `revealComplete()`, nebo jejich geometrie nevznikne.
 **Rozhodnutí:** mimo rozsah redesignu. Redesign měnil barvy a chování reduced-motion, ne
 geometrii. Řešit samostatně, ale **před nasazením** — je to hlavní prvek homepage.
+
+## D-030 — Redesign v1 byl reskin, ne redesign. Startuje v2.
+**Datum:** 2026-08-06 · **Rozhodl:** uživatel
+Uživatel po vizuální kontrole: *„myslel sem ze vymyslíš úplně jiný design a né jen upravíš
+barvy na designu co byl. Myslel sem ze budeš dělat kompletně novou věc."*
+**Měl pravdu, a fakta to potvrzují.** Diff `6d3a0de..HEAD` nad `app/` a `components/`:
+632 přidaných proti 969 smazaným řádkům, z toho jen **dvě** strukturální výměny
+(`ServicesScroll` → `ServicesGrid`, přidaný `MobileServiceGrid`). `page.tsx` se změnila
+o 9 řádků. Pořadí sekcí, scroll-jacking přes `StackCover` i 3D dům jako hero zůstaly.
+**Proč to tak dopadlo:** v HANDOFF.md jsem mezi „zachovat" napsal *a11y wiring 3D domu*
+a scroll architekturu jsem nikdy nedal na stůl jako otevřenou otázku. Tím jsem si sám
+zakázal sáhnout na jediné dvě věci, které tvořily osobnost webu. Spec pak mohl být
+splněn do puntíku a výsledek přesto vypadal jako ten samý web v jiných barvách.
+**Pravidlo:** když zadání zní „kompletně nový vizuální směr", patří **kostra a hlavní
+interakční zařízení** mezi věci, o kterých se rozhoduje vědomě — ne mezi ty, které se
+mlčky zachovají. Seznam „zachovat" smí obsahovat data, URL a a11y kontrakty, ne layout.
+
+## D-031 — Dům odchází z landing page na skrytou URL
+**Datum:** 2026-08-06 · **Rozhodl:** uživatel
+*„Hele klidně zapomeň na dům nech ho někde dostupný na schované URL ale nemusí vůbec být
+na landing page."* Dům zůstává funkční na `/nahled-3d`, neodkazovaný z navigace.
+Modul `components/house3d/` se nemaže.
+**Důsledek:** padá s ním `MobileServiceGrid` (existoval jen jako berlička k domu na
+mobilu) i `HeroScroll`/`HeroHouse`. Mobilní navigaci nově nese rejstřík služeb, jehož
+řádky jsou celoplošné odkazy — mobil je tím vyřešený strukturálně, ne zvláštní komponentou.
+Ruší se i `StackCover` na homepage: žádný scroll-jacking.
+
+## D-032 — Wordmark je nad ohybem vždy, CTA v hlavičce není vyplněné tlačítko
+**Datum:** 2026-08-06 · **Rozhodl:** uživatel (výhrada), Claude (řešení)
+Uživatel: *„na titulní stránce je výraznější „nezávazně poptat" než logo firmy."*
+**Příčina:** `Header.tsx` schovával logo nad hero (`opacity-0`) s komentářem „Logo je na
+homepage nad Hero redundantní (nese ho i dům)". Dům ale žádný wordmark nenese — vykresluje
+geometrii a názvy služeb. Nad ohybem tedy značka nebyla vůbec a jediným výrazným prvkem
+byl vyplněný akcentní `Button` s CTA.
+**Poučení:** komentář, který odůvodňuje skrytí prvku odkazem na jiný prvek, je potřeba
+ověřit proti tomu druhému prvku. Tenhle byl nepravdivý od začátku a nikdo ho nezpochybnil.
+**Pravidlo do v2:** wordmark je viditelný okamžitě a všude. V hlavičce není vyplněné
+tlačítko; CTA je textový odkaz s podtržením.
+
+## D-033 — Paleta v2 je dřevěná; tokeny se přejmenovávají, ne jen přebarvují
+**Datum:** 2026-08-06 · **Rozhodl:** Claude (opus)
+Uživatel si dřevěné barvy přál od začátku ([[D-003]]) a přijal materiálovou paletu jen
+s tím, že *„tokeny se dají změnit později vždy"*. V2 přepisuje kostru, takže je to ta chvíle.
+`slate → timber`, `steel → oak`, `patina → ember`, `paper` zůstává jménem (mění hodnotu).
+**Proč přejmenovat, ne jen přebarvit:** „patina" je zelený pojem. Nechat zelené jméno na
+terakotovém akcentu by byla lež v tokenu, kterou by každý další task musel obcházet.
+Přejmenování je levné právě teď, kdy se stejně přepisují všechny komponenty.
+Hodnoty a naměřené kontrasty: `docs/superpowers/redesign/PALETTE-WOOD.md`.
+Investice z [[D-024]] se vyplatila: hex hodnoty žijí v jediném souboru.
