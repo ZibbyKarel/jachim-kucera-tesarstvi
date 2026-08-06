@@ -36,24 +36,23 @@ export default async function ONasPage({
   const certificates = t.raw('certificates') as string[]
 
   return (
-    <div className="bg-wood-dark">
+    <div className="bg-paper">
       {/* Hero portrét */}
       <header className="relative h-[70vh] min-h-[440px] w-full overflow-hidden">
         <ImageFrame
           src="/images/tym/tym-portret.jpg"
           alt={t('heroAlt')}
           aspect="16/9"
-          aged={false}
           rounded={false}
           priority
           sizes="100vw"
           className="!absolute inset-0 h-full w-full"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-wood-dark via-wood-dark/55 to-wood-dark/25" />
+        <div className="absolute inset-0 bg-gradient-to-t from-paper via-paper/65 to-paper/25" />
         <div className="container-content absolute inset-x-0 bottom-0">
           <div className="pb-14">
             <span className="eyebrow">{tNav('about')} · {tCommon('region')}</span>
-            <h1 className="mt-3 font-display text-5xl italic leading-none text-cream md:text-8xl">
+            <h1 className="mt-3 font-display text-5xl italic leading-none text-slate md:text-8xl">
               {t('heroTitle')}
             </h1>
           </div>
@@ -64,7 +63,7 @@ export default async function ONasPage({
       <section aria-label={t('storyAria')} className="py-20 md:py-28">
         <div className="container-content grid gap-10 md:grid-cols-[1fr_1.3fr] md:gap-16">
           <Reveal>
-            <p className="font-display text-3xl italic leading-snug text-wood-amber md:sticky md:top-28">
+            <p className="font-display text-3xl italic leading-snug text-patina md:sticky md:top-28">
               {t('heroQuote')}
             </p>
           </Reveal>
@@ -73,14 +72,14 @@ export default async function ONasPage({
               <p
                 key={p.slice(0, 24)}
                 data-reveal-item
-                className="font-body text-base leading-relaxed text-cream/75"
+                className="font-body text-base leading-relaxed text-slate/75"
               >
                 {p}
               </p>
             ))}
             <div
               data-reveal-item
-              className="mt-8 grid grid-cols-3 gap-4 border-y border-cream/10 py-8"
+              className="mt-8 grid grid-cols-3 gap-4 border-y border-slate/10 py-8"
             >
               {aboutStats.map((s) => (
                 <Counter key={s.label} value={s.value} label={s.label} />
@@ -93,12 +92,12 @@ export default async function ONasPage({
       {/* Timeline */}
       <section
         aria-labelledby="timeline-heading"
-        className="border-t border-cream/10 bg-wood-medium py-20 md:py-28"
+        className="border-t border-slate/10 bg-paper-dim py-20 md:py-28"
       >
         <div className="container-content">
           <h2
             id="timeline-heading"
-            className="mb-14 font-display text-3xl italic text-cream md:text-4xl"
+            className="mb-14 font-display text-3xl italic text-slate md:text-4xl"
           >
             {t('timelineHeading')}
           </h2>
@@ -109,29 +108,26 @@ export default async function ONasPage({
       {/* Hodnoty */}
       <section
         aria-labelledby="values-heading"
-        className="bg-wood-dark py-20 md:py-28"
+        className="bg-paper py-20 md:py-28"
       >
         <div className="container-content">
           <h2
             id="values-heading"
-            className="font-display text-3xl italic text-cream md:text-4xl"
+            className="font-display text-3xl italic text-slate md:text-4xl"
           >
             {t('valuesHeading')}
           </h2>
           <Reveal stagger className="mt-12 grid gap-8 md:grid-cols-3">
-            {values.map((v, i) => (
+            {values.map((v) => (
               <div
                 key={v.title}
                 data-reveal-item
-                className="border-t border-cream/15 pt-6"
+                className="border-t border-slate/15 pt-6"
               >
-                <span className="font-display text-2xl italic text-wood-warm">
-                  0{i + 1}
-                </span>
-                <h3 className="mt-3 font-display text-3xl italic text-cream">
+                <h3 className="font-display text-3xl italic text-slate">
                   {v.title}
                 </h3>
-                <p className="mt-3 font-body text-sm leading-relaxed text-cream/70">
+                <p className="mt-3 font-body text-sm leading-relaxed text-slate/70">
                   {v.description}
                 </p>
               </div>
@@ -141,9 +137,9 @@ export default async function ONasPage({
       </section>
 
       {/* Certifikáty + CTA */}
-      <section className="border-t border-cream/10 bg-wood-medium py-20 md:py-28">
+      <section className="border-t border-slate/10 bg-paper-dim py-20 md:py-28">
         <div className="container-content">
-          <h2 className="font-display text-3xl italic text-cream md:text-4xl">
+          <h2 className="font-display text-3xl italic text-slate md:text-4xl">
             {t('certificatesHeading')}
           </h2>
           <Reveal stagger className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-4">
@@ -151,15 +147,15 @@ export default async function ONasPage({
               <div
                 key={c}
                 data-reveal-item
-                className="flex aspect-[3/2] items-center justify-center rounded-sm border border-cream/10 bg-wood-dark p-6 text-center font-body text-xs uppercase tracking-widest text-cream/50"
+                className="flex aspect-[3/2] items-center justify-center rounded-sm border border-slate/10 bg-paper p-6 text-center font-body text-xs uppercase tracking-widest text-slate/50"
               >
                 {c}
               </div>
             ))}
           </Reveal>
 
-          <div className="mt-16 flex flex-col items-start gap-6 border-t border-cream/10 pt-12 md:flex-row md:items-center md:justify-between">
-            <p className="max-w-md font-display text-2xl italic text-cream">
+          <div className="mt-16 flex flex-col items-start gap-6 border-t border-slate/10 pt-12 md:flex-row md:items-center md:justify-between">
+            <p className="max-w-md font-display text-2xl italic text-slate">
               {t('ctaText')}
             </p>
             <Button href="/kontakt" size="lg">
