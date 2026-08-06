@@ -72,15 +72,31 @@ Seznam se doplní po finalizaci plánu.
       `realizace/page.tsx` tím vypadl ze seznamu souborů s legacy třídami.
       **Nedodělek k rozhodnutí:** modal nemá focus trap ani návrat fokusu na spouštěč
       (stav před redesignem, subagent ho záměrně tiše nepřidával). Řeší se v Tasku 12.
-- [~] **Oprava mimo plán** — jeden zdroj pravdy pro paletu (D-024) + mrtvá `--font-body` (D-025)
+- [x] **Oprava mimo plán** — jeden zdroj pravdy pro paletu (D-024) → `f4d0146`
+      `lib/palette.ts` je jediný soubor s hex hodnotami palety. `tailwind.config.ts` a
+      `house3d/config.ts` z něj importují, `:root` blok v `globals.css` zrušen a jeho
+      konzumenti přešli na `theme()`. Ověřeno porovnáním vygenerovaného CSS před/po —
+      vypočtené barvy identické. Výměna palety za „dřevěnou" je teď úprava jednoho souboru.
+- [x] **Oprava mimo plán** — visící CSS proměnné (D-025, D-026) → `56e9e6b`
+      `MenuOverlay.ts` sahal po `--font-body` i `--font-display`, ani jedna nikdy
+      neexistovala. `--font-display` měl fallback `Georgia, serif`, takže názvy služeb
+      v menu 3D domu renderovaly serifovou kurzívou na homepage. Provedeno i systematické
+      ověření všech `var()` v repu proti definicím.
 - [x] Task 9 — O nás (timeline jako technický harmonogram) → `d5b5444`
       Odstraněno falešné číslování hodnot (`01`, `02`…), dekorativní tečka Timeline
       nahrazena kótovací značkou. Obě stránky jsou celé na světlém pozadí, takže se
       `*-soft` varianty vůbec nepoužívají a párovací matici nelze porušit.
       Subagent správně nechal em-dashe v `messages/*.json` na Task 11, aby se diff
       nedělal dvakrát.
-- [~] Task 10 — Kontakt (formulář, a11y, kontrast)
-- [ ] Task 11 — Content sweep: em-dashe, zbylé hex literály, mrtvý kód
+- [x] Task 10 — Kontakt (formulář, a11y, kontrast) → `c8c9f9e`
+      Poslední soubory se starou „cream/gold" paletou přebarveny; SVG mapa přešla na
+      `currentColor` + třídy místo `var()`, což se ukázalo jako správné, protože `:root`
+      mezitím zaniklo (D-024). A11y doplněno nad rámec plánu: nativní `required`,
+      `role="alert"` na chyby polí, `aria-busy` a ohlašovaný loading stav.
+      Faktické údaje (telefon, e-mail, oblast) ověřeně beze změny.
+      `text-red-700` pro validační chyby je legální výjimka, plán ji uvádí s kontrastem
+      5,65:1 na `paper`. Sémantická barva chyby nemá jít s paletou.
+- [~] Task 11 — Content sweep: pomlčky, zbylé hex literály, mrtvý kód
       Pozor na dva různé soubory: `app/[locale]/not-found.tsx` **i** `app/not-found.tsx`
       v kořeni. Oba mají vlastní legacy paletu, plán zmiňuje jen ten první.
 - [ ] Task 12 — Závěrečný pass: kontrast, reduced-motion, anti-slop, build
