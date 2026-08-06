@@ -206,14 +206,17 @@ ne pohledem. **Zbývá zkontrolovat na skutečném telefonu nebo v device toolba
       působí hůř než žádná.
 - [ ] **Reálné fotky** — web běží na placeholderech. `ImageFrame` má konstantu
       `hasRealAsset`; po dodání souborů do `public/images/` se přepne.
-- [ ] **3D dům se nevykresluje** (D-029) — je to hlavní prvek homepage a je rozbitý.
-      Vada existovala už před redesignem, takže ji redesign nezpůsobil ani nevyřešil.
+- [x] ~~**3D dům se nevykresluje** (D-029)~~ — vyřešeno. Dům se vykresluje postupně,
+      potvrdil uživatel. Z homepage odešel na `/nahled-3d` (redesign v2) a na titulní
+      stránku se vrátil jen jako neinteraktivní dekorace vpravo dole (D-043, D-044).
 - [ ] **Oficiální název firmy** — `SITE.name` v `lib/constants.ts` je
       `Jáchim & Kučera, tesařství`. Interpunkce je naše, ne ověřená. Až bude známé IČO,
       srovnat s rejstříkem. JSON-LD už používá bezpečný `shortName` (`07e528a`).
 - [ ] **„Záruka 10 let"** v certifikátech na stránce O nás — neověřené tvrzení, může být
       pozůstatek staršího textu. Potvrdit s klientem, nebo odstranit.
-- [ ] **Mobilní zobrazení pohledem** — ověřeno zatím jen strukturálně, viz výše.
+- [x] ~~**Mobilní zobrazení pohledem**~~ — ověřeno na viewportu 281 px (užší než
+      iPhone SE): žádné horizontální přetečení, rejstřík služeb funguje jako navigace,
+      logo v hlavičce čitelné, dotykové cíle 44 px.
 
 ## Známé nedodělky ponechané mimo rozsah
 
@@ -223,3 +226,25 @@ ne pohledem. **Zbývá zkontrolovat na skutečném telefonu nebo v device toolba
   na spouštěcí tlačítko po zavření. Je to stav zděděný z původního kódu, ne regrese
   redesignu. `role="dialog"`, `aria-modal`, `aria-label`, Escape a zamčený scroll fungují.
   K dořešení v Tasku 12.
+
+
+---
+
+## Doladění po redesignu v2 (2026-08-06, po zpětné vazbě uživatele)
+
+Uživatel nahlásil dvě věci: (1) logo v patičce není dobře čitelné, (2) hero sekce má
+prázdný pravý dolní kvadrant, kam by šel dát zmenšený neinteraktivní 3D dům
+(„na mobilu asi nepřidávat").
+
+- [x] **Logo** — dvě nezávislé vady: špatný poměr stran (širokoúhlý lockup renderovaný
+      jako kulatý odznak, D-041) a tmavý inkoust na tmavém poli (D-042). Opraveno
+      sizingem podle výšky + vygenerovanou světlou variantou `public/logo-paper.png`.
+      Commity `4503c4a`, `e3f5535`.
+- [x] **Dekorativní 3D dům v hero** — `interactive={false}` režim scény, mount jen na
+      desktopu přes `matchMedia`, vlastní `FIT_MARGIN_DECOR` (D-043), vazba na textový
+      sloupec (D-044). Commity `3df85a8`, `9e2b1ec`, `6644d3f`.
+- [x] **Produkční build** — prošel, 26 stránek, nula warningů.
+
+**Zbývá posoudit uživateli:** jestli je dům v hero dost výrazný. Rozměrový strop je
+300×214 px kvůli svislému pásmu 249 px mezi patou nadpisu a řádkem CTA; víc by
+znamenalo přestavět rozestupy v `Opener.tsx` (viz D-044).
