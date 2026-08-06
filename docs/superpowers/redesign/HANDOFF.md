@@ -52,7 +52,7 @@ npm run dev         # http://localhost:3000
 
 **Poslední aktualizace:** 2026-08-06
 
-**Fáze:** Příprava — plán se reviduje podle rozhodnutí z auditu.
+**Fáze:** Příprava — plán po adversariálním review, opravuje se druhé kolo.
 
 **Hotovo:**
 - Design spec napsaný a schválený, commitnutý.
@@ -63,16 +63,24 @@ npm run dev         # http://localhost:3000
   mrtvý kód `IsometricHouse.tsx`, chybějící reduced-motion guard u idle animace domu.
 - Rozhodnutí k nálezům: D-011 až D-018 v DECISIONS.md.
 
+**Plán — stav:** napsaný (12 tasků, ~3200 řádků), prošel dvěma review koly.
+Písma: **Archivo** (display, pravá kurzíva) + **IBM Plex Mono**. Česká diakritika ověřena
+inspekcí cmap tabulek stažených `.ttf` přes `fontTools`, ne odhadem.
+
+Review kolo 1 (opus, vlastní skript): všech 7 tvrzených kontrastních poměrů sedí přesně.
+Odhaleny 3 neuvedené padající dvojice → D-020.
+Review kolo 2 (nezávislý adversariální subagent): potvrdil přesnost odkazů na řádky a symboly
+napříč kódovou bází. Nalezena 1 blokující vada (Task 3 implementoval zrušené D-015 místo
+D-019) + 5 dalších oprav.
+
 **Právě probíhá:**
-- Sonnet subagent reviduje plán (`docs/superpowers/plans/2026-08-06-website-redesign.md`):
-  výběr písem s ověřenou českou diakritikou, přesun kontroly kontrastu do Tasku 1,
-  přepis Tasku 6 na statický bento grid.
-- Plán ještě NENÍ zreviewovaný opusem ani commitnutý.
+- Autor plánu zapracovává opravy z obou review kol. Plán ještě NENÍ commitnutý.
 
 **Další krok:**
-- Opus zreviewuje revidovaný plán a commitne ho.
+- Opus ověří opravy, commitne plán, spustí Task 1.
 - Pak implementace task po tasku přes sonnet subagenty, s review mezi tasky.
 
 **Blokery:** žádné.
 
-**Čeká se na klienta:** skutečné IČO (viz PROGRESS.md), reálné fotky realizací.
+**Čeká se na klienta:** skutečné IČO (placeholder zatím zůstává, viz D-019 a pre-launch
+checklist v PROGRESS.md), reálné fotky realizací.
