@@ -124,6 +124,16 @@ navigaci. Rozšíření na 6 je práce v Three.js modelu — mimo rozsah tohoto 
 Audit potvrdil nula importérů. Obsahuje navíc hardcoded hex barvy, které by jinak zůstaly
 v repu jako matoucí falešná stopa při příští výměně palety.
 
+## D-019 — Placeholder IČO zůstává (RUŠÍ D-015)
+**Datum:** 2026-08-06 · **Rozhodl:** uživatel
+Ověřeno grepem: skutečné IČO se v repu nikde nevyskytuje, jediný výskyt je placeholder
+`IČO 000 00 000 · Plzeňský kraj` v `messages/cs.json:19` a `companyIdLabel` v `en.json:19`.
+Uživatel rozhodl placeholder zatím ponechat.
+**Nahrazuje D-015**, který ho chtěl odstranit.
+**Podmínka:** hodnota musí být v kódu i v pre-launch checklistu zřetelně označená jako
+placeholder, aby nemohla nasadit omylem. IČO je v ČR povinný údaj na webu firmy a vymyšlená
+hodnota působí na návštěvníka hůř než žádná — proto to nesmí projít do produkce tiše.
+
 ## D-018 — Chybějící `prefers-reduced-motion` u idle animace domu je bug k opravě
 **Datum:** 2026-08-06 · **Rozhodl:** Claude (opus)
 Idle float/breathing/light-drift smyčka 3D domu nemá guard; má ho jen úvodní animace.
