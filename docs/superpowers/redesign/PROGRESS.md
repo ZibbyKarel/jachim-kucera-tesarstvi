@@ -30,9 +30,15 @@ faktické údaje. Řídící dokumenty:
 - [x] **v2/T4** — homepage: realizace, postup (nová sekce), o nás, kontakt (split) · `34c1f67`
       - ověřeno v prohlížeči: všechny čtyři kroky postupu, split kontakt, faktické
         údaje v mono na tmavém poli
-- [~] **v2/T5** — podstránky (služby, realizace, o nás, kontakt)
-- [ ] **v2/T6** — 404, `/nahled-3d`, úklid mrtvých komponent
-- [ ] **v2/T7** — audit: kontrasty včetně `/N` variant, pomlčky, mrtvé `var()` a `theme()`
+- [x] **v2/T5** — podstránky (služby, realizace, o nás, kontakt) · `a99b9f9`
+      - `ContactSection` se stal sdílenou komponentou (volitelné `heading`,
+        `description`, `showMap`); homepage ji volá bez props
+      - `ServiceCard` smazán (nikdo neimportoval), `Timeline` přepsán do jazyka
+        sekce Postup, filtr realizací z pilulek na textové odkazy
+      - **k ověření:** že se výchozí render `ContactSection` na homepage nezměnil
+- [~] **v2/T6+T7** — 404, `/nahled-3d`, úklid mrtvého kódu + závěrečný audit
+      (kontrasty všech reálně použitých dvojic, mrtvé utility a proměnné, pomlčky,
+      přístupnost, konzistence)
 
 ---
 
