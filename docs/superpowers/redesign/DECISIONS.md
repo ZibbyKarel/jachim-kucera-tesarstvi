@@ -124,6 +124,17 @@ navigaci. Rozšíření na 6 je práce v Three.js modelu — mimo rozsah tohoto 
 Audit potvrdil nula importérů. Obsahuje navíc hardcoded hex barvy, které by jinak zůstaly
 v repu jako matoucí falešná stopa při příští výměně palety.
 
+## D-021 — Zákaz em-dashů platí jen pro uživatelsky viditelný text, ne pro komentáře v kódu
+**Datum:** 2026-08-06 · **Rozhodl:** Claude (opus) — oprava vlastního přespecifikování
+Při zadávání Tasku 1 jsem požadoval nulu em-dashů „včetně komentářů v kódu v češtině".
+To bylo nesprávné rozšíření pravidla.
+**Proč:** pravidlo existuje proti AI-slop v *renderovaném* textu. Komentáře v kódu se
+uživateli nikdy nezobrazí a česká typografie pomlčku legitimně používá. Vynucovat tam
+spojovník je pedantství, které nic nezlepšuje a jen plodí zbytečné diffy.
+**Platí:** nula em-dashů ve všech uživatelsky viditelných řetězcích — `messages/*.json`,
+JSX text, `aria-label`, `alt`, `title`, metadata, chybové hlášky. V komentářích v kódu
+jsou povolené.
+
 ## D-020 — Tokeny mají závaznou párovací matici, ne jen seznam hodnot
 **Datum:** 2026-08-06 · **Rozhodl:** Claude (opus)
 Nezávislé přeměření potvrdilo všech 7 poměrů, které plán tvrdil (přesně na setiny), ale

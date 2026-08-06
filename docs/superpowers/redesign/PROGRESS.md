@@ -12,15 +12,21 @@ Stav implementace task po tasku. Aktualizuje se po každém dokončeném tasku, 
 - [x] Recovery infrastruktura (DECISIONS.md, HANDOFF.md, PROGRESS.md)
 - [x] Audit kódové báze (sonnet subagent)
 - [x] Rozhodnutí k nálezům auditu → D-011 až D-018 v DECISIONS.md
-- [~] Revize implementačního plánu podle rozhodnutí
-- [ ] Review a commit plánu (opus)
+- [x] Revize implementačního plánu podle rozhodnutí
+- [x] Adversariální review plánu (nezávislý subagent) — 1 blokující vada + 5 oprav
+- [x] Review a commit plánu (opus) → `6d3a0de`
 
 ## Fáze 1 — Implementace
 
 Čísla tasků odpovídají `docs/superpowers/plans/2026-08-06-website-redesign.md`.
 Seznam se doplní po finalizaci plánu.
 
-- [ ] Task 1 — Design tokeny, písma, kontrola kontrastu (viz D-012, D-014)
+- [x] Task 1 — Design tokeny, písma, kontrola kontrastu (viz D-012, D-014) → `d8499c9`
+      Tokeny `paper`/`slate`/`steel`/`patina`, písma Archivo + IBM Plex Mono,
+      `SITE.name` em-dash → spojovník. Všech 15 legálních dvojic prošlo AA, 4 zakázané
+      dvojice ověřeny že opravdu padají. typecheck + lint čisté.
+      **Pozn.:** web je od tohoto commitu vizuálně rozbitý (staré třídy `wood-*` už
+      neexistují) — je to záměr, opraví se průběžně v Tascích 2-10.
 - [ ] Task 2 — Sdílené UI primitivy (Button, ImageFrame, Counter)
 - [ ] Task 3 — Layout chrome (Header, Footer, Logo, LanguageSwitcher)
 - [ ] Task 4 — 3D dům retheme desktop + oprava reduced-motion (viz D-018)
