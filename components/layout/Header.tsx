@@ -13,7 +13,7 @@ function navLabel(t: (key: string) => string, source: NavLink['textSource']) {
 }
 
 /* -------------------------------------------------------------------------- */
-/*  Header — wordmark viditelný okamžitě a vždy                                 */
+/*  Header — logo viditelné okamžitě a vždy                                    */
 /*                                                                              */
 /*  V1 schovávala logo (`opacity-0`) nad Hero sekcí homepage s odůvodněním      */
 /*  „nese ho i dům" - dům žádný wordmark nenesl, takže nad ohybem nebyla        */
@@ -21,7 +21,7 @@ function navLabel(t: (key: string) => string, source: NavLink['textSource']) {
 /*  vidět od prvního renderu, na homepage i všude jinde.                       */
 /*                                                                              */
 /*  Jediný stav, který hlavička sleduje, je `scrolled` (> 40px) - po odscroll-  */
-/*  ování se zúží (menší wordmark, `paper/90` + blur, spodní hairline).         */
+/*  ování se zúží (menší logo, `paper/90` + blur, spodní hairline).            */
 /* -------------------------------------------------------------------------- */
 
 export function Header() {
@@ -52,9 +52,13 @@ export function Header() {
   // Zúžení headeru: na začátku stránky (nebo pokud je otevřené mobilní menu,
   // které má vlastní tmavé pozadí) zůstává plně průhledný.
   const solid = !menuOpen && scrolled
-  // 44px je zároveň minimální dotykový cíl (spec §6) — zúžený stav se u loga
-  // zastaví přesně na téhle hranici, ne níž.
-  const logoSize = solid ? 44 : 52
+  // Logo je širokoúhlý lockup (867×463), ne čtvercový odznak — na 281px
+  // mobilním viewportu (bez horizontálního přetečení vedle jazykového
+  // přepínače a hamburgeru) se do řady vejde jen omezená šířka, proto je
+  // vizuální výška v obou stavech nižší než dřívější odznakové rozměry.
+  // Dotykový cíl odkazu pod 44px (spec §6) se dorovnává vertikálním
+  // paddingem přímo na <Logo>, ne zvětšením obrázku.
+  const logoHeight = solid ? 32 : 40
 
   return (
     <header
@@ -68,7 +72,9 @@ export function Header() {
           solid ? 'py-3' : 'py-5'
         }`}
       >
-        <Logo size={logoSize} wordmark className="shrink-0" />
+        {/* py-1.5/py-0.5 dorovnávají klikací plochu na 44px (32+2×6, 40+2×2) —
+            viz komentář u logoHeight výše. */}
+        <Logo height={logoHeight} className={`shrink-0 ${solid ? 'py-1.5' : 'py-0.5'}`} />
 
         <nav aria-label={t('mainNavAria')} className="hidden items-center gap-8 lg:flex">
           {navLinks.map((link) => {

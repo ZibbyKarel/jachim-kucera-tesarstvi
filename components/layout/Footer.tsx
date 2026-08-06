@@ -22,7 +22,10 @@ export function Footer() {
   return (
     <footer aria-label={t('common.siteFooterAria')} className="bg-timber">
       <div className="container-content flex flex-col gap-8 py-10 md:flex-row md:items-center md:justify-between md:gap-6">
-        <Logo size={44} wordmark light />
+        {/* height=60 → šířka ~112px (LOGO_ASPECT_RATIO). Patička je bg-timber,
+            takže logo jede v paper variantě (light) — jinak by antracitový
+            inkoust na tmavém poli prakticky zmizel (~1,2:1 kontrast). */}
+        <Logo height={60} light />
 
         <nav
           aria-label={t('common.footerNavAria')}
