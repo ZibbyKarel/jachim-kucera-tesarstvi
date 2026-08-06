@@ -210,7 +210,7 @@ export function getProject(id: string): Project | undefined {
 /* -------------------------------------------------------------------------- */
 /*  Labely na domě — hlavní navigace. Text/subtext přichází z messages.        */
 /*  `side` určuje, na kterou stranu od kotvy text vyrůstá (kvůli spojnici       */
-/*  a zarovnání) — řeší IsometricHouse přímo přes LAYOUT, tady jen data.        */
+/*  a zarovnání) — layout řeší components/house3d, tady jen data.              */
 /* -------------------------------------------------------------------------- */
 
 export const houseLabels: HouseLabel[] = [
