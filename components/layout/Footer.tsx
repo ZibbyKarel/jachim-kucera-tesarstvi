@@ -18,7 +18,7 @@ export function Footer() {
       <div className="container-content relative grid gap-12 py-16 md:grid-cols-[1.5fr_1fr_1fr]">
         <div className="space-y-5">
           <Logo size={64} />
-          <p className="max-w-xs font-body text-sm leading-relaxed text-slate/60">
+          <p className="max-w-xs font-body text-sm leading-relaxed text-slate/70">
             {t('common.footerDescription')}
           </p>
         </div>
@@ -64,12 +64,12 @@ export function Footer() {
                 {SITE.email}
               </a>
             </li>
-            <li className="pt-2 text-slate/50">{t('common.region')}</li>
+            <li className="pt-2 text-slate/70">{t('common.region')}</li>
           </ul>
         </div>
       </div>
 
-      <div className="container-content relative flex flex-col items-start justify-between gap-2 border-t border-slate/10 py-6 font-body text-xs text-slate/40 sm:flex-row sm:items-center">
+      <div className="container-content relative flex flex-col items-start justify-between gap-2 border-t border-slate/10 py-6 font-body text-xs text-slate/70 sm:flex-row sm:items-center">
         <p>
           © {year} {SITE.name}. {t('common.allRightsReserved')}
         </p>

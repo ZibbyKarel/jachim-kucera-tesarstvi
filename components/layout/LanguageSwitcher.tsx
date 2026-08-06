@@ -15,10 +15,14 @@ export function LanguageSwitcher({
   const locale = useLocale()
   const pathname = usePathname()
   const router = useRouter()
-  const sep = light ? 'text-paper/30' : 'text-slate/30'
+  // Separator glyph is real visible text, not decoration - it must clear AA
+  // on its own (1.86:1/2.52:1 at the original /30 opacity failed 4.5:1;
+  // /65 and /55 clear it with margin: 4.77:1 on paper, 5.21:1 on slate).
+  const sep = light ? 'text-paper/55' : 'text-slate/65'
+  // idle was text-slate/60 on paper (4.11:1, fails 4.5) — bumped to /70 (5.58:1).
   const idle = light
     ? 'text-paper/60 hover:text-paper'
-    : 'text-slate/60 hover:text-slate'
+    : 'text-slate/70 hover:text-slate'
   // On the dark `slate` background (light===true, e.g. the mobile menu), `text-patina`
   // falls to ~2.8:1 as text and fails AA — use `text-patina-soft` there instead
   // (5.69:1 on slate). On the light background, `text-patina` (5.14:1 on paper) is fine.

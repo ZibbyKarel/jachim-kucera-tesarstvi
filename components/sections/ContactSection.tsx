@@ -29,7 +29,7 @@ export function ContactSection() {
           >
             {SITE.phone}
           </a>
-          <p className="mt-4 font-body text-sm uppercase tracking-widest text-slate/50">
+          <p className="mt-4 font-body text-sm uppercase tracking-widest text-slate/65">
             {t('common.region')}
           </p>
         </Reveal>

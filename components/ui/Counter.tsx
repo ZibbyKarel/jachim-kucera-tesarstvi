@@ -50,7 +50,7 @@ export function Counter({ value, label }: CounterProps) {
         {num !== null ? <span ref={numRef}>0</span> : null}
         {num === null ? <span>{suffix}</span> : suffix}
       </div>
-      <div className="mt-2 font-body text-xs uppercase tracking-widest text-slate/60">
+      <div className="mt-2 font-body text-xs uppercase tracking-widest text-slate/70">
         {label}
       </div>
     </div>
