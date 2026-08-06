@@ -59,7 +59,7 @@ export function Header() {
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 border-b transition-colors duration-500 ease-craft ${
-        solid ? 'border-timber/12 bg-paper/90 backdrop-blur-md' : 'border-transparent bg-transparent'
+        solid ? 'border-timber/10 bg-paper/90 backdrop-blur-md' : 'border-transparent bg-transparent'
       }`}
     >
       <div
@@ -67,12 +67,7 @@ export function Header() {
           solid ? 'py-3' : 'py-5'
         }`}
       >
-        <div
-          className="shrink-0 transition-all duration-500 ease-craft"
-          style={{ width: logoSize, height: logoSize }}
-        >
-          <Logo size={logoSize} className="h-full w-full" />
-        </div>
+        <Logo size={logoSize} wordmark className="shrink-0" />
 
         <nav aria-label={t('mainNavAria')} className="hidden items-center gap-8 lg:flex">
           {navLinks.map((link) => {
