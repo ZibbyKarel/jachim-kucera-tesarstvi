@@ -6,6 +6,33 @@ Stav implementace task po tasku. Aktualizuje se po každém dokončeném tasku, 
 
 ---
 
+## REDESIGN v2 — aktuální fáze
+
+Verze 1 byla uživatelem odmítnuta jako reskin (D-030). Kostra homepage zůstala původní.
+Nové zadání: dům pryč z landingu na skrytou URL, kompletně nový design, zachovat jen
+faktické údaje. Řídící dokumenty:
+`specs/2026-08-06-redesign-v2-drevo.md`, `plans/2026-08-06-redesign-v2.md`,
+`redesign/PALETTE-WOOD.md`.
+
+- [x] **v2/T0** — spec, plán, dřevěná paleta (14/14 kontrastních dvojic ověřeno
+      výpočtem a nezávisle přepočítáno) · `af54b51`, `7b663ba`, `90e4fb3`
+- [x] **v2/T1** — dřevěná paleta a písma napříč repem · `bf7523f`
+      - tokeny přejmenovány `slate→timber`, `steel→oak`, `patina→ember`
+      - Fraunces přidán jako display; česká diakritika ověřena cmap inspekcí (28/28 znaků)
+      - review našel dvě věci, opraveno v `f123f36`:
+        `--font-sans` utržený v `MenuOverlay.ts` (D-034) a plošné zvednutí
+        dekorativních linek na `timber/50` (D-035, rozsah pravidla upřesněn ve specu)
+- [~] **v2/T2+T3** — hlavička, patička, otvírák, rejstřík služeb, přepis `page.tsx`
+      (sloučeno do jednoho tasku, je to jedna obrazovka)
+- [ ] **v2/T4** — homepage: realizace, postup, o nás, kontakt (split)
+- [ ] **v2/T5** — podstránky (služby, realizace, o nás, kontakt)
+- [ ] **v2/T6** — 404, `/nahled-3d`, úklid mrtvých komponent
+- [ ] **v2/T7** — audit: kontrasty včetně `/N` variant, pomlčky, mrtvé `var()` a `theme()`
+
+---
+
+## ARCHIV — redesign v1 (hotový, ale nedostatečný)
+
 ## Fáze 0 — Příprava
 
 - [x] Design spec napsaný a schválený → `docs/superpowers/specs/2026-08-06-website-redesign-design.md`
