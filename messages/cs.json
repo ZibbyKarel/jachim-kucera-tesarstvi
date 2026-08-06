@@ -30,7 +30,7 @@
     "heroEyebrow": "Tesařství · Pokrývačství · Klempířství",
     "heroTitle": "Poctivá řemeslná práce",
     "heroCta": "Nezávazně poptat",
-    "heroAria": "Rozcestník: interaktivní dům",
+    "heroAria": "Rozcestník, interaktivní dům",
     "servicesIntro": "Od krovu po poslední okap. Čtyři řemesla pod jednou střechou.",
     "projectsIntro": "Část toho, co jsme za poslední roky postavili po Plzeňském kraji.",
     "aboutHeadline": "Stavíme střechy, jako by byly naše vlastní",
@@ -40,7 +40,7 @@
   "contact": {
     "title": "Kontakt",
     "heroTitle": "Pojďme se domluvit",
-    "intro": "Napište nám pár slov o vaší střeše. Ozveme se a domluvíme se na prohlídce - nezávazně a zdarma.",
+    "intro": "Napište nám pár slov o vaší střeše. Ozveme se a domluvíme se na prohlídce, nezávazně a zdarma.",
     "name": "Jméno",
     "phone": "Telefon",
     "service": "Služba",
@@ -63,7 +63,7 @@
     },
     "infoHeading": "Kde nás zastihnete",
     "areaLabel": "Provozní oblast",
-    "mapAriaLabel": "Mapa provozní oblasti - Plzeňský kraj",
+    "mapAriaLabel": "Mapa provozní oblasti v Plzeňském kraji",
     "mapCityLabel": "Plzeň"
   },
   "about": {
@@ -161,19 +161,19 @@
     "addressRegion": "Plzeňský kraj",
     "serviceTypes": ["Tesařství", "Pokrývačství", "Klempířství", "Čištění střech"],
     "kontakt": {
-      "title": "Kontakt - Nezávazná poptávka",
+      "title": "Kontakt | Nezávazná poptávka",
       "description": "Napište nebo zavolejte. Domluvíme se na nezávazné prohlídce střechy v Plzeňském kraji. Tesařství, pokrývačství a klempířství."
     },
     "onas": {
-      "title": "O nás: Tesaři z Plzeňského kraje",
+      "title": "O nás | Tesaři z Plzeňského kraje",
       "description": "Jsme Jáchim a Kučera. Tesařině, pokrývačství a klempířství se věnujeme přes patnáct let. Poctivá řemeslná práce v Plzeňském kraji."
     },
     "realizace": {
-      "title": "Realizace: Naše střechy v Plzeňském kraji",
+      "title": "Realizace | Naše střechy v Plzeňském kraji",
       "description": "Vybrané realizace tesařských, pokrývačských a klempířských prací po celém Plzeňském kraji. Krovy, střechy, okapy a rekonstrukce."
     },
     "nahled3d": {
-      "title": "3D rozcestník: náhled"
+      "title": "3D rozcestník | Náhled"
     }
   },
   "houseLabels": {
@@ -214,7 +214,7 @@
         "Carport z masivního dřeva",
         "Detail tesařského spoje krovu"
       ],
-      "seoTitle": "Tesařství: Krovové konstrukce a dřevěné práce | Plzeňský kraj",
+      "seoTitle": "Tesařství | Krovy a dřevěné konstrukce | Plzeňský kraj",
       "seoDescription": "Stavíme a rekonstruujeme krovy, dřevěné stropy a pergoly v Plzeňském kraji. Přes 15 let zkušeností, poctivá práce, férová cena."
     },
     "pokryvacstvi": {
@@ -241,7 +241,7 @@
         "Větraný hřeben střechy",
         "Rekonstrukce střešního pláště"
       ],
-      "seoTitle": "Pokrývačství: Pokládka střešní krytiny | Plzeňský kraj",
+      "seoTitle": "Pokrývačství | Pokládka střešní krytiny | Plzeňský kraj",
       "seoDescription": "Pokládáme pálenou a betonovou krytinu, plech i šindel v Plzeňském kraji. Hydroizolace, detaily hřebenů a úžlabí. Střecha, která vydrží."
     },
     "klempirstvi": {
@@ -268,7 +268,7 @@
         "Detail svodu okapu",
         "Lemování napojení střechy na zeď"
       ],
-      "seoTitle": "Klempířství: Okapy a oplechování | Plzeňský kraj",
+      "seoTitle": "Klempířství | Okapy a oplechování | Plzeňský kraj",
       "seoDescription": "Okapové systémy, oplechování komínů a parapetů z pozinku, titanzinku i mědi. Klempířské práce v Plzeňském kraji s důrazem na detail."
     },
     "cisteni-strech": {
@@ -295,7 +295,7 @@
         "Čištění okapů",
         "Vyčištěná střecha rodinného domu"
       ],
-      "seoTitle": "Čištění střech: Mech, mytí a impregnace | Plzeňský kraj",
+      "seoTitle": "Čištění střech | Mech, mytí a impregnace | Plzeňský kraj",
       "seoDescription": "Odstraníme mech a lišejníky, vyčistíme krytinu i okapy a ošetříme střechu preventivním nátěrem. Údržba střech v Plzeňském kraji."
     }
   },
@@ -323,7 +323,7 @@
     "strecha-palena-plzen": {
       "title": "Pálená krytina na novostavbě",
       "location": "Plzeň-jih",
-      "description": "Kompletní střešní plášť novostavby: pojistná hydroizolace, laťování a pálená krytina včetně větraného hřebene."
+      "description": "Kompletní střešní plášť novostavby. Pojistná hydroizolace, laťování a pálená krytina včetně větraného hřebene."
     },
     "plechova-strecha-domazlice": {
       "title": "Falcovaná plechová střecha",
@@ -338,7 +338,7 @@
     "strecha-rekonstrukce-nepomuk": {
       "title": "Rekonstrukce střešního pláště",
       "location": "Nepomuk",
-      "description": "Kompletní rekonstrukce střechy rodinného domu: nové bednění, fólie, laťování a betonová krytina."
+      "description": "Kompletní rekonstrukce střechy rodinného domu. Nové bednění, fólie, laťování a betonová krytina."
     },
     "medene-okapy-plzen": {
       "title": "Měděný okapový systém",
@@ -358,7 +358,7 @@
     "strecha-okapy-prestice": {
       "title": "Střecha a klempířina v jednom",
       "location": "Přeštice",
-      "description": "Zakázka od krovu po okapy: nová střecha s betonovou krytinou a kompletní klempířské prvky z pozinku."
+      "description": "Zakázka od krovu po okapy. Nová střecha s betonovou krytinou a kompletní klempířské prvky z pozinku."
     }
   }
 }

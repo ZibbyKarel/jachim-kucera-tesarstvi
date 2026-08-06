@@ -30,7 +30,7 @@
     "heroEyebrow": "Carpentry · Roofing · Tinsmithing",
     "heroTitle": "Honest craftsmanship",
     "heroCta": "Request a quote",
-    "heroAria": "Site map: interactive house",
+    "heroAria": "Site map, interactive house",
     "servicesIntro": "From the truss to the last gutter. Four crafts under one roof.",
     "projectsIntro": "A part of what we have built across the Pilsen region in recent years.",
     "aboutHeadline": "We build roofs as if they were our own",
@@ -40,7 +40,7 @@
   "contact": {
     "title": "Contact",
     "heroTitle": "Let's talk it through",
-    "intro": "Tell us a few words about your roof. We'll get back to you and arrange a visit - free and with no obligation.",
+    "intro": "Tell us a few words about your roof. We'll get back to you and arrange a visit, free and with no obligation.",
     "name": "Name",
     "phone": "Phone",
     "service": "Service",
@@ -63,7 +63,7 @@
     },
     "infoHeading": "Where to find us",
     "areaLabel": "Service area",
-    "mapAriaLabel": "Service area map - Pilsen region",
+    "mapAriaLabel": "Service area map of the Pilsen region",
     "mapCityLabel": "Pilsen"
   },
   "about": {
@@ -161,19 +161,19 @@
     "addressRegion": "Pilsen Region",
     "serviceTypes": ["Carpentry", "Roofing", "Tinsmithing", "Roof cleaning"],
     "kontakt": {
-      "title": "Contact - Free Inquiry",
+      "title": "Contact | Free Inquiry",
       "description": "Write or call. We'll arrange a free, no-obligation roof inspection in the Pilsen region. Carpentry, roofing and tinsmithing."
     },
     "onas": {
-      "title": "About Us: Carpenters from the Pilsen Region",
+      "title": "About Us | Carpenters from the Pilsen Region",
       "description": "We're Jáchim and Kučera. We've been doing carpentry, roofing and tinsmithing for over fifteen years. Honest craftsmanship in the Pilsen region."
     },
     "realizace": {
-      "title": "Projects: Our Roofs in the Pilsen Region",
+      "title": "Projects | Our Roofs in the Pilsen Region",
       "description": "Selected carpentry, roofing and tinsmith projects across the Pilsen region. Roof trusses, roofs, gutters and reconstructions."
     },
     "nahled3d": {
-      "title": "3D House Map: Preview"
+      "title": "3D House Map | Preview"
     }
   },
   "houseLabels": {
@@ -214,7 +214,7 @@
         "Carport built from solid timber",
         "Detail of a carpentry joint in a roof truss"
       ],
-      "seoTitle": "Carpentry: Roof Trusses and Timber Work | Pilsen Region",
+      "seoTitle": "Carpentry | Roof Trusses and Timber Work | Pilsen Region",
       "seoDescription": "We build and reconstruct roof trusses, timber ceilings and pergolas in the Pilsen region. Over 15 years of experience, honest work, fair prices."
     },
     "pokryvacstvi": {
@@ -241,7 +241,7 @@
         "Ventilated roof ridge",
         "Reconstruction of a roof envelope"
       ],
-      "seoTitle": "Roofing: Roof Covering Installation | Pilsen Region",
+      "seoTitle": "Roofing | Roof Covering Installation | Pilsen Region",
       "seoDescription": "We lay clay and concrete roofing, sheet metal and shingles in the Pilsen region. Waterproofing, ridge and valley details. A roof that lasts."
     },
     "klempirstvi": {
@@ -268,7 +268,7 @@
         "Downspout detail",
         "Wall-to-roof edging"
       ],
-      "seoTitle": "Tinsmithing: Gutters and Flashing | Pilsen Region",
+      "seoTitle": "Tinsmithing | Gutters and Flashing | Pilsen Region",
       "seoDescription": "Gutter systems and flashing for chimneys and sills in galvanized steel, titanium zinc and copper. Tinsmith work in the Pilsen region with an eye for detail."
     },
     "cisteni-strech": {
@@ -295,7 +295,7 @@
         "Gutter cleaning",
         "Cleaned roof of a family home"
       ],
-      "seoTitle": "Roof Cleaning: Moss Removal, Washing and Impregnation | Pilsen Region",
+      "seoTitle": "Roof Cleaning | Moss, Washing and Impregnation | Pilsen Region",
       "seoDescription": "We remove moss and lichen, clean roofing and gutters, and treat the roof with a preventive coating. Roof maintenance in the Pilsen region."
     }
   },
@@ -323,7 +323,7 @@
     "strecha-palena-plzen": {
       "title": "Clay roofing on a new-build",
       "location": "Pilsen-South",
-      "description": "Complete roof envelope for a new-build home: safety waterproofing membrane, battens and clay roofing, including a ventilated ridge."
+      "description": "Complete roof envelope for a new-build home. Safety waterproofing membrane, battens and clay roofing, including a ventilated ridge."
     },
     "plechova-strecha-domazlice": {
       "title": "Standing-seam metal roof",
@@ -338,7 +338,7 @@
     "strecha-rekonstrukce-nepomuk": {
       "title": "Roof envelope reconstruction",
       "location": "Nepomuk",
-      "description": "Complete roof reconstruction of a family home: new sheathing, membranes, battens and concrete roofing."
+      "description": "Complete roof reconstruction of a family home. New sheathing, membranes, battens and concrete roofing."
     },
     "medene-okapy-plzen": {
       "title": "Copper gutter system",
@@ -358,7 +358,7 @@
     "strecha-okapy-prestice": {
       "title": "Roof and tinsmith work in one",
       "location": "Přeštice",
-      "description": "A project spanning truss to gutters: a new roof with concrete tiles and complete tinsmith elements in galvanized steel."
+      "description": "A project spanning truss to gutters. A new roof with concrete tiles and complete tinsmith elements in galvanized steel."
     }
   }
 }
