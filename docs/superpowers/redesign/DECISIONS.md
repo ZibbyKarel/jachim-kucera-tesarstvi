@@ -331,3 +331,30 @@ terakotovém akcentu by byla lež v tokenu, kterou by každý další task musel
 Přejmenování je levné právě teď, kdy se stejně přepisují všechny komponenty.
 Hodnoty a naměřené kontrasty: `docs/superpowers/redesign/PALETTE-WOOD.md`.
 Investice z [[D-024]] se vyplatila: hex hodnoty žijí v jediném souboru.
+
+## D-034 — Přejmenování CSS proměnné znovu utrhlo konzumenta (D-025 podruhé)
+**Datum:** 2026-08-06 · **Zjistil:** Claude (opus), review T1
+T1 přejmenoval `--font-sans` na `--font-body` v `layout.tsx` a v `tailwind.config.ts`,
+ale `components/house3d/MenuOverlay.ts` (řádky 186 a 203) konzumoval `var(--font-sans, …)`
+v **řetězci s CSS**, ne v Tailwind třídě. Grep nad Tailwind konfigurací ho nenajde.
+Proměnná přestala existovat, fallback se tiše aktivoval, menu 3D domu spadlo do `system-ui`.
+Build, typecheck i lint prošly — CSS na neplatný `var()` nikdy nezahlásí chybu.
+**Je to přesně stejná vada jako [[D-025]]**, jen z opačné strany: tehdy proměnná nikdy
+nevznikla, teď zanikla. Obě přežily zelený build.
+**Pravidlo:** přejmenování CSS custom property není hotové, dokud neproběhl grep na
+**staré jméno** přes celý repo včetně `.ts` souborů, které generují CSS jako řetězec.
+Opraveno v review, ne subagentem.
+
+## D-035 — Pravidlo 3:1 platí na UI prvky, ne na dekorativní linky
+**Datum:** 2026-08-06 · **Rozhodl:** Claude (opus), review T1
+T1 dostal instrukci zvednout hranice na `timber/N ≥ 50` a aplikoval ji plošně: **24**
+výskytů, včetně vlasových oddělovačů sekcí, orámování karet a `border-y` kolem bloku
+statistik. Skok z `/8` na `/50` je šestinásobek — z jemné linky se stane těžká tmavá čára.
+**Chyba byla v mém zadání, ne v provedení.** WCAG 1.4.11 vymáhá 3:1 na *prvky
+uživatelského rozhraní* a *grafiku nutnou k pochopení obsahu*, a dekoraci výslovně
+vyjímá. Skutečná vada v v1 ([[D-020]] okolí) byla podtržení inputu ve formuláři na
+1.65:1 — to je hranice ovládacího prvku, ta 3:1 splnit musí. Oddělovač sekcí ne.
+**Riziko opačným směrem:** vizuální jazyk v2 stojí na vlasových linkách. Plošné
+vymáhání 3:1 by ho zlikvidovalo pod záminkou přístupnosti.
+Rozsah pravidla je od teď v tabulce ve specu, sekce „Nepřekročitelná pravidla", bod 5.
+Hodnoty se srovnají v T2–T5, kde se ty komponenty stejně přepisují.

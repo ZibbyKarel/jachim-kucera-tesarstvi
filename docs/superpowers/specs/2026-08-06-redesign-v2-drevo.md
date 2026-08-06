@@ -245,6 +245,22 @@ Stejný jazyk, aplikovaný na existující šablony:
    (D-027) — reformuluj větu.
 5. **Kontrast**: každá dvojice barva/pozadí, včetně variant s průhledností, musí sedět na
    tabulku v PALETTE-WOOD.md. Neměřené průhlednosti jsou zakázané.
+
+   **Ale pozor na rozsah pravidla 3:1** (WCAG 1.4.11, non-text contrast). Platí na
+   *prvky uživatelského rozhraní* a *grafiku nutnou k pochopení obsahu*, ne na
+   dekoraci. Konkrétně v tomhle projektu:
+
+   | musí ≥ 3:1 | nemusí |
+   |---|---|
+   | okraje a podtržení polí formuláře | vlasové oddělovače sekcí |
+   | okraje interaktivních ovládacích prvků (filtry, zavírací tlačítko) | orámování, které jen opticky seskupuje obsah |
+   | focus ring | konstrukční rastr, šum, stíny, gradientové scrimy |
+   | stavové okraje (aktivní filtr, chyba) | ozdobné linky uvnitř bloku |
+
+   Vizuální jazyk v2 stojí na jemných vlasových linkách. Plošné zvednutí **všech**
+   oddělovačů na `timber/50` z nich udělá těžké tmavé čáry a design zhrubne — to je
+   regrese, ne oprava. Dekorativní linky drž nízko (`timber/12`–`timber/20`) a 3:1
+   vymáhej tam, kde hranice nese informaci.
 6. **A11y**: focus ring viditelný všude, `aria-label` u každého landmarku, cíle ≥ 44px,
    skip link funkční.
 7. Každý commit projde `typecheck` + `lint` + `build`.
