@@ -15,23 +15,36 @@ export default function GlobalNotFound() {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundColor: '#e9e6e0',
-          color: '#2d2b28',
+          // Paleta ("Materiály řemesla") zrcadlí lib/palette.ts, protože tenhle
+          // soubor nemá přístup k Tailwind vrstvě mimo lokalizovaný segment.
+          backgroundColor: '#eef0ef', // paper
+          color: '#1c2226', // slate
           fontFamily: 'system-ui, sans-serif',
           textAlign: 'center',
           padding: '0 1.5rem',
         }}
       >
-        <h1 style={{ fontSize: '2rem', margin: 0 }}>404 — Page not found</h1>
-        <p style={{ color: 'rgba(45,43,40,0.7)', marginTop: '1rem' }}>
+        <p
+          style={{
+            margin: 0,
+            fontSize: '0.85rem',
+            textTransform: 'uppercase',
+            letterSpacing: '0.2em',
+            color: 'rgba(28,34,38,0.6)', // slate/60
+          }}
+        >
+          404
+        </p>
+        <h1 style={{ fontSize: '2rem', margin: '0.5rem 0 0' }}>Page not found</h1>
+        <p style={{ color: 'rgba(28,34,38,0.7)', marginTop: '1rem' }}>
           This page doesn&apos;t exist.
         </p>
         <Link
           href="/"
           style={{
             marginTop: '2rem',
-            backgroundColor: '#c49a4c',
-            color: '#2d2b28',
+            backgroundColor: '#486c5a', // patina
+            color: '#eef0ef', // paper
             padding: '0.75rem 1.5rem',
             textDecoration: 'none',
             textTransform: 'uppercase',
