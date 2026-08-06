@@ -219,7 +219,7 @@ function ProjectModal({
       >
         <button
           onClick={onClose}
-          className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full border border-timber/50 text-timber transition-colors hover:border-ember hover:text-ember"
+          className="absolute right-4 top-4 flex h-11 w-11 items-center justify-center rounded-full border border-timber/50 text-timber transition-colors hover:border-ember hover:text-ember"
           aria-label={tFull('common.close')}
         >
           <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">

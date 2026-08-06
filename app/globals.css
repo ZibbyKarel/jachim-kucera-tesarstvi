@@ -31,10 +31,15 @@
     outline-offset: 4px;
   }
 
-  /* Dark mobile-menu panel (#mobile-menu, viz Header.tsx) sedí na timber, kde
-     výchozí ember focus ring by nemusel projít AA. Uvnitř panelu přepínáme
-     na ember-soft (6.99:1 na timber). */
-  #mobile-menu :focus-visible {
+  /* Každý prvek, který vizuálně sedí na tmavém timber poli, potřebuje
+     ember-soft focus ring - prostý ember tam dává jen ~2,5:1 (pod prahem
+     3:1 pro non-text kontrast, viz spec/PALETTE-WOOD.md). Zapnuto přes
+     třídu .bg-timber (ne přes #mobile-menu id), ať to platí všude, kde se
+     `bg-timber` použije - patička, sekce O nás, tmavá půlka kontaktu, 404 -
+     ne jen v mobilním menu. `.bg-timber:focus-visible` navíc pokrývá případ,
+     kdy je fokusovatelný přímo prvek, který `bg-timber` nese. */
+  .bg-timber :focus-visible,
+  .bg-timber:focus-visible {
     outline-color: theme('colors.ember.soft');
   }
 

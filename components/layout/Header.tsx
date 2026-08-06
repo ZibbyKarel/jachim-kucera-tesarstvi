@@ -58,6 +58,7 @@ export function Header() {
 
   return (
     <header
+      aria-label={t('siteHeaderAria')}
       className={`fixed inset-x-0 top-0 z-50 border-b transition-colors duration-500 ease-craft ${
         solid ? 'border-timber/10 bg-paper/90 backdrop-blur-md' : 'border-transparent bg-transparent'
       }`}
@@ -97,7 +98,9 @@ export function Header() {
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
             aria-label={menuOpen ? t('close') : t('menu')}
-            className="relative z-50 flex h-11 w-11 items-center justify-center lg:hidden"
+            className={`relative z-50 flex h-11 w-11 items-center justify-center lg:hidden ${
+              menuOpen ? 'focus-visible:outline-ember-soft' : ''
+            }`}
           >
             <span className="sr-only">{menuOpen ? t('close') : t('menu')}</span>
             <div className="flex w-6 flex-col items-end gap-[6px]">
