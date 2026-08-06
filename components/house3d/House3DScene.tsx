@@ -24,6 +24,9 @@ export interface House3DSceneProps {
   playIntro?: boolean
   /** Zavolá se po dokončení úvodního vykreslení. */
   onIntroDone?: () => void
+  /** Interaktivní menu (hover/klik/OrbitControls)? Default true. false = čistě
+      dekorativní dům bez overlaye, pointer listenerů a raycastu (viz hero). */
+  interactive?: boolean
 }
 
 export function House3DScene({
@@ -32,6 +35,7 @@ export function House3DScene({
   transparent,
   playIntro,
   onIntroDone,
+  interactive,
 }: House3DSceneProps) {
   const t = useTranslations()
   const labels: Record<MenuId, MenuLabelText> = Object.fromEntries(
@@ -62,11 +66,12 @@ export function House3DScene({
       labels: labelsRef.current,
       transparent,
       playIntro,
+      interactive,
       onIntroDone: () => introDoneRef.current?.(),
     })
     return () => manager.dispose()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [transparent, playIntro])
+  }, [transparent, playIntro, interactive])
 
   return (
     <div

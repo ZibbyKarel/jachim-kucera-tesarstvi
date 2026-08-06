@@ -31,6 +31,10 @@ export interface SceneOptions {
   playIntro?: boolean
   /** Zavolá se po dokončení úvodního vykreslení (intro „spotřebováno"). */
   onIntroDone?: () => void
+  /** Interaktivní menu (hover/klik/OrbitControls)? Default true - /nahled-3d.
+      false = čistě dekorativní dům (hero): žádný overlay, žádné pointer
+      listenery, žádný raycast v render smyčce, OrbitControls vypnuté. */
+  interactive?: boolean
 }
 
 export class SceneManager {
@@ -40,7 +44,11 @@ export class SceneManager {
   private camera: THREE.PerspectiveCamera
   private controls: OrbitControls
   private house = new HouseModel()
-  private overlay: MenuOverlay
+  // Overlay existuje jen v interaktivním režimu (viz `interactive`) - dekorativní
+  // hero dům žádné menu nezobrazuje, takže se ani nevytváří. Všechna volání
+  // proto jdou přes `?.` - NE prázdnou atrapou overlaye.
+  private overlay?: MenuOverlay
+  private interactive = true
   private onSelect: (id: MenuId) => void
   private dirLight!: THREE.DirectionalLight
   private groundMat!: THREE.ShadowMaterial
@@ -85,6 +93,7 @@ export class SceneManager {
     this.transparent = opts.transparent ?? false
     this.introActive = opts.playIntro !== false
     this.onIntroDone = opts.onIntroDone
+    this.interactive = opts.interactive ?? true
     // Hero (transparent) chce menší dům + víc papíru; samostatný náhled co největší.
     this.fitMargin = this.transparent ? FIT_MARGIN_HERO : FIT_MARGIN_SOLO
     if (this.transparent) {
@@ -102,6 +111,9 @@ export class SceneManager {
     this.renderer.shadowMap.type = THREE.PCFSoftShadowMap
     this.renderer.outputColorSpace = THREE.SRGBColorSpace
     this.renderer.domElement.style.display = 'block'
+    // Dekorativní režim: canvas nesmí chytat pointer eventy vůbec (dům je jen
+    // kresba za textem, ne klikací plocha) - viz i pointer listenery níž.
+    if (!this.interactive) this.renderer.domElement.style.pointerEvents = 'none'
     this.container.appendChild(this.renderer.domElement)
 
     // ---- camera ----
@@ -130,7 +142,9 @@ export class SceneManager {
     // touch (jinak zoom sní scroll stránky a po dojetí na maxDistance scroll
     // „umře"). Hover labelů i klik-navigace jedou přes vlastní raycast, takže
     // o interaktivitu nepřijdeme. V samostatném /nahled-3d controls zůstávají.
-    if (this.transparent) {
+    // Dekorativní (!interactive) dům ze stejného důvodu OrbitControls taky
+    // nechce - a navíc na něm žádný raycast/klik vůbec neběží (viz níž).
+    if (this.transparent || !this.interactive) {
       this.controls.enabled = false
       // OrbitControls v konstruktoru nastaví touchAction:'none' → i s enabled=false
       // by to na mobilu blokovalo svislý scroll po plátně. Vrátíme default.
@@ -141,15 +155,18 @@ export class SceneManager {
     this.setupGround()
     this.scene.add(this.house.root)
 
-    // ---- overlay ----
-    this.overlay = new MenuOverlay(
-      this.container,
-      {
-        onHover: (id) => this.setHover(id),
-        onSelect: opts.onMenuSelect,
-      },
-      opts.labels
-    )
+    // ---- overlay ---- (jen v interaktivním režimu - dekorativní hero dům
+    // žádné menu labely nemá, takže se overlay ani nezakládá)
+    if (this.interactive) {
+      this.overlay = new MenuOverlay(
+        this.container,
+        {
+          onHover: (id) => this.setHover(id),
+          onSelect: opts.onMenuSelect,
+        },
+        opts.labels
+      )
+    }
 
     if (typeof window !== 'undefined' && window.matchMedia) {
       this.reducedMotionMQ = window.matchMedia('(prefers-reduced-motion: reduce)')
@@ -159,10 +176,13 @@ export class SceneManager {
 
     this.prepareIntro()
 
-    // ---- events ----
-    this.renderer.domElement.addEventListener('pointermove', this.onPointerMove)
-    this.renderer.domElement.addEventListener('pointerleave', this.onPointerLeave)
-    this.renderer.domElement.addEventListener('click', this.onClick)
+    // ---- events ---- (dekorativní dům nereaguje na pointer vůbec - žádný
+    // hover/klik/raycast, viz taky pointerEvents:'none' na canvasu výš)
+    if (this.interactive) {
+      this.renderer.domElement.addEventListener('pointermove', this.onPointerMove)
+      this.renderer.domElement.addEventListener('pointerleave', this.onPointerLeave)
+      this.renderer.domElement.addEventListener('click', this.onClick)
+    }
     this.resizeObs = new ResizeObserver(() => this.resize())
     this.resizeObs.observe(this.container)
 
@@ -306,7 +326,7 @@ export class SceneManager {
     // POZOR: id===null nesmí rozsvítit dekor (menuId===null) — fasáda, okna,
     // garáž. Highlight jen když je id konkrétní a sedí na prvek.
     for (const el of this.house.all) el.setHighlight(id !== null && el.menuId === id)
-    this.overlay.setActive(id)
+    this.overlay?.setActive(id)
     this.container.style.cursor = id ? 'pointer' : ''
   }
 
@@ -323,7 +343,7 @@ export class SceneManager {
     if (reduced || !this.introActive) {
       for (const el of this.house.all) el.revealComplete()
       this.groundMat.opacity = 0.09
-      this.overlay.reveal()
+      this.overlay?.reveal()
       this.introActive = false
       return
     }
@@ -358,7 +378,7 @@ export class SceneManager {
     if (t >= 1) {
       for (const el of this.house.all) el.revealComplete()
       this.groundMat.opacity = 0.09
-      this.overlay.reveal()
+      this.overlay?.reveal()
       this.introActive = false
       // Intro „spotřebováno" — návrat na landing už dům vykreslí rovnou.
       this.onIntroDone?.()
@@ -373,9 +393,10 @@ export class SceneManager {
 
     if (this.introActive) this.updateIntro(dt)
 
-    // raycast hover jen když je kurzor nad plátnem — jinak by každý rámec
-    // přepsal highlight nastavený hoverem labelu (canvas→prvek vs label→prvek)
-    if (this.pointerOnCanvas) this.setHover(this.pickHover())
+    // raycast hover jen v interaktivním režimu a když je kurzor nad plátnem —
+    // jinak by každý rámec přepsal highlight nastavený hoverem labelu
+    // (canvas→prvek vs label→prvek). Dekorativní dům raycast neplatí vůbec.
+    if (this.interactive && this.pointerOnCanvas) this.setHover(this.pickHover())
 
     // idle: jemné vznášení domu / dýchání kamery / posun světla - jen bez reduced-motion.
     // this.reducedMotion je čtený z MediaQueryList vytvořeného JEDNOU v konstruktoru
@@ -406,6 +427,9 @@ export class SceneManager {
   }
 
   private projectAnchors(): void {
+    // Bez overlaye není co promítat (dekorativní dům nemá labely) - ušetři
+    // projekci kotev každý rámec.
+    if (!this.overlay) return
     const w = this.container.clientWidth
     const h = this.container.clientHeight
     for (const item of MENU) {
@@ -453,12 +477,14 @@ export class SceneManager {
     this.disposed = true
     cancelAnimationFrame(this.raf)
     this.resizeObs.disconnect()
-    this.renderer.domElement.removeEventListener('pointermove', this.onPointerMove)
-    this.renderer.domElement.removeEventListener('pointerleave', this.onPointerLeave)
-    this.renderer.domElement.removeEventListener('click', this.onClick)
+    if (this.interactive) {
+      this.renderer.domElement.removeEventListener('pointermove', this.onPointerMove)
+      this.renderer.domElement.removeEventListener('pointerleave', this.onPointerLeave)
+      this.renderer.domElement.removeEventListener('click', this.onClick)
+    }
     this.reducedMotionMQ?.removeEventListener('change', this.onReducedMotionChange)
     this.controls.dispose()
-    this.overlay.dispose()
+    this.overlay?.dispose()
     this.house.dispose()
     this.renderer.dispose()
     this.renderer.domElement.remove()
