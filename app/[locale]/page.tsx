@@ -2,7 +2,7 @@ import { HeroScroll } from '@/components/house/HeroScroll'
 import { AboutSection } from '@/components/sections/AboutSection'
 import { ContactSection } from '@/components/sections/ContactSection'
 import { ProjectsPreview } from '@/components/sections/ProjectsPreview'
-import { ServicesScroll } from '@/components/sections/ServicesScroll'
+import { ServicesGrid } from '@/components/sections/ServicesGrid'
 import { StackCover } from '@/components/sections/StackCover'
 import { Link } from '@/i18n/routing'
 import { houseLabels } from '@/lib/constants'
@@ -33,7 +33,7 @@ export default async function HomePage({
           ho plynule překryje („je tu víc"). */}
       <section
         aria-label={t('home.heroAria')}
-        className="relative z-0 bg-wood-dark"
+        className="relative z-0 bg-paper"
       >
         <HeroScroll />
 
@@ -43,7 +43,7 @@ export default async function HomePage({
             {houseLabels.map((label) => (
               <li key={label.id}>
                 <Link href={label.href}>
-                  {labelText(t, label.textSource)} — {labelSubtext(t, label)}
+                  {labelText(t, label.textSource)} - {labelSubtext(t, label)}
                 </Link>
               </li>
             ))}
@@ -56,12 +56,12 @@ export default async function HomePage({
           sekce nechá 100vh „dráhu", kterou nástupce svým −100vh náběhem zruší a
           šplhá přes ni. Hero drží sticky panel (viz HeroScroll) → také nechá 100vh. */}
 
-      {/* 1B — Služby (vyjedou přes hero). Mají vlastní vnitřní pin (rozdání karet /
-          horizontální pás / mobilní držení), jehož koncový úsek = 100vh výdrž →
-          proto pin={false}, jinak by se dva piny v jednom regionu praly a scrub
-          zamrznul (karty se rozdaly mimo okno). Náběh (climb) přes hero zůstává. */}
-      <StackCover z={20} pin={false}>
-        <ServicesScroll />
+      {/* 1B — Služby (vyjedou přes hero). Statická bento mřížka bez vlastního
+          pinu (viz ServicesGrid) — StackCover ji teď pinuje jako každou jinou
+          sekci (žádný kolizní druhý pin, takže žádné pin={false}). Náběh
+          (climb) přes hero zůstává. */}
+      <StackCover z={20}>
+        <ServicesGrid />
       </StackCover>
 
       {/* 1C — Realizace (vyjedou přes Služby) */}

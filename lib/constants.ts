@@ -35,6 +35,7 @@ export const contacts = [
 export const services: Service[] = [
   {
     slug: 'tesarstvi',
+    featured: true,
     houseGroup: 'g-truss',
     heroImage: '/images/realizace/krov-detail-01.jpg',
     gallery: [

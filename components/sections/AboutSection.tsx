@@ -15,8 +15,7 @@ export function AboutSection() {
   return (
     <section
       aria-labelledby="about-heading"
-      /* Překrytí řeší obal <StackCover> (viz ProjectsPreview). */
-      className="relative min-h-[100dvh] overflow-hidden bg-wood-medium py-24 shadow-[0_-30px_60px_-30px_rgba(0,0,0,0.55)] md:py-32"
+      className="relative min-h-[100dvh] overflow-hidden bg-paper-dim py-24 shadow-[0_-30px_60px_-30px_rgba(28,34,38,0.2)] md:py-32"
     >
       <div className="grain absolute inset-0" aria-hidden="true" />
       <div className="container-content relative grid items-center gap-12 md:grid-cols-2 md:gap-16">
@@ -30,13 +29,10 @@ export function AboutSection() {
         </Reveal>
 
         <Reveal stagger>
-          <span className="eyebrow" data-reveal-item>
-            {t('aboutHeading')}
-          </span>
           <h2
             id="about-heading"
             data-reveal-item
-            className="mt-4 font-display text-4xl italic leading-tight text-cream md:text-5xl"
+            className="font-display text-4xl italic leading-tight text-slate md:text-5xl"
           >
             {t('aboutHeadline')}
           </h2>
@@ -44,7 +40,7 @@ export function AboutSection() {
             <p
               key={p.slice(0, 24)}
               data-reveal-item
-              className="mt-5 max-w-prose font-body text-base leading-relaxed text-cream/75"
+              className="mt-5 max-w-prose font-body text-base leading-relaxed text-slate/75"
             >
               {p}
             </p>
@@ -52,7 +48,7 @@ export function AboutSection() {
 
           <div
             data-reveal-item
-            className="mt-10 grid grid-cols-2 gap-4 border-y border-cream/10 py-8"
+            className="mt-10 grid grid-cols-2 gap-4 border-y border-slate/10 py-8"
           >
             {stats.map((s) => (
               <Counter key={s.label} value={s.value} label={s.label} />
