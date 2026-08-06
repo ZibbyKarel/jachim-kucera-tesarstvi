@@ -1,6 +1,7 @@
 import { useTranslations } from 'next-intl'
 import { Link } from '@/i18n/routing'
 import { Arrow } from '@/components/ui/Button'
+import { OpenerHouse } from './OpenerHouse'
 
 /* -------------------------------------------------------------------------- */
 /*  Opener — otvírák homepage                                                   */
@@ -32,7 +33,11 @@ export function Opener() {
       className="relative flex min-h-[88svh] flex-col justify-end overflow-hidden bg-paper"
     >
       <div className="grain absolute inset-0" aria-hidden="true" />
-      <div className="container-content relative pb-14 pt-28 md:pb-20 md:pt-32">
+      {/* Dekorativní 3D dům - jen desktop, neinteraktivní (viz OpenerHouse.tsx).
+          Rejstřík služeb (ServiceIndex) zůstává jedinou navigací, dům je čistá
+          kresba za textem, ne klikací plocha. */}
+      <OpenerHouse />
+      <div className="container-content relative z-10 pb-14 pt-28 md:pb-20 md:pt-32">
         <p className="font-mono text-xs uppercase tracking-widest text-oak">
           {tCommon('region')} · {t('openerEyebrowFounded', { year: FOUNDED_YEAR })}
         </p>
