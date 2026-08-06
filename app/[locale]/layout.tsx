@@ -85,7 +85,13 @@ function buildJsonLd(tSeo: SeoTranslator, locale: string) {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
     '@id': `${SITE.url}/#business`,
-    name: SITE.name,
+    // Záměrně shortName, ne name: schema.org/LocalBusiness.name má nést jméno
+    // podniku, ne jméno s připojeným popisem oboru. `SITE.name` obsahuje
+    // interpunkci („Jáchim & Kučera, tesařství"), kterou jsme si při redesignu
+    // sami vymysleli — neznáme oficiální znění názvu firmy (v repu není ani
+    // IČO) — a nechceme ji cpát do strukturovaných dat, odkud si ji tahají
+    // vyhledávače a mapové služby. Obor je vyjádřen jinými poli (serviceType).
+    name: SITE.shortName,
     description: tSeo('jsonLdDescription'),
     url: SITE.url,
     telephone: SITE.phone,
