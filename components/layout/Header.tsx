@@ -52,13 +52,22 @@ export function Header() {
   // Zúžení headeru: na začátku stránky (nebo pokud je otevřené mobilní menu,
   // které má vlastní tmavé pozadí) zůstává plně průhledný.
   const solid = !menuOpen && scrolled
-  // Logo je širokoúhlý lockup (867×463), ne čtvercový odznak — na 281px
-  // mobilním viewportu (bez horizontálního přetečení vedle jazykového
-  // přepínače a hamburgeru) se do řady vejde jen omezená šířka, proto je
-  // vizuální výška v obou stavech nižší než dřívější odznakové rozměry.
-  // Dotykový cíl odkazu pod 44px (spec §6) se dorovnává vertikálním
-  // paddingem přímo na <Logo>, ne zvětšením obrázku.
-  const logoHeight = solid ? 32 : 40
+  // Logo je širokoúhlý lockup (867×463) - vysázené jméno firmy uvnitř
+  // obrázku zabírá jen 21 % jeho výšky (naměřeno v public/logo_2.png), takže
+  // lockup musí být citelně vyšší, než by naznačovala "výška loga v headeru"
+  // u čtvercového odznaku, jinak je jméno firmy prakticky nečitelné.
+  //
+  // Na mobilu to ale naráží na šířku: na 281px viewportu (nejužší testovaný,
+  // vedle jazykového přepínače a hamburgeru) se do řady vejde lockup vysoký
+  // nejvýš ~40px, než by řádek přetekl - to je i dnešní strop. Nad `sm`
+  // (640px) je místa dost na cílových 52-60px (nescrollováno) / 44-48px
+  // (scrollováno), viz DECISIONS - proto je výška responzivní, ne jedno
+  // číslo: pod `sm` zůstává na dnešní hranici, od `sm` skáče na cílový pás.
+  // `h-14`/`h-12` apod. jsou skutečné vykreslené rozměry (viz Logo.tsx
+  // `heightClassName`); `height` prop níž slouží next/image jen jako
+  // intrinsic atribut pro srcset (bere se z největší použité velikosti, ať
+  // se retina desktop nedočká zvětšeného, rozmazaného downscalu).
+  const logoHeightClass = solid ? 'h-8 sm:h-12' : 'h-10 sm:h-14'
 
   return (
     <header
@@ -72,9 +81,16 @@ export function Header() {
           solid ? 'py-3' : 'py-5'
         }`}
       >
-        {/* py-1.5/py-0.5 dorovnávají klikací plochu na 44px (32+2×6, 40+2×2) —
-            viz komentář u logoHeight výše. */}
-        <Logo height={logoHeight} className={`shrink-0 ${solid ? 'py-1.5' : 'py-0.5'}`} />
+        {/* py-1.5/py-0.5 dorovnávají klikací plochu pod `sm` na 44px
+            (32+2×6, 40+2×2) - viz komentář u logoHeightClass výše. Od `sm`
+            už to obrázek přerostl (48px/56px), takže se padding ruší
+            (`sm:py-0`), ať logo nestrhává i zbytek řádku hlavičky výš, než
+            je nutné. */}
+        <Logo
+          height={56}
+          heightClassName={logoHeightClass}
+          className={`shrink-0 ${solid ? 'py-1.5 sm:py-0' : 'py-0.5 sm:py-0'}`}
+        />
 
         <nav aria-label={t('mainNavAria')} className="hidden items-center gap-8 lg:flex">
           {navLinks.map((link) => {
