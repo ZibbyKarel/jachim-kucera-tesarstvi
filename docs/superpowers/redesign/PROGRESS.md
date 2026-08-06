@@ -32,7 +32,10 @@ Seznam se doplní po finalizaci plánu.
       `tech-grid`), odstraněny 2 hex literály. `Counter` číslice na `font-mono`.
       Prop `aged` ponechán jako inertní no-op, call sites se ruší v Tascích 6/8/9.
       typecheck + lint čisté, žádný hex ani mrtvá třída v dotčených souborech.
-- [ ] Task 3 — Layout chrome (Header, Footer, Logo, LanguageSwitcher)
+- [x] Task 3 — Layout chrome (Header, Footer, Logo, LanguageSwitcher) → `304f08d`
+      IČO placeholder ověřeně zachován i s markerem (D-019). Tmavé mobilní menu používá
+      `*-soft` varianty podle párovací matice — ověřeno grepem, žádná ilegální dvojice.
+      Em-dash v `aria-label` Loga opraven. typecheck + lint čisté.
 - [ ] Task 4 — 3D dům retheme desktop + oprava reduced-motion (viz D-018)
 - [ ] Task 5 — Mobilní fallback domu: mřížka karet služeb
 - [ ] Task 6 — Homepage: bento grid služeb místo horizontálního scrollu (viz D-013)
