@@ -18,4 +18,9 @@ export function prefersReducedMotion(): boolean {
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches
 }
 
-export { gsap, ScrollTrigger, DrawSVGPlugin }
+// ScrollTrigger/DrawSVGPlugin zůstávají zaregistrované výše (Reveal.tsx je
+// používá nepřímo přes `scrollTrigger: {...}` v gsap.from()), ale nikdo je
+// needovažuje jako přímý import - export drží jen `gsap` samotné, které
+// komponenty skutečně importují (grep `ScrollTrigger`/`DrawSVGPlugin` mimo
+// tenhle soubor vrací 0 hitů).
+export { gsap }

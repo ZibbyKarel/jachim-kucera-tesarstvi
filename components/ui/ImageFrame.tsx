@@ -8,8 +8,6 @@ interface ImageFrameProps {
   className?: string
   sizes?: string
   priority?: boolean
-  /** ponecháno kvůli zpětné kompatibilitě volání - placeholder už nemá "aged" variantu */
-  aged?: boolean
   rounded?: boolean
 }
 

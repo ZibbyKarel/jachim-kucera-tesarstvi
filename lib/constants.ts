@@ -1,4 +1,4 @@
-import type { HouseLabel, NavLink, Project, Service } from './types'
+import type { NavLink, Project, Service } from './types'
 
 export const SITE = {
   name: 'Jáchim & Kučera, tesařství',
@@ -35,8 +35,6 @@ export const contacts = [
 export const services: Service[] = [
   {
     slug: 'tesarstvi',
-    featured: true,
-    houseGroup: 'g-truss',
     heroImage: '/images/realizace/krov-detail-01.jpg',
     gallery: [
       { src: '/images/realizace/krov-plzen-01.jpg' },
@@ -50,7 +48,6 @@ export const services: Service[] = [
   },
   {
     slug: 'pokryvacstvi',
-    houseGroup: 'g-roof',
     heroImage: '/images/realizace/strecha-palena-01.jpg',
     gallery: [
       { src: '/images/realizace/strecha-palena-plzen.jpg' },
@@ -64,7 +61,6 @@ export const services: Service[] = [
   },
   {
     slug: 'klempirstvi',
-    houseGroup: 'g-gutters',
     heroImage: '/images/realizace/okap-mer-01.jpg',
     gallery: [
       { src: '/images/realizace/okap-med.jpg' },
@@ -78,7 +74,6 @@ export const services: Service[] = [
   },
   {
     slug: 'cisteni-strech',
-    houseGroup: 'g-roof',
     heroImage: '/images/realizace/cisteni-strecha-01.jpg',
     gallery: [
       { src: '/images/realizace/cisteni-pred-po.jpg' },
@@ -206,63 +201,6 @@ export const projects: Project[] = [
 export function getProject(id: string): Project | undefined {
   return projects.find((p) => p.id === id)
 }
-
-/* -------------------------------------------------------------------------- */
-/*  Labely na domě — hlavní navigace. Text/subtext přichází z messages.        */
-/*  `side` určuje, na kterou stranu od kotvy text vyrůstá (kvůli spojnici       */
-/*  a zarovnání) — layout řeší components/house3d, tady jen data.              */
-/* -------------------------------------------------------------------------- */
-
-export const houseLabels: HouseLabel[] = [
-  {
-    id: 'label-chimney',
-    key: 'chimney',
-    textSource: { ns: 'nav', key: 'projects' },
-    position: { x: '40%', y: '13%' },
-    groupId: 'g-chimney',
-    href: '/realizace',
-  },
-  {
-    id: 'label-roof',
-    key: 'roof',
-    textSource: { ns: 'service', slug: 'pokryvacstvi' },
-    position: { x: '17%', y: '28%' },
-    groupId: 'g-roof',
-    href: '/sluzby/pokryvacstvi',
-  },
-  {
-    id: 'label-truss',
-    key: 'truss',
-    textSource: { ns: 'service', slug: 'tesarstvi' },
-    position: { x: '80%', y: '33%' },
-    groupId: 'g-truss',
-    href: '/sluzby/tesarstvi',
-  },
-  {
-    id: 'label-gutters',
-    key: 'gutters',
-    textSource: { ns: 'service', slug: 'klempirstvi' },
-    position: { x: '13%', y: '52%' },
-    groupId: 'g-gutters',
-    href: '/sluzby/klempirstvi',
-  },
-  {
-    id: 'label-windows',
-    key: 'windows',
-    textSource: { ns: 'nav', key: 'about' },
-    position: { x: '19%', y: '70%' },
-    groupId: 'g-windows',
-    href: '/o-nas',
-  },
-  {
-    id: 'label-door',
-    key: 'door',
-    textSource: { ns: 'nav', key: 'contact' },
-    position: { x: '53%', y: '82%' },
-    groupId: 'g-door',
-    href: '/kontakt',
-  },
-]
 
 /* -------------------------------------------------------------------------- */
 /*  Navigace                                                                   */
