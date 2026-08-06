@@ -8,7 +8,7 @@ interface ImageFrameProps {
   className?: string
   sizes?: string
   priority?: boolean
-  /** sépiový/grain overlay, který při hoveru mizí */
+  /** ponecháno kvůli zpětné kompatibilitě volání - placeholder už nemá "aged" variantu */
   aged?: boolean
   rounded?: boolean
 }
@@ -16,10 +16,11 @@ interface ImageFrameProps {
 /**
  * Rámeček pro fotku realizace.
  *
- * Reálné fotky nejsou součástí zadání — komponenta proto vykresluje
- * architektonický placeholder se správným poměrem stran a `alt` textem.
- * Jakmile do `public{src}` přibude skutečný soubor, stačí odkomentovat
- * <Image> níže a placeholder se nahradí optimalizovaným obrázkem.
+ * Reálné fotky nejsou součástí zadání - komponenta proto vykresluje
+ * technický/materiálový placeholder (jemný rastr + kótovací značky v rozích +
+ * popisek), ne "chybí obrázek". Jakmile do `public{src}` přibude skutečný
+ * soubor, stačí odkomentovat <Image> níže a placeholder se nahradí
+ * optimalizovaným obrázkem.
  */
 export function ImageFrame({
   src,
@@ -28,14 +29,13 @@ export function ImageFrame({
   className = '',
   sizes = '(max-width: 768px) 100vw, 50vw',
   priority = false,
-  aged = true,
   rounded = true,
 }: ImageFrameProps) {
   const hasRealAsset = false // přepni na true, až budou fotky v /public
 
   return (
     <div
-      className={`group relative overflow-hidden bg-wood-medium ${
+      className={`group relative overflow-hidden bg-paper-dim tech-grid ${
         rounded ? 'rounded-sm' : ''
       } ${className}`}
       style={{ aspectRatio: aspect }}
@@ -48,37 +48,35 @@ export function ImageFrame({
           sizes={sizes}
           priority={priority}
           loading={priority ? undefined : 'lazy'}
-          className={`object-cover ${aged ? 'photo-aged' : ''}`}
+          className="object-cover"
         />
       ) : (
         <div
           role="img"
           aria-label={alt}
-          className={`absolute inset-0 flex flex-col items-center justify-center gap-3 p-6 text-center ${
-            aged ? 'photo-aged' : ''
-          }`}
-          style={{
-            background:
-              'repeating-linear-gradient(135deg, #e6ddca 0 22px, #ded4bf 22px 44px)',
-          }}
+          className="absolute inset-0 flex flex-col items-center justify-center gap-3 p-6 text-center"
         >
+          {/* rohové kótovací značky - signalizují "toto je záměrný rámeček", ne chybějící obrázek */}
           <svg
-            width="40"
-            height="40"
-            viewBox="0 0 40 40"
-            fill="none"
+            width="100%"
+            height="100%"
+            viewBox="0 0 100 100"
+            preserveAspectRatio="none"
             aria-hidden="true"
-            className="text-wood-warm opacity-70"
+            className="pointer-events-none absolute inset-0 text-steel/50"
           >
+            <path d="M6 16V6h10M84 6h10v10M94 84v10H84M16 94H6V84" stroke="currentColor" strokeWidth="0.6" fill="none" />
+          </svg>
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true" className="text-steel">
             <path
-              d="M4 24 20 8l16 16M8 22v10h24V22"
+              d="M4 24 16 8l12 16M8 22v6h16v-6"
               stroke="currentColor"
-              strokeWidth="1.2"
+              strokeWidth="1.1"
               strokeLinecap="round"
               strokeLinejoin="round"
             />
           </svg>
-          <span className="max-w-[80%] font-body text-[0.65rem] uppercase tracking-widest text-cream/40">
+          <span className="max-w-[80%] font-mono text-[0.65rem] uppercase tracking-widest text-slate/45">
             {alt}
           </span>
         </div>
