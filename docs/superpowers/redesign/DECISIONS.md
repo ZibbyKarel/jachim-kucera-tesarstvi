@@ -221,3 +221,17 @@ Kontrola tokenů musí zahrnovat i otázku „kolik souborů se musí změnit p�
 `--font-body` nikde neexistuje (Task 1 zavedl `--font-sans` a `--font-mono`). Overlay tedy
 tiše renderuje system-ui místo Archivo. Fallback maskuje vadu, takže se to vizuálně jeví jako
 „skoro správně". Opravuje se spolu s D-024.
+
+## D-026 — `var()` na neexistující proměnnou je tichá vada, patří do ověřovacího rituálu
+**Datum:** 2026-08-06 · **Rozhodl:** Claude (opus)
+Redesign vyměnil sadu tokenů a v kódu zůstaly odkazy na proměnné, které zanikly:
+`--wood-amber` (`ContactForm`, `IsometricHouse`), `--font-body` a `--font-display`
+(`MenuOverlay.ts`).
+**Proč je to zákeřné:** CSS na neplatnou `var()` nenadává. Buď spadne na fallback, nebo
+deklaraci zahodí. Build, typecheck i lint projdou čistě. `--font-display` měl fallback
+`Georgia, serif`, takže názvy služeb v menu 3D domu renderovaly serifovou kurzívou — přesně
+ten výraz, který měl redesign odstranit, a na nejexponovanějším prvku webu. Vypadalo to
+záměrně, proto si toho nikdo nevšiml.
+**Důsledek pro proces:** ověření tasku nesmí končit u „build prošel". U každé `var(--x)`
+se musí ověřit, že `x` je někde definované. Fallback vadu maskuje, nezachraňuje ji.
+Grep musí procházet i `.ts` soubory — `MenuOverlay.ts` injektuje CSS jako řetězec.
