@@ -18,6 +18,13 @@ const LOGO_ASPECT_RATIO = 867 / 463;
  * výšce next/image dopočítá šířku podle LOGO_ASPECT_RATIO, takže lockup
  * nikdy nevypadá stlačený ani neoříznutý.
  *
+ * `heightClassName` je únikový poklop pro Header: lockup se tam musí měnit
+ * podle breakpointu (a stavu scrollu), což jediné `height: number` neumí -
+ * next/image z něj vyrábí `width`/`height` atributy (poměr stran, srcset),
+ * ale skutečnou vykreslenou velikost přebijí Tailwindí výškové třídy (musí
+ * mít i `w-auto` v `heightClassName` řetězci, ať šířka drží poměr stran).
+ * Bez `heightClassName` se použije `height` jako pevný px rozměr (patička).
+ *
  * `light` přepíná mezi dvěma PNG soubory, ne mezi CSS barvami: inkoust
  * lockupu je rastrový (kresba + písmo v jednom obrázku), takže "světlá
  * varianta" znamená jiný soubor (public/logo-paper.png, vygenerovaný
@@ -31,13 +38,18 @@ export function Logo({
   className = "",
   /** Světlá varianta loga (na tmavém poli, např. patička). */
   light = false,
-  /** Výška loga v px — šířka se dopočítá z LOGO_ASPECT_RATIO. */
+  /** Výška loga v px — šířka se dopočítá z LOGO_ASPECT_RATIO. Bez
+   *  `heightClassName` je to i skutečná vykreslená velikost. */
   height = 88,
+  /** Responzivní Tailwind výškové třídy (např. „h-10 sm:h-14"), které
+   *  přebijí pevnou velikost z `height` - viz komentář u komponenty výš. */
+  heightClassName,
   tabIndex,
 }: {
   className?: string;
   light?: boolean;
   height?: number;
+  heightClassName?: string;
   tabIndex?: number;
 }) {
   const t = useTranslations("nav");
@@ -55,8 +67,10 @@ export function Logo({
         width={width}
         height={height}
         priority
-        className="shrink-0 object-contain transition-transform duration-500 ease-craft group-hover:scale-105"
-        style={{ width, height }}
+        className={`shrink-0 object-contain transition-transform duration-500 ease-craft group-hover:scale-105 ${
+          heightClassName ? `${heightClassName} w-auto` : ""
+        }`}
+        style={heightClassName ? undefined : { width, height }}
       />
     </Link>
   );
