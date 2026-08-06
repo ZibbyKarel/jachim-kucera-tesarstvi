@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Cormorant_Garamond, DM_Sans } from 'next/font/google'
+import { Archivo, IBM_Plex_Mono } from 'next/font/google'
 import { notFound } from 'next/navigation'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server'
@@ -9,17 +9,18 @@ import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import '../globals.css'
 
-const cormorant = Cormorant_Garamond({
+const archivo = Archivo({
   subsets: ['latin', 'latin-ext'],
-  weight: ['300', '400', '600'],
+  weight: ['400', '500', '600', '700'],
   style: ['normal', 'italic'],
-  variable: '--font-display',
+  variable: '--font-sans',
   display: 'swap',
 })
 
-const dmSans = DM_Sans({
+const plexMono = IBM_Plex_Mono({
   subsets: ['latin', 'latin-ext'],
-  variable: '--font-body',
+  weight: ['400', '500'],
+  variable: '--font-mono',
   display: 'swap',
 })
 
@@ -128,7 +129,7 @@ export default async function LocaleLayout({
   return (
     <html
       lang={locale}
-      className={`${cormorant.variable} ${dmSans.variable}`}
+      className={`${archivo.variable} ${plexMono.variable}`}
       suppressHydrationWarning
     >
       <body>
@@ -139,7 +140,7 @@ export default async function LocaleLayout({
         <NextIntlClientProvider messages={messages}>
           <a
             href="#main-content"
-            className="sr-only rounded-md bg-wood-amber px-4 py-2 font-body text-sm font-medium text-charcoal focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100]"
+            className="sr-only rounded-md bg-patina px-4 py-2 font-body text-sm font-medium text-paper focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100]"
           >
             {t('skipToContent')}
           </a>

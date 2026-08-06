@@ -4,17 +4,18 @@
 
 :root {
   /* Design tokeny zrcadlí tailwind.config.ts — pro použití mimo utility třídy.
-     Světlá paleta odvozená z loga (světle šedé pozadí + charcoal + mosaz). */
-  --wood-dark: #e9e6e0; /* základní světlé pozadí */
-  --wood-medium: #f4f0e7; /* sekundární světlé pozadí */
-  --wood-warm: #7a5e26; /* hluboká mosaz */
-  --wood-light: #c49a4c; /* jasná mosazná zlatá (z loga) */
-  --wood-amber: #a07d33; /* mosazný akcent (čitelný na světlém) */
-  --charcoal: #2d2b28;
-  --steel-dark: #2d3748;
-  --steel-medium: #4a5568;
-  --steel-light: #718096;
-  --cream: #2d2b28; /* popředí / text (charcoal) */
+     steel/patina/patina-dim jsou WCAG-AA doladěné (tmavší než výchozí hex
+     hodnoty ze zadání); patina-soft je nový token — viz tabulka tokenů v sekci
+     "Design tokens: WCAG contrast verification" plánu. */
+  --paper: #eef0ef;
+  --paper-dim: #e2e5e3;
+  --slate: #1c2226;
+  --slate-soft: #2a3136;
+  --steel: #5f666a;
+  --steel-soft: #b7bcbe;
+  --patina: #486c5a;
+  --patina-dim: #3a5648;
+  --patina-soft: #74a48c;
 }
 
 @layer base {
@@ -24,26 +25,33 @@
   }
 
   body {
-    @apply bg-wood-dark font-body text-cream antialiased;
+    @apply bg-paper font-body text-slate antialiased;
     text-rendering: optimizeLegibility;
   }
 
   ::selection {
-    background-color: var(--wood-light);
-    color: var(--charcoal);
+    background-color: var(--patina);
+    color: var(--paper);
   }
 
   /* Viditelný a konzistentní focus ring napříč webem. */
   :focus-visible {
-    outline: 2px solid var(--wood-amber);
+    outline: 2px solid var(--patina);
     outline-offset: 3px;
     border-radius: 2px;
   }
 
-  /* SVG skupiny domu nemají vlastní border-radius, ale focus ring chceme. */
+  /* SVG skupiny / canvas overlaye nemají vlastní border-radius, ale focus ring chceme. */
   [tabindex]:focus-visible {
-    outline: 2px solid var(--wood-amber);
+    outline: 2px solid var(--patina);
     outline-offset: 4px;
+  }
+
+  /* Dark mobile-menu panel (#mobile-menu, viz Header.tsx) sedí na --slate, kde
+     výchozí --patina focus ring padá na ~2.8:1 a neprojde AA. Uvnitř panelu
+     přepínáme na --patina-soft (5.69:1 na slate). */
+  #mobile-menu :focus-visible {
+    outline-color: var(--patina-soft);
   }
 
   h1,
@@ -63,18 +71,19 @@
     @apply mx-auto w-full max-w-content px-6 md:px-10;
   }
 
-  /* Jemný papírový / sépiový grain přes tmavá pozadí. */
+  /* Jemný papírový grain přes plochy (nahrazuje starý sépiový .grain). */
   .grain::after {
     content: '';
     position: absolute;
     inset: 0;
     pointer-events: none;
-    opacity: 0.04;
+    opacity: 0.035;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
+  /* Kicker label — vyhrazeno pro HERO nadpisy sekcí (rozpočet: cca 1 na 3 sekce). */
   .eyebrow {
-    @apply font-body text-xs uppercase tracking-widest text-wood-amber;
+    @apply font-mono text-xs uppercase tracking-widest text-patina;
   }
 
   .link-underline {
@@ -87,21 +96,19 @@
   .link-underline:hover::after {
     @apply origin-left scale-x-100;
   }
+
+  /* Technický "konstrukční" rastr — pro ImageFrame placeholder a kontakt mapu. */
+  .tech-grid {
+    background-image:
+      linear-gradient(0deg, rgba(28, 34, 38, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(28, 34, 38, 0.06) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
-  }
-
-  /* Sépiový/grain overlay pro fotky realizací — mizí při hoveru. */
-  .photo-aged {
-    filter: sepia(0.35) saturate(0.85) contrast(0.95);
-    transition: filter 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-  .group:hover .photo-aged,
-  .photo-aged:hover {
-    filter: sepia(0) saturate(1) contrast(1);
   }
 }
 
