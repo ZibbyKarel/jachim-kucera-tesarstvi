@@ -27,20 +27,14 @@
     "contact": "Kontakt"
   },
   "home": {
-    "hint": "Prozkoumejte dům — klikněte na jeho části",
     "heroEyebrow": "Tesařství · Pokrývačství · Klempířství",
     "heroTitle": "Poctivá řemeslná práce",
     "heroCta": "Nezávazně poptat",
     "heroAria": "Rozcestník: interaktivní dům",
-    "scrollCue": "Posuňte níž",
-    "servicesHeading": "Co umíme",
     "servicesIntro": "Od krovu po poslední okap. Čtyři řemesla pod jednou střechou.",
-    "projectsHeading": "Vybrané realizace",
     "projectsIntro": "Část toho, co jsme za poslední roky postavili po Plzeňském kraji.",
-    "aboutHeading": "Kdo to staví",
     "aboutHeadline": "Stavíme střechy, jako by byly naše vlastní",
     "aboutCta": "Náš příběh",
-    "contactHeading": "Pojďme se domluvit",
     "contactHeadline": "Zavolejte nebo napište. Domluvíme se."
   },
   "contact": {

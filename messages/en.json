@@ -27,20 +27,14 @@
     "contact": "Contact"
   },
   "home": {
-    "hint": "Explore the house — click on its parts",
     "heroEyebrow": "Carpentry · Roofing · Tinsmithing",
     "heroTitle": "Honest craftsmanship",
     "heroCta": "Request a quote",
     "heroAria": "Site map: interactive house",
-    "scrollCue": "Scroll down",
-    "servicesHeading": "What we do",
     "servicesIntro": "From the truss to the last gutter. Four crafts under one roof.",
-    "projectsHeading": "Selected projects",
     "projectsIntro": "A part of what we have built across the Pilsen region in recent years.",
-    "aboutHeading": "Who builds it",
     "aboutHeadline": "We build roofs as if they were our own",
     "aboutCta": "Our story",
-    "contactHeading": "Let's talk",
     "contactHeadline": "Call or write. Let's talk it through."
   },
   "contact": {
