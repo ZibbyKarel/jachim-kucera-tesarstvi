@@ -73,9 +73,16 @@ Seznam se doplní po finalizaci plánu.
       **Nedodělek k rozhodnutí:** modal nemá focus trap ani návrat fokusu na spouštěč
       (stav před redesignem, subagent ho záměrně tiše nepřidával). Řeší se v Tasku 12.
 - [~] **Oprava mimo plán** — jeden zdroj pravdy pro paletu (D-024) + mrtvá `--font-body` (D-025)
-- [~] Task 9 — O nás (timeline jako technický harmonogram)
-- [ ] Task 10 — Kontakt (formulář, a11y, kontrast)
+- [x] Task 9 — O nás (timeline jako technický harmonogram) → `d5b5444`
+      Odstraněno falešné číslování hodnot (`01`, `02`…), dekorativní tečka Timeline
+      nahrazena kótovací značkou. Obě stránky jsou celé na světlém pozadí, takže se
+      `*-soft` varianty vůbec nepoužívají a párovací matici nelze porušit.
+      Subagent správně nechal em-dashe v `messages/*.json` na Task 11, aby se diff
+      nedělal dvakrát.
+- [~] Task 10 — Kontakt (formulář, a11y, kontrast)
 - [ ] Task 11 — Content sweep: em-dashe, zbylé hex literály, mrtvý kód
+      Pozor na dva různé soubory: `app/[locale]/not-found.tsx` **i** `app/not-found.tsx`
+      v kořeni. Oba mají vlastní legacy paletu, plán zmiňuje jen ten první.
 - [ ] Task 12 — Závěrečný pass: kontrast, reduced-motion, anti-slop, build
 
 ## Pre-launch checklist — MUSÍ se vyřešit před nasazením
