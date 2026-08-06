@@ -63,35 +63,39 @@ obsazuje jiná aplikace. Pro vizuální kontrolu spusť dev server ručně na vo
 
 **Poslední aktualizace:** 2026-08-06
 
-**Fáze:** Příprava — plán po adversariálním review, opravuje se druhé kolo.
+**Fáze:** Implementace — **8 z 12 tasků hotovo a commitnuto.**
 
-**Hotovo:**
-- Design spec napsaný a schválený, commitnutý.
-- Recovery infrastruktura (DECISIONS.md, PROGRESS.md, tento soubor).
-- Audit kódové báze sonnet subagentem. Klíčové nálezy: Tailwind v3.4.10, současné písmo je
-  serif (Cormorant Garamond) který musí pryč, 22 souborů používá staré barevné třídy,
-  8 souborů má hex literály, 3D dům je raw Three.js (ne R3F), 72 em-dashů v `messages/*.json`,
-  mrtvý kód `IsometricHouse.tsx`, chybějící reduced-motion guard u idle animace domu.
-- Rozhodnutí k nálezům: D-011 až D-018 v DECISIONS.md.
+Plán je commitnutý (`6d3a0de`, 12 tasků), prošel dvěma review koly. Přesný stav tasků
+včetně hashů je v PROGRESS.md — tenhle soubor ho needubluje.
 
-**Plán — stav:** napsaný (12 tasků, ~3200 řádků), prošel dvěma review koly.
-Písma: **Archivo** (display, pravá kurzíva) + **IBM Plex Mono**. Česká diakritika ověřena
-inspekcí cmap tabulek stažených `.ttf` přes `fontTools`, ne odhadem.
+Písma: **Archivo** (display) + **IBM Plex Mono**. Česká diakritika ověřena inspekcí cmap
+tabulek stažených `.ttf` přes `fontTools`, ne odhadem.
 
-Review kolo 1 (opus, vlastní skript): všech 7 tvrzených kontrastních poměrů sedí přesně.
-Odhaleny 3 neuvedené padající dvojice → D-020.
-Review kolo 2 (nezávislý adversariální subagent): potvrdil přesnost odkazů na řádky a symboly
-napříč kódovou bází. Nalezena 1 blokující vada (Task 3 implementoval zrušené D-015 místo
-D-019) + 5 dalších oprav.
+**Právě probíhá (2 souběžné sonnet subagenty, souborově disjunktní):**
+- Task 9 — O nás + Timeline (`app/[locale]/o-nas/page.tsx`, `components/sections/Timeline.tsx`)
+- Oprava mimo plán — jeden zdroj pravdy pro paletu, D-024 (`lib/palette.ts`,
+  `tailwind.config.ts`, `app/globals.css`, `components/house3d/config.ts`)
 
-**Právě probíhá:**
-- Autor plánu zapracovává opravy z obou review kol. Plán ještě NENÍ commitnutý.
+**Další krok:** ověřit oba, pak Task 10 (Kontakt), 11 (content sweep), 12 (závěrečný pass).
 
-**Další krok:**
-- Opus ověří opravy, commitne plán, spustí Task 1.
-- Pak implementace task po tasku přes sonnet subagenty, s review mezi tasky.
+**Soubory, které ještě nesou legacy třídy** (stav po Tasku 8, ověřeno grepem):
+`app/[locale]/kontakt/page.tsx` a `components/ui/ContactForm.tsx` (Task 10),
+`app/[locale]/o-nas/page.tsx` a `components/sections/Timeline.tsx` (Task 9, běží),
+`app/[locale]/not-found.tsx` a `components/house/IsometricHouse.tsx` (Task 11 — druhý se maže).
+Pozor: `app/not-found.tsx` v kořeni je **jiný soubor** než `app/[locale]/not-found.tsx`
+a taky má vlastní legacy paletu (`#2d2b28`/`#e9e6e0`/`#c49a4c`). Ať na něj Task 11 nezapomene.
 
 **Blokery:** žádné.
+
+## Jak se ověřuje cizí práce (poučení, ne teorie)
+
+- Grep piš tak, aby **prázdný výsledek šel odlišit od pádu příkazu** — vypisuj exit kód.
+  `--include=*.tsx` bez uvozovek zsh shodí a chybová hláška zapadne mezi ostatní výstup;
+  přesně takhle proklouzla vada opravená v `fdf5fc6` (D-023).
+- `grep -n --slate soubor` selže na parsování přepínače. Použij `grep -n -e '--slate'`.
+- Kontroluj celý repozitář, ne jen soubory z posledního commitu. Regrese vzniká i tam,
+  co už je odškrtnuté.
+- U tokenů nekontroluj jen *hodnoty*, ale i **počet míst, kde hodnoty žijí** (D-024).
 
 **Čeká se na klienta:** skutečné IČO (placeholder zatím zůstává, viz D-019 a pre-launch
 checklist v PROGRESS.md), reálné fotky realizací.

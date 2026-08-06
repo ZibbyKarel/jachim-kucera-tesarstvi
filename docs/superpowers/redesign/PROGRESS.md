@@ -59,12 +59,21 @@ Seznam se doplní po finalizaci plánu.
       (jeden dělič mezi řádky, ne hairline kolem každého). 4 route soubory ověřeny —
       nepotřebovaly změnu. 1 eyebrow na 5 sekcí. `npm run build` prošel.
 
-- [ ] **Oprava mimo plán** — natvrdo zapsané `rgba(28,34,38,…)` stíny ve 4 sekcích
-      z Tasku 6 (`ServicesGrid`, `AboutSection`, `ContactSection`, `ProjectsPreview`).
+- [x] **Oprava mimo plán** — natvrdo zapsané `rgba(28,34,38,…)` stíny ve 4 sekcích
+      z Tasku 6 (`ServicesGrid`, `AboutSection`, `ContactSection`, `ProjectsPreview`) → `fdf5fc6`
       Je to hodnota tokenu `slate`, tedy paletová barva v komponentě → porušení D-003.
-      Propásla to moje kontrola, viz D-023.
-- [ ] Task 8 — Realizace (galerie)
-- [ ] Task 9 — O nás (timeline jako technický harmonogram)
+      Propásla to moje kontrola, viz D-023. Nahrazeno `.shadow-panel-{12,14,20}` nad
+      `color-mix()`, tedy bez druhé kopie barvy. Ekvivalence doložena výpočtem
+      (premultiplied alpha), ne odhadem.
+- [x] Task 8 — Realizace (galerie) → `a5eabcb`
+      Mřížka s proměnlivým poměrem stran (každá pátá karta na výšku), filtrovací taby,
+      modal. Ověřeno: modal panel je **světlý** (`bg-paper`), tmavý je jen scrim — žádná
+      past na párovací matici, jak jsem čekal. Sada i18n klíčů beze změny.
+      `realizace/page.tsx` tím vypadl ze seznamu souborů s legacy třídami.
+      **Nedodělek k rozhodnutí:** modal nemá focus trap ani návrat fokusu na spouštěč
+      (stav před redesignem, subagent ho záměrně tiše nepřidával). Řeší se v Tasku 12.
+- [~] **Oprava mimo plán** — jeden zdroj pravdy pro paletu (D-024) + mrtvá `--font-body` (D-025)
+- [~] Task 9 — O nás (timeline jako technický harmonogram)
 - [ ] Task 10 — Kontakt (formulář, a11y, kontrast)
 - [ ] Task 11 — Content sweep: em-dashe, zbylé hex literály, mrtvý kód
 - [ ] Task 12 — Závěrečný pass: kontrast, reduced-motion, anti-slop, build
@@ -83,3 +92,7 @@ Seznam se doplní po finalizaci plánu.
 
 - 3D dům má klikatelné 3 části z 6 (D-016). Komín, okna a dveře jsou dostupné jen přes
   hlavní navigaci.
+- Modal galerie realizací nemá focus trap (Tab uteče na stránku pod ním) ani návrat fokusu
+  na spouštěcí tlačítko po zavření. Je to stav zděděný z původního kódu, ne regrese
+  redesignu. `role="dialog"`, `aria-modal`, `aria-label`, Escape a zamčený scroll fungují.
+  K dořešení v Tasku 12.
