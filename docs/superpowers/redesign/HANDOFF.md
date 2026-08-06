@@ -63,29 +63,21 @@ obsazuje jiná aplikace. Pro vizuální kontrolu spusť dev server ručně na vo
 
 **Poslední aktualizace:** 2026-08-06
 
-**Fáze:** Implementace — **8 z 12 tasků hotovo a commitnuto.**
-
-Plán je commitnutý (`6d3a0de`, 12 tasků), prošel dvěma review koly. Přesný stav tasků
-včetně hashů je v PROGRESS.md — tenhle soubor ho needubluje.
+**Fáze:** Implementace hotová. **Všech 12 tasků commitnuto**, plus 6 oprav mimo plán.
+Zbývá vyřešit pre-launch checklist v PROGRESS.md.
 
 Písma: **Archivo** (display) + **IBM Plex Mono**. Česká diakritika ověřena inspekcí cmap
 tabulek stažených `.ttf` přes `fontTools`, ne odhadem.
 
-**Právě probíhá (2 souběžné sonnet subagenty, souborově disjunktní):**
-- Task 9 — O nás + Timeline (`app/[locale]/o-nas/page.tsx`, `components/sections/Timeline.tsx`)
-- Oprava mimo plán — jeden zdroj pravdy pro paletu, D-024 (`lib/palette.ts`,
-  `tailwind.config.ts`, `app/globals.css`, `components/house3d/config.ts`)
+**Blokery pro nasazení** (detail v PROGRESS.md): skutečné IČO, reálné fotky,
+**nevykreslující se 3D dům (D-029)**, ověření oficiálního názvu firmy, potvrzení tvrzení
+„Záruka 10 let", vizuální kontrola na mobilu.
 
-**Další krok:** ověřit oba, pak Task 10 (Kontakt), 11 (content sweep), 12 (závěrečný pass).
-
-**Soubory, které ještě nesou legacy třídy** (stav po Tasku 8, ověřeno grepem):
-`app/[locale]/kontakt/page.tsx` a `components/ui/ContactForm.tsx` (Task 10),
-`app/[locale]/o-nas/page.tsx` a `components/sections/Timeline.tsx` (Task 9, běží),
-`app/[locale]/not-found.tsx` a `components/house/IsometricHouse.tsx` (Task 11 — druhý se maže).
-Pozor: `app/not-found.tsx` v kořeni je **jiný soubor** než `app/[locale]/not-found.tsx`
-a taky má vlastní legacy paletu (`#2d2b28`/`#e9e6e0`/`#c49a4c`). Ať na něj Task 11 nezapomene.
-
-**Blokery:** žádné.
+**Stav kódové báze po redesignu:**
+- Jediný soubor s hex hodnotami palety je `lib/palette.ts` (D-024). Výměna palety za
+  „dřevěnou" je úprava jednoho souboru, jak si uživatel vymínil.
+- Žádné legacy třídy `wood-*`/`cream`/`charcoal`, žádné pomlčky v uživatelském textu.
+- Všech ~20 kontrastních dvojic s průhledností přeměřeno a opraveno (Task 12).
 
 ## Jak se ověřuje cizí práce (poučení, ne teorie)
 
