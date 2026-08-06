@@ -1,66 +1,66 @@
-'use client'
-
-import { Arrow, Button } from '@/components/ui/Button'
-import { Counter } from '@/components/ui/Counter'
-import { ImageFrame } from '@/components/ui/ImageFrame'
-import { Reveal } from '@/components/ui/Reveal'
 import { useTranslations } from 'next-intl'
+import { Link } from '@/i18n/routing'
+import { Arrow } from '@/components/ui/Button'
+import { Reveal } from '@/components/ui/Reveal'
+
+/* -------------------------------------------------------------------------- */
+/*  AboutSection — o nás, timber pole                                           */
+/*                                                                              */
+/*  Velký výrok (home.aboutHeadline) přes ~8 sloupců, vedle krátký odstavec     */
+/*  (about.heroQuote - existující, krátká, úderná věta, ne nový text) v         */
+/*  oak-soft. Hodnoty (about.values) jako prostý hairline oddělený seznam,      */
+/*  žádné karty - stejný vzor jako oddělovače v ServiceIndex (border-paper/40). */
+/* -------------------------------------------------------------------------- */
 
 export function AboutSection() {
   const t = useTranslations('home')
   const tAbout = useTranslations('about')
-  const story = tAbout.raw('story') as string[]
-  const stats = tAbout.raw('stats') as { value: string; label: string }[]
+  const values = tAbout.raw('values') as { title: string; description: string }[]
 
   return (
-    <section
-      aria-labelledby="about-heading"
-      className="relative min-h-[100dvh] overflow-hidden bg-paper-dim py-24 shadow-panel-20 md:py-32"
-    >
-      <div className="grain absolute inset-0" aria-hidden="true" />
-      <div className="container-content relative grid items-center gap-12 md:grid-cols-2 md:gap-16">
-        <Reveal>
-          <ImageFrame
-            src="/images/tym/tym-01.jpg"
-            alt={tAbout('teamAlt')}
-            aspect="4/5"
-            sizes="(max-width: 768px) 100vw, 45vw"
-          />
-        </Reveal>
-
-        <Reveal stagger>
+    <section aria-labelledby="about-heading" className="bg-timber py-24 md:py-32">
+      <div className="container-content">
+        <div className="grid gap-8 md:grid-cols-12 md:gap-12">
           <h2
             id="about-heading"
-            data-reveal-item
-            className="font-display text-4xl italic leading-tight text-timber md:text-5xl"
+            className="text-balance font-display text-[clamp(1.75rem,3.5vw,3rem)] leading-[1.1] text-paper md:col-span-8"
           >
             {t('aboutHeadline')}
           </h2>
-          {story.slice(0, 2).map((p) => (
-            <p
-              key={p.slice(0, 24)}
+          <p className="font-body text-base leading-relaxed text-oak-soft md:col-span-4 md:pt-2">
+            {tAbout('heroQuote')}
+          </p>
+        </div>
+
+        <Reveal
+          stagger
+          className="mt-14 border-t border-paper/40 md:mt-20"
+        >
+          {values.map((value) => (
+            <div
+              key={value.title}
               data-reveal-item
-              className="mt-5 max-w-prose font-body text-base leading-relaxed text-timber/75"
+              className="flex flex-col gap-2 border-b border-paper/40 py-8 md:flex-row md:items-baseline md:gap-10"
             >
-              {p}
-            </p>
+              <h3 className="font-display text-xl text-paper md:w-64 md:shrink-0">
+                {value.title}
+              </h3>
+              <p className="font-body text-base leading-relaxed text-oak-soft">
+                {value.description}
+              </p>
+            </div>
           ))}
-
-          <div
-            data-reveal-item
-            className="mt-10 grid grid-cols-2 gap-4 border-y border-timber/50 py-8"
-          >
-            {stats.map((s) => (
-              <Counter key={s.label} value={s.value} label={s.label} />
-            ))}
-          </div>
-
-          <div data-reveal-item className="mt-8">
-            <Button href="/o-nas" variant="outline">
-              {t('aboutCta')} <Arrow />
-            </Button>
-          </div>
         </Reveal>
+
+        <div className="mt-10">
+          <Link
+            href="/o-nas"
+            className="group link-underline inline-flex items-center gap-2 font-body text-paper"
+          >
+            {t('aboutCta')}
+            <Arrow className="transition-transform duration-300 ease-craft group-hover:translate-x-1" />
+          </Link>
+        </div>
       </div>
     </section>
   )
