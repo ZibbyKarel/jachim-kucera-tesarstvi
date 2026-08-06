@@ -263,3 +263,22 @@ Grep na symptom nenajde vadu, kterou jsem si sám vyrobil při jeho odstraňová
 **Pravidlo:** po každé plošné náhradě znaku se musí hledat i **nový** znak v té samé funkci,
 a to i v místech, kde se text skládá za běhu, ne jen ve zdrojích textu.
 Souvisí s [[D-027]]. Opravuje se v Tasku 12, část A.
+
+## D-029 — 3D dům se nevykresluje; vada je STARŠÍ než redesign
+**Datum:** 2026-08-06 · **Zjistil:** Claude (opus), vizuální kontrola v prohlížeči
+Na `/` i `/nahled-3d` se místo domu vykreslí jen **plaňkový plot** kolem pozemku a pár
+rozptýlených teček. Chybí hlavní hmota, střecha, garáž i pergola. Menu labely se nezobrazí.
+**Ověřeno, že to není regrese redesignu:** vytvořil jsem git worktree na commitu `6d3a0de`
+(stav před Taskem 1, tedy před jakoukoli změnou vzhledu), spustil ho na vlastním portu a
+vykreslení je **vizuálně totožné**. Rozdíl je jen v barvě pozadí a písmu titulku.
+**Není to ani softwarové renderování:** WebGL hlásí `ANGLE (Apple, ANGLE Metal Renderer:
+Apple M5)`, 4× MSAA, DPR 2. Skutečná GPU.
+**Konzole je bez chyb** — jen dvě deprecation varování z Three.js (`THREE.Clock`,
+`PCFSoftShadowMap`). Vada tedy neshodí runtime, jen nic nevykreslí.
+**Kde hledat:** `ArchElement.ts:88` vytváří `LineMaterial` s `opacity: 0` a `transparent: true`;
+plné krytí nastavuje až `revealComplete()` volaný z intro animace v `SceneManager.prepareIntro()`
+/ `updateIntro()`. Plot je jediný prvek, který je vidět, a je to jediný prvek stavěný
+`buildFence()` jako **jedna sloučená geometrie**. To ukazuje směrem k tomu, že ostatní prvky
+buď nedostanou `revealComplete()`, nebo jejich geometrie nevznikne.
+**Rozhodnutí:** mimo rozsah redesignu. Redesign měnil barvy a chování reduced-motion, ne
+geometrii. Řešit samostatně, ale **před nasazením** — je to hlavní prvek homepage.

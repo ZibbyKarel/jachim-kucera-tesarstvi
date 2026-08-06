@@ -99,7 +99,40 @@ Seznam se doplní po finalizaci plánu.
 - [~] Task 11 — Content sweep: pomlčky, zbylé hex literály, mrtvý kód
       Pozor na dva různé soubory: `app/[locale]/not-found.tsx` **i** `app/not-found.tsx`
       v kořeni. Oba mají vlastní legacy paletu, plán zmiňuje jen ten první.
-- [ ] Task 12 — Závěrečný pass: kontrast, reduced-motion, anti-slop, build
+- [x] Task 12 — Závěrečný pass → `f7223ae`, `fcba70e`, `c89523c`
+      **Nejcennější nález celého redesignu:** přeměření kontrastu odhalilo ~20 padajících
+      dvojic. Task 1 ověřoval jen plné tokeny, jenže Tasky 2-11 zavedly průhledné varianty
+      (`text-slate/40`, `border-slate/25` …), které nikdy nikdo neměřil. Nejhorší případ
+      1,65:1 při požadovaných 4,5:1. Opraveno zvýšením krytí, ne změnou tokenů.
+      Dále: 8 mezerníkových spojovníků (D-028), focus trap a návrat fokusu v modalu galerie.
+      Reduced-motion: všech 8 animací má guard, ověřeno jednotlivě.
+- [x] **Oprava mimo plán** — název firmy ve strukturovaných datech → `07e528a`
+      JSON-LD `LocalBusiness.name` používá `SITE.shortName` (`Jáchim & Kučera`) místo
+      `SITE.name`, který za redesign prošel třemi úpravami interpunkce. Neznáme oficiální
+      znění názvu, a vymyšlená interpunkce ve strukturovaných datech je horší než žádná —
+      agregátoři a mapové služby ji porovnávají s rejstříkovými zápisy.
+- [x] **Vizuální kontrola v prohlížeči (opus)** — viz „Nálezy z vizuální kontroly" níže
+
+## Nálezy z vizuální kontroly v prohlížeči
+
+Kontrolováno na `localhost:4317`, Chrome, skutečná GPU (Apple M5 přes Metal, 4× MSAA, DPR 2).
+
+**Funguje podle návrhu:**
+- Hero, typografie (Archivo kurzíva v nadpisu), akcent patiny na CTA.
+- Header je na hero záměrně skrytý (`nav` má `opacity: 0`) a naskakuje při scrollu. Není to
+  vada, je to chování `HeroScroll`.
+- Bento grid služeb: 2 sloupce × 3 řádky, featured buňka `548 × 1135` přes tři řádky,
+  tři vedlejší buňky ve druhém sloupci. Odpovídá D-013.
+- Pět navigačních landmarků, každý s vlastním `aria-label`. Mobilní mřížka služeb má
+  6 cílů s `min-height: 44px` ve dvou sloupcích (požadavek uživatele na mobilní navigaci).
+
+**Vada (starší než redesign):** 3D dům se nevykresluje, viz D-029. Ověřeno proti stavu před
+Taskem 1 v samostatném worktree — vykreslení je totožné.
+
+**Co se v tomto prostředí ověřit NEPODAŘILO:** skutečná mobilní šířka. Prohlížeč má viewport
+odpojený od velikosti okna (`outerWidth` 784, ale `innerWidth` zůstává 1920), takže se
+media queries nepřepnou. Mobilní mřížka je ověřená strukturálně (DOM, třídy, `min-height`),
+ne pohledem. **Zbývá zkontrolovat na skutečném telefonu nebo v device toolbaru.**
 
 ## Pre-launch checklist — MUSÍ se vyřešit před nasazením
 
@@ -110,6 +143,14 @@ Seznam se doplní po finalizaci plánu.
       působí hůř než žádná.
 - [ ] **Reálné fotky** — web běží na placeholderech. `ImageFrame` má konstantu
       `hasRealAsset`; po dodání souborů do `public/images/` se přepne.
+- [ ] **3D dům se nevykresluje** (D-029) — je to hlavní prvek homepage a je rozbitý.
+      Vada existovala už před redesignem, takže ji redesign nezpůsobil ani nevyřešil.
+- [ ] **Oficiální název firmy** — `SITE.name` v `lib/constants.ts` je
+      `Jáchim & Kučera, tesařství`. Interpunkce je naše, ne ověřená. Až bude známé IČO,
+      srovnat s rejstříkem. JSON-LD už používá bezpečný `shortName` (`07e528a`).
+- [ ] **„Záruka 10 let"** v certifikátech na stránce O nás — neověřené tvrzení, může být
+      pozůstatek staršího textu. Potvrdit s klientem, nebo odstranit.
+- [ ] **Mobilní zobrazení pohledem** — ověřeno zatím jen strukturálně, viz výše.
 
 ## Známé nedodělky ponechané mimo rozsah
 
