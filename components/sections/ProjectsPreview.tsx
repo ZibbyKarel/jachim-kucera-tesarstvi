@@ -47,7 +47,7 @@ export function ProjectsPreview() {
               >
                 <ImageFrame
                   src={project.thumbnail}
-                  alt={`${title} - ${location}`}
+                  alt={`${title}, ${location}`}
                   aspect={i % 4 === 0 ? '3/4' : '4/3'}
                   sizes="(max-width: 768px) 50vw, 33vw"
                 />

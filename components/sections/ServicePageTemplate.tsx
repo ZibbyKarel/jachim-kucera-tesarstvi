@@ -20,7 +20,7 @@ export function ServicePageTemplate({ service }: { service: Service }) {
       <header className="relative h-[72vh] min-h-[460px] w-full overflow-hidden">
         <ImageFrame
           src={service.heroImage}
-          alt={`${tCommon('serviceLabel')} - ${title}`}
+          alt={`${tCommon('serviceLabel')}, ${title}`}
           aspect="16/9"
           rounded={false}
           priority

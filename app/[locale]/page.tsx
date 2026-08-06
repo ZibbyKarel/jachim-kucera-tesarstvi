@@ -43,7 +43,7 @@ export default async function HomePage({
             {houseLabels.map((label) => (
               <li key={label.id}>
                 <Link href={label.href}>
-                  {labelText(t, label.textSource)} - {labelSubtext(t, label)}
+                  {labelText(t, label.textSource)}, {labelSubtext(t, label)}
                 </Link>
               </li>
             ))}
