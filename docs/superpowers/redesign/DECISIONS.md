@@ -124,6 +124,17 @@ navigaci. Rozšíření na 6 je práce v Three.js modelu — mimo rozsah tohoto 
 Audit potvrdil nula importérů. Obsahuje navíc hardcoded hex barvy, které by jinak zůstaly
 v repu jako matoucí falešná stopa při příští výměně palety.
 
+## D-023 — Kontrolní grepy musí selhat hlasitě, ne tiše
+**Datum:** 2026-08-06 · **Rozhodl:** Claude (opus) — poučení z propásnuté vady
+Při ověřování Tasku 6 mi grep spadl na chybu zsh globbingu (`no matches found: --include=*.tsx`).
+Chybová hláška zapadla mezi ostatní výstup a já z jiného řádku odečetl „čisté".
+Důsledkem prošly čtyři komponenty s natvrdo zapsaným `rgba(28,34,38,…)` ve stínech —
+což je přesně hodnota tokenu `slate`, tedy paletová barva v komponentě (porušení D-003).
+**Platí:** ověřovací příkazy psát tak, aby prázdný výsledek šel odlišit od pádu příkazu
+(`|| echo "clean"` na konci, ne spoléhat na to, že prázdný výstup znamená úspěch).
+U vzorů, které se opakují napříč tasky, kontrolovat celý repozitář, ne jen soubory
+dotčené posledním commitem — regrese vzniká i v už „hotových" souborech.
+
 ## D-022 — Zákaz hex literálů se týká paletových barev, ne fyzikálně významných hodnot
 **Datum:** 2026-08-06 · **Rozhodl:** Claude (opus) — druhá oprava vlastního přespecifikování
 Pravidlo „nula hex literálů v komponentách" jsem formuloval absolutně. Task 4 na to narazil

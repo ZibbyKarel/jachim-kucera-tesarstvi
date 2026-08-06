@@ -54,7 +54,15 @@ Seznam se doplní po finalizaci plánu.
       importéry. Bento: 1 featured buňka přes 3 řádky + 3 vedlejší, 0 prázdných buněk,
       1 sloupec pod 768px. `ServiceCard.tsx` zbaven hexů a legacy tříd.
       Realizace na homepage 6 → 4. `npm run build` prošel (26 stránek).
-- [ ] Task 7 — ServicePageTemplate + 4 stránky služeb
+- [x] Task 7 — ServicePageTemplate + 4 stránky služeb → `c245cf6`
+      „Co zahrnuje" přepsáno z ohraničených karet na `divide-y` řádky v mono registru
+      (jeden dělič mezi řádky, ne hairline kolem každého). 4 route soubory ověřeny —
+      nepotřebovaly změnu. 1 eyebrow na 5 sekcí. `npm run build` prošel.
+
+- [ ] **Oprava mimo plán** — natvrdo zapsané `rgba(28,34,38,…)` stíny ve 4 sekcích
+      z Tasku 6 (`ServicesGrid`, `AboutSection`, `ContactSection`, `ProjectsPreview`).
+      Je to hodnota tokenu `slate`, tedy paletová barva v komponentě → porušení D-003.
+      Propásla to moje kontrola, viz D-023.
 - [ ] Task 8 — Realizace (galerie)
 - [ ] Task 9 — O nás (timeline jako technický harmonogram)
 - [ ] Task 10 — Kontakt (formulář, a11y, kontrast)
