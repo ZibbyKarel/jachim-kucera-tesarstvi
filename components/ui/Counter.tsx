@@ -45,12 +45,12 @@ export function Counter({ value, label }: CounterProps) {
 
   return (
     <div className="text-center">
-      <div className="font-display text-5xl text-wood-amber md:text-6xl">
+      <div className="font-mono text-4xl text-patina md:text-5xl">
         {prefix}
         {num !== null ? <span ref={numRef}>0</span> : null}
         {num === null ? <span>{suffix}</span> : suffix}
       </div>
-      <div className="mt-2 font-body text-xs uppercase tracking-widest text-cream/60">
+      <div className="mt-2 font-body text-xs uppercase tracking-widest text-slate/60">
         {label}
       </div>
     </div>
