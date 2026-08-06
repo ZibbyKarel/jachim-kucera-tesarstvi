@@ -16,6 +16,8 @@ export interface Service {
   gallery: { src: string }[]
   /** Počet položek „Co zahrnuje" (texty přichází z messages/{locale}.json). */
   workItemNumbers: string[]
+  /** Zvýrazněná služba v homepage bento mřížce (přesně jedna, viz lib/constants.ts). */
+  featured?: boolean
 }
 
 export interface Project {
