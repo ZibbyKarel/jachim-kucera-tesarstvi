@@ -36,7 +36,12 @@ Seznam se doplní po finalizaci plánu.
       IČO placeholder ověřeně zachován i s markerem (D-019). Tmavé mobilní menu používá
       `*-soft` varianty podle párovací matice — ověřeno grepem, žádná ilegální dvojice.
       Em-dash v `aria-label` Loga opraven. typecheck + lint čisté.
-- [ ] Task 4 — 3D dům retheme desktop + oprava reduced-motion (viz D-018)
+- [x] Task 4 — 3D dům retheme desktop + oprava reduced-motion (viz D-018) → `d81572e`
+      `MediaQueryList` se konstruuje jednou v konstruktoru, `tick()` čte jen cachovaný
+      boolean, listener se odhlašuje v `dispose()` (ověřeno, že `dispose()` React opravdu
+      volá při unmountu). **`npm run build` prošel** — 26 stránek vygenerováno.
+      Hex literály z `HouseModel.ts` a `SceneManager.ts` pryč, kromě `setClearColor` —
+      viz D-022, ten se tokenizovat nesmí.
 - [ ] Task 5 — Mobilní fallback domu: mřížka karet služeb
 - [ ] Task 6 — Homepage: bento grid služeb místo horizontálního scrollu (viz D-013)
 - [ ] Task 7 — ServicePageTemplate + 4 stránky služeb

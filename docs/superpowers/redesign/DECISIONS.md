@@ -124,6 +124,21 @@ navigaci. Rozšíření na 6 je práce v Three.js modelu — mimo rozsah tohoto 
 Audit potvrdil nula importérů. Obsahuje navíc hardcoded hex barvy, které by jinak zůstaly
 v repu jako matoucí falešná stopa při příští výměně palety.
 
+## D-022 — Zákaz hex literálů se týká paletových barev, ne fyzikálně významných hodnot
+**Datum:** 2026-08-06 · **Rozhodl:** Claude (opus) — druhá oprava vlastního přespecifikování
+Pravidlo „nula hex literálů v komponentách" jsem formuloval absolutně. Task 4 na to narazil
+u dvou hodnot, které barvami palety nejsou:
+- `SceneManager.ts:99` → `setClearColor(0x000000, 0)` — alfa je 0, takže jde o *průhledné*
+  pozadí canvasu. Sémanticky to znamená „nic", ne „černá".
+- `DirectionalLight` / `AmbientLight` s `0xffffff` — barva světelného zdroje, ne povrchu.
+
+**Platí:** tokenizovat se musí barvy, které se mění při výměně palety. Fyzikálně významné
+hodnoty (bílé světlo, průhledné pozadí) smějí zůstat literálem s komentářem.
+**Důsledek pro Task 11:** hex sweep **nesmí** sáhnout na `SceneManager.ts:99`. Nahrazení
+`0x000000` paletovým tokenem by canvas přestal být průhledný a rozbilo by to hero sekci.
+Task 4 přidal `COLORS.white` pro barvy světel — to je akceptovatelné, ale musí u něj zůstat
+komentář, že se při přechodu na dřevěnou paletu **nemění**.
+
 ## D-021 — Zákaz em-dashů platí jen pro uživatelsky viditelný text, ne pro komentáře v kódu
 **Datum:** 2026-08-06 · **Rozhodl:** Claude (opus) — oprava vlastního přespecifikování
 Při zadávání Tasku 1 jsem požadoval nulu em-dashů „včetně komentářů v kódu v češtině".
