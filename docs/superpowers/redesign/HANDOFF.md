@@ -42,9 +42,20 @@ Při obnově: pokračuj stejným modelem. Nedělej implementaci sám v hlavní s
 ```bash
 npm run typecheck   # tsc --noEmit
 npm run lint        # ESLint
-npm run build       # produkční build
-npm run dev         # http://localhost:3000
+npm run build       # produkční build - JEDINÝ spolehlivý signál, viz níže
 ```
+
+⚠️ **`npm run dev` v tomto prostředí nepoužívej jako ověření.** Výstup prochází wrapperem,
+který ho shrnuje na „Errors: N" a hlásí chybu i tam, kde build prochází čistě. Ověřeno:
+`npm run build` prošel (26 stránek), zatímco dev wrapper hlásil chybu. Port 3000 navíc
+obsazuje jiná aplikace. Pro vizuální kontrolu spusť dev server ručně na volném portu.
+
+## URL struktura (pozor při ručním testování)
+
+`localePrefix: 'as-needed'`, výchozí locale je `cs`. Takže:
+- čeština je na `/`, `/kontakt`, `/realizace` — **bez** prefixu `/cs`
+- angličtina je na `/en`, `/en/kontakt`, …
+- `/cs/...` vrací 404, a je to správně
 
 ---
 

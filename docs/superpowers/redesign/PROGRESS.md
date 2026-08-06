@@ -48,7 +48,12 @@ Seznam se doplní po finalizaci plánu.
       `mobileServicesNavAria`). Scroll cue odstraněn. `npm run build` prošel.
       Subagent odmítl spustit skript z plánu, který by přeformátoval celý JSON —
       diff je 1 řádek na soubor místo ~150 řádků whitespace churnu.
-- [ ] Task 6 — Homepage: bento grid služeb místo horizontálního scrollu (viz D-013)
+- [x] Task 6 — Homepage: bento grid služeb místo horizontálního scrollu (D-013) → `5b82824`
+      `ServicesScroll.tsx` smazán (-172 řádků), `ServicesGrid.tsx` vytvořen. Ověřeno proti
+      zdroji, že `StackCover` defaultuje `pin = true` a že `ServicesScroll` neměl jiné
+      importéry. Bento: 1 featured buňka přes 3 řádky + 3 vedlejší, 0 prázdných buněk,
+      1 sloupec pod 768px. `ServiceCard.tsx` zbaven hexů a legacy tříd.
+      Realizace na homepage 6 → 4. `npm run build` prošel (26 stránek).
 - [ ] Task 7 — ServicePageTemplate + 4 stránky služeb
 - [ ] Task 8 — Realizace (galerie)
 - [ ] Task 9 — O nás (timeline jako technický harmonogram)
