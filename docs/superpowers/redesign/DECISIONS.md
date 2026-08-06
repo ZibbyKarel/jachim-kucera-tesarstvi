@@ -235,3 +235,18 @@ záměrně, proto si toho nikdo nevšiml.
 **Důsledek pro proces:** ověření tasku nesmí končit u „build prošel". U každé `var(--x)`
 se musí ověřit, že `x` je někde definované. Fallback vadu maskuje, nezachraňuje ji.
 Grep musí procházet i `.ts` soubory — `MenuOverlay.ts` injektuje CSS jako řetězec.
+
+## D-027 — Zákaz pomlček se nesmí zvrhnout v mechanickou náhradu jiným znakem
+**Datum:** 2026-08-06 · **Rozhodl:** Claude (opus)
+Task 11 odstranil všech 68 pomlček z uživatelského textu přeformulováním, ne náhradou
+spojovníkem — to bylo správně a explicitně zadané. Jenže u části řetězců se z toho stala
+náhrada pomlčky **dvojtečkou**, systematicky, asi patnáctkrát.
+**Proč to vadí:** zákaz pomlček existuje proti monotónnímu AI rytmu. Patnáct dvojteček
+ve stejné funkci ten rytmus reprodukuje, jen v jiném kostýmu. Navíc SEO titulky tím dostaly
+dvě konvence vedle sebe (`Kontakt - Nezávazná poptávka` se spojovníkem vs.
+`O nás: Tesaři z Plzeňského kraje` s dvojtečkou) a u služeb dokonce dva oddělovače v jednom
+řetězci (`Tesařství: Krovové konstrukce a dřevěné práce | Plzeňský kraj`).
+**Pravidlo:** u obsahových pravidel typu „tenhle znak ne" se kontroluje i to, **čím byl
+nahrazen**, a jestli náhrada není stejně mechanická. Jinak se jen přesune symptom.
+**Poznámka:** `Kontakt - Nezávazná poptávka` byl pozůstatek mechanické náhrady už z Tasku 1.
+Spojovník s mezerami je v české sazbě chyba, ne stylová volba.
