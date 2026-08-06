@@ -12,22 +12,22 @@ export function House3DPreview() {
   const label = item ? t(`services.${item.serviceSlug}.title`) : null
 
   return (
-    <main className="fixed inset-0 z-50 h-[100dvh] w-full overflow-hidden bg-white">
+    <main className="fixed inset-0 z-50 h-[100dvh] w-full overflow-hidden bg-paper">
       <House3DScene onMenuSelect={setSelected} />
 
       <div className="pointer-events-none absolute inset-x-0 top-0 flex items-start justify-between p-6">
-        <p className="font-display text-lg italic text-[#35332f]">
+        <p className="font-display text-lg italic text-slate">
           {t('nahled3d.heading')}
         </p>
         <p
-          className="font-body text-xs uppercase tracking-widest text-[#a07d33] transition-opacity duration-300"
+          className="font-mono text-xs uppercase tracking-widest text-patina transition-opacity duration-300"
           style={{ opacity: label ? 1 : 0 }}
         >
-          {label ? `onMenuSelect → ${label}` : '—'}
+          {label ? `onMenuSelect -> ${label}` : ''}
         </p>
       </div>
 
-      <p className="pointer-events-none absolute inset-x-0 bottom-5 text-center font-body text-[0.65rem] uppercase tracking-[0.2em] text-[#35332f]/40">
+      <p className="pointer-events-none absolute inset-x-0 bottom-5 text-center font-mono text-[0.65rem] uppercase tracking-[0.2em] text-slate/40">
         {t('nahled3d.hint')}
       </p>
     </main>

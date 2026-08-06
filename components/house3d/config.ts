@@ -25,19 +25,26 @@ export interface MenuItem {
   anchor: [number, number, number]
 }
 
-/** Premium architektonická paleta — téměř monochromatická. */
+/** "Materiály řemesla" paleta - steel/zinek, břidlice, patina mědi.
+ *  emissiveHover/accent = #486c5a, WCAG-AA doladěný `patina` token z
+ *  tailwind.config.ts (Task 1) - tmavší než výchozí hex zadání #5b8a72. */
 export const COLORS = {
-  background: 0xffffff,
-  line: 0x2a2926,
-  lineHover: 0x000000,
-  face: 0xf6f5f3,
-  faceHover: 0xffffff,
-  emissiveHover: 0x7a766e,
-  ground: 0xffffff,
+  background: 0xeef0ef, // paper
+  line: 0x2a3136, // slate-soft - obrysové linky
+  lineHover: 0x1c2226, // slate - tmavší při hoveru pro kontrast
+  face: 0xdfe2e1, // paper-dim/steel mix - plochy stěn/střechy
+  faceHover: 0xeef0ef, // paper - zesvětlá při hoveru
+  emissiveHover: 0x486c5a, // patina - jediný akcent, hover/aktivní stav
+  ground: 0xeef0ef, // paper
+  // Neutrální bílá pro Three.js světla (Hemisphere/Directional/Ambient) - drží
+  // je mimo paletu domu, ať zůstanou skutečně bílá i po výměně palety za
+  // "dřevěnou". Beze změny při ladění palety, proto zůstává samostatně od
+  // face/background (i když má stejnou logiku "žádný raw hex mimo config.ts").
+  white: 0xffffff,
   /* DOM/overlay (CSS) */
-  ink: '#35332f',
-  inkSoft: 'rgba(53, 51, 47, 0.55)',
-  accent: '#a07d33',
+  ink: '#1c2226', // slate
+  inkSoft: 'rgba(28, 34, 38, 0.55)',
+  accent: '#486c5a', // patina - jediný akcent
 } as const
 
 export const LINE = {
