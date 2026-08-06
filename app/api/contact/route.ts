@@ -50,8 +50,8 @@ export async function POST(req: Request) {
       headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
       body: JSON.stringify({
         access_key: accessKey,
-        subject: `Nová poptávka — ${name}`,
-        from_name: 'Web — Jáchim & Kučera',
+        subject: `Nová poptávka: ${name}`,
+        from_name: 'Web Jáchim & Kučera',
         name,
         phone,
         message,
