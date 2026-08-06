@@ -358,3 +358,41 @@ vyjímá. Skutečná vada v v1 ([[D-020]] okolí) byla podtržení inputu ve for
 vymáhání 3:1 by ho zlikvidovalo pod záminkou přístupnosti.
 Rozsah pravidla je od teď v tabulce ve specu, sekce „Nepřekročitelná pravidla", bod 5.
 Hodnoty se srovnají v T2–T5, kde se ty komponenty stejně přepisují.
+
+## D-036 — Modifikátor průhlednosti musí být násobek pěti, jinak utilita tiše neexistuje
+**Datum:** 2026-08-06 · **Zjistil:** Claude (opus), kontrola v prohlížeči
+Napsal jsem do specu doporučení „dekorativní linky drž nízko (`timber/12`)" a subagent ho
+poslušně použil v `Header.tsx`. V prohlížeči měla hlavička spodní linku v **chladné šedé**.
+Příčina: Tailwind generuje modifikátory průhlednosti z výchozí škály `opacity`, která jde
+po pětkách. `border-timber/12` se nevygeneruje vůbec, `border-b` proto spadne na výchozí
+`borderColor` (`gray-200`) — studená šedá uprostřed teplé dřevěné palety.
+**Nic to nezahlásí:** typecheck, lint i build jsou zelené, protože je to jen řetězec ve
+`className`. Stejná třída vad jako [[D-025]] a [[D-034]] — tiché selhání ve stylové vrstvě.
+**Jak se to našlo:** čtením `getComputedStyle` skutečně vykresleného prvku v prohlížeči,
+ne grepem nad zdrojem. Grep vidí, že třída je napsaná; nevidí, že neexistuje.
+**Ověřeno v celém repu:** jediný mrtvý výskyt byl `border-timber/12`, opraveno na `/10`.
+**Pravidlo:** `/N` jen jako násobek pěti. Audit v T7 musí kontrolovat existenci
+vygenerovaného pravidla, ne jen naměřený kontrast hodnoty, kterou jsme *zamýšleli*.
+
+## D-037 — Fraunces se fixuje na nízké opsz a vyšší váhu
+**Datum:** 2026-08-06 · **Rozhodl:** Claude (opus), vizuální kontrola
+Fraunces je proměnné písmo s osou optical-size (9-144). Prohlížeče mají
+`font-optical-sizing: auto` a odvozují opsz z velikosti písma, takže nadpis přes 100 px
+dostal nejvyšší opsz: vlasové tahy, vysoký kontrast, kresba módního magazínu.
+Otvírák s větou „Krov, střecha, okap. Tři řemesla, jedna parta." tak byl vysázený
+písmem, které mluví úplně jiným hlasem než ten text.
+**Řešení** (`app/globals.css`, `@layer base`): `font-optical-sizing: none`,
+`font-variation-settings: 'opsz' 18`, `font-weight: 600` pro `.font-display`/`h1`-`h3`,
+`700` pro `h1`. Nízké opsz je u Fraunces textová kresba: hutná, měkká, nízký kontrast tahů.
+**Proč to nebyla chyba subagenta:** spec předepisoval písmo a velikosti, ne osy
+proměnného písma. Chyběl v něm požadavek, který plyne z organizující myšlenky
+(„hmota místo pohybu"). Typografická váha je součást zadání, ne detail implementace.
+
+## D-038 — Značka je odznak + vysázené jméno, ne jen odznak
+**Datum:** 2026-08-06 · **Rozhodl:** Claude (opus)
+Kruhový odznak nese jméno firmy jen jako součást kresby a pod ~64 px je nečitelný.
+V hlavičce (44-52 px) tedy fungoval jako značka, ne jako jméno — a to byl zbytek
+uživatelovy výhrady z [[D-032]]: i po zviditelnění loga bylo „jméno firmy" fakticky
+nepřítomné. `Logo` má nově prop `wordmark`: odznak + `SITE.shortName` vysázený
+v display písmu vedle něj. Odznak dostal `alt=""`, jméno nese `aria-label` odkazu
+a viditelný text — jinak by ho odečítač hlásil dvakrát.

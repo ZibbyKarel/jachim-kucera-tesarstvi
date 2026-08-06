@@ -259,8 +259,14 @@ Stejný jazyk, aplikovaný na existující šablony:
 
    Vizuální jazyk v2 stojí na jemných vlasových linkách. Plošné zvednutí **všech**
    oddělovačů na `timber/50` z nich udělá těžké tmavé čáry a design zhrubne — to je
-   regrese, ne oprava. Dekorativní linky drž nízko (`timber/12`–`timber/20`) a 3:1
+   regrese, ne oprava. Dekorativní linky drž nízko (`timber/10`–`timber/20`) a 3:1
    vymáhej tam, kde hranice nese informaci.
+
+   ⚠️ **Modifikátor průhlednosti musí být násobek pěti.** Tailwind má výchozí škálu
+   `opacity` po pětkách; `bg-paper/90` se vygeneruje, `border-timber/12` **ne** —
+   utilita tiše neexistuje a prvek spadne na výchozí hodnotu (u `border-b` je to
+   chladná šedá `gray-200` uprostřed teplé palety). Build ani lint to nezahlásí.
+   Viz D-036.
 6. **A11y**: focus ring viditelný všude, `aria-label` u každého landmarku, cíle ≥ 44px,
    skip link funkční.
 7. Každý commit projde `typecheck` + `lint` + `build`.

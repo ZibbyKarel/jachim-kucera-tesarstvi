@@ -45,6 +45,26 @@
     text-wrap: balance;
   }
 
+  /* Fraunces je proměnné písmo s osou optical-size (opsz 9-144). Prohlížeč má
+     `font-optical-sizing: auto` a odvozuje opsz z velikosti písma - u nadpisu
+     přes 100px tedy sáhne po nejvyšší hodnotě, kde má řez vlasové tahy a
+     vysoký kontrast. Vypadá to jako módní magazín, ne jako tesařina.
+     Fixujeme proto opsz nízko (kresba textového řezu: hutná, měkká, nízký
+     kontrast tahů) a přidáváme váhu. Koncept redesignu stojí na hmotě, ne na
+     eleganci - viz spec, "Organizující myšlenka". */
+  .font-display,
+  h1,
+  h2,
+  h3 {
+    font-optical-sizing: none;
+    font-variation-settings: 'opsz' 18;
+    font-weight: 600;
+  }
+
+  h1 {
+    font-weight: 700;
+  }
+
   p {
     text-wrap: pretty;
   }
