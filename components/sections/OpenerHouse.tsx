@@ -54,11 +54,22 @@ export function OpenerHouse() {
     //   vzduchu nahoře. Šířka nikdy neomezuje - i na 1024px zůstává
     //   pravý okraj vrstvy přes 150px za pravým okrajem odstavce s
     //   podtitulkem (nejširší sousední prvek), na širších už jen s rezervou.
+    //
+    // Vodorovně se vrstva váže na textový sloupec (`container-content`), ne na
+    // okraj viewportu: `right-0` na sekci vypadalo dobře do ~1440px, ale nad
+    // šířkou sloupce (max-w-content) dům odplul do prázdné mrže vpravo, ztratil
+    // vazbu na sazbu a na 1920px ho pravý okraj okna dokonce ořízl. `ml-auto`
+    // uvnitř sloupce srovná pravou hranu domu s pravou hranou textu na všech
+    // šířkách.
     <div
       aria-hidden="true"
-      className="pointer-events-none absolute bottom-24 right-0 z-0 hidden aspect-[7/5] w-[clamp(240px,20vw,300px)] lg:block"
+      className="pointer-events-none absolute inset-x-0 bottom-24 z-0 hidden lg:block"
     >
-      <House3DScene className="h-full w-full" transparent interactive={false} playIntro />
+      <div className="container-content">
+        <div className="ml-auto aspect-[7/5] w-[clamp(240px,20vw,300px)]">
+          <House3DScene className="h-full w-full" transparent interactive={false} playIntro />
+        </div>
+      </div>
     </div>
   )
 }
