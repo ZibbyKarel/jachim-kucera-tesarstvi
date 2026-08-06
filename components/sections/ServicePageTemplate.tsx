@@ -20,22 +20,21 @@ export function ServicePageTemplate({ service }: { service: Service }) {
       <header className="relative h-[72vh] min-h-[460px] w-full overflow-hidden">
         <ImageFrame
           src={service.heroImage}
-          alt={`${tCommon('serviceLabel')} — ${title}`}
+          alt={`${tCommon('serviceLabel')} - ${title}`}
           aspect="16/9"
-          aged={false}
           rounded={false}
           priority
           sizes="100vw"
           className="!absolute inset-0 h-full w-full"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-wood-dark via-wood-dark/50 to-wood-dark/20" />
+        <div className="absolute inset-0 bg-gradient-to-t from-paper via-paper/60 to-paper/20" />
         <div className="container-content absolute inset-x-0 bottom-0">
           <div className="pb-14">
             <span className="eyebrow">{tCommon('serviceLabel')} · {tCommon('region')}</span>
-            <h1 className="mt-3 font-display text-6xl italic leading-none text-cream md:text-8xl">
+            <h1 className="mt-3 font-display text-6xl italic leading-none text-slate md:text-8xl">
               {title}
             </h1>
-            <p className="mt-4 max-w-md font-body text-lg text-cream/70">
+            <p className="mt-4 max-w-md font-body text-lg text-slate/70">
               {tService('tagline')}
             </p>
           </div>
@@ -45,11 +44,11 @@ export function ServicePageTemplate({ service }: { service: Service }) {
       {/* 2 — Popis */}
       <section
         aria-label={t('descriptionAria')}
-        className="bg-wood-dark py-20 md:py-28"
+        className="bg-paper py-20 md:py-28"
       >
         <div className="container-content grid gap-10 md:grid-cols-[1fr_1.4fr] md:gap-16">
           <Reveal>
-            <p className="font-display text-2xl italic leading-snug text-wood-amber md:sticky md:top-28">
+            <p className="font-display text-2xl italic leading-snug text-patina md:sticky md:top-28">
               {tService('shortDescription')}
             </p>
           </Reveal>
@@ -58,7 +57,7 @@ export function ServicePageTemplate({ service }: { service: Service }) {
               <p
                 key={p.slice(0, 24)}
                 data-reveal-item
-                className="font-body text-base leading-relaxed text-cream/75"
+                className="font-body text-base leading-relaxed text-slate/75"
               >
                 {p}
               </p>
@@ -67,33 +66,33 @@ export function ServicePageTemplate({ service }: { service: Service }) {
         </div>
       </section>
 
-      {/* 3 — Co zahrnuje */}
+      {/* 3 — Co zahrnuje: spec-sheet řádky, mono čísla, žádné karty s rámečkem */}
       <section
         aria-labelledby="includes-heading"
-        className="border-t border-cream/10 bg-wood-medium py-20 md:py-28"
+        className="bg-paper-dim py-20 md:py-28"
       >
         <div className="container-content">
           <h2
             id="includes-heading"
-            className="font-display text-3xl italic text-cream md:text-4xl"
+            className="font-display text-3xl italic text-slate md:text-4xl"
           >
             {t('includesHeading')}
           </h2>
-          <Reveal stagger className="mt-12 grid gap-px overflow-hidden rounded-sm border border-cream/10 bg-cream/10 sm:grid-cols-2">
+          <Reveal stagger className="mt-12 divide-y divide-slate/10 border-t border-slate/10">
             {workItems.map((item, i) => (
               <div
                 key={item.title}
                 data-reveal-item
-                className="group flex gap-6 bg-wood-medium p-8 transition-colors duration-500 hover:bg-wood-dark md:p-10"
+                className="group flex gap-6 py-8 transition-colors duration-500 md:gap-10"
               >
-                <span className="font-display text-4xl italic text-wood-warm transition-colors duration-500 group-hover:text-wood-amber">
+                <span className="font-mono text-xl text-steel transition-colors duration-500 group-hover:text-patina">
                   {service.workItemNumbers[i]}
                 </span>
                 <div>
-                  <h3 className="font-display text-2xl italic text-cream">
+                  <h3 className="font-display text-2xl italic text-slate">
                     {item.title}
                   </h3>
-                  <p className="mt-2 font-body text-sm leading-relaxed text-cream/65">
+                  <p className="mt-2 font-body text-sm leading-relaxed text-slate/65">
                     {item.description}
                   </p>
                 </div>
@@ -106,12 +105,12 @@ export function ServicePageTemplate({ service }: { service: Service }) {
       {/* 4 — Galerie */}
       <section
         aria-labelledby="gallery-heading"
-        className="bg-wood-dark py-20 md:py-28"
+        className="bg-paper py-20 md:py-28"
       >
         <div className="container-content">
           <h2
             id="gallery-heading"
-            className="font-display text-3xl italic text-cream md:text-4xl"
+            className="font-display text-3xl italic text-slate md:text-4xl"
           >
             {t('galleryHeading')}
           </h2>
@@ -134,13 +133,13 @@ export function ServicePageTemplate({ service }: { service: Service }) {
       </section>
 
       {/* 5 — CTA */}
-      <section className="border-t border-cream/10 bg-wood-medium py-20 md:py-28">
+      <section className="border-t border-slate/10 bg-paper-dim py-20 md:py-28">
         <div className="container-content flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
           <div>
-            <h2 className="font-display text-3xl italic text-cream md:text-4xl">
+            <h2 className="font-display text-3xl italic text-slate md:text-4xl">
               {t('ctaHeading')}
             </h2>
-            <p className="mt-3 max-w-md font-body text-base text-cream/70">
+            <p className="mt-3 max-w-md font-body text-base text-slate/70">
               {t('ctaText')}
             </p>
           </div>
@@ -150,7 +149,7 @@ export function ServicePageTemplate({ service }: { service: Service }) {
             </Button>
             <a
               href={`tel:${SITE.phoneHref}`}
-              className="inline-flex items-center justify-center border border-cream/30 px-8 py-4 font-body text-base font-medium uppercase tracking-widest text-cream transition-colors hover:border-wood-amber hover:text-wood-amber"
+              className="inline-flex items-center justify-center border border-slate/30 px-8 py-4 font-mono text-base text-slate transition-colors hover:border-patina hover:text-patina"
             >
               {SITE.phone}
             </a>
