@@ -70,8 +70,8 @@ export function ProjectGallery({
                 onClick={() => setFilter(f.key)}
                 className={`rounded-full border px-5 py-2 font-body text-xs uppercase tracking-widest transition-colors duration-300 ${
                   active
-                    ? 'border-wood-amber bg-wood-amber text-charcoal'
-                    : 'border-cream/20 text-cream/70 hover:border-cream/50 hover:text-cream'
+                    ? 'border-patina bg-patina text-paper'
+                    : 'border-slate/20 text-slate/70 hover:border-slate/50 hover:text-slate'
                 }`}
               >
                 {f.label}
@@ -93,30 +93,30 @@ export function ProjectGallery({
               key={project.id}
               data-project-card
               className={
-                // jemný masonry rytmus — každá třetí karta vyšší
+                // jemný masonry rytmus — každá pátá karta vyšší
                 i % 5 === 0 ? 'sm:row-span-2' : ''
               }
             >
               <button
                 onClick={() => setSelected(project)}
                 className="group block w-full text-left"
-                aria-label={`${title}, ${location} ${project.year} — ${t('viewDetailAria')}`}
+                aria-label={`${title}, ${location} ${project.year} - ${t('viewDetailAria')}`}
               >
                 <ImageFrame
                   src={project.thumbnail}
-                  alt={`${title} — ${location}`}
+                  alt={`${title} - ${location}`}
                   aspect={i % 5 === 0 ? '3/4' : '4/3'}
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 />
                 <div className="mt-3 flex items-baseline justify-between gap-4">
-                  <h3 className="font-display text-xl italic text-cream transition-colors group-hover:text-wood-amber">
+                  <h3 className="font-display text-xl italic text-slate transition-colors group-hover:text-patina">
                     {title}
                   </h3>
-                  <span className="shrink-0 font-body text-xs uppercase tracking-widest text-cream/40">
+                  <span className="shrink-0 font-mono text-xs uppercase tracking-widest text-steel">
                     {project.year}
                   </span>
                 </div>
-                <p className="mt-1 font-body text-xs uppercase tracking-widest text-wood-warm">
+                <p className="mt-1 font-mono text-xs uppercase tracking-widest text-steel">
                   {tFull(`services.${project.category}.title`)} · {location}
                 </p>
               </button>
@@ -167,7 +167,7 @@ function ProjectModal({
       aria-label={title}
     >
       <button
-        className="absolute inset-0 bg-charcoal/70 backdrop-blur-sm"
+        className="absolute inset-0 bg-slate/70 backdrop-blur-sm"
         onClick={onClose}
         aria-label={t('closeDetailAria')}
         tabIndex={-1}
@@ -175,11 +175,11 @@ function ProjectModal({
       <div
         ref={dialogRef}
         tabIndex={-1}
-        className="animate-fade-up relative z-10 max-h-[88vh] w-full max-w-4xl overflow-y-auto rounded-sm border border-cream/10 bg-wood-medium p-6 outline-none md:p-10"
+        className="animate-fade-up relative z-10 max-h-[88vh] w-full max-w-4xl overflow-y-auto rounded-sm border border-slate/10 bg-paper p-6 outline-none md:p-10"
       >
         <button
           onClick={onClose}
-          className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full border border-cream/20 text-cream transition-colors hover:border-wood-amber hover:text-wood-amber"
+          className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full border border-slate/20 text-slate transition-colors hover:border-patina hover:text-patina"
           aria-label={tFull('common.close')}
         >
           <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
@@ -195,10 +195,10 @@ function ProjectModal({
         <span className="eyebrow">
           {tFull(`services.${project.category}.title`)} · {location} · {project.year}
         </span>
-        <h2 className="mt-3 font-display text-4xl italic text-cream">
+        <h2 className="mt-3 font-display text-4xl italic text-slate">
           {title}
         </h2>
-        <p className="mt-4 max-w-2xl font-body text-sm leading-relaxed text-cream/70">
+        <p className="mt-4 max-w-2xl font-body text-sm leading-relaxed text-slate/70">
           {description}
         </p>
 
@@ -207,25 +207,24 @@ function ProjectModal({
             <ImageFrame
               key={img}
               src={img}
-              alt={`${title} — ${t('photoAlt')} ${i + 1}`}
+              alt={`${title} - ${t('photoAlt')} ${i + 1}`}
               aspect="4/3"
-              aged={false}
             />
           ))}
         </div>
 
-        <dl className="mt-8 flex flex-wrap gap-x-12 gap-y-3 border-t border-cream/10 pt-6 font-body text-sm">
+        <dl className="mt-8 flex flex-wrap gap-x-12 gap-y-3 border-t border-slate/10 pt-6 font-body text-sm">
           <div>
-            <dt className="text-xs uppercase tracking-widest text-cream/40">
+            <dt className="text-xs uppercase tracking-widest text-steel">
               {t('location')}
             </dt>
-            <dd className="mt-1 text-cream">{location}</dd>
+            <dd className="mt-1 text-slate">{location}</dd>
           </div>
           <div>
-            <dt className="text-xs uppercase tracking-widest text-cream/40">
+            <dt className="text-xs uppercase tracking-widest text-steel">
               {t('year')}
             </dt>
-            <dd className="mt-1 text-cream">{project.year}</dd>
+            <dd className="mt-1 font-mono text-slate">{project.year}</dd>
           </div>
         </dl>
       </div>
