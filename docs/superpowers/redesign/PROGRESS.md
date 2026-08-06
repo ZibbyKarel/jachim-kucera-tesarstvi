@@ -42,7 +42,12 @@ Seznam se doplní po finalizaci plánu.
       volá při unmountu). **`npm run build` prošel** — 26 stránek vygenerováno.
       Hex literály z `HouseModel.ts` a `SceneManager.ts` pryč, kromě `setClearColor` —
       viz D-022, ten se tokenizovat nesmí.
-- [ ] Task 5 — Mobilní fallback domu: mřížka karet služeb
+- [x] Task 5 — Mobilní fallback domu: mřížka karet služeb → `7142c80`
+      `MobileServiceGrid` (6 cílů, `min-h-[44px]`, 2 sloupce na 375px, `md:hidden`).
+      Dva navigační landmarky mají různý `aria-label` (`houseNavAria` vs
+      `mobileServicesNavAria`). Scroll cue odstraněn. `npm run build` prošel.
+      Subagent odmítl spustit skript z plánu, který by přeformátoval celý JSON —
+      diff je 1 řádek na soubor místo ~150 řádků whitespace churnu.
 - [ ] Task 6 — Homepage: bento grid služeb místo horizontálního scrollu (viz D-013)
 - [ ] Task 7 — ServicePageTemplate + 4 stránky služeb
 - [ ] Task 8 — Realizace (galerie)
