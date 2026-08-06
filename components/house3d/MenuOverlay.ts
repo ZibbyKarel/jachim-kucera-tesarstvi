@@ -183,7 +183,7 @@ export class MenuOverlay {
 
   private injectStyles(): void {
     const css = `
-.h3d-overlay{position:absolute;inset:0;pointer-events:none;font-family:var(--font-sans,system-ui,sans-serif);z-index:5;opacity:0;transition:opacity .7s ease;}
+.h3d-overlay{position:absolute;inset:0;pointer-events:none;font-family:var(--font-body,system-ui,sans-serif);z-index:5;opacity:0;transition:opacity .7s ease;}
 .h3d-overlay.is-ready{opacity:1;}
 .h3d-svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;}
 .h3d-labels{position:absolute;inset:0;}
@@ -200,7 +200,7 @@ export class MenuOverlay {
 .h3d-label:hover,.h3d-label.is-active{color:${COLORS.accent};}
 .h3d-label.h3d-left:hover,.h3d-label.h3d-left.is-active{transform:translateX(6px);}
 .h3d-label.h3d-right:hover,.h3d-label.h3d-right.is-active{transform:translateX(-6px);}
-.h3d-service{font-family:var(--font-sans,system-ui,sans-serif);font-style:italic;font-weight:500;font-size:2.1rem;letter-spacing:.01em;}
+.h3d-service{font-family:var(--font-body,system-ui,sans-serif);font-style:italic;font-weight:500;font-size:2.1rem;letter-spacing:.01em;}
 .h3d-element{font-size:.76rem;font-weight:600;text-transform:uppercase;letter-spacing:.2em;opacity:.7;}
 .h3d-label:focus-visible{outline:2px solid ${COLORS.accent};outline-offset:3px;border-radius:3px;}
 @media (max-width:1024px){.h3d-service{font-size:1.6rem;}.h3d-element{font-size:.66rem;}}
