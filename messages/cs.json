@@ -3,16 +3,12 @@
     "skipToContent": "Přeskočit na obsah",
     "menu": "Menu",
     "close": "Zavřít",
-    "backToServices": "Zpět na služby",
     "allProjects": "Všechny realizace",
-    "moreAbout": "Více o službě",
-    "nonbindingInquiry": "Nezávazná poptávka",
     "region": "Plzeňský kraj a okolí",
     "serviceLabel": "Služba",
     "mainNavAria": "Hlavní navigace",
     "mobileNavAria": "Mobilní navigace",
     "footerNavAria": "Navigace patičky",
-    "navigationHeading": "Navigace",
     "allRightsReserved": "Všechna práva vyhrazena.",
     "icoLabel": "IČO"
   },
@@ -63,11 +59,7 @@
     "name": "Jméno",
     "phone": "Telefon",
     "emailLabel": "E-mail",
-    "service": "Služba",
     "message": "Zpráva",
-    "messageOptional": "Zpráva (nepovinné)",
-    "selectService": "Vyberte službu",
-    "serviceOther": "Jiné",
     "submit": "Odeslat poptávku",
     "submitting": "Odesílám…",
     "submitAnother": "Odeslat další poptávku",
@@ -81,7 +73,6 @@
       "messageRequired": "Napište prosím krátkou zprávu.",
       "generic": "Zprávu se nepodařilo odeslat. Zavolejte nám prosím přímo na {phone}."
     },
-    "infoHeading": "Kde nás zastihnete",
     "areaLabel": "Provozní oblast",
     "mapAriaLabel": "Mapa provozní oblasti v Plzeňském kraji",
     "mapCityLabel": "Plzeň"
@@ -90,8 +81,6 @@
     "heroTitle": "Kdo to staví",
     "heroQuote": "Nejsme velká firma a nechceme být. Děláme tolik, kolik zvládneme udělat pořádně.",
     "storyAria": "Příběh firmy",
-    "teamAlt": "Jáchim a Kučera se svou partou na střeše",
-    "heroAlt": "Jáchim a Kučera před rozestavěnou střechou",
     "story": [
       "Jmenujeme se Jáchim a Kučera a střechám se věnujeme přes patnáct let. Začínali jsme jako vyučení tesaři v Plzeňském kraji a dnes vedeme vlastní partu, na kterou se můžete spolehnout. Každou střechu stavíme tak, jako by byla naše vlastní.",
       "Postupem let jsme k tesařině přidali pokrývačství a klempířství, abychom mohli zákazníkovi předat hotovou střechu od krovu po poslední okap, bez toho, aby musel shánět tři různé firmy a hlídat, kdo za co odpovídá. Vše máme pod jednou střechou, doslova.",
@@ -195,14 +184,6 @@
     "nahled3d": {
       "title": "3D rozcestník | Náhled"
     }
-  },
-  "houseLabels": {
-    "chimney": "Komín: co jsme postavili",
-    "roof": "Střecha",
-    "truss": "Krov",
-    "gutters": "Okapy a svody",
-    "windows": "Okna: kdo jsme",
-    "door": "Vstup: ozvěte se"
   },
   "house3dMenu": {
     "roof": "Střecha",

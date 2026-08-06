@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, type ElementType, type ReactNode } from 'react'
-import { gsap, ScrollTrigger, prefersReducedMotion } from '@/lib/gsap'
+import { gsap, prefersReducedMotion } from '@/lib/gsap'
 
 interface RevealProps {
   children: ReactNode

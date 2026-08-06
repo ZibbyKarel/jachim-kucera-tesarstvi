@@ -3,16 +3,12 @@
     "skipToContent": "Skip to content",
     "menu": "Menu",
     "close": "Close",
-    "backToServices": "Back to services",
     "allProjects": "All projects",
-    "moreAbout": "More about",
-    "nonbindingInquiry": "Free inquiry",
     "region": "Pilsen region and surroundings",
     "serviceLabel": "Service",
     "mainNavAria": "Main navigation",
     "mobileNavAria": "Mobile navigation",
     "footerNavAria": "Footer navigation",
-    "navigationHeading": "Navigation",
     "allRightsReserved": "All rights reserved.",
     "icoLabel": "Company ID"
   },
@@ -63,11 +59,7 @@
     "name": "Name",
     "phone": "Phone",
     "emailLabel": "Email",
-    "service": "Service",
     "message": "Message",
-    "messageOptional": "Message (optional)",
-    "selectService": "Select a service",
-    "serviceOther": "Other",
     "submit": "Send inquiry",
     "submitting": "Sending…",
     "submitAnother": "Send another inquiry",
@@ -81,7 +73,6 @@
       "messageRequired": "Please write a short message.",
       "generic": "We couldn't send your message. Please call us directly at {phone}."
     },
-    "infoHeading": "Where to find us",
     "areaLabel": "Service area",
     "mapAriaLabel": "Service area map of the Pilsen region",
     "mapCityLabel": "Pilsen"
@@ -90,8 +81,6 @@
     "heroTitle": "Who builds it",
     "heroQuote": "We're not a big company, and we don't want to be. We take on only as much work as we can do properly.",
     "storyAria": "Company story",
-    "teamAlt": "Jáchim and Kučera with their crew on a roof",
-    "heroAlt": "Jáchim and Kučera in front of a roof under construction",
     "story": [
       "We're Jáchim and Kučera, and we've been working on roofs for over fifteen years. We started out as trained carpenters in the Pilsen region, and today we run our own crew you can rely on. We build every roof as if it were our own.",
       "Over the years we added roofing and tinsmithing to our carpentry work, so we can hand a customer a finished roof from the truss to the last gutter, without them having to chase down three different companies and keep track of who's responsible for what. It's all under one roof, literally.",
@@ -195,14 +184,6 @@
     "nahled3d": {
       "title": "3D House Map | Preview"
     }
-  },
-  "houseLabels": {
-    "chimney": "Chimney: what we've built",
-    "roof": "Roof",
-    "truss": "Truss",
-    "gutters": "Gutters and downspouts",
-    "windows": "Windows: who we are",
-    "door": "Entrance: reach out"
   },
   "house3dMenu": {
     "roof": "Roof",

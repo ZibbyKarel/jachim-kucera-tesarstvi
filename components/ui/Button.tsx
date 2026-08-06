@@ -1,63 +1,12 @@
-import { Link } from '@/i18n/routing'
-import type { ComponentProps, ReactNode } from 'react'
-
-type Variant = 'primary' | 'outline' | 'ghost'
-type Size = 'md' | 'lg'
-
-const base =
-  'inline-flex items-center justify-center gap-2 font-body text-sm font-medium uppercase tracking-widest transition-all duration-500 ease-craft disabled:cursor-not-allowed disabled:opacity-60'
-
-const variants: Record<Variant, string> = {
-  primary: 'bg-ember text-paper hover:bg-ember-dim',
-  outline: 'border border-timber/50 text-timber hover:border-ember hover:text-ember',
-  ghost: 'text-timber hover:text-ember',
-}
-
-const sizes: Record<Size, string> = {
-  md: 'px-6 py-3',
-  lg: 'px-8 py-4 text-base',
-}
-
-interface CommonProps {
-  variant?: Variant
-  size?: Size
-  className?: string
-  children: ReactNode
-}
-
-type ButtonAsLink = CommonProps & {
-  href: string
-} & Omit<ComponentProps<typeof Link>, 'href' | 'className' | 'children'>
-
-type ButtonAsButton = CommonProps & {
-  href?: undefined
-} & Omit<ComponentProps<'button'>, 'className' | 'children'>
-
-export function Button(props: ButtonAsLink | ButtonAsButton) {
-  const {
-    variant = 'primary',
-    size = 'md',
-    className = '',
-    children,
-    ...rest
-  } = props
-  const classes = `${base} ${variants[variant]} ${sizes[size]} ${className}`
-
-  if ('href' in props && props.href !== undefined) {
-    const { href, ...linkRest } = rest as ButtonAsLink
-    return (
-      <Link href={href} className={classes} {...linkRest}>
-        {children}
-      </Link>
-    )
-  }
-
-  return (
-    <button className={classes} {...(rest as ButtonAsButton)}>
-      {children}
-    </button>
-  )
-}
+/* -------------------------------------------------------------------------- */
+/*  Arrow — jediné, co z téhle komponenty redesign v2 skutečně používá.         */
+/*                                                                              */
+/*  Spec §"Nepřekročitelná pravidla": v2 nemá vyplněná tlačítka mimo formulář   */
+/*  (CTA jsou textové odkazy s podtržením). Původní `Button` (primary/outline/  */
+/*  ghost varianty, `variant`/`size` props) po T2–T5 nikde neimportuje - grep   */
+/*  `<Button` i `import { Button }` v celém app/ a components/ vrací 0 hitů,    */
+/*  proto byl smazán jako mrtvý kód (T6/A3), `Arrow` zůstává.                   */
+/* -------------------------------------------------------------------------- */
 
 export function Arrow({ className = '' }: { className?: string }) {
   return (
