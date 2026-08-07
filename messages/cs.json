@@ -12,10 +12,7 @@
     "mainNavAria": "Hlavní navigace",
     "mobileNavAria": "Mobilní navigace",
     "footerNavAria": "Navigace patičky",
-    "houseNavAria": "Rozcestník: části domu",
-    "mobileServicesNavAria": "Mobilní nabídka služeb",
     "navigationHeading": "Navigace",
-    "footerDescription": "Poctivá tesařská, pokrývačská a klempířská práce v Plzeňském kraji. Stavíme střechy, jako by byly naše vlastní.",
     "allRightsReserved": "Všechna práva vyhrazena.",
     "icoLabel": "IČO"
   },
@@ -27,11 +24,12 @@
     "contact": "Kontakt"
   },
   "home": {
-    "heroEyebrow": "Tesařství · Pokrývačství · Klempířství",
-    "heroTitle": "Poctivá řemeslná práce",
-    "heroCta": "Nezávazně poptat",
-    "heroAria": "Rozcestník, interaktivní dům",
-    "servicesIntro": "Od krovu po poslední okap. Čtyři řemesla pod jednou střechou.",
+    "openerEyebrowFounded": "založeno {year}",
+    "openerTitle": "Krov, střecha, okap. Tři řemesla, jedna parta.",
+    "openerLead": "Tesařství, pokrývačství a klempířství v Plzeňském kraji.",
+    "openerCtaInquiry": "Nezávazně poptat",
+    "openerCtaProjects": "Prohlédnout realizace",
+    "serviceIndexHeading": "Řemesla",
     "projectsIntro": "Část toho, co jsme za poslední roky postavili po Plzeňském kraji.",
     "aboutHeadline": "Stavíme střechy, jako by byly naše vlastní",
     "aboutCta": "Náš příběh",

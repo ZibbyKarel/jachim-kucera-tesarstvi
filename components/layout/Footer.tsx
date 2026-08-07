@@ -8,76 +8,61 @@ function navLabel(t: (key: string) => string, source: NavLink['textSource']) {
   return source.ns === 'service' ? t(`services.${source.slug}.title`) : t(`nav.${source.key}`)
 }
 
+/* -------------------------------------------------------------------------- */
+/*  Footer — úzký timber pás                                                    */
+/*                                                                              */
+/*  Wordmark, navigace, telefon a e-mail jako odkazy, IČO, copyright. Nic       */
+/*  víc - žádný popisný odstavec jako v1 (ten patřil k jinému rytmu stránky).   */
+/* -------------------------------------------------------------------------- */
+
 export function Footer() {
   const t = useTranslations()
   const year = 2026
 
   return (
-    <footer className="relative overflow-hidden border-t border-timber/50 bg-paper-dim">
-      <div className="grain absolute inset-0" aria-hidden="true" />
-      <div className="container-content relative grid gap-12 py-16 md:grid-cols-[1.5fr_1fr_1fr]">
-        <div className="space-y-5">
-          <Logo size={64} />
-          <p className="max-w-xs font-body text-sm leading-relaxed text-timber/70">
-            {t('common.footerDescription')}
-          </p>
-        </div>
+    <footer className="bg-timber">
+      <div className="container-content flex flex-col gap-8 py-10 md:flex-row md:items-center md:justify-between md:gap-6">
+        <Logo size={44} />
 
-        <nav aria-label={t('common.footerNavAria')} className="space-y-4">
-          <h2 className="font-mono text-xs uppercase tracking-widest text-oak">
-            {t('common.navigationHeading')}
-          </h2>
-          <ul className="space-y-2">
-            {navLinks.map((link) => (
-              <li key={link.href}>
-                <Link
-                  href={link.href}
-                  className="link-underline font-body text-sm text-timber/70 transition-colors hover:text-timber"
-                >
-                  {navLabel(t, link.textSource)}
-                </Link>
-              </li>
-            ))}
-          </ul>
+        <nav
+          aria-label={t('common.footerNavAria')}
+          className="flex flex-wrap gap-x-6 gap-y-3"
+        >
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="link-underline font-body text-sm text-paper"
+            >
+              {navLabel(t, link.textSource)}
+            </Link>
+          ))}
         </nav>
 
-        <div className="space-y-4">
-          <h2 className="font-mono text-xs uppercase tracking-widest text-oak">
-            {t('nav.contact')}
-          </h2>
-          <ul className="space-y-2 font-body text-sm text-timber/70">
-            {contacts.map((contact) => (
-              <li key={contact.phoneHref}>
-                <a
-                  href={`tel:${contact.phoneHref}`}
-                  className="link-underline font-mono transition-colors hover:text-timber"
-                >
-                  {contact.name} — {contact.phone}
-                </a>
-              </li>
-            ))}
-            <li>
-              <a
-                href={`mailto:${SITE.email}`}
-                className="link-underline font-mono transition-colors hover:text-timber"
-              >
-                {SITE.email}
-              </a>
-            </li>
-            <li className="pt-2 text-timber/70">{t('common.region')}</li>
-          </ul>
+        <div className="flex flex-col gap-2 font-mono text-sm">
+          {contacts.map((contact) => (
+            <a
+              key={contact.phoneHref}
+              href={`tel:${contact.phoneHref}`}
+              className="link-underline w-fit text-paper"
+            >
+              {contact.name} — {contact.phone}
+            </a>
+          ))}
+          <a href={`mailto:${SITE.email}`} className="link-underline w-fit text-paper">
+            {SITE.email}
+          </a>
         </div>
       </div>
 
-      <div className="container-content relative flex flex-col items-start justify-between gap-2 border-t border-timber/50 py-6 font-body text-xs text-timber/70 sm:flex-row sm:items-center">
-        <p>
-          © {year} {SITE.name}. {t('common.allRightsReserved')}
-        </p>
+      <div className="container-content flex flex-col gap-2 border-t border-paper/15 py-6 font-body text-xs text-oak-soft sm:flex-row sm:items-center sm:justify-between">
         <p>
           {contacts
             .map((contact) => `${contact.name} ${t('common.icoLabel')} ${contact.ic}`)
-            .join(' · ')}{' '}
-          · {t('common.region')}
+            .join(' · ')}
+        </p>
+        <p>
+          © {year} {SITE.name}. {t('common.allRightsReserved')}
         </p>
       </div>
     </footer>
