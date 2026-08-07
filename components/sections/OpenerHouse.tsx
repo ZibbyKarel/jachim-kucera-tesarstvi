@@ -59,9 +59,9 @@ export function OpenerHouse() {
     //   spodek vrstvy o ~8px zasahoval do bounding boxu řádku CTA (změřeno,
     //   viditelně to nevadilo, protože samotná kresba domu do canvasu
     //   nesahá až na jeho okraj, ale bounding box ano). 112px dává vrstvě
-    //   jistých ~8px vzduchu nad CTA na všech čtyřech šířkách a při výšce
-    //   viewportu 720px zůstává pata vrstvy vždy nad ohybem (viz i sekce
-    //   Verifikace v zadání úkolu).
+    //   jistých ~8px vzduchu nad CTA na všech čtyřech šířkách. Při výšce
+    //   viewportu 720px zůstává pata vrstvy vždy nad ohybem (nejhorší případ
+    //   ~608px na 1920px, viz naměřená tabulka v handoff/PR).
     //
     // Vodorovně se vrstva váže na textový sloupec (`container-content`), ne na
     // okraj viewportu: `right-0` na sekci vypadalo dobře do ~1440px, ale nad
