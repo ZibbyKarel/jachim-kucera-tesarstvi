@@ -203,27 +203,34 @@ function measureSilhouette(
    významu.
 
    Tři různé hodnoty podle toho, co ten vzduch spotřebuje:
-   - FIT_MARGIN_SOLO = 1.42: samostatný /nahled-3d. Přesný vrcholový fit je
-     o dost těsnější než starý AABB fit (starý margin 1.08 měřil na nafouklé
-     rohy Box3) - 1.42 je dokalibrováno tak, aby VÝSLEDNÁ vzdálenost kamery
-     (a tím i velikost domu v obraze) na běžných desktopových šířkách
-     (aspect ≳ 1.3, tj. ~1280 px a víc) odpovídala PŮVODNÍMU vzhledu (ověřeno
-     vizuálním porovnáním screenshotů, ne ink-fill boxem - viz níž proč).
-     Zbývá zdravá rezerva na rotaci/zoom OrbitControls (ověřeno na všech 4
-     rozích azimuth/polar × nejbližší zoom, viz report úlohy) - `fitDistance`
-     počítá jen pro VÝCHOZÍ azimuth/elevation, ne pro krajní polohy, takže
-     rezerva musí vzniknout tady, ne v `fitDistance` samotném.
-     POZOR: ink-fill (ořez pozadí na screenshotu) NENÍ na /nahled-3d spolehlivý
-     ukazatel velikosti domu - `MenuOverlay` kreslí labely v PEVNÝCH % pozicích
-     od kraje canvasu (`.h3d-label` v MenuOverlay.ts), takže změřený „inkoust"
-     je prakticky vždy label chip, ne obrys domu - margin 1.0 i 1.42 dají
-     bit-identický ink bbox. Validace proto šla přes shodu vzdálenosti kamery
-     (`fitDistance` dW/dH) + vizuální porovnání, ne přes automatický ink-fill.
-     Při užším poměru stran (~1024 px, aspect ~1.14) vychází dům o něco menší
-     než PŮVODNĚ (starý AABB fit tam byl vázaný na jinak nafouklou šířku než
-     nový vrcholový fit) - žádné oříznutí, jen o trochu menší dům; jednu
-     hodnotu marginu nejde dokalibrovat na shodu v OBOU režimech (width-bound
-     i height-bound) najednou, viz report.
+   - FIT_MARGIN_SOLO = 1.15: samostatný /nahled-3d. PŮVODNĚ se tahle hodnota
+     snažila dokalibrovat tak, aby výsledná vzdálenost kamery odpovídala
+     starému AABB fitu (margin 1.08) - to ale matematicky nejde: starý fit byl
+     na ~1024 px vázaný šířkou (dW > dH), na ~1280 px a víc výškou (dH > dW),
+     a nový přesný vrcholový fit nadhodnocuje starou AABB šířku i výšku KAŽDOU
+     jinak, takže jeden skalár nemůže sednout v obou režimech zároveň (a starý
+     AABB fit navíc ignoroval labely úplně - dům jim na 1024 px přímo přejížděl
+     přes text, viz níž).
+     Správný model rezervy NENÍ „trefit starou vzdálenost" - je to „nech domu
+     střední pás mezi bočními sloupci labelů". Tu práci dělá `tanH'` přímo ve
+     `fitDistance` (viz komentář tam) z reálně změřených šířek sloupců
+     (`measureLabelColumns` - živé `getBoundingClientRect`, ne odhad z CSS,
+     protože šířka labelu závisí na jazyku i na font-size breakpointu). Tahle
+     konstanta je pak už jen malý rovnoměrný „dech" navrch toho přesného fitu
+     (+ rezerva na rotaci/zoom OrbitControls, protože `fitDistance` počítá jen
+     pro VÝCHOZÍ azimuth/elevation, ne pro krajní polohy) - 1.15 zvoleno stejně
+     jako DECOR, ověřeno na obou krajích (1024 i 1440 px, všechny 4 rohy
+     azimuth/polar × nejbližší zoom) - žádné oříznutí, žádný průnik s labelem.
+     Důsledek: na 1024-1440 px vychází dům MENŠÍ než starý AABB baseline
+     (fillW/fillH změřeno přes reálnou projekci vrcholů kamerou, ne přes
+     ink-fill screenshotu - ten na /nahled-3d kazí SVG spojnice labelů i
+     textové řádky stránky, které mají stejnou barvu jako kresba domu a
+     spolehlivě otestovanou nezávislost na marginu, viz report úlohy). To je
+     ZÁMĚR, ne regrese: starý baseline labely ignoroval a přes ně přejížděl
+     (viz "Tesařství" v `v3-baseline-solo-canvas-1024.png"), takže shoda s ním
+     by znamenala zopakovat stejnou chybu. Na ~1920 px, kde starý baseline už
+     labelům dost uhýbal, nový fit naopak starou velikost PŘEKONÁ (menší
+     relativní podíl labelů na šířce → víc místa uprostřed).
    - FIT_MARGIN_HERO: transparentní A interaktivní varianta (menu labely by
      bydlely v pevných sloupcích u kraje - dnes nepoužito, ale rezervováno).
    - FIT_MARGIN_DECOR = 1.15: dekorativní hero dům (`interactive === false`,
@@ -237,7 +244,7 @@ function measureSilhouette(
    Pořadí konstant je: interaktivita (SOLO/HERO) > co je vlastně dekorace
    (DECOR) - viz `this.fitMargin` v konstruktoru. */
 const FIT_MARGIN_HERO = 1.55
-const FIT_MARGIN_SOLO = 1.42
+const FIT_MARGIN_SOLO = 1.15
 const FIT_MARGIN_DECOR = 1.15
 
 /** Poměr stran dekorativního hero canvasu - musí sedět s `aspect-[7/5]` v
@@ -496,6 +503,34 @@ export class SceneManager {
     this.houseOffsets = withFence ? this.houseOffsetsFull : this.houseOffsetsNoFence
   }
 
+  /** Šířka levého/pravého labelového sloupce jako zlomek šířky containeru -
+      změřená PŘÍMO z reálných `.h3d-label` elementů (`getBoundingClientRect`),
+      NE odhadnutá z CSS. Text labelů (a tím jejich šířka) se liší podle
+      jazyka (cs/en - "Klempířství" vs. "Roofing") i podle breakpointu
+      (`.h3d-service`/`.h3d-element` mají pod 1024px menší font, viz
+      MenuOverlay.ts) - jediná natvrdo zadaná konstanta by seděla jen na
+      jeden jazyk/šířku, měření za běhu sedí na oba. Platí jen pro desktopové
+      boční sloupce (`w > 768` - stejný práh jako plot, viz `resize()`; pod
+      768 MenuOverlay přepíná layout labelů na řádek chipů POD domem přes
+      vlastní media query, jejich rect by sloupcovou rezervu jen zkreslil).
+      Bez overlaye (dekorativní hero, DECOR) vrací 0/0 - žádné labely, žádná
+      rezerva. `getBoundingClientRect` na živém, už rozloženém DOM vynutí
+      synchronní reflow, ale volá se jen z `resize()`, ne každý frame. */
+  private measureLabelColumns(w: number): { leftFrac: number; rightFrac: number } {
+    if (!this.overlay || w <= 768) return { leftFrac: 0, rightFrac: 0 }
+    const crect = this.container.getBoundingClientRect()
+    const cw = crect.width || w
+    let leftEdge = 0
+    let rightEdge = 0
+    this.container.querySelectorAll<HTMLElement>('.h3d-label').forEach((el) => {
+      const r = el.getBoundingClientRect()
+      if (r.width === 0 && r.height === 0) return // není rozloženo (display:none apod.)
+      if (el.classList.contains('h3d-left')) leftEdge = Math.max(leftEdge, r.right - crect.left)
+      else if (el.classList.contains('h3d-right')) rightEdge = Math.max(rightEdge, crect.right - r.left)
+    })
+    return { leftFrac: Math.max(0, leftEdge / cw), rightFrac: Math.max(0, rightEdge / cw) }
+  }
+
   /** Přesná vzdálenost kamery, na kterou se celá silueta domu (všechny
       vrcholy obrysů, viz `measureHouse`) vejde do frustumu - žádný odhad,
       žádná Box3 aproximace (ta při pohledu zešikma trčí za skutečnou kresbu,
@@ -506,29 +541,48 @@ export class SceneManager {
       vodorovně/svisle. Vrchol je uvnitř frustumu ve vzdálenosti `d`, když
       `|r| <= tanH·(d-f)` a `|u| <= tanV·(d-f)` (definice perspektivního
       frustumu), tj. `d >= f + |r|/tanH` a `d >= f + |u|/tanV`. `dW`/`dH` jsou
-      maxima přes všechny vrcholy odděleně pro šířku/výšku - protože `f` je
-      pro daný vrchol společné oběma podmínkám, `max(f+|r|/tanH, f+|u|/tanV)
-      = f + max(...)`, takže `max(dW, dH)` je matematicky shodné s "jedním
-      průchodem" přes obě podmínky najednou (algebraická identita, ne
-      aproximace). PerspectiveCamera.fov je VERTIKÁLNÍ → tanH se dopočítá
-      z aspectu. */
-  private fitDistance(aspect: number): number {
+      maxima přes všechny vrcholy odděleně pro šířku/výšku. PerspectiveCamera.fov
+      je VERTIKÁLNÍ → tanH se dopočítá z aspectu.
+
+      Vodorovná rezerva na menu labely (`measureLabelColumns`) NENÍ jednotný
+      násobitel na celou šířku - je to reálný sloupec u KAŽDÉHO kraje zvlášť,
+      takže se promítá jako zúžení dostupné poloviny frustumu na dané straně:
+      vrchol s `r >= 0` (obrazovkově vpravo - `right` je `cross(WORLD_UP, e)`,
+      stejná konvence jako THREE.Camera.lookAt používá pro svou lokální osu X)
+      musí zůstat uvnitř `[-1, 1-2·rightFrac]` v NDC, `r < 0` (vlevo) uvnitř
+      `[-1+2·leftFrac, 1]` - z toho `tanH' = tanH·(1-2·frac)` pro danou stranu
+      (odvození: NDC_x = r/(tanH·(d-f)), dosaď mez, vyjádři d). Svisle labely
+      nejsou, `tanV` se nemění. `fitMargin` navrch je pak jen malá rovnoměrná
+      rezerva na dýchání (+ trochu prostoru na rotaci/zoom OrbitControls u
+      SOLO) - ne kompenzace za labely, ta je už v `tanH'`. */
+  private fitDistance(aspect: number, w: number): number {
     const tanV = Math.tan((this.baseFov * DEG) / 2)
     const tanH = tanV * aspect
-
-    let dW = 0
-    let dH = 0
-    for (const o of this.houseOffsets) {
-      dW = Math.max(dW, o.f + Math.abs(o.r) / tanH)
-      dH = Math.max(dH, o.f + Math.abs(o.u) / tanV)
-    }
 
     // Hero na úzkém (portrét/mobil) viewportu: labely jdou pod dům (viz overlay),
     // takže dům smí vyplnit ~90 % šířky → couvni jen podle šířky s malou rezervou.
     if (this.transparent && aspect < 0.85) {
-      return Math.max(dW * 1.12, dH * 1.02)
+      let dW0 = 0
+      let dH0 = 0
+      for (const o of this.houseOffsets) {
+        dW0 = Math.max(dW0, o.f + Math.abs(o.r) / tanH)
+        dH0 = Math.max(dH0, o.f + Math.abs(o.u) / tanV)
+      }
+      return Math.max(dW0 * 1.12, dH0 * 1.02)
     }
-    return Math.max(dW, dH) * this.fitMargin // rezerva na labely + vzduch kolem
+
+    const { leftFrac, rightFrac } = this.measureLabelColumns(w)
+    const tanHLeft = tanH * Math.max(0.05, 1 - 2 * leftFrac)
+    const tanHRight = tanH * Math.max(0.05, 1 - 2 * rightFrac)
+
+    let dW = 0
+    let dH = 0
+    for (const o of this.houseOffsets) {
+      const tanHSide = o.r >= 0 ? tanHRight : tanHLeft
+      dW = Math.max(dW, o.f + Math.abs(o.r) / tanHSide)
+      dH = Math.max(dH, o.f + Math.abs(o.u) / tanV)
+    }
+    return Math.max(dW, dH) * this.fitMargin // malá rezerva na dýchání (+ rotace u SOLO)
   }
 
   private placeCamera(): void {
@@ -805,7 +859,7 @@ export class SceneManager {
     this.controls.target.copy(this.houseCenter)
 
     // přepočítej fit-vzdálenost a limity zoomu pro nový poměr stran
-    this.distance = this.fitDistance(w / h)
+    this.distance = this.fitDistance(w / h, w)
     this.controls.minDistance = this.distance * CAMERA.zoomRange[0]
     this.controls.maxDistance = this.distance * CAMERA.zoomRange[1]
     this.placeCamera()
