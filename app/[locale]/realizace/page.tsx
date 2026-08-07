@@ -29,12 +29,12 @@ export default async function RealizacePage({
 
   return (
     <div className="bg-paper">
-      <header className="container-content pb-12 pt-36 md:pt-44">
-        <span className="eyebrow">{tNav('projects')}</span>
-        <h1 className="mt-3 max-w-3xl font-display text-5xl italic leading-tight text-timber md:text-7xl">
+      <header className="container-content pb-14 pt-36 md:pb-20 md:pt-44">
+        <p className="font-mono text-xs uppercase tracking-widest text-oak">{tNav('projects')}</p>
+        <h1 className="mt-5 max-w-[18ch] text-balance font-display text-[clamp(2.5rem,6vw,5.5rem)] leading-[0.95] tracking-tight text-timber">
           {t('heroTitle')}
         </h1>
-        <p className="mt-5 max-w-xl font-body text-base leading-relaxed text-timber/70">
+        <p className="mt-6 max-w-[46ch] font-body text-lg text-oak md:text-xl">
           {t('heroIntro')}
         </p>
       </header>

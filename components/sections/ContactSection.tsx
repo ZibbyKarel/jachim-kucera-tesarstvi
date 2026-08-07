@@ -22,9 +22,23 @@ import { Reveal } from '@/components/ui/Reveal'
 /*  Vzhledově taky beze změny - je navržený pro paper pozadí (text-timber,      */
 /*  border-timber, akcent ember) a levá půlka zůstává paper, takže sedí beze    */
 /*  zásahu.                                                                    */
+/*                                                                              */
+/*  Sdílená komponenta (T5): `heading`/`description` jdou přepsat, ať se ta     */
+/*  samá sazba dá znovupoužít jako závěrečné CTA na ServicePageTemplate         */
+/*  (spec §A) beze duplikace markupu. Bez props se chová přesně jako předtím -  */
+/*  homepage volá <ContactSection /> beze změny. `showMap` přidá technickou     */
+/*  "mapu" (spec §D, Kontakt) do tmavé poloviny, beze karty.                    */
 /* -------------------------------------------------------------------------- */
 
-export function ContactSection() {
+export function ContactSection({
+  heading,
+  description,
+  showMap = false,
+}: {
+  heading?: string
+  description?: string
+  showMap?: boolean
+} = {}) {
   const t = useTranslations()
 
   return (
@@ -74,6 +88,57 @@ export function ContactSection() {
             <div className="border-t border-paper/40 pt-6">
               <p className="font-mono text-sm text-oak-soft">{t('common.companyIdLabel')}</p>
             </div>
+
+            {showMap && (
+              <div className="border-t border-paper/40 pt-6">
+                <div
+                  role="img"
+                  aria-label={t('contact.mapAriaLabel')}
+                  className="relative aspect-[16/9] w-full"
+                >
+                  <svg
+                    className="absolute inset-0 h-full w-full"
+                    viewBox="0 0 400 300"
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M-20 210 C80 180 120 120 200 150 S340 120 420 90"
+                      className="text-oak-soft"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      opacity="0.6"
+                    />
+                    <path
+                      d="M40 -20 C70 80 30 160 90 240 S140 360 120 420"
+                      className="text-oak-soft"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      opacity="0.45"
+                    />
+                    <circle
+                      cx="200"
+                      cy="150"
+                      r="6"
+                      className="text-ember-soft"
+                      fill="currentColor"
+                    />
+                    <circle
+                      cx="200"
+                      cy="150"
+                      r="16"
+                      className="text-ember-soft"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      opacity="0.6"
+                    />
+                  </svg>
+                  <span className="absolute bottom-0 left-0 font-mono text-sm text-paper">
+                    {t('contact.mapCityLabel')}
+                  </span>
+                </div>
+              </div>
+            )}
           </dl>
         </Reveal>
 
@@ -87,8 +152,11 @@ export function ContactSection() {
             id="contact-heading"
             className="font-display text-3xl text-timber md:text-4xl"
           >
-            {t('home.contactHeadline')}
+            {heading ?? t('home.contactHeadline')}
           </h2>
+          {description && (
+            <p className="mt-4 max-w-md font-body text-base text-oak">{description}</p>
+          )}
           <div className="mt-10">
             <ContactForm />
           </div>
