@@ -732,3 +732,36 @@ Do `.claude/settings.json` proto přibylo `"worktree": {"bgIsolation": "none"}`,
 dokumentovaný vypínač té izolace. Commituje se rovnou na `redesign`.
 Poznámka: `redesign` je čistě lokální větev, `origin/redesign` neexistuje - publikování
 zůstává na uživateli.
+
+## D-060 — Kresba domu posunutá `translate-x`, aby lícovala s CS | EN switchem
+**Datum:** 2026-08-07 · **Rozhodl:** uživatel (klient), zapsal Claude (sonnet)
+Klient: „zkus ještě trochu posunout dům doprava, můžeme ho zarovnat společně s CS | EN
+switchem a nebude tak zasahovat do nadpisu".
+
+`ml-auto` v `OpenerHouse.tsx` už zarovnávalo pravou hranu *canvasu* s pravou hranou textu
+(D-056), ale kresba samotná canvas nevyplňuje až do kraje - `SceneManager` rámuje podle
+bounding boxu modelu, jehož hmota táhne doleva (velká pergola vlevo, malá bednička vpravo),
+takže viditelný okraj kresby končí ~18 % šířky canvasu před jeho pravým okrajem. Vizuálně
+tak dům působil posazený víc vlevo, než dovoloval prostor k switchi v hlavičce.
+
+Přidán `translate-x-[min(18%,max(40px,calc(50vw_-_560px)))]` na `ml-auto` vrstvu:
+- `18%` šířky vrstvy je naměřený posun, po kterém viditelný pravý okraj kresby (roh
+  bedničky/rampy) vizuálně lícuje s pravým okrajem „en" v hlavičce (ověřeno screenshotem
+  na šířce 1696 CSS px).
+- `max(40px, calc(50vw - 560px))` je bezpečnostní strop odvozený z `container-content`
+  (`max-w-content: 1200px`, `px-10` = 40px): gutter mezi pravým okrajem sloupce a okrajem
+  viewportu je pevných 40px pod 1200px šířky okna a nad tím roste jako `50vw - 560px`.
+  Bez stropu by na užších `lg`/`xl` šířkách (1024-1280px, gutter 40-80px) posun o 18 %
+  (94-110px) přetekl mimo viewport a vytvořil vodorovný scroll - přesně to strop brání.
+  Nad ~1368px šířky okna už strop nezasahuje a posun dosáhne plných 18 %.
+- Zbytek pozicování (`ml-auto`, svislý `bottom` calc z D-058) beze změny - `translate-x` se
+  aplikuje až nad hotovým zarovnáním na sloupec, ne místo něj.
+
+**Vedlejší efekt (žádoucí):** posun kresby doprava ji zároveň vzdaluje od `<h1>`, takže
+překryv z D-056 (dotyk s patou posledního řádku nadpisu na 1440/1920px) se zmenšuje.
+
+**Neověřeno automatizovaně:** `resize_window` v této session neměnil skutečnou šířku
+viewportu (zůstávala 1696 CSS px bez ohledu na zadané rozměry), takže posun na 1024/1280px
+nebyl ověřen screenshotem - jen výpočtem gutteru z `container-content`. Strop je odvozený
+přímo ze stejných konstant jako `.container-content` v `globals.css`, takže by měl sedět,
+ale reálný vizuální check na užších šířkách zbývá.
