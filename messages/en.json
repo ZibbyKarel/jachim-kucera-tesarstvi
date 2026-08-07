@@ -46,7 +46,7 @@
   "contact": {
     "title": "Contact",
     "heroTitle": "Let's talk it through",
-    "intro": "Tell us a few words about your roof. We'll get back to you and arrange a visit — free and with no obligation.",
+    "intro": "Tell us a few words about your roof. We'll get back to you and arrange a visit - free and with no obligation.",
     "name": "Name",
     "phone": "Phone",
     "service": "Service",
@@ -69,7 +69,7 @@
     },
     "infoHeading": "Where to find us",
     "areaLabel": "Service area",
-    "mapAriaLabel": "Service area map — Pilsen region",
+    "mapAriaLabel": "Service area map - Pilsen region",
     "mapCityLabel": "Pilsen"
   },
   "about": {
@@ -167,7 +167,7 @@
     "addressRegion": "Pilsen Region",
     "serviceTypes": ["Carpentry", "Roofing", "Tinsmithing", "Roof cleaning"],
     "kontakt": {
-      "title": "Contact — Free Inquiry",
+      "title": "Contact - Free Inquiry",
       "description": "Write or call. We'll arrange a free, no-obligation roof inspection in the Pilsen region. Carpentry, roofing and tinsmithing."
     },
     "onas": {

@@ -46,7 +46,7 @@
   "contact": {
     "title": "Kontakt",
     "heroTitle": "Pojďme se domluvit",
-    "intro": "Napište nám pár slov o vaší střeše. Ozveme se a domluvíme se na prohlídce — nezávazně a zdarma.",
+    "intro": "Napište nám pár slov o vaší střeše. Ozveme se a domluvíme se na prohlídce - nezávazně a zdarma.",
     "name": "Jméno",
     "phone": "Telefon",
     "service": "Služba",
@@ -69,7 +69,7 @@
     },
     "infoHeading": "Kde nás zastihnete",
     "areaLabel": "Provozní oblast",
-    "mapAriaLabel": "Mapa provozní oblasti — Plzeňský kraj",
+    "mapAriaLabel": "Mapa provozní oblasti - Plzeňský kraj",
     "mapCityLabel": "Plzeň"
   },
   "about": {
@@ -167,7 +167,7 @@
     "addressRegion": "Plzeňský kraj",
     "serviceTypes": ["Tesařství", "Pokrývačství", "Klempířství", "Čištění střech"],
     "kontakt": {
-      "title": "Kontakt — Nezávazná poptávka",
+      "title": "Kontakt - Nezávazná poptávka",
       "description": "Napište nebo zavolejte. Domluvíme se na nezávazné prohlídce střechy v Plzeňském kraji. Tesařství, pokrývačství a klempířství."
     },
     "onas": {
