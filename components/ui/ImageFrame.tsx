@@ -14,11 +14,13 @@ interface ImageFrameProps {
 /**
  * Rámeček pro fotku realizace.
  *
- * Reálné fotky nejsou součástí zadání - komponenta proto vykresluje
- * technický/materiálový placeholder (jemný rastr + kótovací značky v rozích +
- * popisek), ne "chybí obrázek". Jakmile do `public{src}` přibude skutečný
- * soubor, stačí odkomentovat <Image> níže a placeholder se nahradí
- * optimalizovaným obrázkem.
+ * Skutečné fotky realizací žijí pod `/images/realizace/...` (naimportované
+ * z původního webu firmy). Tam, kde fotky nemáme (klempířství, čištění
+ * střech), na ně `lib/constants.ts` schválně odkazuje cestou pod
+ * `/images/placeholder/...` - soubor tam fyzicky není a nebude, jméno jen
+ * popisuje, co tam jednou má být. Podle téhle konvence komponenta pozná, kdy
+ * má vykreslit technický/materiálový placeholder (jemný rastr + kótovací
+ * značky v rozích + popisek) místo optimalizovaného <Image>.
  */
 export function ImageFrame({
   src,
@@ -29,7 +31,7 @@ export function ImageFrame({
   priority = false,
   rounded = true,
 }: ImageFrameProps) {
-  const hasRealAsset = false // přepni na true, až budou fotky v /public
+  const hasRealAsset = !src.startsWith('/images/placeholder/')
 
   return (
     <div

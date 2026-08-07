@@ -151,8 +151,7 @@
     "closeDetailAria": "Close detail",
     "viewDetailAria": "view detail",
     "photoAlt": "photo",
-    "year": "Year",
-    "location": "Location"
+    "year": "Year"
   },
   "realizacePage": {
     "heroTitle": "What we've built",
@@ -213,12 +212,12 @@
         { "title": "Sheathing and facade timber", "description": "Roof sheathing, tongue-and-groove soffits and timber facades. Ventilated systems with a long service life." }
       ],
       "galleryAlt": [
-        "New roof truss for a family home in Plzeň",
-        "Reconstruction of a historic roof truss in Klatovy",
-        "Exposed timber beam ceiling",
-        "Timber pergola by a family home",
-        "Carport built from solid timber",
-        "Detail of a carpentry joint in a roof truss"
+        "New roof truss with battens ready for roofing",
+        "Finished timber carport",
+        "Covered outdoor kitchen with a fireplace",
+        "Log building with a finished roof",
+        "Children's playground with a play house and swings",
+        "Timber well cover with a stone base"
       ],
       "seoTitle": "Carpentry | Roof Trusses and Timber Work | Pilsen Region",
       "seoDescription": "We build and reconstruct roof trusses, timber ceilings and pergolas in the Pilsen region. Over 15 years of experience, honest work, fair prices."
@@ -240,12 +239,12 @@
         { "title": "Ridges, hips, valleys", "description": "The details where roofs leak most often. We build them to hold water back even in extreme weather." }
       ],
       "galleryAlt": [
-        "Clay roofing on a family home in Plzeň",
-        "Standing-seam metal roof",
-        "Traditional beaver-tail tiles on a reconstructed roof",
-        "Detail of a roof valley",
-        "Ventilated roof ridge",
-        "Reconstruction of a roof envelope"
+        "Concrete roof tiles on a new-build roof",
+        "Ridge and gutter system on a finished roof",
+        "Roof covering of a timber carport",
+        "Roof truss ready for roofing",
+        "Detail of battens before roofing",
+        "Roof of a log building"
       ],
       "seoTitle": "Roofing | Roof Covering Installation | Pilsen Region",
       "seoDescription": "We lay clay and concrete roofing, sheet metal and shingles in the Pilsen region. Waterproofing, ridge and valley details. A roof that lasts."
@@ -306,65 +305,45 @@
     }
   },
   "projectsData": {
-    "krov-rodinny-dum-plzen": {
-      "title": "New roof truss for a family home",
-      "location": "Pilsen-North",
-      "description": "Complete purlin roof truss for a new-build family home. Kiln-dried lumber, carpentry connectors and exposed elements over the terrace."
+    "krov-a-latovani": {
+      "title": "Roof Truss and Battens for a New Build",
+      "description": "New roof truss for a family home, including counter-battens and battens, ready for the roofing to go on."
     },
-    "rekonstrukce-krovu-klatovy": {
-      "title": "Reconstruction of a historic roof truss",
-      "location": "Klatovy",
-      "description": "Rescue of the original roof truss of a townhouse. Replacement of damaged sections, splicing and reinforcement while preserving the historic structure."
+    "betonova-krytina": {
+      "title": "Roofing on a New Build",
+      "description": "Finished roof envelope of the same house. Dark interlocking tiles, ridge and gutter system."
     },
-    "pergola-rokycany": {
-      "title": "Pergola with terrace roof",
-      "location": "Rokycany",
-      "description": "Freestanding pergola built from solid timber with a polycarbonate roof and integrated lighting."
+    "pristresek-pro-auta": {
+      "title": "Carport",
+      "description": "Freestanding timber carport. The first photo shows the bare truss with battens, the second the same structure after the roofing was laid."
     },
-    "tramovy-strop-susice": {
-      "title": "Exposed timber beam ceiling",
-      "location": "Sušice",
-      "description": "Exposed beam ceiling in a reconstructed loft. Hand-finished edges and an oiled surface."
+    "pergola-tesarske-spoje": {
+      "title": "Pergola with Carpentry Joints",
+      "description": "A substantial pergola with purlins and angled braces. The joints are traditional carpentry work, reinforced with bolts, the timber finished with a stain."
     },
-    "strecha-palena-plzen": {
-      "title": "Clay roofing on a new-build",
-      "location": "Pilsen-South",
-      "description": "Complete roof envelope for a new-build home. Safety waterproofing membrane, battens and clay roofing, including a ventilated ridge."
+    "venkovni-kuchyne": {
+      "title": "Outdoor Kitchen with Fireplace",
+      "description": "Covered seating area with a brick fireplace and grill. Exposed roof truss, timber benches and a worktop."
     },
-    "plechova-strecha-domazlice": {
-      "title": "Standing-seam metal roof",
-      "location": "Domažlice",
-      "description": "Standing-seam roof in titanium zinc on a farmstead. Long runs without cross joints and clean valley details."
+    "zastreseni-vstupu": {
+      "title": "Entrance and Terrace Roof",
+      "description": "Timber roof structure at a family home, connecting to the terrace. Posts with carpentry joints and exposed rafters."
     },
-    "bobrovka-stribro": {
-      "title": "Roof reconstruction with beaver-tail tiles",
-      "location": "Stříbro",
-      "description": "Replacement of a historic home's roofing with traditional plain beaver-tail tiles laid in courses, including new battens."
+    "roubena-stavba": {
+      "title": "Log Building",
+      "description": "Log structure built from solid timber, with a finished roof and windows installed."
     },
-    "strecha-rekonstrukce-nepomuk": {
-      "title": "Roof envelope reconstruction",
-      "location": "Nepomuk",
-      "description": "Complete roof reconstruction of a family home. New sheathing, membranes, battens and concrete roofing."
+    "strechy-novostaveb": {
+      "title": "Roofs of New Builds",
+      "description": "Two houses under construction, the roof envelope already finished on the first."
     },
-    "medene-okapy-plzen": {
-      "title": "Copper gutter system",
-      "location": "Pilsen-City",
-      "description": "Complete copper gutters and downspouts on a villa in the historic quarter. Soldered joints and cornice flashing in matching material."
+    "detska-hriste": {
+      "title": "Playgrounds and Play Structures",
+      "description": "Play structures with towers, slides, swings and a climbing wall. Built for municipalities and private gardens alike, from pressure-treated timber."
     },
-    "oplechovani-komin-tachov": {
-      "title": "Chimney and parapet flashing",
-      "location": "Tachov",
-      "description": "Flashing for a chimney stack and parapets in titanium zinc, made to measure on site with folded joints."
-    },
-    "titanzinek-okapy-horsovsky-tyn": {
-      "title": "Titanium zinc gutters",
-      "location": "Horšovský Týn",
-      "description": "New titanium zinc gutter system for a family home, with fall and gutter sizing designed to match the roof area."
-    },
-    "strecha-okapy-prestice": {
-      "title": "Roof and tinsmith work in one",
-      "location": "Přeštice",
-      "description": "A project spanning truss to gutters. A new roof with concrete tiles and complete tinsmith elements in galvanized steel."
+    "zastreseni-studni": {
+      "title": "Well Covers",
+      "description": "Timber well covers with a stone base and a pulley wheel. Built from solid timber, surface finished with a stain."
     }
   }
 }

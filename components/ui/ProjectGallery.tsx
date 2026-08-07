@@ -66,11 +66,16 @@ export function ProjectGallery({
     return () => ctx.revert()
   }, [filter])
 
+  // Filtry odvozené z kategorií, které se v `projects` skutečně vyskytují -
+  // natvrdo vypsaný seznam by po změně dat mohl nabídnout kategorii bez
+  // jediné realizace (prázdná mřížka). Pořadí kategorií je pevné.
+  const categoryOrder: ProjectCategory[] = ['tesarstvi', 'pokryvacstvi', 'klempirstvi']
+  const presentCategories = categoryOrder.filter((c) =>
+    projects.some((p) => p.category === c)
+  )
   const filters: { key: Filter; label: string }[] = [
     { key: 'all', label: t('filterAll') },
-    { key: 'tesarstvi', label: tFull('services.tesarstvi.title') },
-    { key: 'pokryvacstvi', label: tFull('services.pokryvacstvi.title') },
-    { key: 'klempirstvi', label: tFull('services.klempirstvi.title') },
+    ...presentCategories.map((c) => ({ key: c, label: tFull(`services.${c}.title`) })),
   ]
 
   return (
@@ -108,7 +113,6 @@ export function ProjectGallery({
       >
         {visible.map((project, i) => {
           const title = tFull(`projectsData.${project.id}.title`)
-          const location = tFull(`projectsData.${project.id}.location`)
           const categoryTitle = tFull(`services.${project.category}.title`)
           return (
             <article
@@ -125,16 +129,16 @@ export function ProjectGallery({
                   setSelected(project)
                 }}
                 className="group block w-full text-left"
-                aria-label={`${title}, ${location}, ${project.year}, ${t('viewDetailAria')}`}
+                aria-label={`${title}, ${project.year ? project.year + ', ' : ''}${t('viewDetailAria')}`}
               >
                 <ImageFrame
                   src={project.thumbnail}
-                  alt={`${title}, ${location}`}
+                  alt={title}
                   aspect={i % 5 === 0 ? '3/4' : '4/3'}
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 />
                 <p className="mt-3 border-t border-timber/20 pt-3 font-mono text-xs uppercase tracking-widest text-oak transition-colors group-hover:text-ember">
-                  {location} / {project.year} / {categoryTitle}
+                  {project.year ? `${project.year} / ${categoryTitle}` : categoryTitle}
                 </p>
               </button>
             </article>
@@ -158,7 +162,6 @@ function ProjectModal({
   const tFull = useTranslations()
   const dialogRef = useRef<HTMLDivElement>(null)
   const title = tFull(`projectsData.${project.id}.title`)
-  const location = tFull(`projectsData.${project.id}.location`)
   const description = tFull(`projectsData.${project.id}.description`)
 
   useEffect(() => {
@@ -233,7 +236,8 @@ function ProjectModal({
         </button>
 
         <span className="eyebrow">
-          {tFull(`services.${project.category}.title`)} · {location} · {project.year}
+          {tFull(`services.${project.category}.title`)}
+          {project.year ? ` · ${project.year}` : ''}
         </span>
         <h2 className="mt-3 font-display text-4xl text-timber">
           {title}
@@ -253,20 +257,16 @@ function ProjectModal({
           ))}
         </div>
 
-        <dl className="mt-8 flex flex-wrap gap-x-12 gap-y-3 border-t border-timber/50 pt-6">
-          <div>
-            <dt className="font-mono text-xs uppercase tracking-widest text-oak">
-              {t('location')}
-            </dt>
-            <dd className="mt-1 font-body text-sm text-timber">{location}</dd>
-          </div>
-          <div>
-            <dt className="font-mono text-xs uppercase tracking-widest text-oak">
-              {t('year')}
-            </dt>
-            <dd className="mt-1 font-mono text-sm text-timber">{project.year}</dd>
-          </div>
-        </dl>
+        {project.year && (
+          <dl className="mt-8 flex flex-wrap gap-x-12 gap-y-3 border-t border-timber/50 pt-6">
+            <div>
+              <dt className="font-mono text-xs uppercase tracking-widest text-oak">
+                {t('year')}
+              </dt>
+              <dd className="mt-1 font-mono text-sm text-timber">{project.year}</dd>
+            </div>
+          </dl>
+        )}
       </div>
     </div>
   )
