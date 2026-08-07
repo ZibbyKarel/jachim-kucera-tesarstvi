@@ -1,9 +1,8 @@
-import { useTranslations } from 'next-intl'
-import type { Service } from '@/lib/types'
-import { ImageFrame } from '@/components/ui/ImageFrame'
-import { Reveal } from '@/components/ui/Reveal'
-import { ContactSection } from '@/components/sections/ContactSection'
-import { services } from '@/lib/constants'
+import { ContactSection } from "@/components/sections/ContactSection";
+import { ImageFrame } from "@/components/ui/ImageFrame";
+import { Reveal } from "@/components/ui/Reveal";
+import type { Service } from "@/lib/types";
+import { useTranslations } from "next-intl";
 
 /* -------------------------------------------------------------------------- */
 /*  ServicePageTemplate — /sluzby/[slug], stejný jazyk jako homepage (T5/A)     */
@@ -25,14 +24,16 @@ import { services } from '@/lib/constants'
 /* -------------------------------------------------------------------------- */
 
 export function ServicePageTemplate({ service }: { service: Service }) {
-  const t = useTranslations('service')
-  const tCommon = useTranslations('common')
-  const tService = useTranslations(`services.${service.slug}`)
-  const title = tService('title')
-  const longDescription = tService.raw('longDescription') as string[]
-  const workItems = tService.raw('workItems') as { title: string; description: string }[]
-  const galleryAlt = tService.raw('galleryAlt') as string[]
-  const ordinal = services.findIndex((s) => s.slug === service.slug) + 1
+  const t = useTranslations("service");
+  const tCommon = useTranslations("common");
+  const tService = useTranslations(`services.${service.slug}`);
+  const title = tService("title");
+  const longDescription = tService.raw("longDescription") as string[];
+  const workItems = tService.raw("workItems") as {
+    title: string;
+    description: string;
+  }[];
+  const galleryAlt = tService.raw("galleryAlt") as string[];
 
   return (
     <article>
@@ -40,22 +41,25 @@ export function ServicePageTemplate({ service }: { service: Service }) {
       <header className="bg-paper">
         <div className="container-content pb-14 pt-36 md:pb-20 md:pt-44">
           <p className="font-mono text-xs uppercase tracking-widest text-oak">
-            {String(ordinal).padStart(2, '0')} · {tCommon('serviceLabel')}
+            {tCommon("serviceLabel")}
           </p>
           <h1 className="mt-5 max-w-[16ch] text-balance font-display text-[clamp(2.5rem,6vw,5.5rem)] leading-[0.95] tracking-tight text-timber">
             {title}
           </h1>
           <p className="mt-6 max-w-[46ch] font-body text-lg text-oak md:text-xl">
-            {tService('tagline')}
+            {tService("tagline")}
           </p>
         </div>
       </header>
 
       {/* 2 — Popis */}
-      <section aria-label={t('descriptionAria')} className="bg-paper pb-20 md:pb-28">
+      <section
+        aria-label={t("descriptionAria")}
+        className="bg-paper pb-20 md:pb-28"
+      >
         <div className="container-content max-w-[65ch]">
           <p className="font-body text-lg leading-relaxed text-timber md:text-xl">
-            {tService('shortDescription')}
+            {tService("shortDescription")}
           </p>
           <Reveal stagger className="mt-8 space-y-5">
             {longDescription.map((p) => (
@@ -72,13 +76,16 @@ export function ServicePageTemplate({ service }: { service: Service }) {
       </section>
 
       {/* 3 — Co zahrnuje: číslovaný rejstřík na timber poli, stejný vzor jako ServiceIndex */}
-      <section aria-labelledby="includes-heading" className="bg-timber py-20 md:py-28">
+      <section
+        aria-labelledby="includes-heading"
+        className="bg-timber py-20 md:py-28"
+      >
         <div className="container-content">
           <h2
             id="includes-heading"
             className="font-mono text-xs uppercase tracking-widest text-oak-soft"
           >
-            {t('includesHeading')}
+            {t("includesHeading")}
           </h2>
 
           <Reveal stagger as="div" className="mt-8 md:mt-12">
@@ -104,12 +111,21 @@ export function ServicePageTemplate({ service }: { service: Service }) {
       </section>
 
       {/* 4 — Galerie: mřížka rámů s mono popiskami, jazyk realizací na homepage */}
-      <section aria-labelledby="gallery-heading" className="bg-paper py-20 md:py-28">
+      <section
+        aria-labelledby="gallery-heading"
+        className="bg-paper py-20 md:py-28"
+      >
         <div className="container-content">
-          <h2 id="gallery-heading" className="font-display text-3xl text-timber md:text-4xl">
-            {t('galleryHeading')}
+          <h2
+            id="gallery-heading"
+            className="font-display text-3xl text-timber md:text-4xl"
+          >
+            {t("galleryHeading")}
           </h2>
-          <Reveal stagger className="mt-12 grid grid-cols-2 gap-x-4 gap-y-8 md:grid-cols-3 md:gap-x-6">
+          <Reveal
+            stagger
+            className="mt-12 grid grid-cols-2 gap-x-4 gap-y-8 md:grid-cols-3 md:gap-x-6"
+          >
             {service.gallery.map((img, i) => (
               <div data-reveal-item key={img.src}>
                 <ImageFrame
@@ -128,7 +144,7 @@ export function ServicePageTemplate({ service }: { service: Service }) {
       </section>
 
       {/* 5 — Závěrečné CTA: sdílený split se stejnou vizuální gramatikou jako homepage */}
-      <ContactSection heading={t('ctaHeading')} description={t('ctaText')} />
+      <ContactSection heading={t("ctaHeading")} description={t("ctaText")} />
     </article>
-  )
+  );
 }
