@@ -56,6 +56,17 @@
     "aboutCta": "Our story",
     "contactHeadline": "Call or write. Let's talk it through."
   },
+  "testimonials": {
+    "eyebrow": "Testimonials",
+    "heading": "What our customers say",
+    "items": [
+      { "quote": "“Precise work and great communication. The pergola looks beautiful.”", "author": "Jana K." },
+      { "quote": "“Quick site survey, an accurate quote, and the deadline kept to the day.”", "author": "Tomáš P." },
+      { "quote": "“Quality materials and professional installation. We recommend them.”", "author": "Obecní úřad" },
+      { "quote": "“The custom staircase is a joy to use, clean details throughout.”", "author": "Martin S." },
+      { "quote": "“The log elements respect the style of the house, we're delighted.”", "author": "Veronika D." }
+    ]
+  },
   "contact": {
     "title": "Contact",
     "heroTitle": "Let's talk it through",
