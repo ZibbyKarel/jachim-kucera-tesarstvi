@@ -45,58 +45,66 @@ export const SITE = {
 
 /* -------------------------------------------------------------------------- */
 /*  Služby — texty žijí v messages/{locale}.json pod services.<slug>          */
+/*                                                                              */
+/*  Konvence cest k obrázkům: `/images/realizace/...` jsou skutečné fotky      */
+/*  naimportované z původního webu (viz komentář nad `projects` níže).         */
+/*  `/images/placeholder/...` jsou cesty, pod kterými soubory ZÁMĚRNĚ neexis-  */
+/*  tují - u tesařství a pokrývačství máme reálné fotky, u klempířství a       */
+/*  čištění střech ne. Jméno souboru v placeholder cestě jen popisuje, co tam  */
+/*  jednou má být; `ImageFrame` podle prefixu `/images/placeholder/` pozná, že */
+/*  má vykreslit technický rámeček místo <Image>.                              */
 /* -------------------------------------------------------------------------- */
 
 export const services: Service[] = [
   {
     slug: 'tesarstvi',
-    heroImage: '/images/realizace/krov-detail-01.jpg',
+    heroImage: '/images/realizace/pergola-spoje.jpg',
     gallery: [
-      { src: '/images/realizace/krov-plzen-01.jpg' },
-      { src: '/images/realizace/krov-klatovy-01.jpg' },
-      { src: '/images/realizace/strop-tramovy-01.jpg' },
-      { src: '/images/realizace/pergola-rokycany-01.jpg' },
-      { src: '/images/realizace/carport-01.jpg' },
-      { src: '/images/realizace/krov-detail-spoj.jpg' },
+      { src: '/images/realizace/krov-latovani-01.jpg' },
+      { src: '/images/realizace/pristresek-hotovy.jpg' },
+      { src: '/images/realizace/venkovni-kuchyne-exterier.jpg' },
+      { src: '/images/realizace/roubenka-02.jpg' },
+      { src: '/images/realizace/hriste-domek-houpacky.jpg' },
+      { src: '/images/realizace/studna-02.jpg' },
     ],
     workItemNumbers: ['01', '02', '03', '04'],
   },
   {
     slug: 'pokryvacstvi',
-    heroImage: '/images/realizace/strecha-palena-01.jpg',
+    heroImage: '/images/realizace/strechy-novostavby.jpg',
     gallery: [
-      { src: '/images/realizace/strecha-palena-plzen.jpg' },
-      { src: '/images/realizace/strecha-plech-falc.jpg' },
-      { src: '/images/realizace/strecha-bobrovka.jpg' },
-      { src: '/images/realizace/strecha-uzlabi.jpg' },
-      { src: '/images/realizace/strecha-hreben.jpg' },
-      { src: '/images/realizace/strecha-rekonstrukce.jpg' },
+      { src: '/images/realizace/krytina-betonova-01.jpg' },
+      { src: '/images/realizace/krytina-betonova-02.jpg' },
+      { src: '/images/realizace/pristresek-hotovy.jpg' },
+      { src: '/images/realizace/krov-latovani-01.jpg' },
+      { src: '/images/realizace/krov-latovani-02.jpg' },
+      { src: '/images/realizace/roubenka-01.jpg' },
     ],
     workItemNumbers: ['01', '02', '03', '04'],
   },
   {
     slug: 'klempirstvi',
-    heroImage: '/images/realizace/okap-mer-01.jpg',
+    heroImage: '/images/placeholder/okap-mer-01.jpg',
     gallery: [
-      { src: '/images/realizace/okap-med.jpg' },
-      { src: '/images/realizace/okap-titanzinek.jpg' },
-      { src: '/images/realizace/oplechovani-komin.jpg' },
-      { src: '/images/realizace/oplechovani-parapet.jpg' },
-      { src: '/images/realizace/svod-detail.jpg' },
-      { src: '/images/realizace/lemovani-zed.jpg' },
+      { src: '/images/placeholder/okap-med.jpg' },
+      { src: '/images/placeholder/okap-titanzinek.jpg' },
+      { src: '/images/placeholder/oplechovani-komin.jpg' },
+      { src: '/images/placeholder/oplechovani-parapet.jpg' },
+      { src: '/images/placeholder/svod-detail.jpg' },
+      { src: '/images/placeholder/lemovani-zed.jpg' },
     ],
     workItemNumbers: ['01', '02', '03', '04'],
   },
   {
     slug: 'cisteni-strech',
-    heroImage: '/images/realizace/cisteni-strecha-01.jpg',
+    heroImage: '/images/placeholder/cisteni-strecha-01.jpg',
     gallery: [
-      { src: '/images/realizace/cisteni-pred-po.jpg' },
-      { src: '/images/realizace/cisteni-mech.jpg' },
-      { src: '/images/realizace/cisteni-tlak.jpg' },
-      { src: '/images/realizace/cisteni-nater.jpg' },
-      { src: '/images/realizace/cisteni-okap.jpg' },
-      { src: '/images/realizace/cisteni-strecha-02.jpg' },
+      { src: '/images/placeholder/cisteni-pred-po.jpg' },
+      { src: '/images/placeholder/cisteni-mech.jpg' },
+      { src: '/images/placeholder/cisteni-tlak.jpg' },
+      { src: '/images/placeholder/cisteni-nater.jpg' },
+      { src: '/images/placeholder/cisteni-okap.jpg' },
+      { src: '/images/placeholder/cisteni-strecha-02.jpg' },
     ],
     workItemNumbers: ['01', '02', '03', '04'],
   },
@@ -108,108 +116,114 @@ export function getService(slug: string): Service | undefined {
 
 /* -------------------------------------------------------------------------- */
 /*  Realizace — texty žijí v messages/{locale}.json pod projectsData.<id>     */
+/*                                                                              */
+/*  Fotky jsou skutečné, naimportované z původního webu firmy                 */
+/*  (sikovnytesar.cz). `year` pochází z EXIF metadat originálních souborů -    */
+/*  je to tedy reálný údaj, ne odhad. Lokalitu (v EXIF nebyla GPS) neznáme,    */
+/*  proto `location` v datovém modelu vůbec neexistuje a v UI se nikde         */
+/*  nezobrazuje. U dvou realizací (`detska-hriste`, `zastreseni-studni`) je    */
+/*  `year` vynechaný úplně - jde o sadu fotek z více let bez jednoznačného     */
+/*  data. Nic z tohohle pole se nesmí domýšlet: žádná města, žádné obce,       */
+/*  žádné m², žádné značky materiálu, žádná jména zákazníků.                  */
 /* -------------------------------------------------------------------------- */
 
 export const projects: Project[] = [
   {
-    id: 'krov-rodinny-dum-plzen',
-    category: 'tesarstvi',
-    year: 2024,
-    images: [
-      '/images/realizace/krov-plzen-01.jpg',
-      '/images/realizace/krov-plzen-02.jpg',
-      '/images/realizace/krov-plzen-03.jpg',
-    ],
-    thumbnail: '/images/realizace/krov-plzen-01.jpg',
-  },
-  {
-    id: 'rekonstrukce-krovu-klatovy',
-    category: 'tesarstvi',
-    year: 2023,
-    images: [
-      '/images/realizace/krov-klatovy-01.jpg',
-      '/images/realizace/krov-klatovy-02.jpg',
-    ],
-    thumbnail: '/images/realizace/krov-klatovy-01.jpg',
-  },
-  {
-    id: 'pergola-rokycany',
-    category: 'tesarstvi',
-    year: 2025,
-    images: [
-      '/images/realizace/pergola-rokycany-01.jpg',
-      '/images/realizace/pergola-rokycany-02.jpg',
-    ],
-    thumbnail: '/images/realizace/pergola-rokycany-01.jpg',
-  },
-  {
-    id: 'tramovy-strop-susice',
+    id: 'krov-a-latovani',
     category: 'tesarstvi',
     year: 2022,
-    images: ['/images/realizace/strop-tramovy-01.jpg'],
-    thumbnail: '/images/realizace/strop-tramovy-01.jpg',
-  },
-  {
-    id: 'strecha-palena-plzen',
-    category: 'pokryvacstvi',
-    year: 2024,
     images: [
-      '/images/realizace/strecha-palena-plzen.jpg',
-      '/images/realizace/strecha-palena-02.jpg',
+      '/images/realizace/krov-latovani-01.jpg',
+      '/images/realizace/krov-latovani-02.jpg',
     ],
-    thumbnail: '/images/realizace/strecha-palena-plzen.jpg',
+    thumbnail: '/images/realizace/krov-latovani-01.jpg',
   },
   {
-    id: 'plechova-strecha-domazlice',
+    id: 'betonova-krytina',
     category: 'pokryvacstvi',
-    year: 2023,
-    images: ['/images/realizace/strecha-plech-falc.jpg'],
-    thumbnail: '/images/realizace/strecha-plech-falc.jpg',
-  },
-  {
-    id: 'bobrovka-stribro',
-    category: 'pokryvacstvi',
-    year: 2021,
-    images: ['/images/realizace/strecha-bobrovka.jpg'],
-    thumbnail: '/images/realizace/strecha-bobrovka.jpg',
-  },
-  {
-    id: 'strecha-rekonstrukce-nepomuk',
-    category: 'pokryvacstvi',
-    year: 2025,
-    images: ['/images/realizace/strecha-rekonstrukce.jpg'],
-    thumbnail: '/images/realizace/strecha-rekonstrukce.jpg',
-  },
-  {
-    id: 'medene-okapy-plzen',
-    category: 'klempirstvi',
-    year: 2024,
-    images: [
-      '/images/realizace/okap-med.jpg',
-      '/images/realizace/okap-med-02.jpg',
-    ],
-    thumbnail: '/images/realizace/okap-med.jpg',
-  },
-  {
-    id: 'oplechovani-komin-tachov',
-    category: 'klempirstvi',
-    year: 2023,
-    images: ['/images/realizace/oplechovani-komin.jpg'],
-    thumbnail: '/images/realizace/oplechovani-komin.jpg',
-  },
-  {
-    id: 'titanzinek-okapy-horsovsky-tyn',
-    category: 'klempirstvi',
     year: 2022,
-    images: ['/images/realizace/okap-titanzinek.jpg'],
-    thumbnail: '/images/realizace/okap-titanzinek.jpg',
+    images: [
+      '/images/realizace/krytina-betonova-01.jpg',
+      '/images/realizace/krytina-betonova-02.jpg',
+    ],
+    thumbnail: '/images/realizace/krytina-betonova-01.jpg',
   },
   {
-    id: 'strecha-okapy-prestice',
+    id: 'pristresek-pro-auta',
+    category: 'tesarstvi',
+    year: 2016,
+    images: [
+      '/images/realizace/pristresek-krov.jpg',
+      '/images/realizace/pristresek-hotovy.jpg',
+    ],
+    thumbnail: '/images/realizace/pristresek-hotovy.jpg',
+  },
+  {
+    id: 'pergola-tesarske-spoje',
+    category: 'tesarstvi',
+    year: 2016,
+    images: ['/images/realizace/pergola-spoje.jpg'],
+    thumbnail: '/images/realizace/pergola-spoje.jpg',
+  },
+  {
+    id: 'venkovni-kuchyne',
+    category: 'tesarstvi',
+    year: 2015,
+    images: [
+      '/images/realizace/venkovni-kuchyne-exterier.jpg',
+      '/images/realizace/venkovni-kuchyne-interier.jpg',
+    ],
+    thumbnail: '/images/realizace/venkovni-kuchyne-exterier.jpg',
+  },
+  {
+    id: 'zastreseni-vstupu',
+    category: 'tesarstvi',
+    year: 2022,
+    images: ['/images/realizace/zastreseni-vstupu.jpg'],
+    thumbnail: '/images/realizace/zastreseni-vstupu.jpg',
+  },
+  {
+    id: 'roubena-stavba',
+    category: 'tesarstvi',
+    year: 2022,
+    images: [
+      '/images/realizace/roubenka-01.jpg',
+      '/images/realizace/roubenka-02.jpg',
+      '/images/realizace/roubenka-03.jpg',
+    ],
+    thumbnail: '/images/realizace/roubenka-02.jpg',
+  },
+  {
+    id: 'strechy-novostaveb',
     category: 'pokryvacstvi',
-    year: 2025,
-    images: ['/images/realizace/strecha-okapy-prestice.jpg'],
-    thumbnail: '/images/realizace/strecha-okapy-prestice.jpg',
+    year: 2024,
+    images: ['/images/realizace/strechy-novostavby.jpg'],
+    thumbnail: '/images/realizace/strechy-novostavby.jpg',
+  },
+  {
+    id: 'detska-hriste',
+    category: 'tesarstvi',
+    images: [
+      '/images/realizace/hriste-domek-houpacky.jpg',
+      '/images/realizace/hriste-vez-most.jpg',
+      '/images/realizace/hriste-verejne.jpg',
+      '/images/realizace/hriste-skluzavky.jpg',
+      '/images/realizace/hriste-lezecka-stena.jpg',
+      '/images/realizace/hriste-vez-rampa.jpg',
+    ],
+    thumbnail: '/images/realizace/hriste-domek-houpacky.jpg',
+  },
+  {
+    id: 'zastreseni-studni',
+    category: 'tesarstvi',
+    images: [
+      '/images/realizace/studna-02.jpg',
+      '/images/realizace/studna-03.jpg',
+      '/images/realizace/studna-01.jpg',
+      '/images/realizace/studna-05.jpg',
+      '/images/realizace/studna-04.jpg',
+    ],
+    thumbnail: '/images/realizace/studna-02.jpg',
   },
 ]
 

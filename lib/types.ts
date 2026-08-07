@@ -19,7 +19,8 @@ export interface Service {
 export interface Project {
   id: string
   category: ProjectCategory
-  year: number
+  /** Volitelný - u realizací, které jsou sada fotek z více let, se rok neuvádí. */
+  year?: number
   images: string[]
   thumbnail: string
 }

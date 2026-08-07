@@ -12,10 +12,10 @@ import { Arrow } from '@/components/ui/Button'
 /*  Asymetrická sazba na 12 sloupcích (spec §4): první realizace col-span-7     */
 /*  s vysokým rámem (4/5), další dvě naskládané pod sebou v col-span-5 (4/3).   */
 /*  Na mobilu jeden sloupec, pořadí zůstává. Popiska pod každým rámem je mono,  */
-/*  hairline oddělená shora, ve tvaru LOKALITA / ROK / KATEGORIE - lokalita a   */
-/*  rok jdou z lib/constants.ts + messages projectsData.<id>, kategorie z       */
-/*  services.<slug>.title. Žádné číslo/rok se nevymýšlí, vše je existující       */
-/*  obsah.                                                                     */
+/*  hairline oddělená shora, ve tvaru ROK / KATEGORIE (lokalitu neznáme, viz    */
+/*  lib/constants.ts) - rok jde z lib/constants.ts, kategorie z                */
+/*  services.<slug>.title. U realizací bez roku se zobrazí jen kategorie.       */
+/*  Žádné číslo/rok se nevymýšlí, vše je existující obsah.                     */
 /* -------------------------------------------------------------------------- */
 
 function ProjectFrame({
@@ -28,19 +28,18 @@ function ProjectFrame({
   t: ReturnType<typeof useTranslations>
 }) {
   const title = t(`projectsData.${project.id}.title`)
-  const location = t(`projectsData.${project.id}.location`)
   const categoryTitle = t(`services.${project.category}.title`)
 
   return (
     <Link href="/realizace" className="group block">
       <ImageFrame
         src={project.thumbnail}
-        alt={`${title}, ${location}`}
+        alt={title}
         aspect={aspect}
         sizes="(max-width: 768px) 100vw, 50vw"
       />
       <p className="mt-3 border-t border-timber/20 pt-3 font-mono text-xs uppercase tracking-widest text-oak">
-        {location} / {project.year} / {categoryTitle}
+        {project.year ? `${project.year} / ${categoryTitle}` : categoryTitle}
       </p>
     </Link>
   )
@@ -49,7 +48,11 @@ function ProjectFrame({
 export function ProjectsPreview() {
   const t = useTranslations('home')
   const tFull = useTranslations()
-  const featured = [...projects].sort((a, b) => b.year - a.year).slice(0, 3)
+  // Realizace bez roku (sady fotek z více let) jdou na konec, ne na začátek -
+  // `?? 0` by je jinak řadilo mezi ty nejstarší.
+  const featured = [...projects]
+    .sort((a, b) => (b.year ?? 0) - (a.year ?? 0))
+    .slice(0, 3)
   const [main, ...rest] = featured
 
   return (

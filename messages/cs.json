@@ -151,8 +151,7 @@
     "closeDetailAria": "Zavřít detail",
     "viewDetailAria": "zobrazit detail",
     "photoAlt": "foto",
-    "year": "Rok",
-    "location": "Lokalita"
+    "year": "Rok"
   },
   "realizacePage": {
     "heroTitle": "Co jsme postavili",
@@ -213,12 +212,12 @@
         { "title": "Bednění a fasádní dřevo", "description": "Podstřešní bednění, palubkové podhledy a dřevěné fasády. Provětrávané systémy s dlouhou životností." }
       ],
       "galleryAlt": [
-        "Nový krov rodinného domu v Plzni",
-        "Rekonstrukce historického krovu v Klatovech",
-        "Pohledový trámový strop",
-        "Dřevěná pergola u rodinného domu",
-        "Carport z masivního dřeva",
-        "Detail tesařského spoje krovu"
+        "Nový krov s laťováním připraveným pod krytinu",
+        "Dokončený dřevěný přístřešek pro auta",
+        "Zastřešená venkovní kuchyně s krbem",
+        "Roubená stavba s dokončenou střechou",
+        "Dětské hřiště s domkem a houpačkami",
+        "Dřevěné zastřešení studny s kamenným pláštěm"
       ],
       "seoTitle": "Tesařství | Krovy a dřevěné konstrukce | Plzeňský kraj",
       "seoDescription": "Stavíme a rekonstruujeme krovy, dřevěné stropy a pergoly v Plzeňském kraji. Přes 15 let zkušeností, poctivá práce, férová cena."
@@ -240,12 +239,12 @@
         { "title": "Hřebeny, nároží, úžlabí", "description": "Detaily, kde střechy zatékají nejčastěji. Děláme je tak, aby držely vodu i za extrémního počasí." }
       ],
       "galleryAlt": [
-        "Pálená krytina na rodinném domě v Plzni",
-        "Falcovaná plechová střecha",
-        "Tradiční bobrovka na rekonstruované střeše",
-        "Detail úžlabí střechy",
-        "Větraný hřeben střechy",
-        "Rekonstrukce střešního pláště"
+        "Betonová krytina na střeše novostavby",
+        "Hřeben a okapový systém na dokončené střeše",
+        "Střešní krytina dřevěného přístřešku pro auta",
+        "Krov připravený pod krytinu",
+        "Detail laťování před pokládkou krytiny",
+        "Střecha roubené stavby"
       ],
       "seoTitle": "Pokrývačství | Pokládka střešní krytiny | Plzeňský kraj",
       "seoDescription": "Pokládáme pálenou a betonovou krytinu, plech i šindel v Plzeňském kraji. Hydroizolace, detaily hřebenů a úžlabí. Střecha, která vydrží."
@@ -306,65 +305,45 @@
     }
   },
   "projectsData": {
-    "krov-rodinny-dum-plzen": {
-      "title": "Nový krov rodinného domu",
-      "location": "Plzeň-sever",
-      "description": "Kompletní vaznicový krov novostavby rodinného domu. Sušené řezivo, tesařské kování a pohledové prvky nad terasou."
+    "krov-a-latovani": {
+      "title": "Krov a laťování novostavby",
+      "description": "Nový krov rodinného domu včetně kontralatí a laťování, připravený pod krytinu."
     },
-    "rekonstrukce-krovu-klatovy": {
-      "title": "Rekonstrukce historického krovu",
-      "location": "Klatovy",
-      "description": "Záchrana původního krovu měšťanského domu. Výměna napadených částí, protézování a zpevnění při zachování historické konstrukce."
+    "betonova-krytina": {
+      "title": "Krytina na novostavbě",
+      "description": "Dokončený střešní plášť téhož domu. Tmavá skládaná krytina, hřeben a okapový systém."
     },
-    "pergola-rokycany": {
-      "title": "Pergola se zastřešením terasy",
-      "location": "Rokycany",
-      "description": "Samostatně stojící pergola z masivního dřeva s polykarbonátovým zastřešením a integrovaným osvětlením."
+    "pristresek-pro-auta": {
+      "title": "Přístřešek pro auta",
+      "description": "Volně stojící dřevěný přístřešek. Na první fotce holý krov s laťováním, na druhé stejná stavba po položení krytiny."
     },
-    "tramovy-strop-susice": {
-      "title": "Pohledový trámový strop",
-      "location": "Sušice",
-      "description": "Pohledový trámový strop v rekonstruovaném podkroví. Ručně opracované hrany a olejovaný povrch."
+    "pergola-tesarske-spoje": {
+      "title": "Pergola s tesařskými spoji",
+      "description": "Masivní pergola s vaznicemi a šikmými vzpěrami. Spoje jsou tesařské, zpevněné svorníky, dřevo ošetřené lazurou."
     },
-    "strecha-palena-plzen": {
-      "title": "Pálená krytina na novostavbě",
-      "location": "Plzeň-jih",
-      "description": "Kompletní střešní plášť novostavby. Pojistná hydroizolace, laťování a pálená krytina včetně větraného hřebene."
+    "venkovni-kuchyne": {
+      "title": "Venkovní kuchyně s krbem",
+      "description": "Zastřešené posezení s cihlovým krbem a grilem. Pohledový krov, dřevěné lavice a pracovní deska."
     },
-    "plechova-strecha-domazlice": {
-      "title": "Falcovaná plechová střecha",
-      "location": "Domažlice",
-      "description": "Falcovaná střecha z titanzinku na zemědělské usedlosti. Dlouhé pásy bez příčných spojů a čisté detaily úžlabí."
+    "zastreseni-vstupu": {
+      "title": "Zastřešení vstupu a terasy",
+      "description": "Dřevěná konstrukce zastřešení u rodinného domu, navazující na terasu. Sloupky s tesařskými spoji a pohledové krokve."
     },
-    "bobrovka-stribro": {
-      "title": "Rekonstrukce střechy bobrovkou",
-      "location": "Stříbro",
-      "description": "Výměna krytiny historického domu za tradiční režnou bobrovku korunové kladení, včetně nového laťování."
+    "roubena-stavba": {
+      "title": "Roubená stavba",
+      "description": "Roubená stavba z masivních profilů s dokončenou střechou a osazenými okny."
     },
-    "strecha-rekonstrukce-nepomuk": {
-      "title": "Rekonstrukce střešního pláště",
-      "location": "Nepomuk",
-      "description": "Kompletní rekonstrukce střechy rodinného domu. Nové bednění, fólie, laťování a betonová krytina."
+    "strechy-novostaveb": {
+      "title": "Střechy novostaveb",
+      "description": "Dvojice rozestavěných domů, u prvního je střešní plášť hotový."
     },
-    "medene-okapy-plzen": {
-      "title": "Měděný okapový systém",
-      "location": "Plzeň-město",
-      "description": "Kompletní měděné okapy a svody na vile v historické čtvrti. Pájené spoje a oplechování říms ze stejného materiálu."
+    "detska-hriste": {
+      "title": "Dětská hřiště a herní sestavy",
+      "description": "Herní sestavy s věžemi, skluzavkami, houpačkami a lezeckou stěnou. Pro obce i soukromé zahrady, konstrukce z impregnovaného dřeva."
     },
-    "oplechovani-komin-tachov": {
-      "title": "Oplechování komínu a atik",
-      "location": "Tachov",
-      "description": "Oplechování komínového tělesa a atik z titanzinku, vyrobené na míru přímo na stavbě s falcovanými spoji."
-    },
-    "titanzinek-okapy-horsovsky-tyn": {
-      "title": "Okapy z titanzinku",
-      "location": "Horšovský Týn",
-      "description": "Nový okapový systém z titanzinku na rodinném domě, navržené spády a dimenze žlabů podle plochy střechy."
-    },
-    "strecha-okapy-prestice": {
-      "title": "Střecha a klempířina v jednom",
-      "location": "Přeštice",
-      "description": "Zakázka od krovu po okapy. Nová střecha s betonovou krytinou a kompletní klempířské prvky z pozinku."
+    "zastreseni-studni": {
+      "title": "Zastřešení studní",
+      "description": "Dřevěné zastřešení studní s kamenným pláštěm a kladkovým kolem. Konstrukce z masivu, povrch ošetřený lazurou."
     }
   }
 }
