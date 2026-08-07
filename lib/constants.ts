@@ -73,8 +73,8 @@ export const services: Service[] = [
     slug: 'pokryvacstvi',
     heroImage: '/images/realizace/strechy-novostavby.jpg',
     gallery: [
-      { src: '/images/realizace/krytina-betonova-01.jpg' },
-      { src: '/images/realizace/krytina-betonova-02.jpg' },
+      { src: '/images/realizace/krytina-01.jpg' },
+      { src: '/images/realizace/krytina-02.jpg' },
       { src: '/images/realizace/pristresek-hotovy.jpg' },
       { src: '/images/realizace/krov-latovani-01.jpg' },
       { src: '/images/realizace/krov-latovani-02.jpg' },
@@ -143,10 +143,17 @@ export const projects: Project[] = [
     category: 'pokryvacstvi',
     year: 2022,
     images: [
-      '/images/realizace/krytina-betonova-01.jpg',
-      '/images/realizace/krytina-betonova-02.jpg',
+      '/images/realizace/krytina-01.jpg',
+      '/images/realizace/krytina-02.jpg',
     ],
-    thumbnail: '/images/realizace/krytina-betonova-01.jpg',
+    thumbnail: '/images/realizace/krytina-01.jpg',
+  },
+  {
+    id: 'krytina-rekonstrukce',
+    category: 'pokryvacstvi',
+    year: 2023,
+    images: ['/images/realizace/krytina-rekonstrukce.jpg'],
+    thumbnail: '/images/realizace/krytina-rekonstrukce.jpg',
   },
   {
     id: 'pristresek-pro-auta',
@@ -183,6 +190,13 @@ export const projects: Project[] = [
     thumbnail: '/images/realizace/zastreseni-vstupu.jpg',
   },
   {
+    id: 'zastresena-tribuna',
+    category: 'tesarstvi',
+    year: 2015,
+    images: ['/images/realizace/tribuna-zastreseni.jpg'],
+    thumbnail: '/images/realizace/tribuna-zastreseni.jpg',
+  },
+  {
     id: 'roubena-stavba',
     category: 'tesarstvi',
     year: 2022,
@@ -190,6 +204,7 @@ export const projects: Project[] = [
       '/images/realizace/roubenka-01.jpg',
       '/images/realizace/roubenka-02.jpg',
       '/images/realizace/roubenka-03.jpg',
+      '/images/realizace/roubenka-04.jpg',
     ],
     thumbnail: '/images/realizace/roubenka-02.jpg',
   },

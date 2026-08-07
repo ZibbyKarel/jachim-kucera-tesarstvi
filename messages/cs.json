@@ -239,11 +239,11 @@
         { "title": "Hřebeny, nároží, úžlabí", "description": "Detaily, kde střechy zatékají nejčastěji. Děláme je tak, aby držely vodu i za extrémního počasí." }
       ],
       "galleryAlt": [
-        "Betonová krytina na střeše novostavby",
+        "Skládaná krytina na střeše novostavby",
         "Hřeben a okapový systém na dokončené střeše",
         "Střešní krytina dřevěného přístřešku pro auta",
         "Krov připravený pod krytinu",
-        "Detail laťování před pokládkou krytiny",
+        "Laťování střechy před pokládkou krytiny",
         "Střecha roubené stavby"
       ],
       "seoTitle": "Pokrývačství | Pokládka střešní krytiny | Plzeňský kraj",
@@ -313,6 +313,10 @@
       "title": "Krytina na novostavbě",
       "description": "Dokončený střešní plášť téhož domu. Tmavá skládaná krytina, hřeben a okapový systém."
     },
+    "krytina-rekonstrukce": {
+      "title": "Krytina na rekonstrukci",
+      "description": "Nová skládaná krytina na rekonstruovaném domě, včetně komína a okapového systému."
+    },
     "pristresek-pro-auta": {
       "title": "Přístřešek pro auta",
       "description": "Volně stojící dřevěný přístřešek. Na první fotce holý krov s laťováním, na druhé stejná stavba po položení krytiny."
@@ -328,6 +332,10 @@
     "zastreseni-vstupu": {
       "title": "Zastřešení vstupu a terasy",
       "description": "Dřevěná konstrukce zastřešení u rodinného domu, navazující na terasu. Sloupky s tesařskými spoji a pohledové krokve."
+    },
+    "zastresena-tribuna": {
+      "title": "Zastřešená tribuna",
+      "description": "Dřevěné zastřešení tribuny u sportovního hřiště. Sloupy s tesařskými spoji a dlouhá vaznicová vazba."
     },
     "roubena-stavba": {
       "title": "Roubená stavba",
