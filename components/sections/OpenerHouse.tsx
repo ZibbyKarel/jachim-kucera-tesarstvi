@@ -62,14 +62,32 @@ export function OpenerHouse() {
     //   Změřeno Playwrightem na 1024/1280/1440/1920 px: na 1024 a 1280 se
     //   kresba se sazbou vůbec nepotkává, na 1440/1920 se dotýká jen patka
     //   posledního řádku <h1>. Lead odstavec, statistiky ani CTA nikde.
-    // - `bottom-28` (112px od spodku sekce), ne `bottom-24` (96px) - se 96px
-    //   spodek vrstvy o ~8px zasahoval do bounding boxu řádku CTA (změřeno,
-    //   viditelně to nevadilo, protože samotná kresba domu do canvasu
-    //   nesahá až na jeho okraj, ale bounding box ano). 112px dává vrstvě
-    //   jistých ~8px vzduchu nad CTA na všech čtyřech šířkách. Po zvětšení
-    //   domu se `bottom-28` nemění - vrstva roste nahoru, ne dolů, takže
-    //   vzduch nad CTA zůstává (změřeno: spodek canvasu 592-609px, řádek CTA
-    //   začíná níž na všech čtyřech šířkách).
+    // - Svisle je dům **zarovnaný patou na spodní hranu řádku CTA**: klient
+    //   chtěl, aby spodek kresby lícoval se spodní hranou textu „Prohlédnout
+    //   realizace". Dřív tu bylo prosté `bottom-28` (112px). Konstanta ale po
+    //   zdvojnásobení nestačí, protože **spodní okraj canvasu není spodek
+    //   domu**: SceneManager nechává pod kresbou prázdný pás o konstantních
+    //   ~9 % výšky canvasu, který tedy s velikostí domu roste (změřeno
+    //   analýzou pixelů: 33,4 / 39,8 / 43,8 / 44,8px na 1024/1280/1440/1920).
+    //   Pevné `bottom` by proto sedlo vždy jen na jedné šířce a jinde bylo
+    //   o 5-11px vedle.
+    //
+    //   Proto `calc()`, ne konstanta:
+    //     bottom = 84px - 0,0645 × <šířka vrstvy>
+    //   84px je vzdálenost spodní hrany textu CTA od spodku sekce - konstantní
+    //   na všech čtyřech šířkách (`pb-20` plus řádkování, nikde žádné `vw`),
+    //   takže cíl je pevný. 0,0645 je ten prázdný pás přepočtený z výšky na
+    //   šířku: 9,03 % × poměr 5/7. Zbytek dopočítá tentýž `clamp()` jako
+    //   u `w-`, takže obě hodnoty nejdou rozejít.
+    //
+    //   Pozor při zásahu do 3D scény: 0,0645 je odvozené z rámování
+    //   (`FIT_MARGIN_DECOR`) a z modelu domu. Když se změní jedno nebo druhé,
+    //   je potřeba prázdný pás přeměřit, jinak zarovnání odjede.
+    //
+    //   Vodorovně se pata kresby s odkazy CTA nepotká: odkazy končí kolem
+    //   x≈540px (1440), kresba začíná až na x≈590px. Sesunem o ~70px dolů se
+    //   posunula celá vrstva, takže se s <h1> teď nepotkává pergola, ale hřeben
+    //   střechy - překryv zůstává zhruba stejně velký, jen výš na kresbě.
     //
     // Vodorovně se vrstva váže na textový sloupec (`container-content`), ne na
     // okraj viewportu: `right-0` na sekci vypadalo dobře do ~1440px, ale nad
@@ -80,7 +98,7 @@ export function OpenerHouse() {
     // cs i en).
     <div
       aria-hidden="true"
-      className="pointer-events-none absolute inset-x-0 bottom-28 z-0 hidden lg:block"
+      className="pointer-events-none absolute inset-x-0 bottom-[calc(84px_-_0.0645_*_clamp(520px,48vw,690px))] z-0 hidden lg:block"
     >
       <div className="container-content">
         <div className="ml-auto aspect-[7/5] w-[clamp(520px,48vw,690px)]">

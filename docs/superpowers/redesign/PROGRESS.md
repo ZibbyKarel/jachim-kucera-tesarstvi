@@ -342,3 +342,10 @@ Uživatel: „dům v hero sekci může být minimálně 2x tak velký" a „odst
       koliduje jen na 1440/1920, a jen patkou posledního řádku `<h1>`), `/kontakt`
       v cs i en a na 390px, kontaktní sekce homepage. `tsc --noEmit`, `next lint`
       a produkční build prošly bez chyb.
+- [x] **Dům svisle zarovnaný na CTA** — pata kresby lícuje se spodní hranou textu
+      „Prohlédnout realizace". `bottom-28` nahradilo
+      `bottom-[calc(84px_-_0.0645*clamp(520px,48vw,690px))]`, protože prázdný pás pod
+      kresbou uvnitř canvasu roste s velikostí domu (~9 % výšky), takže konstanta by
+      sedla vždy jen na jedné šířce. Doměřeno na ±1px na 1024/1280/1440/1920. D-058.
+- [x] **Konec worktree** — `"worktree": {"bgIsolation": "none"}` v `.claude/settings.json`,
+      commituje se rovnou na `redesign`. D-059.

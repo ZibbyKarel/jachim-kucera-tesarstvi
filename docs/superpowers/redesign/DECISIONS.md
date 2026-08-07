@@ -695,3 +695,40 @@ pádem zase jen `heading`/`description` a chová se všude stejně (homepage,
 
 Kdyby klient někdy chtěl mapu doopravdy, patří tam vložený Mapy.cz/OSM iframe s reálnou
 adresou, ne překreslený placeholder - to je jiné rozhodnutí, ne návrat tohohle.
+
+## D-058 — Pata hero domu lícuje s řádkem CTA, a proto je `bottom` počítané
+**Datum:** 2026-08-07 · **Rozhodl:** uživatel (klient), zapsal Claude (opus)
+Klient po zvětšení domu (D-056): „posuneme ho dolů tak, aby začínal se spodní hranou textů
+,Prohlédnout realizace'". Dům se tedy sesunul z `bottom-28` (112px) zhruba o 70px dolů.
+
+**Proč to není konstanta.** Spodní okraj canvasu není spodek domu - `SceneManager` pod
+kresbou nechává prázdný pás. Ten je konstantních ~9 % výšky canvasu, takže **s velikostí
+domu roste**: změřeno analýzou pixelů 33,4 / 39,8 / 43,8 / 44,8px na 1024/1280/1440/1920.
+Cíl je naopak pevný - spodní hrana textu „Prohlédnout realizace" leží 84px nad spodkem
+sekce na všech čtyřech šířkách (`pb-20` plus řádkování, nikde žádné `vw`). Jedno pevné
+`bottom` by proto lícovalo vždy jen na jedné šířce a na ostatních by bylo o 5-11px vedle.
+
+Řešení je `calc()` nad tímtéž `clamp()`, jaký drží šířku vrstvy:
+
+    bottom: calc(84px - 0.0645 * clamp(520px, 48vw, 690px))
+
+kde 0,0645 je ten prázdný pás přepočtený z výšky na šířku (9,03 % × poměr 5/7). Tím se
+šířka a svislý posun nedají rozejít - kdo změní jedno, změní i druhé.
+
+**Ověřeno doměřením:** pata kresby vychází 84,9 / 83,2 / 84,3 / 83,3px nad spodkem sekce
+proti cíli 84px, tedy do ±1px na všech čtyřech šířkách. Vodorovně kolize nehrozí, odkazy
+CTA končí kolem x≈540px (1440) a kresba začíná až na x≈590px.
+
+**Křehké místo:** 0,0645 je odvozené z `FIT_MARGIN_DECOR` a z modelu domu. Změna rámování
+scény nebo geometrie modelu znamená prázdný pás přeměřit, jinak zarovnání odjede. Poznámka
+je i v komentáři v `OpenerHouse.tsx`, aby to nebylo objevování z pixelů podruhé.
+
+## D-059 — Práce se dělá lokálně v `redesign`, ne ve worktree
+**Datum:** 2026-08-07 · **Rozhodl:** uživatel
+Uživatel: „zamerguj to normálně sem do redesign větve a úpravy vždy dělej lokálně tady".
+Background joby v Claude Code jinak defaultně izolují práci do `git worktree` a tlačí
+vlastní větev - u sólo projektu s jednou pracovní větví je to jen režie navíc.
+Do `.claude/settings.json` proto přibylo `"worktree": {"bgIsolation": "none"}`, což je
+dokumentovaný vypínač té izolace. Commituje se rovnou na `redesign`.
+Poznámka: `redesign` je čistě lokální větev, `origin/redesign` neexistuje - publikování
+zůstává na uživateli.
