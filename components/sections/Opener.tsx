@@ -44,7 +44,7 @@ export function Opener() {
 
         <h1
           id="opener-heading"
-          className="mt-5 max-w-[14ch] text-balance font-display text-[clamp(2.75rem,7vw,6.5rem)] leading-[0.95] tracking-tight text-timber"
+          className="mt-5 max-w-[14ch] text-balance font-display text-[clamp(2.5rem,5.5vw,5rem)] leading-[0.95] tracking-tight text-timber"
         >
           {t('openerTitle')}
         </h1>

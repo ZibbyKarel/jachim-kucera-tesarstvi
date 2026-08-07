@@ -14,23 +14,28 @@ import { CAMERA, COLORS, MENU, type MenuId } from './config'
 /* -------------------------------------------------------------------------- */
 
 const DEG = Math.PI / 180
+const WORLD_UP = new THREE.Vector3(0, 1, 0)
 
-/* Rezerva kolem domu při „fitu" do viewportu. Vyšší číslo = kamera couvne dál =
-   dům menší a víc papíru kolem. Tři různé hodnoty podle toho, co tu rezervu
-   spotřebuje:
-   - FIT_MARGIN_SOLO: samostatný /nahled-3d, žádná rezerva na nic navíc -
-     dům chce co největší.
+/* Rezerva kolem domu při „fitu" do viewportu. `fitDistance` teď počítá PŘESNOU
+   vzdálenost, na kterou se dům celý (všech 8 rohů jeho skutečného Box3) vejde
+   do frustumu - viz níže. Tahle konstanta je proto čistý násobitel „vzduchu
+   kolem kresby": 1.0 = dům přesně na hraně rámu (edge-to-edge, nic navíc),
+   1.3 = kolem domu je navíc ~30 % vzdálenosti prostoru. Není to už (jako dřív)
+   kompenzace za podhodnocený odhad rozměrů - odhad je pryč, fit je exaktní.
+   Tři různé hodnoty podle toho, co ten vzduch spotřebuje:
+   - FIT_MARGIN_SOLO: samostatný /nahled-3d, jen tenký okraj, ať dům zabírá
+     co nejvíc rámu.
    - FIT_MARGIN_HERO: transparentní A interaktivní varianta (menu labely by
      bydlely v pevných sloupcích u kraje - dnes nepoužito, ale rezervováno).
    - FIT_MARGIN_DECOR: dekorativní hero dům (`interactive === false`,
-     OpenerHouse) - žádné labely, žádný overlay, takže ta rezerva by šla
-     doslova na nic. Menší než HERO, ale pořád o kus víc než SOLO, ať dům
-     nesedí nalepený na hraně svého rámu jako oříznutý.
+     OpenerHouse) - žádné labely, žádný overlay, takže velká rezerva HERO by
+     šla doslova na nic. Menší než HERO, ale pořád o kousek víc než SOLO, ať
+     dům nesedí nalepený na hraně svého rámu.
    Pořadí konstant je: interaktivita (SOLO/HERO) > co je vlastně dekorace
    (DECOR) - viz `this.fitMargin` v konstruktoru. */
-const FIT_MARGIN_HERO = 2.25
-const FIT_MARGIN_SOLO = 1.5
-const FIT_MARGIN_DECOR = 1.3
+const FIT_MARGIN_HERO = 1.55
+const FIT_MARGIN_SOLO = 1.08
+const FIT_MARGIN_DECOR = 1.16
 
 export interface SceneOptions {
   onMenuSelect: (id: MenuId) => void
@@ -85,6 +90,14 @@ export class SceneManager {
 
   private fitMargin = FIT_MARGIN_SOLO
 
+  // Skutečné hranice domu (world-space Box3 z `house.root`) a jeho střed —
+  // spočítané JEDNOU v konstruktoru (viz `measureHouse`), ne každý frame.
+  // `houseCorners` = všech 8 rohů toho Box3, cachované jako Vector3 pro
+  // `fitDistance` (přesný fit kamery, viz tam).
+  private houseBox = new THREE.Box3()
+  private houseCenter = new THREE.Vector3()
+  private houseCorners: THREE.Vector3[] = []
+
   private lineMats = this.house.lineMaterials()
   private baseFov = CAMERA.fov
   private dirBase = new THREE.Vector3(6.5, 12, 7.5)
@@ -99,6 +112,11 @@ export class SceneManager {
   private _anchors = new Map<MenuId, ProjectedAnchor>()
 
   constructor(container: HTMLElement, opts: SceneOptions) {
+    // `this.house` je postavený už jako inicializátor pole (běží před tělem
+    // konstruktoru), takže jeho geometrie tu už existuje - měř hned, než
+    // cokoliv dalšího (kamera, controls) potřebuje střed/rozměry domu.
+    this.measureHouse()
+
     this.container = container
     this.onSelect = opts.onMenuSelect
     this.transparent = opts.transparent ?? false
@@ -141,7 +159,9 @@ export class SceneManager {
 
     // ---- controls (silně omezené) ----
     this.controls = new OrbitControls(this.camera, this.renderer.domElement)
-    this.controls.target.set(...CAMERA.target)
+    // Cíl kamery = skutečný střed domu (houseCenter), ne pevný CAMERA.target -
+    // fixní bod byl jednou z příčin ořízlého domu (viz fitDistance výš).
+    this.controls.target.copy(this.houseCenter)
     this.controls.enableDamping = true
     this.controls.dampingFactor = 0.08
     this.controls.enablePan = false
@@ -209,15 +229,63 @@ export class SceneManager {
     this.raf = requestAnimationFrame(this.tick)
   }
 
-  /** Vzdálenost kamery tak, aby se celý dům vešel i na úzký (portrét) viewport.
-      PerspectiveCamera.fov je VERTIKÁLNÍ → na úzké obrazovce se horizontální FOV
-      zmenší, proto musíme couvnout. */
+  /** Spočítá skutečné hranice domu (world-space Box3 z `house.root` - BEZ
+      zemní roviny, ta žije samostatně přímo ve `scene`, ne pod `house.root`,
+      viz `setupGround`) a jeho 8 rohů. Voláno JEDNOU (konstruktor) - dům je
+      po sestavení statická geometrie (intro mění jen opacity materiálů,
+      ne vertexy), takže se cache nikdy neinvaliduje. */
+  private measureHouse(): void {
+    this.houseBox.setFromObject(this.house.root)
+    this.houseBox.getCenter(this.houseCenter)
+    const { min, max } = this.houseBox
+    this.houseCorners = [
+      new THREE.Vector3(min.x, min.y, min.z),
+      new THREE.Vector3(min.x, min.y, max.z),
+      new THREE.Vector3(min.x, max.y, min.z),
+      new THREE.Vector3(min.x, max.y, max.z),
+      new THREE.Vector3(max.x, min.y, min.z),
+      new THREE.Vector3(max.x, min.y, max.z),
+      new THREE.Vector3(max.x, max.y, min.z),
+      new THREE.Vector3(max.x, max.y, max.z),
+    ]
+  }
+
+  /** Přesná vzdálenost kamery, na kterou se celý dům (všech 8 rohů jeho
+      Box3) vejde do frustumu - žádný odhad poloviční šířky/výšky domu.
+
+      Pro směr od středu domu ke kameře `e` (dopočítaný z azimuthDeg/
+      elevationDeg) a jeho pravo/nahoru bázi `right`/`up` rozložíme offset
+      každého rohu od středu na `f = v·e` (hloubka), `r = v·right`
+      (vodorovně), `u = v·up` (svisle). Roh je uvnitř frustumu ve vzdálenosti
+      `d`, když `|r| <= tanH·(d-f)` a `|u| <= tanV·(d-f)` (definice
+      perspektivního frustumu), tj. `d >= f + |r|/tanH` a `d >= f + |u|/tanV`.
+      `dW`/`dH` jsou maxima přes všechny rohy odděleně pro šířku/výšku -
+      protože `f` je společné, `max(f+|r|/tanH, f+|u|/tanV) = f + max(...)`,
+      takže `max(dW, dH)` je matematicky shodné s "jedním průchodem" přes obě
+      podmínky najednou (algebraická identita, ne aproximace).
+      PerspectiveCamera.fov je VERTIKÁLNÍ → tanH se dopočítá z aspectu. */
   private fitDistance(aspect: number): number {
     const tanV = Math.tan((this.baseFov * DEG) / 2)
-    const halfW = 4.6 // poloviční šířka domu (pergola vlevo + prolézačka vpravo)
-    const halfH = 3.3 // poloviční výška (od země po hřeben + rezerva)
-    const dW = halfW / (tanV * aspect)
-    const dH = halfH / tanV
+    const tanH = tanV * aspect
+
+    const az = CAMERA.azimuthDeg * DEG
+    const el = CAMERA.elevationDeg * DEG
+    const e = new THREE.Vector3(Math.cos(el) * Math.sin(az), Math.sin(el), Math.cos(el) * Math.cos(az))
+    const right = new THREE.Vector3().crossVectors(WORLD_UP, e).normalize()
+    const up = new THREE.Vector3().crossVectors(e, right)
+
+    let dW = 0
+    let dH = 0
+    const v = new THREE.Vector3()
+    for (const corner of this.houseCorners) {
+      v.subVectors(corner, this.houseCenter)
+      const f = v.dot(e)
+      const r = Math.abs(v.dot(right))
+      const u = Math.abs(v.dot(up))
+      dW = Math.max(dW, f + r / tanH)
+      dH = Math.max(dH, f + u / tanV)
+    }
+
     // Hero na úzkém (portrét/mobil) viewportu: labely jdou pod dům (viz overlay),
     // takže dům smí vyplnit ~90 % šířky → couvni jen podle šířky s malou rezervou.
     if (this.transparent && aspect < 0.85) {
@@ -230,7 +298,7 @@ export class SceneManager {
     const az = CAMERA.azimuthDeg * DEG
     const el = CAMERA.elevationDeg * DEG
     const d = this.distance
-    const t = new THREE.Vector3(...CAMERA.target)
+    const t = this.houseCenter
     this.camera.position.set(
       t.x + d * Math.cos(el) * Math.sin(az),
       t.y + d * Math.sin(el),

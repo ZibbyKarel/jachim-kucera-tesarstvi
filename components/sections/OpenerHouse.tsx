@@ -41,32 +41,41 @@ export function OpenerHouse() {
     // fokusovatelný obsah v ní není - dům je neinteraktivní).
     //
     // Rozměry a pozice jsou napočítané z reálného layoutu Openeru (změřeno
-    // Playwrightem na 1024/1280/1440/1920 px, cs i en), ne odhadem:
-    // - `bottom-24` (96px od spodku sekce) místo `bottom-0` - sekce má dole
-    //   80px prázdného paddingu (`pb-20` v Openeru), 96px je o kousek víc,
-    //   takže spodek vrstvy sedí těsně NAD řádkem CTA odkazů, ne pod ním.
-    //   Díky tomu zůstává celá vrstva nad ohybem i při výšce viewportu
-    //   720px, kde `bottom-0` (spodek sekce) dnes končí až pod ním.
-    // - `w-[clamp(240px,20vw,300px)]` - `aspect-[7/5]` z toho dělá výšku
-    //   171-214px. Strop 300px/214px není nahodilý: mezera mezi patou <h1>
-    //   a řádkem CTA je constantních 249px na všech čtyřech šířkách (fixní
-    //   px odstupy v Openeru, ne vw), takže 214px nechává právě ~19px
-    //   vzduchu nahoře. Šířka nikdy neomezuje - i na 1024px zůstává
-    //   pravý okraj vrstvy přes 150px za pravým okrajem odstavce s
-    //   podtitulkem (nejširší sousední prvek), na širších už jen s rezervou.
+    // Playwrightem na 1024/1280/1440/1920 px, cs i en, po zmenšení <h1> na
+    // clamp(2.5rem,5.5vw,5rem) - viz Opener.tsx), ne odhadem. Klient chtěl dům
+    // „trochu větší" a zároveň zmenšit nadpis - obojí spolu souvisí: menší <h1>
+    // uvolnilo prostor NAD původním stropem vrstvy, který dřív zabíral text.
+    //
+    // - `w-[clamp(260px,24vw,345px)]` - `aspect-[7/5]` z toho dělá výšku
+    //   186-246px (dřív 171-214px). Strop 345px není nahodilý: <h1> i lead
+    //   odstavec mají `max-w-[14ch]`/`max-w-[46ch]`, takže i když vrstva svým
+    //   horním okrajem zasahuje do výšky <h1> (na 1440/1920px), jejich
+    //   bounding boxy se vodorovně nikdy nepotkají - mezera mezi pravým
+    //   okrajem <h1> a pravým okrajem sloupce je i na nejužší 1920px
+    //   kombinaci přes 360px, vrstva široká 345px se do ní i s rezervou
+    //   vejde. Ověřeno `getBoundingClientRect()` průnikem (žádný) s <h1>,
+    //   lead odstavcem, statistikami i řádkem CTA na všech čtyřech šířkách.
+    // - `bottom-28` (112px od spodku sekce), ne `bottom-24` (96px) - se 96px
+    //   spodek vrstvy o ~8px zasahoval do bounding boxu řádku CTA (změřeno,
+    //   viditelně to nevadilo, protože samotná kresba domu do canvasu
+    //   nesahá až na jeho okraj, ale bounding box ano). 112px dává vrstvě
+    //   jistých ~8px vzduchu nad CTA na všech čtyřech šířkách a při výšce
+    //   viewportu 720px zůstává pata vrstvy vždy nad ohybem (viz i sekce
+    //   Verifikace v zadání úkolu).
     //
     // Vodorovně se vrstva váže na textový sloupec (`container-content`), ne na
     // okraj viewportu: `right-0` na sekci vypadalo dobře do ~1440px, ale nad
     // šířkou sloupce (max-w-content) dům odplul do prázdné mrže vpravo, ztratil
     // vazbu na sazbu a na 1920px ho pravý okraj okna dokonce ořízl. `ml-auto`
     // uvnitř sloupce srovná pravou hranu domu s pravou hranou textu na všech
-    // šířkách.
+    // šířkách (ověřeno: canvasRight - textRight = 0 na 1024/1280/1440/1920,
+    // cs i en).
     <div
       aria-hidden="true"
-      className="pointer-events-none absolute inset-x-0 bottom-24 z-0 hidden lg:block"
+      className="pointer-events-none absolute inset-x-0 bottom-28 z-0 hidden lg:block"
     >
       <div className="container-content">
-        <div className="ml-auto aspect-[7/5] w-[clamp(240px,20vw,300px)]">
+        <div className="ml-auto aspect-[7/5] w-[clamp(260px,24vw,345px)]">
           <House3DScene className="h-full w-full" transparent interactive={false} playIntro />
         </div>
       </div>
