@@ -7,7 +7,7 @@ import Image from "next/image";
 // širokoúhlý lockup kresby domu a vysázeného jména firmy, ne čtvercový
 // odznak. Šířka se z výšky dopočítává tímhle poměrem, ať next/image dostane
 // vždy správné rozměry a obrázek se nezkresluje.
-const LOGO_ASPECT_RATIO = 867 / 463;
+export const LOGO_ASPECT_RATIO = 867 / 463;
 
 /**
  * Logo Jáchim & Kučera — širokoúhlý lockup (kresba domu + vysázené jméno
@@ -45,12 +45,16 @@ export function Logo({
    *  přebijí pevnou velikost z `height` - viz komentář u komponenty výš. */
   heightClassName,
   tabIndex,
+  /** Skryje logo asistivním technologiím a vyjme ho z tab pořadí, aniž by se
+   *  odstranilo z DOM (viz Header.tsx - dočasné schování za mobilní hero logo). */
+  ariaHidden,
 }: {
   className?: string;
   light?: boolean;
   height?: number;
   heightClassName?: string;
   tabIndex?: number;
+  ariaHidden?: boolean;
 }) {
   const t = useTranslations("nav");
   const width = Math.round(height * LOGO_ASPECT_RATIO);
@@ -58,6 +62,7 @@ export function Logo({
     <Link
       href="/"
       aria-label={`${SITE.name}, ${t("home")}`}
+      aria-hidden={ariaHidden}
       tabIndex={tabIndex}
       className={`group inline-flex items-center ${className}`}
     >

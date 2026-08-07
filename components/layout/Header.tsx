@@ -20,9 +20,17 @@ function navLabel(t: (key: string) => string, source: NavLink['textSource']) {
 /*  značka vůbec. V2 nemá žádný dům na landingu, takže logo i navigace jsou     */
 /*  vidět od prvního renderu, na homepage i všude jinde.                       */
 /*                                                                              */
-/*  Jediný stav, který hlavička sleduje, je `scrolled` (> 40px) - po odscroll-  */
-/*  ování se zúží (menší logo, `paper/90` + blur, spodní hairline).            */
+/*  Krom `scrolled` (> 40px, zúžení hlavičky) sleduje hlavička na homepage od   */
+/*  D-061 ještě `logoHiddenForHero`: pod `lg` má domovská stránka vlastní       */
+/*  velké logo v hero sekci (`Opener.tsx`, `#mobile-hero-logo`) - dokud je to   */
+/*  logo vidět, logo v hlavičce zmizí (`opacity-0`, ne unmount), ať se dvě      */
+/*  stejná loga nezdvojí na jedné obrazovce. Jakmile hero logo odscrolluje z    */
+/*  viewportu, logo v hlavičce se vrátí. Na `lg`+ a na všech ostatních          */
+/*  stránkách (žádné `#mobile-hero-logo` v DOM) zůstává vždy viditelné.         */
 /* -------------------------------------------------------------------------- */
+
+const HOME_PATHNAME = '/'
+const DESKTOP_QUERY = '(min-width: 1024px)'
 
 export function Header() {
   const t = useTranslations('common')
@@ -30,6 +38,12 @@ export function Header() {
   const pathname = usePathname()
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const [isDesktop, setIsDesktop] = useState(false)
+  // Výchozí `true`: na homepage pod `lg` je při prvním vykreslení hero logo
+  // vždy vidět (scroll = 0), takže logo v hlavičce má být od prvního
+  // klientského renderu schované - žádný záblesk viditelného loga před tím,
+  // než IntersectionObserver stihne doběhnout.
+  const [heroLogoInView, setHeroLogoInView] = useState(true)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
@@ -37,6 +51,31 @@ export function Header() {
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+
+  useEffect(() => {
+    const mql = window.matchMedia(DESKTOP_QUERY)
+    const onChange = () => setIsDesktop(mql.matches)
+    onChange()
+    mql.addEventListener('change', onChange)
+    return () => mql.removeEventListener('change', onChange)
+  }, [])
+
+  useEffect(() => {
+    if (pathname !== HOME_PATHNAME || isDesktop) {
+      setHeroLogoInView(false)
+      return
+    }
+    const target = document.getElementById('mobile-hero-logo')
+    if (!target) {
+      setHeroLogoInView(false)
+      return
+    }
+    const observer = new IntersectionObserver(([entry]) => setHeroLogoInView(entry.isIntersecting))
+    observer.observe(target)
+    return () => observer.disconnect()
+  }, [pathname, isDesktop])
+
+  const logoHiddenForHero = pathname === HOME_PATHNAME && !isDesktop && heroLogoInView
 
   useEffect(() => {
     setMenuOpen(false)
@@ -89,7 +128,11 @@ export function Header() {
         <Logo
           height={56}
           heightClassName={logoHeightClass}
-          className={`shrink-0 ${solid ? 'py-1.5 sm:py-0' : 'py-0.5 sm:py-0'}`}
+          tabIndex={logoHiddenForHero ? -1 : undefined}
+          ariaHidden={logoHiddenForHero}
+          className={`shrink-0 transition-opacity duration-500 ease-craft ${
+            logoHiddenForHero ? 'pointer-events-none opacity-0' : 'opacity-100'
+          } ${solid ? 'py-1.5 sm:py-0' : 'py-0.5 sm:py-0'}`}
         />
 
         <nav aria-label={t('mainNavAria')} className="hidden items-center gap-8 lg:flex">
