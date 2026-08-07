@@ -1,10 +1,9 @@
 import type { Metadata } from 'next'
 import { setRequestLocale, getTranslations } from 'next-intl/server'
-import { ImageFrame } from '@/components/ui/ImageFrame'
 import { Reveal } from '@/components/ui/Reveal'
-import { Counter } from '@/components/ui/Counter'
 import { Timeline } from '@/components/sections/Timeline'
-import { Button, Arrow } from '@/components/ui/Button'
+import { Link } from '@/i18n/routing'
+import { Arrow } from '@/components/ui/Button'
 
 export async function generateMetadata({
   params,
@@ -37,130 +36,109 @@ export default async function ONasPage({
 
   return (
     <div className="bg-paper">
-      {/* Hero portrét */}
-      <header className="relative h-[70vh] min-h-[440px] w-full overflow-hidden">
-        <ImageFrame
-          src="/images/tym/tym-portret.jpg"
-          alt={t('heroAlt')}
-          aspect="16/9"
-          rounded={false}
-          priority
-          sizes="100vw"
-          className="!absolute inset-0 h-full w-full"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-paper via-paper/65 to-paper/25" />
-        <div className="container-content absolute inset-x-0 bottom-0">
-          <div className="pb-14">
-            <span className="eyebrow">{tNav('about')} · {tCommon('region')}</span>
-            <h1 className="mt-3 font-display text-5xl italic leading-none text-timber md:text-8xl">
-              {t('heroTitle')}
-            </h1>
-          </div>
+      {/* Otvírák — stejný duch jako Opener.tsx na homepage, žádný obrázkový hero */}
+      <header className="bg-paper">
+        <div className="container-content pb-14 pt-36 md:pb-20 md:pt-44">
+          <p className="font-mono text-xs uppercase tracking-widest text-oak">
+            {tNav('about')} · {tCommon('region')}
+          </p>
+          <h1 className="mt-5 max-w-[16ch] text-balance font-display text-[clamp(2.5rem,6vw,5.5rem)] leading-[0.95] tracking-tight text-timber">
+            {t('heroTitle')}
+          </h1>
+          <p className="mt-6 max-w-[46ch] font-body text-lg text-oak md:text-xl">
+            {t('heroQuote')}
+          </p>
         </div>
       </header>
 
-      {/* Příběh */}
-      <section aria-label={t('storyAria')} className="py-20 md:py-28">
-        <div className="container-content grid gap-10 md:grid-cols-[1fr_1.3fr] md:gap-16">
-          <Reveal>
-            <p className="font-display text-3xl italic leading-snug text-ember md:sticky md:top-28">
-              {t('heroQuote')}
-            </p>
-          </Reveal>
+      {/* Příběh — široký sloupec + faktický pás stejného typu jako v Opener.tsx */}
+      <section aria-label={t('storyAria')} className="bg-paper pb-20 md:pb-28">
+        <div className="container-content max-w-[65ch]">
           <Reveal stagger className="space-y-5">
             {aboutStory.map((p) => (
               <p
                 key={p.slice(0, 24)}
                 data-reveal-item
-                className="font-body text-base leading-relaxed text-timber/75"
+                className="font-body text-base leading-relaxed text-oak"
               >
                 {p}
               </p>
             ))}
-            <div
-              data-reveal-item
-              className="mt-8 grid grid-cols-3 gap-4 border-y border-timber/50 py-8"
-            >
-              {aboutStats.map((s) => (
-                <Counter key={s.label} value={s.value} label={s.label} />
-              ))}
-            </div>
           </Reveal>
+
+          <div className="mt-10 grid grid-cols-2 border-t border-timber/20 pt-8 sm:inline-grid sm:auto-cols-max sm:grid-flow-col">
+            {aboutStats.map((stat, i) => (
+              <div
+                key={stat.label}
+                className={`flex flex-col gap-1 pr-8 ${i > 0 ? 'border-l border-timber/20 pl-8' : ''}`}
+              >
+                <span className="font-mono text-3xl text-timber sm:text-4xl">{stat.value}</span>
+                <span className="font-mono text-xs uppercase tracking-widest text-oak">
+                  {stat.label}
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Timeline */}
-      <section
-        aria-labelledby="timeline-heading"
-        className="border-t border-timber/50 bg-paper-dim py-20 md:py-28"
-      >
+      {/* Cesta firmy — Timeline v jazyce Process.tsx */}
+      <section aria-labelledby="timeline-heading" className="bg-paper-dim py-20 md:py-28">
         <div className="container-content">
           <h2
             id="timeline-heading"
-            className="mb-14 font-display text-3xl italic text-timber md:text-4xl"
+            className="font-mono text-xs uppercase tracking-widest text-oak"
           >
             {t('timelineHeading')}
           </h2>
-          <Timeline />
+          <div className="mt-14 md:mt-20">
+            <Timeline />
+          </div>
         </div>
       </section>
 
-      {/* Hodnoty */}
-      <section
-        aria-labelledby="values-heading"
-        className="bg-paper py-20 md:py-28"
-      >
+      {/* Hodnoty — hairline oddělený seznam, žádné karty */}
+      <section aria-labelledby="values-heading" className="bg-paper py-20 md:py-28">
         <div className="container-content">
-          <h2
-            id="values-heading"
-            className="font-display text-3xl italic text-timber md:text-4xl"
-          >
+          <h2 id="values-heading" className="font-display text-3xl text-timber md:text-4xl">
             {t('valuesHeading')}
           </h2>
-          <Reveal stagger className="mt-12 grid gap-8 md:grid-cols-3">
+          <Reveal stagger className="mt-12 border-t border-timber/20">
             {values.map((v) => (
               <div
                 key={v.title}
                 data-reveal-item
-                className="border-t border-timber/50 pt-6"
+                className="flex flex-col gap-2 border-b border-timber/20 py-8 md:flex-row md:items-baseline md:gap-10"
               >
-                <h3 className="font-display text-3xl italic text-timber">
+                <h3 className="font-display text-xl text-timber md:w-64 md:shrink-0">
                   {v.title}
                 </h3>
-                <p className="mt-3 font-body text-sm leading-relaxed text-timber/70">
-                  {v.description}
-                </p>
+                <p className="font-body text-base leading-relaxed text-oak">{v.description}</p>
               </div>
             ))}
           </Reveal>
         </div>
       </section>
 
-      {/* Certifikáty + CTA */}
-      <section className="border-t border-timber/50 bg-paper-dim py-20 md:py-28">
+      {/* Certifikáty jako mono řádek + závěrečné CTA */}
+      <section className="bg-paper-dim py-20 md:py-28">
         <div className="container-content">
-          <h2 className="font-display text-3xl italic text-timber md:text-4xl">
+          <h2 className="font-mono text-xs uppercase tracking-widest text-oak">
             {t('certificatesHeading')}
           </h2>
-          <Reveal stagger className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-4">
-            {certificates.map((c) => (
-              <div
-                key={c}
-                data-reveal-item
-                className="flex aspect-[3/2] items-center justify-center rounded-sm border border-timber/50 bg-paper p-6 text-center font-body text-xs uppercase tracking-widest text-timber/65"
-              >
-                {c}
-              </div>
-            ))}
-          </Reveal>
+          <p className="mt-6 max-w-3xl font-mono text-sm uppercase tracking-widest text-timber">
+            {certificates.join(' · ')}
+          </p>
 
-          <div className="mt-16 flex flex-col items-start gap-6 border-t border-timber/50 pt-12 md:flex-row md:items-center md:justify-between">
-            <p className="max-w-md font-display text-2xl italic text-timber">
-              {t('ctaText')}
-            </p>
-            <Button href="/kontakt" size="lg">
-              {t('ctaButton')} <Arrow />
-            </Button>
+          <div className="mt-16 flex flex-col items-start gap-6 border-t border-timber/20 pt-12 md:flex-row md:items-center md:justify-between">
+            <p className="max-w-md font-display text-2xl text-timber">{t('ctaText')}</p>
+            <Link
+              href="/kontakt"
+              className="group link-underline inline-flex items-center gap-2 font-body text-timber"
+            >
+              {t('ctaButton')}
+              <Arrow className="transition-transform duration-300 ease-craft group-hover:translate-x-1" />
+            </Link>
           </div>
         </div>
       </section>

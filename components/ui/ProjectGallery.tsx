@@ -79,7 +79,7 @@ export function ProjectGallery({
         <div
           role="tablist"
           aria-label={t('filterAria')}
-          className="mb-10 flex flex-wrap gap-3"
+          className="mb-10 flex flex-wrap gap-x-8 gap-y-3 border-b border-timber/20 pb-6"
         >
           {filters.map((f) => {
             const active = filter === f.key
@@ -89,10 +89,10 @@ export function ProjectGallery({
                 role="tab"
                 aria-selected={active}
                 onClick={() => setFilter(f.key)}
-                className={`rounded-full border px-5 py-2 font-body text-xs uppercase tracking-widest transition-colors duration-300 ${
+                className={`inline-flex min-h-[44px] items-center font-mono text-xs uppercase tracking-widest underline-offset-4 transition-colors duration-200 motion-reduce:transition-none ${
                   active
-                    ? 'border-ember bg-ember text-paper'
-                    : 'border-timber/50 text-timber/70 hover:border-timber hover:text-timber'
+                    ? 'text-ember underline'
+                    : 'text-oak no-underline hover:text-timber'
                 }`}
               >
                 {f.label}
@@ -109,6 +109,7 @@ export function ProjectGallery({
         {visible.map((project, i) => {
           const title = tFull(`projectsData.${project.id}.title`)
           const location = tFull(`projectsData.${project.id}.location`)
+          const categoryTitle = tFull(`services.${project.category}.title`)
           return (
             <article
               key={project.id}
@@ -132,16 +133,8 @@ export function ProjectGallery({
                   aspect={i % 5 === 0 ? '3/4' : '4/3'}
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 />
-                <div className="mt-3 flex items-baseline justify-between gap-4">
-                  <h3 className="font-display text-xl italic text-timber transition-colors group-hover:text-ember">
-                    {title}
-                  </h3>
-                  <span className="shrink-0 font-mono text-xs uppercase tracking-widest text-oak">
-                    {project.year}
-                  </span>
-                </div>
-                <p className="mt-1 font-mono text-xs uppercase tracking-widest text-oak">
-                  {tFull(`services.${project.category}.title`)} · {location}
+                <p className="mt-3 border-t border-timber/20 pt-3 font-mono text-xs uppercase tracking-widest text-oak transition-colors group-hover:text-ember">
+                  {location} / {project.year} / {categoryTitle}
                 </p>
               </button>
             </article>
@@ -242,7 +235,7 @@ function ProjectModal({
         <span className="eyebrow">
           {tFull(`services.${project.category}.title`)} · {location} · {project.year}
         </span>
-        <h2 className="mt-3 font-display text-4xl italic text-timber">
+        <h2 className="mt-3 font-display text-4xl text-timber">
           {title}
         </h2>
         <p className="mt-4 max-w-2xl font-body text-sm leading-relaxed text-timber/70">
@@ -260,18 +253,18 @@ function ProjectModal({
           ))}
         </div>
 
-        <dl className="mt-8 flex flex-wrap gap-x-12 gap-y-3 border-t border-timber/50 pt-6 font-body text-sm">
+        <dl className="mt-8 flex flex-wrap gap-x-12 gap-y-3 border-t border-timber/50 pt-6">
           <div>
-            <dt className="text-xs uppercase tracking-widest text-oak">
+            <dt className="font-mono text-xs uppercase tracking-widest text-oak">
               {t('location')}
             </dt>
-            <dd className="mt-1 text-timber">{location}</dd>
+            <dd className="mt-1 font-body text-sm text-timber">{location}</dd>
           </div>
           <div>
-            <dt className="text-xs uppercase tracking-widest text-oak">
+            <dt className="font-mono text-xs uppercase tracking-widest text-oak">
               {t('year')}
             </dt>
-            <dd className="mt-1 font-mono text-timber">{project.year}</dd>
+            <dd className="mt-1 font-mono text-sm text-timber">{project.year}</dd>
           </div>
         </dl>
       </div>
