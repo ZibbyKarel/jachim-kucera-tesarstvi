@@ -4,6 +4,7 @@ import { Opener } from '@/components/sections/Opener'
 import { Process } from '@/components/sections/Process'
 import { ProjectsPreview } from '@/components/sections/ProjectsPreview'
 import { ServiceIndex } from '@/components/sections/ServiceIndex'
+import { Testimonials } from '@/components/sections/Testimonials'
 import { setRequestLocale } from 'next-intl/server'
 
 export default async function HomePage({
@@ -20,6 +21,7 @@ export default async function HomePage({
       <ServiceIndex />
       <ProjectsPreview />
       <Process />
+      <Testimonials />
       <AboutSection />
       <ContactSection />
     </>

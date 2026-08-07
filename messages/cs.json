@@ -56,6 +56,17 @@
     "aboutCta": "Náš příběh",
     "contactHeadline": "Zavolejte nebo napište. Domluvíme se."
   },
+  "testimonials": {
+    "eyebrow": "Ohlasy",
+    "heading": "Co říkají zákazníci",
+    "items": [
+      { "quote": "„Precizní práce a skvělá komunikace. Pergola vypadá nádherně.“", "author": "Jana K." },
+      { "quote": "„Rychlé zaměření, přesná cenová nabídka a termín dodržen na den.“", "author": "Tomáš P." },
+      { "quote": "„Kvalitní materiál a profesionální montáž. Doporučujeme.“", "author": "Obecní úřad" },
+      { "quote": "„Schodiště na míru je radost používat, čisté detaily.“", "author": "Martin S." },
+      { "quote": "„Roubené prvky respektují styl domu, jsme nadšení.“", "author": "Veronika D." }
+    ]
+  },
   "contact": {
     "title": "Kontakt",
     "heroTitle": "Pojďme se domluvit",
