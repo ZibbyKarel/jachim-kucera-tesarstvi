@@ -1,11 +1,13 @@
-import { useTranslations } from 'next-intl'
-import { Link } from '@/i18n/routing'
-import { SITE, navLinks, people } from '@/lib/constants'
-import type { NavLink } from '@/lib/types'
-import { Logo } from './Logo'
+import { Link } from "@/i18n/routing";
+import { SITE, navLinks, people } from "@/lib/constants";
+import type { NavLink } from "@/lib/types";
+import { useTranslations } from "next-intl";
+import { Logo } from "./Logo";
 
-function navLabel(t: (key: string) => string, source: NavLink['textSource']) {
-  return source.ns === 'service' ? t(`services.${source.slug}.title`) : t(`nav.${source.key}`)
+function navLabel(t: (key: string) => string, source: NavLink["textSource"]) {
+  return source.ns === "service"
+    ? t(`services.${source.slug}.title`)
+    : t(`nav.${source.key}`);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -16,11 +18,11 @@ function navLabel(t: (key: string) => string, source: NavLink['textSource']) {
 /* -------------------------------------------------------------------------- */
 
 export function Footer() {
-  const t = useTranslations()
-  const year = 2026
+  const t = useTranslations();
+  const year = 2026;
 
   return (
-    <footer aria-label={t('common.siteFooterAria')} className="bg-timber">
+    <footer aria-label={t("common.siteFooterAria")} className="bg-timber">
       <div className="container-content flex flex-col gap-8 py-10 md:flex-row md:items-center md:justify-between md:gap-6">
         {/* height=60 → šířka ~112px (LOGO_ASPECT_RATIO). Patička je bg-timber,
             takže logo jede v paper variantě (light) — jinak by antracitový
@@ -28,7 +30,7 @@ export function Footer() {
         <Logo height={60} light />
 
         <nav
-          aria-label={t('common.footerNavAria')}
+          aria-label={t("common.footerNavAria")}
           className="flex flex-wrap gap-x-6 gap-y-3"
         >
           {navLinks.map((link) => (
@@ -54,7 +56,10 @@ export function Footer() {
               </a>
             </div>
           ))}
-          <a href={`mailto:${SITE.email}`} className="link-underline w-fit text-paper">
+          <a
+            href={`mailto:${SITE.email}`}
+            className="link-underline w-fit text-paper"
+          >
             {SITE.email}
           </a>
         </div>
@@ -65,15 +70,14 @@ export function Footer() {
         <div className="flex flex-col gap-1">
           {people.map((person) => (
             <p key={person.key}>
-              {person.name} · {t('common.companyIdLabel')} {person.companyId}
+              {person.name} · {t("common.companyIdLabel")} {person.companyId}
             </p>
           ))}
-          <p>{t('common.region')}</p>
         </div>
         <p>
-          © {year} {SITE.name}. {t('common.allRightsReserved')}
+          © {year} {SITE.name}. {t("common.allRightsReserved")}
         </p>
       </div>
     </footer>
-  )
+  );
 }

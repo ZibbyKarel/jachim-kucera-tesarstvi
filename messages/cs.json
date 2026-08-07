@@ -30,7 +30,7 @@
     "openerCtaInquiry": "Nezávazně poptat",
     "openerCtaProjects": "Prohlédnout realizace",
     "serviceIndexHeading": "Řemesla",
-    "projectsIntro": "Část toho, co jsme za poslední roky postavili po Plzeňském kraji.",
+    "projectsIntro": "Část toho, co jsme za poslední roky postavili.",
     "process": {
       "heading": "Jak zakázka probíhá",
       "steps": [
@@ -60,11 +60,26 @@
     "eyebrow": "Ohlasy",
     "heading": "Co říkají zákazníci",
     "items": [
-      { "quote": "„Precizní práce a skvělá komunikace. Pergola vypadá nádherně.“", "author": "Jana K." },
-      { "quote": "„Rychlé zaměření, přesná cenová nabídka a termín dodržen na den.“", "author": "Tomáš P." },
-      { "quote": "„Kvalitní materiál a profesionální montáž. Doporučujeme.“", "author": "Obecní úřad" },
-      { "quote": "„Schodiště na míru je radost používat, čisté detaily.“", "author": "Martin S." },
-      { "quote": "„Roubené prvky respektují styl domu, jsme nadšení.“", "author": "Veronika D." }
+      {
+        "quote": "„Precizní práce a skvělá komunikace. Pergola vypadá nádherně.“",
+        "author": "Jana K."
+      },
+      {
+        "quote": "„Rychlé zaměření, přesná cenová nabídka a termín dodržen na den.“",
+        "author": "Tomáš P."
+      },
+      {
+        "quote": "„Kvalitní materiál a profesionální montáž. Doporučujeme.“",
+        "author": "Obecní úřad"
+      },
+      {
+        "quote": "„Schodiště na míru je radost používat, čisté detaily.“",
+        "author": "Martin S."
+      },
+      {
+        "quote": "„Roubené prvky respektují styl domu, jsme nadšení.“",
+        "author": "Veronika D."
+      }
     ]
   },
   "contact": {
@@ -143,7 +158,12 @@
       }
     ],
     "certificatesHeading": "Certifikáty a reference",
-    "certificates": ["ČKAIT", "Zelená úsporám", "Pojištění odpovědnosti", "Záruka 10 let"],
+    "certificates": [
+      "ČKAIT",
+      "Zelená úsporám",
+      "Pojištění odpovědnosti",
+      "Záruka 10 let"
+    ],
     "ctaText": "Potřebujete střechu, na kterou se dá spolehnout?",
     "ctaButton": "Ozvěte se nám"
   },
@@ -177,11 +197,24 @@
   },
   "seo": {
     "siteDescription": "Tesařství, pokrývačství a klempířství v Plzeňském kraji. Stavíme krovy, pokládáme střechy a děláme okapy. Přes 15 let poctivé řemeslné práce.",
-    "keywords": ["tesařství", "pokrývačství", "klempířství", "krovy", "střechy", "Plzeňský kraj", "Plzeň"],
+    "keywords": [
+      "tesařství",
+      "pokrývačství",
+      "klempířství",
+      "krovy",
+      "střechy",
+      "Plzeňský kraj",
+      "Plzeň"
+    ],
     "ogLocale": "cs_CZ",
     "jsonLdDescription": "Tesařství, pokrývačství a klempířství v Plzeňském kraji",
     "addressRegion": "Plzeňský kraj",
-    "serviceTypes": ["Tesařství", "Pokrývačství", "Klempířství", "Čištění střech"],
+    "serviceTypes": [
+      "Tesařství",
+      "Pokrývačství",
+      "Klempířství",
+      "Čištění střech"
+    ],
     "kontakt": {
       "title": "Kontakt | Nezávazná poptávka",
       "description": "Napište nebo zavolejte. Domluvíme se na nezávazné prohlídce střechy v Plzeňském kraji. Tesařství, pokrývačství a klempířství."
@@ -215,10 +248,22 @@
         "Postavíme vám i pergolu, carport nebo přístřešek na míru. Od jednoduchého zastřešení terasy po samostatně stojící konstrukci, která vydrží sníh i vítr a hezky zestárne."
       ],
       "workItems": [
-        { "title": "Krovové konstrukce", "description": "Nové krovy i kompletní rekonstrukce. Vaznicové, hambálkové i složitější soustavy podle tvaru střechy a zatížení." },
-        { "title": "Dřevěné a trámové stropy", "description": "Pohledové trámové stropy, záklopy a podbití. Statika i estetika v jednom: strop, který zdobí interiér." },
-        { "title": "Pergoly, carporty, přístřešky", "description": "Zastřešení teras, stání pro auta i zahradní přístřešky na míru. Robustní konstrukce s čistým detailem." },
-        { "title": "Bednění a fasádní dřevo", "description": "Podstřešní bednění, palubkové podhledy a dřevěné fasády. Provětrávané systémy s dlouhou životností." }
+        {
+          "title": "Krovové konstrukce",
+          "description": "Nové krovy i kompletní rekonstrukce. Vaznicové, hambálkové i složitější soustavy podle tvaru střechy a zatížení."
+        },
+        {
+          "title": "Dřevěné a trámové stropy",
+          "description": "Pohledové trámové stropy, záklopy a podbití. Statika i estetika v jednom: strop, který zdobí interiér."
+        },
+        {
+          "title": "Pergoly, carporty, přístřešky",
+          "description": "Zastřešení teras, stání pro auta i zahradní přístřešky na míru. Robustní konstrukce s čistým detailem."
+        },
+        {
+          "title": "Bednění a fasádní dřevo",
+          "description": "Podstřešní bednění, palubkové podhledy a dřevěné fasády. Provětrávané systémy s dlouhou životností."
+        }
       ],
       "galleryAlt": [
         "Nový krov s laťováním připraveným pod krytinu",
@@ -242,10 +287,22 @@
         "U rekonstrukcí nejdřív zjistíme stav bednění a laťování a vyměníme, co je potřeba. Nepokládáme novou krytinu na shnilé latě jen proto, aby to bylo rychle hotové."
       ],
       "workItems": [
-        { "title": "Pálená a betonová krytina", "description": "Klasické skládané krytiny pro šikmé střechy. Přesná pokládka, správné překrytí a větrání hřebene." },
-        { "title": "Bobrovka, šindel, plech", "description": "Tradiční bobrovka, dřevěný i asfaltový šindel a falcovaný plech. Řešení pro památky i moderní domy." },
-        { "title": "Hydroizolace a parotěsné zábrany", "description": "Správná skladba střešního pláště: pojistná hydroizolace, difuzní a parotěsné fólie bez tepelných mostů." },
-        { "title": "Hřebeny, nároží, úžlabí", "description": "Detaily, kde střechy zatékají nejčastěji. Děláme je tak, aby držely vodu i za extrémního počasí." }
+        {
+          "title": "Pálená a betonová krytina",
+          "description": "Klasické skládané krytiny pro šikmé střechy. Přesná pokládka, správné překrytí a větrání hřebene."
+        },
+        {
+          "title": "Bobrovka, šindel, plech",
+          "description": "Tradiční bobrovka, dřevěný i asfaltový šindel a falcovaný plech. Řešení pro památky i moderní domy."
+        },
+        {
+          "title": "Hydroizolace a parotěsné zábrany",
+          "description": "Správná skladba střešního pláště: pojistná hydroizolace, difuzní a parotěsné fólie bez tepelných mostů."
+        },
+        {
+          "title": "Hřebeny, nároží, úžlabí",
+          "description": "Detaily, kde střechy zatékají nejčastěji. Děláme je tak, aby držely vodu i za extrémního počasí."
+        }
       ],
       "galleryAlt": [
         "Skládaná krytina na střeše novostavby",
@@ -269,10 +326,22 @@
         "Postaráme se i o klempířské detaily kolem střešních prostupů, ventilací a prostupů antén. Jsou to maličkosti, ale právě ony rozhodují o tom, jestli střecha těsní."
       ],
       "workItems": [
-        { "title": "Okapové systémy", "description": "Žlaby a svody z pozinku, titanzinku i mědi. Správné spády, dimenze a kotvení pro bezúdržbový odvod vody." },
-        { "title": "Oplechování říms, parapetů, komínů", "description": "Lemování a oplechování na míru přímo na stavbě. Falcované spoje, které těsní a počítají s dilatací." },
-        { "title": "Střešní prostupy a ventilace", "description": "Těsné napojení komínů, ventilací a prostupů. Detaily, na kterých střechy nejčastěji selhávají." },
-        { "title": "Klempířské detaily", "description": "Lemování zdí, závětrné lišty, okapnice a další prvky, které drží vodu tam, kam patří." }
+        {
+          "title": "Okapové systémy",
+          "description": "Žlaby a svody z pozinku, titanzinku i mědi. Správné spády, dimenze a kotvení pro bezúdržbový odvod vody."
+        },
+        {
+          "title": "Oplechování říms, parapetů, komínů",
+          "description": "Lemování a oplechování na míru přímo na stavbě. Falcované spoje, které těsní a počítají s dilatací."
+        },
+        {
+          "title": "Střešní prostupy a ventilace",
+          "description": "Těsné napojení komínů, ventilací a prostupů. Detaily, na kterých střechy nejčastěji selhávají."
+        },
+        {
+          "title": "Klempířské detaily",
+          "description": "Lemování zdí, závětrné lišty, okapnice a další prvky, které drží vodu tam, kam patří."
+        }
       ],
       "galleryAlt": [
         "Měděný okapový systém",
@@ -296,10 +365,22 @@
         "Nezapomínáme ani na okapy, protože zanesené žlaby přetékají a vlhko pak putuje do fasády a základů. Vyčištění okapů zařadíme rovnou do prohlídky střechy."
       ],
       "workItems": [
-        { "title": "Odstranění mechů a lišejníků", "description": "Šetrné mechanické i tlakové odstranění porostu, který drží vlhkost a ničí povrch krytiny." },
-        { "title": "Tlakové mytí krytiny", "description": "Čištění přizpůsobené typu a stáří krytiny tak, aby se obnovil povrch a nepoškodil materiál." },
-        { "title": "Preventivní nátěry a impregnace", "description": "Ochranný nátěr, který zpomalí návrat mechu, obnoví barvu a vrátí taškám odpudivost vůči vodě." },
-        { "title": "Čištění okapů", "description": "Vyčištění žlabů a svodů, aby voda odtékala, kam má, a nezatékala do fasády a základů." }
+        {
+          "title": "Odstranění mechů a lišejníků",
+          "description": "Šetrné mechanické i tlakové odstranění porostu, který drží vlhkost a ničí povrch krytiny."
+        },
+        {
+          "title": "Tlakové mytí krytiny",
+          "description": "Čištění přizpůsobené typu a stáří krytiny tak, aby se obnovil povrch a nepoškodil materiál."
+        },
+        {
+          "title": "Preventivní nátěry a impregnace",
+          "description": "Ochranný nátěr, který zpomalí návrat mechu, obnoví barvu a vrátí taškám odpudivost vůči vodě."
+        },
+        {
+          "title": "Čištění okapů",
+          "description": "Vyčištění žlabů a svodů, aby voda odtékala, kam má, a nezatékala do fasády a základů."
+        }
       ],
       "galleryAlt": [
         "Střecha před a po vyčištění",

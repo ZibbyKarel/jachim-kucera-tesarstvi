@@ -30,7 +30,7 @@
     "openerCtaInquiry": "Get a free quote",
     "openerCtaProjects": "See our work",
     "serviceIndexHeading": "Crafts",
-    "projectsIntro": "A part of what we have built across the Pilsen region in recent years.",
+    "projectsIntro": "A part of what we have built in recent years.",
     "process": {
       "heading": "How the job runs",
       "steps": [
@@ -60,11 +60,26 @@
     "eyebrow": "Testimonials",
     "heading": "What our customers say",
     "items": [
-      { "quote": "“Precise work and great communication. The pergola looks beautiful.”", "author": "Jana K." },
-      { "quote": "“Quick site survey, an accurate quote, and the deadline kept to the day.”", "author": "Tomáš P." },
-      { "quote": "“Quality materials and professional installation. We recommend them.”", "author": "Obecní úřad" },
-      { "quote": "“The custom staircase is a joy to use, clean details throughout.”", "author": "Martin S." },
-      { "quote": "“The log elements respect the style of the house, we're delighted.”", "author": "Veronika D." }
+      {
+        "quote": "“Precise work and great communication. The pergola looks beautiful.”",
+        "author": "Jana K."
+      },
+      {
+        "quote": "“Quick site survey, an accurate quote, and the deadline kept to the day.”",
+        "author": "Tomáš P."
+      },
+      {
+        "quote": "“Quality materials and professional installation. We recommend them.”",
+        "author": "Obecní úřad"
+      },
+      {
+        "quote": "“The custom staircase is a joy to use, clean details throughout.”",
+        "author": "Martin S."
+      },
+      {
+        "quote": "“The log elements respect the style of the house, we're delighted.”",
+        "author": "Veronika D."
+      }
     ]
   },
   "contact": {
@@ -143,7 +158,12 @@
       }
     ],
     "certificatesHeading": "Certificates and references",
-    "certificates": ["ČKAIT certified", "Zelená úsporám programme", "Liability insurance", "10-year warranty"],
+    "certificates": [
+      "ČKAIT certified",
+      "Zelená úsporám programme",
+      "Liability insurance",
+      "10-year warranty"
+    ],
     "ctaText": "Need a roof you can rely on?",
     "ctaButton": "Get in touch"
   },
@@ -177,7 +197,15 @@
   },
   "seo": {
     "siteDescription": "Carpentry, roofing and tinsmithing in the Pilsen region. We build roof trusses, lay roofing and install gutters. Over 15 years of honest craftsmanship.",
-    "keywords": ["carpentry", "roofing", "tinsmithing", "roof trusses", "roofs", "Pilsen Region", "Plzeň"],
+    "keywords": [
+      "carpentry",
+      "roofing",
+      "tinsmithing",
+      "roof trusses",
+      "roofs",
+      "Pilsen Region",
+      "Plzeň"
+    ],
     "ogLocale": "en_US",
     "jsonLdDescription": "Carpentry, roofing and tinsmithing in the Pilsen region",
     "addressRegion": "Pilsen Region",
@@ -215,10 +243,22 @@
         "We'll also build you a custom pergola, carport or shelter. From a simple terrace roof to a freestanding structure that holds up to snow and wind and ages beautifully."
       ],
       "workItems": [
-        { "title": "Roof truss structures", "description": "New trusses and complete reconstructions. Purlin, collar-beam and more complex systems, matched to the roof shape and load." },
-        { "title": "Timber and beam ceilings", "description": "Exposed beam ceilings, boarding and soffits. Structure and aesthetics in one: a ceiling that decorates the interior." },
-        { "title": "Pergolas, carports, shelters", "description": "Terrace roofs, car shelters and garden structures, custom-built. Robust construction with a clean finish." },
-        { "title": "Sheathing and facade timber", "description": "Roof sheathing, tongue-and-groove soffits and timber facades. Ventilated systems with a long service life." }
+        {
+          "title": "Roof truss structures",
+          "description": "New trusses and complete reconstructions. Purlin, collar-beam and more complex systems, matched to the roof shape and load."
+        },
+        {
+          "title": "Timber and beam ceilings",
+          "description": "Exposed beam ceilings, boarding and soffits. Structure and aesthetics in one: a ceiling that decorates the interior."
+        },
+        {
+          "title": "Pergolas, carports, shelters",
+          "description": "Terrace roofs, car shelters and garden structures, custom-built. Robust construction with a clean finish."
+        },
+        {
+          "title": "Sheathing and facade timber",
+          "description": "Roof sheathing, tongue-and-groove soffits and timber facades. Ventilated systems with a long service life."
+        }
       ],
       "galleryAlt": [
         "New roof truss with battens ready for roofing",
@@ -242,10 +282,22 @@
         "On reconstructions, we first check the condition of the sheathing and battens and replace what's needed. We don't lay new roofing over rotten battens just to get the job done quickly."
       ],
       "workItems": [
-        { "title": "Clay and concrete roofing", "description": "Classic interlocking tiles for pitched roofs. Precise laying, correct overlap and ridge ventilation." },
-        { "title": "Beaver-tail tiles, shingles, sheet metal", "description": "Traditional beaver-tail tiles, timber and asphalt shingles, and standing-seam metal. Solutions for heritage buildings and modern homes alike." },
-        { "title": "Waterproofing and vapor barriers", "description": "The right roof build-up: safety waterproofing membrane, breather and vapor barrier foils without thermal bridges." },
-        { "title": "Ridges, hips, valleys", "description": "The details where roofs leak most often. We build them to hold water back even in extreme weather." }
+        {
+          "title": "Clay and concrete roofing",
+          "description": "Classic interlocking tiles for pitched roofs. Precise laying, correct overlap and ridge ventilation."
+        },
+        {
+          "title": "Beaver-tail tiles, shingles, sheet metal",
+          "description": "Traditional beaver-tail tiles, timber and asphalt shingles, and standing-seam metal. Solutions for heritage buildings and modern homes alike."
+        },
+        {
+          "title": "Waterproofing and vapor barriers",
+          "description": "The right roof build-up: safety waterproofing membrane, breather and vapor barrier foils without thermal bridges."
+        },
+        {
+          "title": "Ridges, hips, valleys",
+          "description": "The details where roofs leak most often. We build them to hold water back even in extreme weather."
+        }
       ],
       "galleryAlt": [
         "Interlocking roof tiles on a new-build roof",
@@ -269,10 +321,22 @@
         "We also handle the tinsmith details around roof penetrations, vents and antenna feed-throughs. They're small things, but they're exactly what decides whether a roof stays watertight."
       ],
       "workItems": [
-        { "title": "Gutter systems", "description": "Gutters and downspouts in galvanized steel, titanium zinc and copper. Correct falls, sizing and fixing for maintenance-free drainage." },
-        { "title": "Cornice, sill and chimney flashing", "description": "Edging and flashing made to measure, directly on site. Folded joints that seal while allowing for expansion." },
-        { "title": "Roof penetrations and vents", "description": "Watertight connections for chimneys, vents and penetrations. The details where roofs fail most often." },
-        { "title": "Tinsmith details", "description": "Wall edging, wind strips, drip edges and other elements that keep water exactly where it belongs." }
+        {
+          "title": "Gutter systems",
+          "description": "Gutters and downspouts in galvanized steel, titanium zinc and copper. Correct falls, sizing and fixing for maintenance-free drainage."
+        },
+        {
+          "title": "Cornice, sill and chimney flashing",
+          "description": "Edging and flashing made to measure, directly on site. Folded joints that seal while allowing for expansion."
+        },
+        {
+          "title": "Roof penetrations and vents",
+          "description": "Watertight connections for chimneys, vents and penetrations. The details where roofs fail most often."
+        },
+        {
+          "title": "Tinsmith details",
+          "description": "Wall edging, wind strips, drip edges and other elements that keep water exactly where it belongs."
+        }
       ],
       "galleryAlt": [
         "Copper gutter system",
@@ -296,10 +360,22 @@
         "We don't forget the gutters either, because clogged troughs overflow, and the damp then finds its way into the facade and foundations. We include gutter cleaning as part of the roof inspection."
       ],
       "workItems": [
-        { "title": "Moss and lichen removal", "description": "Gentle mechanical and pressure removal of growth that traps moisture and damages the roofing surface." },
-        { "title": "Pressure washing of roofing", "description": "Cleaning matched to the type and age of the roofing, so the surface is restored without damaging the material." },
-        { "title": "Preventive coatings and impregnation", "description": "A protective coating that slows moss from returning, restores colour and gives the tiles their water resistance back." },
-        { "title": "Gutter cleaning", "description": "Clearing troughs and downspouts so water drains where it should, instead of into the facade and foundations." }
+        {
+          "title": "Moss and lichen removal",
+          "description": "Gentle mechanical and pressure removal of growth that traps moisture and damages the roofing surface."
+        },
+        {
+          "title": "Pressure washing of roofing",
+          "description": "Cleaning matched to the type and age of the roofing, so the surface is restored without damaging the material."
+        },
+        {
+          "title": "Preventive coatings and impregnation",
+          "description": "A protective coating that slows moss from returning, restores colour and gives the tiles their water resistance back."
+        },
+        {
+          "title": "Gutter cleaning",
+          "description": "Clearing troughs and downspouts so water drains where it should, instead of into the facade and foundations."
+        }
       ],
       "galleryAlt": [
         "Roof before and after cleaning",
