@@ -93,15 +93,31 @@ export function OpenerHouse() {
     // okraj viewportu: `right-0` na sekci vypadalo dobře do ~1440px, ale nad
     // šířkou sloupce (max-w-content) dům odplul do prázdné mrže vpravo, ztratil
     // vazbu na sazbu a na 1920px ho pravý okraj okna dokonce ořízl. `ml-auto`
-    // uvnitř sloupce srovná pravou hranu domu s pravou hranou textu na všech
-    // šířkách (ověřeno: canvasRight - textRight = 0 na 1024/1280/1440/1920,
-    // cs i en).
+    // uvnitř sloupce srovná pravou hranu *canvasu* s pravou hranou textu na
+    // všech šířkách (ověřeno: canvasRight - textRight = 0 na 1024/1280/1440/
+    // 1920, cs i en).
+    //
+    // Kresba samotná ale canvas nevyplňuje až do kraje - SceneManager rámuje
+    // podle bounding boxu modelu, který má prázdný pás i vpravo (asymetrická
+    // scéna, hmota táhne doleva), takže viditelný okraj kresby končí ~18 %
+    // šířky canvasu před jeho pravým okrajem. D-060: klient chtěl dům posunout
+    // dál doprava, „zarovnat s CS | EN switchem" v hlavičce - `translate-x`
+    // o těch 18 % šířky vrstvy tedy posune viditelnou kresbu (ne canvas) na
+    // pravou hranu switche, beze změny vazby na sloupec (`ml-auto` zůstává,
+    // překryv s `<h1>` tím navíc klesá, protože se dům vzdaluje od textu).
+    //
+    // `min(18%, max(40px, calc(50vw - 560px)))` je bezpečnostní strop: gutter
+    // mezi pravou hranou sloupce a okrajem viewportu roste s šířkou okna jen
+    // nad 1200px (`max-w-content`), pod tím je pevných 40px (`px-10`). Bez
+    // stropu by na 1024/1280 posun o 18 % (94-110px) přetekl přes 40-80px
+    // gutteru a vytvořil vodorovný scroll. Nad ~1368px už strop nezasahuje a
+    // posun dosáhne plných 18 %.
     <div
       aria-hidden="true"
       className="pointer-events-none absolute inset-x-0 bottom-[calc(84px_-_0.0645_*_clamp(520px,48vw,690px))] z-0 hidden lg:block"
     >
       <div className="container-content">
-        <div className="ml-auto aspect-[7/5] w-[clamp(520px,48vw,690px)]">
+        <div className="ml-auto aspect-[7/5] w-[clamp(520px,48vw,690px)] translate-x-[min(18%,max(40px,calc(50vw_-_560px)))]">
           <House3DScene className="h-full w-full" transparent interactive={false} playIntro />
         </div>
       </div>
