@@ -656,3 +656,42 @@ výstavbě, členství je veřejně dohledatelné a u OSVČ tesaře nepravděpod
 v profesní komoře, kde není, není marketingová nadsázka.
 **Nedořešeno - čeká na klienta.** Doporučení: dokud nepotvrdí položku po položce, seznam ze
 stránky pryč. Prázdno je lepší než nedoložitelné tvrzení.
+
+## D-056 — Dům v hero sekci je dvojnásobný, i za cenu překryvu s nadpisem
+**Datum:** 2026-08-07 · **Rozhodl:** uživatel (klient), zapsal Claude (opus)
+Klient: „dům v hero sekci může být minimálně 2x tak velký". Celý clamp v `OpenerHouse.tsx`
+se znásobil dvěma: `w-[clamp(260px,24vw,345px)]` → `w-[clamp(520px,48vw,690px)]`, tedy
+dvojnásobek na minimu, preferované hodnotě i stropu. `aspect-[7/5]` z toho dělá výšku
+371-493px místo dosavadních 186-246px. Poměr stran canvasu zůstal, takže rámování scény
+v `SceneManager` sedí beze změny a kresba se zvětší přesně dvakrát.
+
+**Zrušená podmínka:** D-044 (a navazující zvětšení na 345px) vybíral strop právě tak, aby se
+bounding boxy vrstvy a `<h1>`/lead odstavce nikdy nepotkaly. Dvojnásobný dům se do mezery
+vpravo od sazby nevejde - buď ustoupí zadání, nebo ta podmínka. Ustoupila podmínka:
+vrstva zůstává `z-0`, textový sloupec `z-10`, takže od 1440px kreslí konec `<h1>`
+(poslední řádek plus čárka za „řemesla,") přes stěnu domu, ne naopak. Čitelnost drží
+kontrast tmavého písma na světlé stěně.
+
+Změřeno Playwrightem na 1024/1280/1440/1920 px: na 1024 a 1280 se kresba se sazbou vůbec
+nepotkává (dům se vejde vedle nadpisu), na 1440/1920 se dotýká jen patka posledního řádku
+`<h1>`. Lead odstavec, statistiky ani řádek CTA nikde na žádné šířce. `bottom-28` se
+nemění - vrstva roste nahoru, ne dolů.
+
+Zbytek pozicování beze změny: `ml-auto` uvnitř `container-content` (vazba na textový
+sloupec, ne na okraj viewportu) a `matchMedia` gate, který dům na mobilu vůbec nemountne.
+
+## D-057 — „Mapa" v kontaktu byla placeholder, je pryč
+**Datum:** 2026-08-07 · **Rozhodl:** uživatel (klient), zapsal Claude (opus)
+Klient: „odstraň ze sekce kontakt ,pozici na mapě', je to k ničemu, je to jen placeholder".
+Souhlas - ta „mapa" (prop `showMap` v `ContactSection`, zapnutá jen na `/kontakt`) byla
+inline SVG se dvěma abstraktními křivkami a puntíkem uprostřed. Žádná skutečná geografie,
+žádné souřadnice, jen dekorace tvářící se jako informace. Návštěvník z ní nezjistí nic, co
+by nebylo v řádku „Provozní oblast: Plzeňský kraj a okolí" o pár řádků výš.
+
+Odstraněno celé, ne schované: `showMap` prop, SVG blok, i klíče `contact.mapAriaLabel` a
+`contact.mapCityLabel` v `messages/cs.json` a `messages/en.json`. `ContactSection` má tím
+pádem zase jen `heading`/`description` a chová se všude stejně (homepage,
+`ServicePageTemplate`, `/kontakt`).
+
+Kdyby klient někdy chtěl mapu doopravdy, patří tam vložený Mapy.cz/OSM iframe s reálnou
+adresou, ne překreslený placeholder - to je jiné rozhodnutí, ne návrat tohohle.

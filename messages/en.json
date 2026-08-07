@@ -88,9 +88,7 @@
       "messageRequired": "Please write a short message.",
       "generic": "We couldn't send your message. Please call us directly at {phone}."
     },
-    "areaLabel": "Service area",
-    "mapAriaLabel": "Service area map of the Pilsen region",
-    "mapCityLabel": "Pilsen"
+    "areaLabel": "Service area"
   },
   "about": {
     "heroTitle": "Who builds it",

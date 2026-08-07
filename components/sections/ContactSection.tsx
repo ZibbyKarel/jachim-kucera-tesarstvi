@@ -26,18 +26,20 @@ import { Reveal } from '@/components/ui/Reveal'
 /*  Sdílená komponenta (T5): `heading`/`description` jdou přepsat, ať se ta     */
 /*  samá sazba dá znovupoužít jako závěrečné CTA na ServicePageTemplate         */
 /*  (spec §A) beze duplikace markupu. Bez props se chová přesně jako předtím -  */
-/*  homepage volá <ContactSection /> beze změny. `showMap` přidá technickou     */
-/*  "mapu" (spec §D, Kontakt) do tmavé poloviny, beze karty.                    */
+/*  homepage volá <ContactSection /> beze změny.                                */
+/*                                                                              */
+/*  Dekorativní "mapa" oblasti působnosti (prop `showMap`, jen na /kontakt) je   */
+/*  pryč (klient 2026-08-07): byly to abstraktní SVG křivky s puntíkem, žádná    */
+/*  skutečná geografie - k ničemu, jen placeholder. Oblast působnosti drží       */
+/*  textový řádek `contact.areaLabel` / `common.region` výš ve sloupci.          */
 /* -------------------------------------------------------------------------- */
 
 export function ContactSection({
   heading,
   description,
-  showMap = false,
 }: {
   heading?: string
   description?: string
-  showMap?: boolean
 } = {}) {
   const t = useTranslations()
 
@@ -50,10 +52,10 @@ export function ContactSection({
           className="flex flex-col justify-center bg-timber px-6 py-20 md:w-1/2 md:px-16 md:py-32"
         >
           {/* `<dl>` obaluje jen skutečné dvojice termín/hodnota (telefon, e-mail,
-              oblast) - IČO řádky a mapa nejsou definiční páry, takže žijí mimo
+              oblast) - IČO řádky nejsou definiční páry, takže žijí mimo
               `<dl>` jako sourozenci, ne jako další `<div>` uvnitř něj. HTML spec
               povoluje uvnitř `<dl>` jen `dt`/`dd` skupiny nebo `<div>` obalující
-              výhradně `dt`/`dd` - vnořený `<div>` s `<p>` nebo mapou by to porušil. */}
+              výhradně `dt`/`dd` - vnořený `<div>` s `<p>` by to porušil. */}
           <div className="flex flex-col gap-8">
             <dl className="flex flex-col gap-8">
               <div className="flex flex-col gap-5">
@@ -105,56 +107,6 @@ export function ContactSection({
               </div>
             </div>
 
-            {showMap && (
-              <div className="border-t border-paper/40 pt-6">
-                <div
-                  role="img"
-                  aria-label={t('contact.mapAriaLabel')}
-                  className="relative aspect-[16/9] w-full"
-                >
-                  <svg
-                    className="absolute inset-0 h-full w-full"
-                    viewBox="0 0 400 300"
-                    fill="none"
-                    aria-hidden="true"
-                  >
-                    <path
-                      d="M-20 210 C80 180 120 120 200 150 S340 120 420 90"
-                      className="text-oak-soft"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      opacity="0.6"
-                    />
-                    <path
-                      d="M40 -20 C70 80 30 160 90 240 S140 360 120 420"
-                      className="text-oak-soft"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      opacity="0.45"
-                    />
-                    <circle
-                      cx="200"
-                      cy="150"
-                      r="6"
-                      className="text-ember-soft"
-                      fill="currentColor"
-                    />
-                    <circle
-                      cx="200"
-                      cy="150"
-                      r="16"
-                      className="text-ember-soft"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      opacity="0.6"
-                    />
-                  </svg>
-                  <span className="absolute bottom-0 left-0 font-mono text-sm text-paper">
-                    {t('contact.mapCityLabel')}
-                  </span>
-                </div>
-              </div>
-            )}
           </div>
         </Reveal>
 

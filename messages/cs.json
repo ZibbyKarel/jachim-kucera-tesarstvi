@@ -88,9 +88,7 @@
       "messageRequired": "Napište prosím krátkou zprávu.",
       "generic": "Zprávu se nepodařilo odeslat. Zavolejte nám prosím přímo na {phone}."
     },
-    "areaLabel": "Provozní oblast",
-    "mapAriaLabel": "Mapa provozní oblasti v Plzeňském kraji",
-    "mapCityLabel": "Plzeň"
+    "areaLabel": "Provozní oblast"
   },
   "about": {
     "heroTitle": "Kdo to staví",

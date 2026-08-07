@@ -21,8 +21,8 @@ export async function generateMetadata({
 /*                                                                              */
 /*  Krátký paper otvírák (stejný duch jako Opener.tsx) nad sdílenou             */
 /*  ContactSection - ta samá komponenta, co homepage a ServicePageTemplate,     */
-/*  jen s `showMap`, aby technická "mapa" oblasti působnosti seděla do tmavé    */
-/*  poloviny (contact.mapAriaLabel / contact.mapCityLabel), ne jako karta.      */
+/*  bez jakýchkoli přepínačů. Dekorativní "mapa" oblasti působnosti byla         */
+/*  odstraněna (klient 2026-08-07, viz ContactSection.tsx).                     */
 /* -------------------------------------------------------------------------- */
 
 export default async function KontaktPage({
@@ -48,7 +48,7 @@ export default async function KontaktPage({
         </div>
       </header>
 
-      <ContactSection showMap />
+      <ContactSection />
     </div>
   )
 }
