@@ -199,19 +199,31 @@ ne pohledem. **Zbývá zkontrolovat na skutečném telefonu nebo v device toolba
 
 ## Pre-launch checklist — MUSÍ se vyřešit před nasazením
 
-- [ ] **Skutečné IČO** — v patičce je na každé stránce vymyšlené `000 00 000`
-      (`messages/cs.json` → `companyIdLabel`, totéž v `en.json`). Ponecháno jako placeholder
-      na rozhodnutí uživatele (D-019, ruší D-015). V repu není žádná skutečná hodnota.
-      **Nesmí jít do produkce.** IČO je v ČR povinný údaj na webu firmy a vymyšlená hodnota
-      působí hůř než žádná.
+- [x] ~~**Skutečné IČO**~~ — vyřešeno 2026-08-07. Klient dodal údaje obou OSVČ:
+      Petr Jáchim (IČO 47748303) a Milan Kučera (IČO 29640113). Obě prošla kontrolní
+      číslicí i ověřením v ARES (jména sedí, forma 101). Žijí v `lib/constants.ts`
+      jako `people`, viz D-046 (ruší D-019). Zobrazuje je patička, kontaktní panel
+      i `/o-nas`.
+- [ ] **Skutečný e-mail a doména** — `SITE.email` (`info@jachim-kucera-tesarstvi.cz`)
+      a `SITE.url` (`https://jachim-kucera-tesarstvi.cz`) jsou vymyšlené od prvního
+      commitu. V kódu mají u sebe komentář „nesmí jít do produkce" (D-047).
+      **Poslední vymyšlené údaje na webu.**
+- [ ] **Rok založení** — `FOUNDED_YEAR = 2008` v `components/sections/Opener.tsx` je
+      odvozený z `about.timeline`, není to dodané datum. ARES uvádí u Petra Jáchima
+      vznik živnosti 2003, u Milana Kučery datum výrazně pozdější. Ani jedno neumíme
+      vyložit jako „rok založení firmy". Souvisí s tvrzením „přes patnáct let"
+      v `about.story` a s údaji v `about.stats`. **Potvrdit s klientem.**
 - [ ] **Reálné fotky** — web běží na placeholderech. `ImageFrame` má konstantu
       `hasRealAsset`; po dodání souborů do `public/images/` se přepne.
 - [x] ~~**3D dům se nevykresluje** (D-029)~~ — vyřešeno. Dům se vykresluje postupně,
       potvrdil uživatel. Z homepage odešel na `/nahled-3d` (redesign v2) a na titulní
       stránku se vrátil jen jako neinteraktivní dekorace vpravo dole (D-043, D-044).
-- [ ] **Oficiální název firmy** — `SITE.name` v `lib/constants.ts` je
-      `Jáchim & Kučera, tesařství`. Interpunkce je naše, ne ověřená. Až bude známé IČO,
-      srovnat s rejstříkem. JSON-LD už používá bezpečný `shortName` (`07e528a`).
+- [ ] **Oficiální název firmy** — srovnáno s rejstříkem 2026-08-07: **žádný zapsaný
+      subjekt „Jáchim & Kučera" neexistuje**, jsou to dvě fyzické osoby podnikající.
+      `SITE.name` je tedy obchodní označení, ne zapsaný název, a interpunkce je pořád
+      naše. Povinné identifikační údaje nese patička (obě jména + obě IČO), takže
+      právní minimum je splněné, viz D-046. Zbývá jen potvrdit s klientem, že chce
+      web prezentovat pod tímhle společným označením.
 - [ ] **„Záruka 10 let"** v certifikátech na stránce O nás — neověřené tvrzení, může být
       pozůstatek staršího textu. Potvrdit s klientem, nebo odstranit.
 - [x] ~~**Mobilní zobrazení pohledem**~~ — ověřeno na viewportu 281 px (užší než

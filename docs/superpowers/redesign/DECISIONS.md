@@ -503,3 +503,43 @@ neposunula ani o jeden snímek. Scéna tedy zamrzne uprostřed úvodního rozkre
 Layout a rozměry ověřuj čísly (`getBoundingClientRect`), vzhled 3D scény si nech
 vyrenderovat subagentem s vlastním Playwrightem (tam rAF běží) a **počkej po načtení
 alespoň 3 sekundy**, než screenshotuješ.
+
+## D-046 — Firma jsou dva OSVČ, ne jedna právnická osoba (RUŠÍ D-019)
+**Datum:** 2026-08-07 · **Rozhodl:** uživatel (dodal data), zpracoval Claude (opus)
+Klient dodal skutečné údaje: **Petr Jáchim, IČO 47748303, +420 608 212 410** a
+**Milan Kučera, IČO 29640113, +420 725 443 271**. Dvě IČO znamenají dva samostatné
+podnikající subjekty, ne jednu firmu s jedním identifikačním číslem — což ruší celý předpoklad
+D-019 (jeden placeholder `IČO 000 00 000` v jednom řetězci v `messages`).
+Ověřeno nezávisle, ne přepsáno naslepo: obě IČO projdou kontrolní číslicí (mod 11) a v ARES
+odpovídají uvedeným jménům, oba jako právní forma 101 (fyzická osoba podnikající).
+**Důsledek:** lidé jsou **data**, ne text. Žijí v `lib/constants.ts` jako `people: Person[]`,
+messages drží jen holý štítek (`common.companyIdLabel` = `IČO` / `Company ID`) a jména ani
+čísla se v překladech neopakují. Patička, kontaktní panel, JSON-LD i `/o-nas` iterují stejné
+pole. `SITE.name` (`Jáchim & Kučera, tesařství`) tím zůstává **obchodní označení, ne zapsaný
+název** — v rejstříku žádný takový subjekt není, jsou tam dvě fyzické osoby. Povinné údaje
+proto nese patička (obě jména + obě IČO), ne `SITE.name`.
+
+## D-047 — Vymyšlené kontaktní údaje se nesmí tvářit jako faktická data
+**Datum:** 2026-08-07 · **Rozhodl:** Claude (opus)
+`SITE.phone` byl od prvního commitu `+420 777 123 456` — vymyšlené číslo, které vypadalo
+jako skutečný údaj a šlo do JSON-LD, do patičky i do chybové hlášky formuláře. Pravidlo
+„zachovat faktické údaje" ho chránilo, přestože faktický nikdy nebyl.
+**Pravidlo:** placeholder musí být buď zjevně prázdný, nebo v kódu **označený komentářem
+s podmínkou nasazení**. `SITE.phone` je nově odvozený z `people[0]`, takže vymyšlené číslo
+v repu neexistuje (ověřeno grepem). Zbylé dva vymyšlené údaje — `SITE.email` a `SITE.url` —
+mají u sebe explicitní komentář „nesmí jít do produkce" a záznam v pre-launch checklistu.
+Formátový příklad ve formuláři (`+420 123 456 789`) je záměrně neutrální, ať ho nikdo
+nezamění za číslo firmy.
+
+## D-048 — `<dl>` snese jen `dt`/`dd`, i když prohlížeč nezlobí
+**Datum:** 2026-08-07 · **Zjistil:** Claude (opus) při code review
+Rozpad jednoho telefonu na dva vedl k `<dl> > <div> > <p>` a dalšímu vnořenému `<div>`.
+Vizuálně bez chyby, ale mimo spec: uvnitř `<dl>` smí být jen skupiny `dt`/`dd`, případně
+`<div>`, který obaluje **výhradně** `dt`/`dd`. Odečítač obrazovky pak hlásí jiný počet
+položek, než kolik jich na stránce je.
+Správný tvar pro „jeden termín, dvě hodnoty" je jedno `<dt>` a **dvě `<dd>`** (spec to
+výslovně dovoluje), ne dvojice zabalené do divů. Při opravě se stejná vada našla i v blocích
+IČO a mapy (`showMap`, tedy `/kontakt`) — ty definiční páry nejsou vůbec a přesunuly se ven
+z `<dl>` jako sourozenci.
+**Ověřuje se skriptem**, ne pohledem: projít `dl.children` a `div.children` a ohlásit každý
+tag mimo `DIV`/`DT`/`DD`.
