@@ -90,30 +90,36 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
     return (
       <div
         role="status"
-        className="animate-fade-up flex flex-col items-start gap-4 rounded-sm border border-wood-amber/40 bg-wood-amber/10 p-8"
+        className="animate-fade-up flex flex-col items-start gap-4 rounded-sm border border-patina/40 bg-patina/10 p-8"
       >
-        <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true">
+        <svg
+          width="40"
+          height="40"
+          viewBox="0 0 40 40"
+          aria-hidden="true"
+          className="text-patina"
+        >
           <circle
             cx="20"
             cy="20"
             r="18"
-            stroke="var(--wood-amber)"
+            stroke="currentColor"
             strokeWidth="1.4"
             fill="none"
           />
           <path
             d="M12 20.5 18 26 28 14"
-            stroke="var(--wood-amber)"
+            stroke="currentColor"
             strokeWidth="1.8"
             fill="none"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
         </svg>
-        <p className="font-display text-2xl italic text-cream">{t('success')}</p>
+        <p className="font-display text-2xl italic text-slate">{t('success')}</p>
         <button
           onClick={() => setStatus('idle')}
-          className="font-body text-xs uppercase tracking-widest text-wood-amber hover:text-wood-warm"
+          className="rounded-sm font-body text-xs uppercase tracking-widest text-patina transition-colors hover:text-patina-dim"
         >
           {t('submitAnother')}
         </button>
@@ -122,8 +128,8 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
   }
 
   const inputClass = (invalid?: boolean) =>
-    `w-full border-b bg-transparent py-3 font-body text-cream placeholder-cream/30 outline-none transition-colors duration-300 focus:border-wood-amber ${
-      invalid ? 'border-red-600/70' : 'border-cream/25'
+    `w-full rounded-sm border-b bg-transparent py-3 font-body text-slate placeholder-slate/30 outline-none transition-colors duration-300 focus:border-patina ${
+      invalid ? 'border-red-600/70' : 'border-slate/25'
     }`
 
   return (
@@ -144,14 +150,18 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
         <div>
           <label
             htmlFor={fid('name')}
-            className="mb-1 block font-body text-xs uppercase tracking-widest text-cream/60"
+            className="mb-1 block font-body text-xs uppercase tracking-widest text-slate/60"
           >
-            {t('name')} *
+            {t('name')}{' '}
+            <span aria-hidden="true" className="text-patina">
+              *
+            </span>
           </label>
           <input
             id={fid('name')}
             name="name"
             type="text"
+            required
             autoComplete="name"
             value={values.name}
             onChange={(e) => onChange('name', e.target.value)}
@@ -162,7 +172,7 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
             placeholder={t('namePlaceholder')}
           />
           {errors.name && (
-            <p id={fid('name-err')} className="mt-1 text-sm text-red-700">
+            <p id={fid('name-err')} role="alert" className="mt-1 text-sm text-red-700">
               {errors.name}
             </p>
           )}
@@ -171,14 +181,18 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
         <div>
           <label
             htmlFor={fid('phone')}
-            className="mb-1 block font-body text-xs uppercase tracking-widest text-cream/60"
+            className="mb-1 block font-body text-xs uppercase tracking-widest text-slate/60"
           >
-            {t('phone')} *
+            {t('phone')}{' '}
+            <span aria-hidden="true" className="text-patina">
+              *
+            </span>
           </label>
           <input
             id={fid('phone')}
             name="phone"
             type="tel"
+            required
             inputMode="tel"
             autoComplete="tel"
             value={values.phone}
@@ -186,11 +200,11 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
             onBlur={() => onBlur('phone')}
             aria-invalid={errors.phone ? 'true' : undefined}
             aria-describedby={errors.phone ? fid('phone-err') : undefined}
-            className={inputClass(!!errors.phone)}
+            className={`${inputClass(!!errors.phone)} font-mono`}
             placeholder="+420 777 123 456"
           />
           {errors.phone && (
-            <p id={fid('phone-err')} className="mt-1 text-sm text-red-700">
+            <p id={fid('phone-err')} role="alert" className="mt-1 text-sm text-red-700">
               {errors.phone}
             </p>
           )}
@@ -200,13 +214,17 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
       <div>
         <label
           htmlFor={fid('message')}
-          className="mb-1 block font-body text-xs uppercase tracking-widest text-cream/60"
+          className="mb-1 block font-body text-xs uppercase tracking-widest text-slate/60"
         >
-          {t('message')} *
+          {t('message')}{' '}
+          <span aria-hidden="true" className="text-patina">
+            *
+          </span>
         </label>
         <textarea
           id={fid('message')}
           name="message"
+          required
           rows={compact ? 3 : 4}
           value={values.message}
           onChange={(e) => onChange('message', e.target.value)}
@@ -217,7 +235,7 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
           placeholder={t('messagePlaceholder')}
         />
         {errors.message && (
-          <p id={fid('message-err')} className="mt-1 text-sm text-red-700">
+          <p id={fid('message-err')} role="alert" className="mt-1 text-sm text-red-700">
             {errors.message}
           </p>
         )}
@@ -232,12 +250,16 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
       <button
         type="submit"
         disabled={status === 'loading'}
-        className="inline-flex items-center justify-center gap-2 bg-wood-amber px-8 py-4 font-body text-sm font-medium uppercase tracking-widest text-charcoal transition-all duration-300 hover:bg-wood-light disabled:cursor-not-allowed disabled:opacity-70"
+        aria-busy={status === 'loading'}
+        className="inline-flex items-center justify-center gap-2 rounded-sm bg-patina px-8 py-4 font-body text-sm font-medium uppercase tracking-widest text-paper transition-all duration-300 hover:bg-patina-dim disabled:cursor-not-allowed disabled:opacity-70"
       >
         {status === 'loading' ? (
           <>
-            <span className="h-4 w-4 animate-spin rounded-full border-2 border-charcoal/30 border-t-charcoal" />
-            {t('submitting')}
+            <span
+              aria-hidden="true"
+              className="h-4 w-4 animate-spin rounded-full border-2 border-paper/30 border-t-paper"
+            />
+            <span role="status">{t('submitting')}</span>
           </>
         ) : (
           t('submit')
