@@ -12,29 +12,30 @@ function navLabel(t: (key: string) => string, source: NavLink['textSource']) {
   return source.ns === 'service' ? t(`services.${source.slug}.title`) : t(`nav.${source.key}`)
 }
 
+/* -------------------------------------------------------------------------- */
+/*  Header — wordmark viditelný okamžitě a vždy                                 */
+/*                                                                              */
+/*  V1 schovávala logo (`opacity-0`) nad Hero sekcí homepage s odůvodněním      */
+/*  „nese ho i dům" - dům žádný wordmark nenesl, takže nad ohybem nebyla        */
+/*  značka vůbec. V2 nemá žádný dům na landingu, takže logo i navigace jsou     */
+/*  vidět od prvního renderu, na homepage i všude jinde.                       */
+/*                                                                              */
+/*  Jediný stav, který hlavička sleduje, je `scrolled` (> 40px) - po odscroll-  */
+/*  ování se zúží (menší wordmark, `paper/90` + blur, spodní hairline).         */
+/* -------------------------------------------------------------------------- */
+
 export function Header() {
   const t = useTranslations('common')
   const tFull = useTranslations()
   const pathname = usePathname()
-  const isHome = pathname === '/'
-  const [pastHero, setPastHero] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
 
-  // Na homepage je menu skryté nad Hero sekcí (navigaci tam tvoří dům).
-  // Objeví se, jakmile uživatel odscrolluje pod Hero.
   useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 40)
-      setPastHero(window.scrollY > window.innerHeight - 140)
-    }
+    const onScroll = () => setScrolled(window.scrollY > 40)
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
-    window.addEventListener('resize', onScroll)
-    return () => {
-      window.removeEventListener('scroll', onScroll)
-      window.removeEventListener('resize', onScroll)
-    }
+    return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
   useEffect(() => {
@@ -48,38 +49,32 @@ export function Header() {
     }
   }, [menuOpen])
 
-  // Desktop navigace: na homepage až po Hero, jinde vždy.
-  const showNav = !isHome || pastHero
-  // Plné pozadí headeru: na homepage až po Hero, jinde po malém odscrollování.
-  // Při otevřeném menu zůstane průhledný — splyne s tmavým fullscreen overlayem.
-  const solid = !menuOpen && (isHome ? pastHero : scrolled)
+  // Zúžení headeru: na začátku stránky (nebo pokud je otevřené mobilní menu,
+  // které má vlastní tmavé pozadí) zůstává plně průhledný.
+  const solid = !menuOpen && scrolled
+  // 44px je zároveň minimální dotykový cíl (spec §6) — zúžený stav se u loga
+  // zastaví přesně na téhle hranici, ne níž.
+  const logoSize = solid ? 44 : 52
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-colors duration-500 ${
-        solid
-          ? 'border-b border-timber/50 bg-paper/85 backdrop-blur-md'
-          : 'bg-transparent'
+      className={`fixed inset-x-0 top-0 z-50 border-b transition-colors duration-500 ease-craft ${
+        solid ? 'border-timber/12 bg-paper/90 backdrop-blur-md' : 'border-transparent bg-transparent'
       }`}
     >
-      <div className="container-content flex items-center justify-between py-4">
-        {/* Logo je na homepage nad Hero redundantní (nese ho i dům) — objeví se
-            zároveň s horní navigací (po Hero / na podstránkách), menší. */}
+      <div
+        className={`container-content flex items-center justify-between transition-all duration-500 ease-craft ${
+          solid ? 'py-3' : 'py-5'
+        }`}
+      >
         <div
-          className={`transition-opacity duration-500 ${
-            showNav ? 'opacity-100' : 'pointer-events-none opacity-0'
-          }`}
-          aria-hidden={!showNav}
+          className="shrink-0 transition-all duration-500 ease-craft"
+          style={{ width: logoSize, height: logoSize }}
         >
-          <Logo size={56} tabIndex={showNav ? undefined : -1} />
+          <Logo size={logoSize} className="h-full w-full" />
         </div>
 
-        <nav
-          aria-label={t('mainNavAria')}
-          className={`hidden items-center gap-8 transition-opacity duration-500 lg:flex ${
-            showNav ? 'opacity-100' : 'pointer-events-none opacity-0'
-          }`}
-        >
+        <nav aria-label={t('mainNavAria')} className="hidden items-center gap-8 lg:flex">
           {navLinks.map((link) => {
             const active = pathname.startsWith(link.href)
             return (
@@ -87,9 +82,8 @@ export function Header() {
                 key={link.href}
                 href={link.href}
                 aria-current={active ? 'page' : undefined}
-                tabIndex={showNav ? undefined : -1}
-                className={`link-underline font-body text-xs uppercase tracking-widest transition-colors duration-300 ${
-                  active ? 'text-ember' : 'text-timber/80 hover:text-timber'
+                className={`font-mono text-xs uppercase tracking-widest transition-colors duration-300 ${
+                  active ? 'text-ember' : 'text-oak hover:text-timber'
                 }`}
               >
                 {navLabel(tFull, link.textSource)}
@@ -108,7 +102,7 @@ export function Header() {
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
             aria-label={menuOpen ? t('close') : t('menu')}
-            className="relative z-50 flex h-10 w-8 items-center justify-center lg:hidden"
+            className="relative z-50 flex h-11 w-11 items-center justify-center lg:hidden"
           >
             <span className="sr-only">{menuOpen ? t('close') : t('menu')}</span>
             <div className="flex w-6 flex-col items-end gap-[6px]">
@@ -132,13 +126,12 @@ export function Header() {
         </div>
       </div>
 
-      {/* Fullscreen overlay menu (mobil) — tmavé pozadí přes celou obrazovku */}
+      {/* Fullscreen overlay menu (mobil) — timber pole přes celou obrazovku.
+          #mobile-menu focus ring (ember-soft) je definovaný v app/globals.css. */}
       <div
         id="mobile-menu"
         className={`fixed inset-0 z-40 flex h-[100dvh] w-screen flex-col bg-timber transition-opacity duration-300 lg:hidden ${
-          menuOpen
-            ? 'pointer-events-auto opacity-100'
-            : 'pointer-events-none opacity-0'
+          menuOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
         }`}
       >
         <nav
@@ -150,7 +143,8 @@ export function Header() {
               key={link.href}
               href={link.href}
               tabIndex={menuOpen ? undefined : -1}
-              className="font-display text-4xl italic text-paper transition-colors duration-300 hover:text-ember-soft"
+              aria-current={pathname.startsWith(link.href) ? 'page' : undefined}
+              className="font-display text-4xl text-paper transition-colors duration-300 hover:text-ember-soft"
             >
               {navLabel(tFull, link.textSource)}
             </Link>

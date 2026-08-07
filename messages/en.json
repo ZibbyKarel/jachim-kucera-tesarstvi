@@ -12,10 +12,7 @@
     "mainNavAria": "Main navigation",
     "mobileNavAria": "Mobile navigation",
     "footerNavAria": "Footer navigation",
-    "houseNavAria": "Site map: parts of the house",
-    "mobileServicesNavAria": "Mobile services menu",
     "navigationHeading": "Navigation",
-    "footerDescription": "Honest carpentry, roofing and tinsmith work in the Pilsen region. We build roofs as if they were our own.",
     "allRightsReserved": "All rights reserved.",
     "icoLabel": "Company ID"
   },
@@ -27,11 +24,12 @@
     "contact": "Contact"
   },
   "home": {
-    "heroEyebrow": "Carpentry · Roofing · Tinsmithing",
-    "heroTitle": "Honest craftsmanship",
-    "heroCta": "Request a quote",
-    "heroAria": "Site map, interactive house",
-    "servicesIntro": "From the truss to the last gutter. Four crafts under one roof.",
+    "openerEyebrowFounded": "founded {year}",
+    "openerTitle": "Truss to gutter. Three trades, one crew.",
+    "openerLead": "Carpentry, roofing and tinsmithing in the Pilsen region.",
+    "openerCtaInquiry": "Get a free quote",
+    "openerCtaProjects": "See our work",
+    "serviceIndexHeading": "Crafts",
     "projectsIntro": "A part of what we have built across the Pilsen region in recent years.",
     "aboutHeadline": "We build roofs as if they were our own",
     "aboutCta": "Our story",
