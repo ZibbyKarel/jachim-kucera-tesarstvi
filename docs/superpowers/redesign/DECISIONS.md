@@ -765,3 +765,76 @@ viewportu (zůstávala 1696 CSS px bez ohledu na zadané rozměry), takže posun
 nebyl ověřen screenshotem - jen výpočtem gutteru z `container-content`. Strop je odvozený
 přímo ze stejných konstant jako `.container-content` v `globals.css`, takže by měl sedět,
 ale reálný vizuální check na užších šířkách zbývá.
+
+## D-061 — Velké logo v mobilním hero, dočasně schované v hlavičce
+**Datum:** 2026-08-07 · **Rozhodl:** uživatel (klient), zapsal Claude (sonnet)
+Klient: „Hero sekce je nějaká zvláštní tak že horní půlka stránky je prázdná. Možná by
+stálo za to tam dát velké logo firmy (a zároveň ho odstranit z topbaru dokud uživatel
+nesescrolluje dostatečně nízko. Pak bychom ho v topbaru znovu zobrazili)". Pod `lg`
+(<1024px) `OpenerHouse` nic nekreslí (je `hidden lg:block`, viz její vlastní komentář),
+takže tam nad textem hero sekce zíval prázdný prostor - přesně to samé místo, kam na
+desktopu kreslí 3D dům.
+
+**Řešení, dvě části:**
+1. `Opener.tsx` - velké dekorativní logo (`logo_2.png`, stejný lockup jako v hlavičce)
+   v obalu `flex flex-1 items-center justify-center lg:hidden`. Sekce je
+   `flex-col justify-end` s jediným flow-dítětem dřív (`container-content`, dům i grain
+   jsou `absolute`) - přidáním druhého flow-dítěte s `flex-1` se ono samo natáhne přes
+   celý volný prostor nad textem, bez nutnosti dolaďovat pevné odsazení podle výšky
+   hlavičky nebo délky překladu nadpisu. `aria-hidden`, žádný `<Link>` (jsme už na
+   homepage). `id="mobile-hero-logo"` je cíl pro `IntersectionObserver` v `Header.tsx`.
+2. `Header.tsx` - logo v hlavičce dostane `opacity-0` + `pointer-events-none` +
+   `tabIndex={-1}` + `aria-hidden`, dokud platí všechny tři podmínky zároveň: jsme na
+   homepage (`pathname === '/'`), viewport je `<1024px` (`matchMedia`, stejný vzor jako
+   `OpenerHouse`'s `DESKTOP_QUERY`) a `#mobile-hero-logo` je v `IntersectionObserver`u
+   pořád `isIntersecting`. Jakmile kterákoli podmínka přestane platit (odscrolluje se pryč,
+   zvětší se okno, přejde se na jinou stránku), logo v hlavičce se vrátí. `Logo.tsx` dostal
+   nový prop `ariaHidden` (a `LOGO_ASPECT_RATIO` je teď exportovaná, aby ji `Opener.tsx`
+   nemusel duplikovat).
+
+**Proč IntersectionObserver, ne pevný scroll práh:** výška hero sekce se liší podle
+jazyka (CS/EN mají různě dlouhý překlad nadpisu) i podle toho, jestli je hlavička zúžená.
+Pozorování skutečného loga v hero sekci je vůči tomu imunní - hlavička se vrátí přesně
+ve chvíli, kdy hero logo zmizí z viewportu, ne podle odhadnutého počtu pixelů.
+
+**Bug nalezený a opravený při ověřování:** simulace mobilního viewportu (386×840 přes
+`<iframe>`, viz D-062 pro proč přes iframe) ukázala, že když součet loga a textového
+bloku přesáhne `min-h` sekce (viz D-062), nemá `flex-1` žádný volný prostor k rozdělení a
+logo se přilepí na `top: 0` - **pod fixní hlavičku** (ta má na mobilu nescrollovaná ~85px).
+Oprava: `pt-28` natvrdo na obalu loga (stejná hodnota jako `pt-*` na `container-content`
+níž) jako pojistka, co platí bez ohledu na to, jestli `flex-1` má co rozdělovat.
+
+**Neověřeno automatizovaně - IntersectionObserver:** `resize_window` v této session
+neměnil skutečnou šířku okna (zůstal `develop`-branch problém z D-060), takže mobilní
+layout byl testovaný přes `<iframe src="/cs" width="390" height="844">` vložený do
+prázdné stránky - funguje, protože iframe má vlastní layout viewport nezávislý na
+skutečném okně prohlížeče (potvrzeno: `contentWindow.innerWidth` uvnitř iframe = 386,
+`svh`/`vw` se počítají z toho, ne z okna). Tímhle způsobem šlo ověřit počáteční stav
+(logo v hlavičce schované, hero logo viditelné, žádný překryv s hlavičkou) i finální
+opravu `pt-28`. **Samotný scroll-triggered reveal (IntersectionObserver callback po
+scrollnutí) ověřit nešlo** - ani vlastní testovací `IntersectionObserver` nedostal
+během testu jediný callback (ani počáteční), což ukazuje na omezení automatizačního
+prostředí (pravděpodobně needs-visible-tab throttling), ne na chybu v kódu. Logika
+1:1 kopíruje už fungující `matchMedia` vzor z `OpenerHouse.tsx`. Doporučení: rychlý
+ruční scroll-check v běžném prohlížeči, než se tohle prezentuje.
+
+## D-062 — Sekce hero má strop výšky, ne jen `88svh` bez limitu
+**Datum:** 2026-08-07 · **Rozhodl:** uživatel (klient), zapsal Claude (sonnet)
+Klient (v návaznosti na D-061): „stejně se tak tomu děje i na větších rozlišeních.
+Content hero sekce je dole a vršek pak vypadá hodně prázdný." `min-h-[88svh]` roste s
+výškou okna bez horní meze - na notebookovém displeji (~830-930px výšky) to vypadalo v
+pořádku, ale na vysokém externím monitoru (1080p+) rostla prázdná plocha nad textem bez
+omezení, protože obsahový blok dole má prakticky konstantní výšku (`<h1>` je omezené na
+`max-w-[14ch]`, počet řádků se nemění podle šířky/výšky okna).
+
+**Řešení:** `min-h-[88svh]` → `min-h-[min(88svh,820px)]` - strop, ne floor. Pod 932px
+výšky okna (kde 88 % dá ≤820px) se sekce chová identicky jako dřív, nad tím přestane
+růst. 820px odpovídá tomu, jak sekce vypadala (a vypadala v pořádku, klient si na ni
+nestěžoval) na běžné notebookové výšce - naměřeno na 929px: `min-h` vyšlo 817px. Cíl je
+zamrazit dnešní schválený poměr, ne redesignovat rozvržení hero sekce od nuly.
+
+**Neověřeno vizuálně nad 932px výšky okna:** fyzický displej tohoto automatizačního
+prostředí neumožnil `resize_window` nad ~929px výšky (požadavek na 1920×1400 skončil na
+1920×929 - pravděpodobně limit skutečné obrazovky stroje). Oprava je čistě aritmetická
+(`min()` nad existující `88svh`), takže riziko regrese je nízké, ale skutečný vizuální
+check na 1080p+ monitoru zbývá - doporučeno klientovi před prezentací.
