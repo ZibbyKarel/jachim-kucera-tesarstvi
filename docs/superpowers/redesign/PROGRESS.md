@@ -324,3 +324,21 @@ Adresa ale potvrzuje tvrzení „Plzeňský kraj" v textech, které do teď dolo
 
 **Zbývá:** seznam certifikátů na `/o-nas` (celý, ne jen záruka), potvrzení ohlasů,
 rozhodnutí o truhlářině.
+
+## Doladění 4 (2026-08-07) — dvojnásobný dům, mapa pryč
+
+Uživatel: „dům v hero sekci může být minimálně 2x tak velký" a „odstraň ze sekce kontakt
+,pozici na mapě', je to k ničemu, je to jen placeholder".
+
+- [x] **Dům 2×** — `w-[clamp(260px,24vw,345px)]` → `w-[clamp(520px,48vw,690px)]`
+      v `OpenerHouse.tsx`. Výška z 186-246px na 371-493px. Poměr stran ani `bottom-28`
+      se nemění, `SceneManager` rámuje podle aspectu, takže kresba roste přesně 2×.
+      Vědomě tím padá podmínka z D-044, že se dům se sazbou nikdy nepotká - od 1440px
+      se překrývá s koncem `<h1>`, text kreslí přes dům (`z-10` vs `z-0`). D-056.
+- [x] **„Mapa" v kontaktu pryč** — prop `showMap`, SVG blok i klíče `contact.mapAriaLabel`
+      a `contact.mapCityLabel` v cs/en. `ContactSection` má zase jen `heading`
+      a `description`. Oblast působnosti drží textový řádek „Provozní oblast". D-057.
+- [x] **Ověřeno** — Playwright screenshoty hero na 1024/1280/1440/1920 (dům se sazbou
+      koliduje jen na 1440/1920, a jen patkou posledního řádku `<h1>`), `/kontakt`
+      v cs i en a na 390px, kontaktní sekce homepage. `tsc --noEmit`, `next lint`
+      a produkční build prošly bez chyb.

@@ -46,22 +46,30 @@ export function OpenerHouse() {
     // „trochu větší" a zároveň zmenšit nadpis - obojí spolu souvisí: menší <h1>
     // uvolnilo prostor NAD původním stropem vrstvy, který dřív zabíral text.
     //
-    // - `w-[clamp(260px,24vw,345px)]` - `aspect-[7/5]` z toho dělá výšku
-    //   186-246px (dřív 171-214px). Strop 345px není nahodilý: <h1> i lead
-    //   odstavec mají `max-w-[14ch]`/`max-w-[46ch]`, takže i když vrstva svým
-    //   horním okrajem zasahuje do výšky <h1> (na 1440/1920px), jejich
-    //   bounding boxy se vodorovně nikdy nepotkají - mezera mezi pravým
-    //   okrajem <h1> a pravým okrajem sloupce je i na nejužší 1920px
-    //   kombinaci přes 360px, vrstva široká 345px se do ní i s rezervou
-    //   vejde. Ověřeno `getBoundingClientRect()` průnikem (žádný) s <h1>,
-    //   lead odstavcem, statistikami i řádkem CTA na všech čtyřech šířkách.
+    // 2026-08-07 klient znovu: „dům může být klidně 2x tak velký". Celý clamp
+    // se proto znásobil dvěma - `w-[clamp(260px,24vw,345px)]` →
+    // `w-[clamp(520px,48vw,690px)]`, přesně dvojnásobek na všech třech větvích.
+    // `aspect-[7/5]` z toho dělá výšku 371-493px (dřív 186-246px). Protože
+    // SceneManager rámuje dům podle poměru stran canvasu (ten se nemění),
+    // dvojnásobný canvas = dvojnásobně velká kresba.
+    //
+    // - Původní strop 345px byl vybraný tak, aby se bounding boxy vrstvy a
+    //   <h1>/lead nikdy nepotkaly. **Ta podmínka teď záměrně neplatí.** Dvojnásobný
+    //   dům se do mezery vpravo od sazby nevejde, takže se od 1440px vodorovně
+    //   překrývá s koncem <h1> (poslední řádek + čárka za „řemesla,"). Vrstva
+    //   zůstává `z-0` a textový sloupec `z-10`, takže text kreslí přes dům, ne
+    //   naopak - čitelnost drží kontrast tmavého písma na světlé stěně.
+    //   Změřeno Playwrightem na 1024/1280/1440/1920 px: na 1024 a 1280 se
+    //   kresba se sazbou vůbec nepotkává, na 1440/1920 se dotýká jen patka
+    //   posledního řádku <h1>. Lead odstavec, statistiky ani CTA nikde.
     // - `bottom-28` (112px od spodku sekce), ne `bottom-24` (96px) - se 96px
     //   spodek vrstvy o ~8px zasahoval do bounding boxu řádku CTA (změřeno,
     //   viditelně to nevadilo, protože samotná kresba domu do canvasu
     //   nesahá až na jeho okraj, ale bounding box ano). 112px dává vrstvě
-    //   jistých ~8px vzduchu nad CTA na všech čtyřech šířkách. Při výšce
-    //   viewportu 720px zůstává pata vrstvy vždy nad ohybem (nejhorší případ
-    //   ~608px na 1920px, viz naměřená tabulka v handoff/PR).
+    //   jistých ~8px vzduchu nad CTA na všech čtyřech šířkách. Po zvětšení
+    //   domu se `bottom-28` nemění - vrstva roste nahoru, ne dolů, takže
+    //   vzduch nad CTA zůstává (změřeno: spodek canvasu 592-609px, řádek CTA
+    //   začíná níž na všech čtyřech šířkách).
     //
     // Vodorovně se vrstva váže na textový sloupec (`container-content`), ne na
     // okraj viewportu: `right-0` na sekci vypadalo dobře do ~1440px, ale nad
@@ -75,7 +83,7 @@ export function OpenerHouse() {
       className="pointer-events-none absolute inset-x-0 bottom-28 z-0 hidden lg:block"
     >
       <div className="container-content">
-        <div className="ml-auto aspect-[7/5] w-[clamp(260px,24vw,345px)]">
+        <div className="ml-auto aspect-[7/5] w-[clamp(520px,48vw,690px)]">
           <House3DScene className="h-full w-full" transparent interactive={false} playIntro />
         </div>
       </div>
