@@ -4,6 +4,7 @@ import { Reveal } from '@/components/ui/Reveal'
 import { Timeline } from '@/components/sections/Timeline'
 import { Link } from '@/i18n/routing'
 import { Arrow } from '@/components/ui/Button'
+import { people } from '@/lib/constants'
 
 export async function generateMetadata({
   params,
@@ -79,6 +80,38 @@ export default async function ONasPage({
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Lidé ve firmě — dva OSVČ, jen jméno, IČO a telefon. Žádné role, tituly
+          ani vymyšlené životopisy - klient neřekl, kdo dělá co. Stejný rytmus
+          hairline řádků jako sekce „Hodnoty" níže, ne karty. */}
+      <section aria-labelledby="team-heading" className="bg-paper py-20 md:py-28">
+        <div className="container-content">
+          <h2 id="team-heading" className="font-mono text-xs uppercase tracking-widest text-oak">
+            {t('teamHeading')}
+          </h2>
+          <Reveal stagger className="mt-12 border-t border-timber/20">
+            {people.map((person) => (
+              <div
+                key={person.key}
+                data-reveal-item
+                className="flex flex-col gap-2 border-b border-timber/20 py-8 md:flex-row md:items-baseline md:gap-10"
+              >
+                <h3 className="font-display text-xl text-timber md:w-64 md:shrink-0">
+                  {person.name}
+                </h3>
+                <div className="flex flex-col gap-1 font-mono text-sm text-oak sm:flex-row sm:gap-6">
+                  <span>
+                    {tCommon('companyIdLabel')} {person.companyId}
+                  </span>
+                  <a href={`tel:${person.phoneHref}`} className="link-underline w-fit text-timber">
+                    {person.phone}
+                  </a>
+                </div>
+              </div>
+            ))}
+          </Reveal>
         </div>
       </section>
 

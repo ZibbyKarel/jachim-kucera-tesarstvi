@@ -14,7 +14,7 @@
     "footerNavAria": "Footer navigation",
     "languageSwitcherAria": "Language choice",
     "allRightsReserved": "All rights reserved.",
-    "icoLabel": "Company ID"
+    "companyIdLabel": "Company ID"
   },
   "nav": {
     "home": "Home",
@@ -73,7 +73,7 @@
     "errors": {
       "nameRequired": "Please enter your name.",
       "phoneRequired": "Please enter your phone number.",
-      "phoneInvalid": "Enter a phone number like +420 777 123 456.",
+      "phoneInvalid": "Enter a phone number like +420 123 456 789.",
       "messageRequired": "Please write a short message.",
       "generic": "We couldn't send your message. Please call us directly at {phone}."
     },
@@ -85,6 +85,7 @@
     "heroTitle": "Who builds it",
     "heroQuote": "We're not a big company, and we don't want to be. We take on only as much work as we can do properly.",
     "storyAria": "Company story",
+    "teamHeading": "The people behind it",
     "story": [
       "We're Jáchim and Kučera, and we've been working on roofs for over fifteen years. We started out as trained carpenters in the Pilsen region, and today we run our own crew you can rely on. We build every roof as if it were our own.",
       "Over the years we added roofing and tinsmithing to our carpentry work, so we can hand a customer a finished roof from the truss to the last gutter, without them having to chase down three different companies and keep track of who's responsible for what. It's all under one roof, literally.",

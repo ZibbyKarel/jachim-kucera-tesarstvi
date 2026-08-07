@@ -1,32 +1,46 @@
-import type { NavLink, Project, Service } from './types'
-
-export const SITE = {
-  name: 'Jáchim & Kučera, tesařství',
-  shortName: 'Jáchim & Kučera',
-  url: 'https://jachim-kucera-tesarstvi.cz',
-  phone: '+420 608 212 410',
-  phoneHref: '+420608212410',
-  email: 'info@jachim-kucera-tesarstvi.cz',
-} as const
+import type { NavLink, Person, Project, Service } from './types'
 
 /* -------------------------------------------------------------------------- */
-/*  Kontaktní osoby — dva společníci, každý se svým IČ a telefonem            */
+/*  Lidé — firma jsou dva OSVČ, každý s vlastním IČO, ne jedna právnická       */
+/*  osoba. Pořadí odpovídá jménu firmy „Jáchim & Kučera" - Petr Jáchim první.  */
+/*  Údaje dodal klient, opisují se znak po znaku (žádné role, tituly, e-maily  */
+/*  ani biografie - nikdo neřekl, kdo je „šéf").                               */
 /* -------------------------------------------------------------------------- */
 
-export const contacts = [
+export const people: Person[] = [
   {
+    key: 'jachim',
     name: 'Petr Jáchim',
-    ic: '47748303',
+    companyId: '47748303',
     phone: '+420 608 212 410',
     phoneHref: '+420608212410',
   },
   {
+    key: 'kucera',
     name: 'Milan Kučera',
-    ic: '29640113',
+    companyId: '29640113',
     phone: '+420 725 443 271',
     phoneHref: '+420725443271',
   },
-] as const
+]
+
+export const SITE = {
+  name: 'Jáchim & Kučera, tesařství',
+  shortName: 'Jáchim & Kučera',
+  // PLACEHOLDER — skutečnou doménu klient zatím nedodal, tohle je vymyšlená
+  // hodnota z prvního commitu redesignu. Nesmí jít do produkce beze změny -
+  // sleduje pre-launch checklist v docs/superpowers/redesign/PROGRESS.md.
+  url: 'https://jachim-kucera-tesarstvi.cz',
+  // Hlavní číslo je Petr Jáchim, protože je první ve jméně firmy. Používá se
+  // v JSON-LD (app/[locale]/layout.tsx, kde jde navíc pole obou čísel) a jako
+  // fallback při chybě odeslání v ContactForm.
+  phone: people[0].phone,
+  phoneHref: people[0].phoneHref,
+  // PLACEHOLDER — skutečný e-mail klient zatím nedodal, tohle je vymyšlená
+  // hodnota z prvního commitu redesignu. Nesmí jít do produkce beze změny -
+  // sleduje pre-launch checklist v docs/superpowers/redesign/PROGRESS.md.
+  email: 'info@jachim-kucera-tesarstvi.cz',
+} as const
 
 /* -------------------------------------------------------------------------- */
 /*  Služby — texty žijí v messages/{locale}.json pod services.<slug>          */

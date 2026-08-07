@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server'
 import { routing } from '@/i18n/routing'
-import { SITE } from '@/lib/constants'
+import { SITE, people } from '@/lib/constants'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import '../globals.css'
@@ -108,7 +108,9 @@ function buildJsonLd(tSeo: SeoTranslator, locale: string) {
     name: SITE.shortName,
     description: tSeo('jsonLdDescription'),
     url: SITE.url,
-    telephone: SITE.phone,
+    // Firma jsou dva OSVČ, každý s vlastním číslem - schema.org/telephone
+    // přijímá pole, takže se publikují obě, ne jen to hlavní ze SITE.phone.
+    telephone: people.map((person) => person.phone),
     email: SITE.email,
     image: `${SITE.url}/logo.jpg`,
     priceRange: '$$',

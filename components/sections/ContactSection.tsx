@@ -1,7 +1,7 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { SITE } from '@/lib/constants'
+import { SITE, people } from '@/lib/constants'
 import { ContactForm } from '@/components/ui/ContactForm'
 import { Reveal } from '@/components/ui/Reveal'
 
@@ -51,17 +51,24 @@ export function ContactSection({
         >
           <dl className="flex flex-col gap-8">
             <div>
-              <dt className="font-mono text-xs uppercase tracking-widest text-oak-soft">
+              <p className="font-mono text-xs uppercase tracking-widest text-oak-soft">
                 {t('contact.phone')}
-              </dt>
-              <dd className="mt-2">
-                <a
-                  href={`tel:${SITE.phoneHref}`}
-                  className="link-underline inline-block font-mono text-[clamp(1.5rem,2.5vw,2.25rem)] text-paper"
-                >
-                  {SITE.phone}
-                </a>
-              </dd>
+              </p>
+              <div className="mt-3 flex flex-col gap-5">
+                {people.map((person) => (
+                  <div key={person.key}>
+                    <dt className="font-mono text-sm text-oak-soft">{person.name}</dt>
+                    <dd className="mt-1">
+                      <a
+                        href={`tel:${person.phoneHref}`}
+                        className="link-underline inline-block font-mono text-[clamp(1.5rem,2.5vw,2.25rem)] text-paper"
+                      >
+                        {person.phone}
+                      </a>
+                    </dd>
+                  </div>
+                ))}
+              </div>
             </div>
 
             <div>
@@ -86,7 +93,13 @@ export function ContactSection({
             </div>
 
             <div className="border-t border-paper/40 pt-6">
-              <p className="font-mono text-sm text-oak-soft">{t('common.companyIdLabel')}</p>
+              <div className="flex flex-col gap-1">
+                {people.map((person) => (
+                  <p key={person.key} className="font-mono text-sm text-oak-soft">
+                    {person.name} · {t('common.companyIdLabel')} {person.companyId}
+                  </p>
+                ))}
+              </div>
             </div>
 
             {showMap && (

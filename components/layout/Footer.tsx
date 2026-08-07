@@ -1,6 +1,6 @@
 import { useTranslations } from 'next-intl'
 import { Link } from '@/i18n/routing'
-import { SITE, contacts, navLinks } from '@/lib/constants'
+import { SITE, navLinks, people } from '@/lib/constants'
 import type { NavLink } from '@/lib/types'
 import { Logo } from './Logo'
 
@@ -42,15 +42,17 @@ export function Footer() {
           ))}
         </nav>
 
-        <div className="flex flex-col gap-2 font-mono text-sm">
-          {contacts.map((contact) => (
-            <a
-              key={contact.phoneHref}
-              href={`tel:${contact.phoneHref}`}
-              className="link-underline w-fit text-paper"
-            >
-              {contact.name} — {contact.phone}
-            </a>
+        <div className="flex flex-col gap-4 font-mono text-sm">
+          {people.map((person) => (
+            <div key={person.key} className="flex flex-col gap-1">
+              <span className="text-oak-soft">{person.name}</span>
+              <a
+                href={`tel:${person.phoneHref}`}
+                className="link-underline w-fit text-paper"
+              >
+                {person.phone}
+              </a>
+            </div>
           ))}
           <a href={`mailto:${SITE.email}`} className="link-underline w-fit text-paper">
             {SITE.email}
@@ -58,12 +60,16 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="container-content flex flex-col gap-2 border-t border-paper/15 py-6 font-body text-xs text-oak-soft sm:flex-row sm:items-center sm:justify-between">
-        <p>
-          {contacts
-            .map((contact) => `${contact.name} ${t('common.icoLabel')} ${contact.ic}`)
-            .join(' · ')}
-        </p>
+      <div className="container-content flex flex-col gap-4 border-t border-paper/15 py-6 font-body text-xs text-oak-soft sm:flex-row sm:items-center sm:justify-between">
+        {/* Skutečné IČO dodal klient (viz D-019), hodnoty žijí v lib/constants.ts. */}
+        <div className="flex flex-col gap-1">
+          {people.map((person) => (
+            <p key={person.key}>
+              {person.name} · {t('common.companyIdLabel')} {person.companyId}
+            </p>
+          ))}
+          <p>{t('common.region')}</p>
+        </div>
         <p>
           © {year} {SITE.name}. {t('common.allRightsReserved')}
         </p>

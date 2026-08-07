@@ -6,7 +6,7 @@ import { SITE } from '@/lib/constants'
 
 type FieldErrors = Partial<Record<'name' | 'phone' | 'message', string>>
 
-// Volné CZ/SK telefonní formáty: +420 777 123 456, 777123456, 00420…
+// Volné CZ/SK telefonní formáty: +420 123 456 789, 123456789, 00420…
 const PHONE_RE = /^(\+|00)?\d[\d\s/-]{7,15}$/
 
 export function ContactForm({ compact = false }: { compact?: boolean }) {
@@ -206,7 +206,7 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
             aria-invalid={errors.phone ? 'true' : undefined}
             aria-describedby={errors.phone ? fid('phone-err') : undefined}
             className={`${inputClass(!!errors.phone)} font-mono`}
-            placeholder="+420 777 123 456"
+            placeholder="+420 123 456 789"
           />
           {errors.phone && (
             <p id={fid('phone-err')} role="alert" className="mt-1 text-sm text-red-700">

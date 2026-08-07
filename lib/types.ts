@@ -28,3 +28,11 @@ export interface NavLink {
   href: string
   textSource: { ns: 'service'; slug: ServiceSlug } | { ns: 'nav'; key: 'projects' | 'about' | 'contact' }
 }
+
+export interface Person {
+  key: string
+  name: string
+  companyId: string
+  phone: string
+  phoneHref: string
+}
