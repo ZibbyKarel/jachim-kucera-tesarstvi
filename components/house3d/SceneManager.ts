@@ -16,26 +16,58 @@ import { CAMERA, COLORS, MENU, type MenuId } from './config'
 const DEG = Math.PI / 180
 const WORLD_UP = new THREE.Vector3(0, 1, 0)
 
+/** Vrátí všech 8 rohů Box3 jako Vector3 (pro `fitDistance` - viz tam). Sdílená
+    pomocná funkce, protože `measureHouse` teď měří DVĚ verze boxu (s plotem
+    i bez něj), ne jednu. */
+function boxCorners(box: THREE.Box3): THREE.Vector3[] {
+  const { min, max } = box
+  return [
+    new THREE.Vector3(min.x, min.y, min.z),
+    new THREE.Vector3(min.x, min.y, max.z),
+    new THREE.Vector3(min.x, max.y, min.z),
+    new THREE.Vector3(min.x, max.y, max.z),
+    new THREE.Vector3(max.x, min.y, min.z),
+    new THREE.Vector3(max.x, min.y, max.z),
+    new THREE.Vector3(max.x, max.y, min.z),
+    new THREE.Vector3(max.x, max.y, max.z),
+  ]
+}
+
 /* Rezerva kolem domu při „fitu" do viewportu. `fitDistance` teď počítá PŘESNOU
    vzdálenost, na kterou se dům celý (všech 8 rohů jeho skutečného Box3) vejde
    do frustumu - viz níže. Tahle konstanta je proto čistý násobitel „vzduchu
-   kolem kresby": 1.0 = dům přesně na hraně rámu (edge-to-edge, nic navíc),
-   1.3 = kolem domu je navíc ~30 % vzdálenosti prostoru. Není to už (jako dřív)
+   kolem kresby": 1.0 = Box3 přesně na hraně rámu (edge-to-edge, nic navíc),
+   1.3 = kolem BOXU je navíc ~30 % vzdálenosti prostoru. Není to už (jako dřív)
    kompenzace za podhodnocený odhad rozměrů - odhad je pryč, fit je exaktní.
+
+   POZOR na rozdíl mezi „box na hraně rámu" a „kresba vyplňuje rám": Box3 je
+   osově zarovnaný (world-space X/Y/Z), ale kamera je natočená šikmo (azimuth/
+   elevation v CAMERA) - jeho 8 rohů jsou matematické kombinace min/max, skoro
+   nikdy ne skutečné body domu. Při pohledu zešikma proto i margin=1.0 (box
+   přesně na hraně) nechá kolem SKUTEČNÉ kresby čitelnou mezeru - u tohohle
+   domu (viz `measureHouse`) naměřeno cca 55-57 % šířky/výšky vrstvy při
+   margin=1.0 u dekorace, ne 100 %. Menší margin sice kresbu zvětší, ale POD
+   1.0 garantovaně ořízne (viz komentář u `fitDistance`) - proto se margin pro
+   DECOR ladí NAD 1.0, empiricky proti naměřenému ink-fill (Playwright +
+   ořez pozadí), ne proti nominálnímu významu „1.0 = 100 % rámu".
+
    Tři různé hodnoty podle toho, co ten vzduch spotřebuje:
    - FIT_MARGIN_SOLO: samostatný /nahled-3d, jen tenký okraj, ať dům zabírá
      co nejvíc rámu.
    - FIT_MARGIN_HERO: transparentní A interaktivní varianta (menu labely by
      bydlely v pevných sloupcích u kraje - dnes nepoužito, ale rezervováno).
    - FIT_MARGIN_DECOR: dekorativní hero dům (`interactive === false`,
-     OpenerHouse) - žádné labely, žádný overlay, takže velká rezerva HERO by
-     šla doslova na nic. Menší než HERO, ale pořád o kousek víc než SOLO, ať
-     dům nesedí nalepený na hraně svého rámu.
+     OpenerHouse) - žádné labely, žádný overlay. Stejná hodnota jako SOLO -
+     bez plotu v boxu (viz `selectHouseGeometry`) je „o kousek víc než SOLO"
+     zbytečné, dům smí zabrat rámu stejně tolik. Menší než 1.08 (zkoušeno
+     1.03/0.68 při ladění) buď ořízlo pergolu/vstup, nebo nedalo žádnou
+     rezervu na antialiasing tlustých čar (`LineMaterial`) při změně velikosti
+     canvasu mezi šířkami.
    Pořadí konstant je: interaktivita (SOLO/HERO) > co je vlastně dekorace
    (DECOR) - viz `this.fitMargin` v konstruktoru. */
 const FIT_MARGIN_HERO = 1.55
 const FIT_MARGIN_SOLO = 1.08
-const FIT_MARGIN_DECOR = 1.16
+const FIT_MARGIN_DECOR = 1.08
 
 export interface SceneOptions {
   onMenuSelect: (id: MenuId) => void
@@ -90,11 +122,23 @@ export class SceneManager {
 
   private fitMargin = FIT_MARGIN_SOLO
 
-  // Skutečné hranice domu (world-space Box3 z `house.root`) a jeho střed —
-  // spočítané JEDNOU v konstruktoru (viz `measureHouse`), ne každý frame.
-  // `houseCorners` = všech 8 rohů toho Box3, cachované jako Vector3 pro
-  // `fitDistance` (přesný fit kamery, viz tam).
-  private houseBox = new THREE.Box3()
+  // Skutečné hranice domu (world-space Box3 z `house.root`) — měřené DVAKRÁT
+  // v konstruktoru (viz `measureHouse`), ne každý frame: jednou VČETNĚ plotu,
+  // jednou BEZ něj. Plot totiž bývá skrytý (`house.fence.group.visible`,
+  // viz `resize()`, `w > 768`) a `Box3.setFromObject` viditelnost IGNORUJE
+  // (ověřeno testem na three 0.185.0 - schovaný objekt box stejně nafoukne,
+  // zdroj `expandByObject` netestuje `object.visible` vůbec) - fit na skrytou
+  // geometrii je přesně to, co dělalo dekorativní hero dům malým a mimo
+  // střed. `houseCenter`/`houseCorners` = AKTUÁLNÍ výběr z dvojice níž,
+  // přepočítá ho `selectHouseGeometry()` podle právě nastavené viditelnosti
+  // plotu - `fitDistance` i cíl OrbitControls tak vždy čtou ZE STEJNÉHO boxu.
+  private houseBoxFull = new THREE.Box3()
+  private houseCenterFull = new THREE.Vector3()
+  private houseCornersFull: THREE.Vector3[] = []
+  private houseBoxNoFence = new THREE.Box3()
+  private houseCenterNoFence = new THREE.Vector3()
+  private houseCornersNoFence: THREE.Vector3[] = []
+
   private houseCenter = new THREE.Vector3()
   private houseCorners: THREE.Vector3[] = []
 
@@ -231,23 +275,45 @@ export class SceneManager {
 
   /** Spočítá skutečné hranice domu (world-space Box3 z `house.root` - BEZ
       zemní roviny, ta žije samostatně přímo ve `scene`, ne pod `house.root`,
-      viz `setupGround`) a jeho 8 rohů. Voláno JEDNOU (konstruktor) - dům je
-      po sestavení statická geometrie (intro mění jen opacity materiálů,
-      ne vertexy), takže se cache nikdy neinvaliduje. */
+      viz `setupGround`) DVAKRÁT: jednou celý dům (plot obepíná CELÝ pozemek,
+      viz komentář u `buildFence` v HouseModelu), jednou bez plotu. Voláno
+      JEDNOU (konstruktor) - dům je po sestavení statická geometrie (intro
+      mění jen opacity materiálů, ne vertexy), takže se cache nikdy
+      neinvaliduje.
+
+      Plot NEJDE vyloučit nastavením `visible = false` a pak změřit -
+      `Box3.setFromObject` viditelnost ignoruje (ověřeno testem, three
+      0.185.0: schovaný objekt daleko od zbytku geometrie box i tak nafoukl -
+      zdroj `expandByObject` nikde netestuje `object.visible`). Plot proto na
+      chvíli fyzicky vyjmeme ze stromu (`root.remove`/`root.add`), ne
+      schováme - a vrátíme přesně na konec, jako při stavbě v HouseModelu
+      (`buildFence` je poslední `this.all.push`, takže `root.add` pořadí
+      dětí/render order nezmění). */
   private measureHouse(): void {
-    this.houseBox.setFromObject(this.house.root)
-    this.houseBox.getCenter(this.houseCenter)
-    const { min, max } = this.houseBox
-    this.houseCorners = [
-      new THREE.Vector3(min.x, min.y, min.z),
-      new THREE.Vector3(min.x, min.y, max.z),
-      new THREE.Vector3(min.x, max.y, min.z),
-      new THREE.Vector3(min.x, max.y, max.z),
-      new THREE.Vector3(max.x, min.y, min.z),
-      new THREE.Vector3(max.x, min.y, max.z),
-      new THREE.Vector3(max.x, max.y, min.z),
-      new THREE.Vector3(max.x, max.y, max.z),
-    ]
+    this.houseBoxFull.setFromObject(this.house.root)
+    this.houseBoxFull.getCenter(this.houseCenterFull)
+    this.houseCornersFull = boxCorners(this.houseBoxFull)
+
+    this.house.root.remove(this.house.fence.group)
+    this.houseBoxNoFence.setFromObject(this.house.root)
+    this.houseBoxNoFence.getCenter(this.houseCenterNoFence)
+    this.houseCornersNoFence = boxCorners(this.houseBoxNoFence)
+    this.house.root.add(this.house.fence.group)
+
+    this.selectHouseGeometry()
+  }
+
+  /** Vybere z dvojice boxů předpočítaných v `measureHouse` ten, který
+      odpovídá PRÁVĚ NASTAVENÉ viditelnosti plotu (`house.fence.group.visible`
+      - `resize()` ji nastavuje TĚSNĚ PŘED voláním této metody, viz tam).
+      `houseCenter`/`houseCorners` pak čtou `fitDistance` i cíl OrbitControls
+      (`controls.target`), takže fit distance a cíl kamery vždycky sedí na
+      STEJNOU geometrii - míchání dvou různých boxů mezi distance a targetem
+      byla původní příčina malého/mimostředého domu v hero. */
+  private selectHouseGeometry(): void {
+    const withFence = this.house.fence.group.visible
+    this.houseCenter.copy(withFence ? this.houseCenterFull : this.houseCenterNoFence)
+    this.houseCorners = withFence ? this.houseCornersFull : this.houseCornersNoFence
   }
 
   /** Přesná vzdálenost kamery, na kterou se celý dům (všech 8 rohů jeho
@@ -547,9 +613,25 @@ export class SceneManager {
     this.renderer.setPixelRatio(dpr)
     for (const m of this.lineMats) m.resolution.set(w, h)
 
-    // Plot je jen pro desktop (mobil: bez plotu). Scéna se staví jednou, resize
-    // běží i při startu i při rotaci/změně velikosti → tady je správné místo.
+    // Plot se zobrazí, jen když je CANVAS (kontejner, `w` výš) širší než
+    // 768px - POZOR, to je šířka canvasu, ne `window.innerWidth`/viewportu.
+    // U interaktivního /nahled-3d se to prakticky kryje s "desktop": canvas
+    // tam běží na celou šířku layoutu. Dekorativní hero canvas (OpenerHouse,
+    // ~260-345px i na velkém monitoru, viz `clamp(260px,24vw,345px)`) je ale
+    // VŽDY pod tímhle prahem bez ohledu na viewport - plot je tam tedy vždy
+    // skrytý, a to je žádoucí (na 345px by byl vizuální šum). Scéna se staví
+    // jednou, resize běží i při startu i při rotaci/změně velikosti → tady
+    // je správné místo.
     this.house.fence.group.visible = w > 768
+
+    // Box (a tedy i cíl kamery) MUSÍ odpovídat PRÁVĚ nastavené viditelnosti
+    // plotu (viz `selectHouseGeometry`) - jinak by fit distance počítala s
+    // jinou geometrií, než kam míří `controls.target`, a dům by byl malý
+    // a/nebo mimo střed. Proto se volá TADY (po řádku výš), ne jen jednou
+    // v konstruktoru - i canvas, který během života přejde přes 768px práh
+    // (resize okna, ne jen initial mount), se tak přerámuje správně.
+    this.selectHouseGeometry()
+    this.controls.target.copy(this.houseCenter)
 
     // přepočítej fit-vzdálenost a limity zoomu pro nový poměr stran
     this.distance = this.fitDistance(w / h)
