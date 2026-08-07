@@ -49,48 +49,51 @@ export function ContactSection({
           as="div"
           className="flex flex-col justify-center bg-timber px-6 py-20 md:w-1/2 md:px-16 md:py-32"
         >
-          <dl className="flex flex-col gap-8">
-            <div>
-              <p className="font-mono text-xs uppercase tracking-widest text-oak-soft">
-                {t('contact.phone')}
-              </p>
-              <div className="mt-3 flex flex-col gap-5">
+          {/* `<dl>` obaluje jen skutečné dvojice termín/hodnota (telefon, e-mail,
+              oblast) - IČO řádky a mapa nejsou definiční páry, takže žijí mimo
+              `<dl>` jako sourozenci, ne jako další `<div>` uvnitř něj. HTML spec
+              povoluje uvnitř `<dl>` jen `dt`/`dd` skupiny nebo `<div>` obalující
+              výhradně `dt`/`dd` - vnořený `<div>` s `<p>` nebo mapou by to porušil. */}
+          <div className="flex flex-col gap-8">
+            <dl className="flex flex-col gap-8">
+              <div className="flex flex-col gap-5">
+                <dt className="font-mono text-xs uppercase tracking-widest text-oak-soft">
+                  {t('contact.phone')}
+                </dt>
                 {people.map((person) => (
-                  <div key={person.key}>
-                    <dt className="font-mono text-sm text-oak-soft">{person.name}</dt>
-                    <dd className="mt-1">
-                      <a
-                        href={`tel:${person.phoneHref}`}
-                        className="link-underline inline-block font-mono text-[clamp(1.5rem,2.5vw,2.25rem)] text-paper"
-                      >
-                        {person.phone}
-                      </a>
-                    </dd>
-                  </div>
+                  <dd key={person.key}>
+                    <span className="block font-mono text-sm text-oak-soft">{person.name}</span>
+                    <a
+                      href={`tel:${person.phoneHref}`}
+                      className="link-underline mt-1 inline-block font-mono text-[clamp(1.5rem,2.5vw,2.25rem)] text-paper"
+                    >
+                      {person.phone}
+                    </a>
+                  </dd>
                 ))}
               </div>
-            </div>
 
-            <div>
-              <dt className="font-mono text-xs uppercase tracking-widest text-oak-soft">
-                {t('contact.emailLabel')}
-              </dt>
-              <dd className="mt-2">
-                <a
-                  href={`mailto:${SITE.email}`}
-                  className="link-underline inline-block break-all font-mono text-xl text-paper md:text-2xl"
-                >
-                  {SITE.email}
-                </a>
-              </dd>
-            </div>
+              <div>
+                <dt className="font-mono text-xs uppercase tracking-widest text-oak-soft">
+                  {t('contact.emailLabel')}
+                </dt>
+                <dd className="mt-2">
+                  <a
+                    href={`mailto:${SITE.email}`}
+                    className="link-underline inline-block break-all font-mono text-xl text-paper md:text-2xl"
+                  >
+                    {SITE.email}
+                  </a>
+                </dd>
+              </div>
 
-            <div>
-              <dt className="font-mono text-xs uppercase tracking-widest text-oak-soft">
-                {t('contact.areaLabel')}
-              </dt>
-              <dd className="mt-2 font-body text-lg text-paper">{t('common.region')}</dd>
-            </div>
+              <div>
+                <dt className="font-mono text-xs uppercase tracking-widest text-oak-soft">
+                  {t('contact.areaLabel')}
+                </dt>
+                <dd className="mt-2 font-body text-lg text-paper">{t('common.region')}</dd>
+              </div>
+            </dl>
 
             <div className="border-t border-paper/40 pt-6">
               <div className="flex flex-col gap-1">
@@ -152,7 +155,7 @@ export function ContactSection({
                 </div>
               </div>
             )}
-          </dl>
+          </div>
         </Reveal>
 
         {/* Formulář — paper */}
