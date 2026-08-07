@@ -92,13 +92,19 @@ export const MENU: MenuItem[] = [
   { id: 'gutters', serviceSlug: 'klempirstvi', side: 'right', slot: 0, anchor: [3.3, 3.05, 3.42] },
 ]
 
-/** Kam se dívá kamera + úhel (30° horizontálně, 20° vertikálně). */
+/** Úhel pohledu kamery (30° horizontálně, 20° vertikálně) + limity OrbitControls.
+    Cíl kamery (kam se dívá) i vzdálenost (`fitDistance`) se NEdrží tady jako
+    odhad - `SceneManager.measureHouse()` je spočítá přesně ze skutečného
+    Box3 domu (viz `houseCenter`/`fitDistance` v SceneManageru). Fixní
+    `target` tu dřív byl a byl jednou z příčin ořízlého domu (dům není
+    souměrný podle osy, takže odhadovaný střed [0, 1.9, 0] neseděl se
+    skutečným těžištěm geometrie). `distance` níž je jen počáteční hodnota
+    před prvním `resize()` (který ji hned přepočítá přes `fitDistance`). */
 export const CAMERA = {
   fov: 34,
   azimuthDeg: 30,
   elevationDeg: 20,
   distance: 17.5,
-  target: [0, 1.9, 0] as [number, number, number],
   /* limity OrbitControls (radiány se dopočítají) */
   azimuthRangeDeg: 13,
   polarRangeDeg: 7,
