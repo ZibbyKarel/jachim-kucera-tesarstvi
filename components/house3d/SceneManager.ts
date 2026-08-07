@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import { LineSegments2 } from 'three/examples/jsm/lines/LineSegments2.js'
 import { ArchElement } from './ArchElement'
 import { HouseModel } from './HouseModel'
 import { MenuOverlay, type ProjectedAnchor, type MenuLabelText } from './MenuOverlay'
@@ -16,58 +17,235 @@ import { CAMERA, COLORS, MENU, type MenuId } from './config'
 const DEG = Math.PI / 180
 const WORLD_UP = new THREE.Vector3(0, 1, 0)
 
-/** Vrátí všech 8 rohů Box3 jako Vector3 (pro `fitDistance` - viz tam). Sdílená
-    pomocná funkce, protože `measureHouse` teď měří DVĚ verze boxu (s plotem
-    i bez něj), ne jednu. */
-function boxCorners(box: THREE.Box3): THREE.Vector3[] {
-  const { min, max } = box
-  return [
-    new THREE.Vector3(min.x, min.y, min.z),
-    new THREE.Vector3(min.x, min.y, max.z),
-    new THREE.Vector3(min.x, max.y, min.z),
-    new THREE.Vector3(min.x, max.y, max.z),
-    new THREE.Vector3(max.x, min.y, min.z),
-    new THREE.Vector3(max.x, min.y, max.z),
-    new THREE.Vector3(max.x, max.y, min.z),
-    new THREE.Vector3(max.x, max.y, max.z),
-  ]
+/** Offset jednoho vrcholu od (rekentrovaného) středu siluety, v kamerové bázi
+    (viz `cameraBasis`): `f` = hloubka podél `e` (směr od středu ke kameře),
+    `r`/`u` = vodorovně/svisle. `fitDistance` z nich čte přímo, žádné dot
+    producty za běhu resize - viz `measureSilhouette`. */
+interface AxisOffset {
+  f: number
+  r: number
+  u: number
 }
 
-/* Rezerva kolem domu při „fitu" do viewportu. `fitDistance` teď počítá PŘESNOU
-   vzdálenost, na kterou se dům celý (všech 8 rohů jeho skutečného Box3) vejde
-   do frustumu - viz níže. Tahle konstanta je proto čistý násobitel „vzduchu
-   kolem kresby": 1.0 = Box3 přesně na hraně rámu (edge-to-edge, nic navíc),
-   1.3 = kolem BOXU je navíc ~30 % vzdálenosti prostoru. Není to už (jako dřív)
-   kompenzace za podhodnocený odhad rozměrů - odhad je pryč, fit je exaktní.
+/** Pevná kamerová báze - `e` (směr od domu ke kameře), `right`, `up`. Závisí
+    jen na `CAMERA.azimuthDeg`/`elevationDeg` (konstanty), ne na rozměrech
+    domu ani poměru stran canvasu, takže se počítá jednou v `measureHouse`
+    a sdílí mezi FULL/NO_FENCE měřením - ne přepočítávat při každém `resize()`
+    (jako to dělal starý `fitDistance` s AABB rohy). */
+function cameraBasis(): { e: THREE.Vector3; right: THREE.Vector3; up: THREE.Vector3 } {
+  const az = CAMERA.azimuthDeg * DEG
+  const el = CAMERA.elevationDeg * DEG
+  const e = new THREE.Vector3(Math.cos(el) * Math.sin(az), Math.sin(el), Math.cos(el) * Math.cos(az))
+  const right = new THREE.Vector3().crossVectors(WORLD_UP, e).normalize()
+  const up = new THREE.Vector3().crossVectors(e, right)
+  return { e, right, up }
+}
 
-   POZOR na rozdíl mezi „box na hraně rámu" a „kresba vyplňuje rám": Box3 je
-   osově zarovnaný (world-space X/Y/Z), ale kamera je natočená šikmo (azimuth/
-   elevation v CAMERA) - jeho 8 rohů jsou matematické kombinace min/max, skoro
-   nikdy ne skutečné body domu. Při pohledu zešikma proto i margin=1.0 (box
-   přesně na hraně) nechá kolem SKUTEČNÉ kresby čitelnou mezeru - u tohohle
-   domu (viz `measureHouse`) naměřeno cca 55-57 % šířky/výšky vrstvy při
-   margin=1.0 u dekorace, ne 100 %. Menší margin sice kresbu zvětší, ale POD
-   1.0 garantovaně ořízne (viz komentář u `fitDistance`) - proto se margin pro
-   DECOR ladí NAD 1.0, empiricky proti naměřenému ink-fill (Playwright +
-   ořez pozadí), ne proti nominálnímu významu „1.0 = 100 % rámu".
+/** Posbírá SKUTEČNÉ world-space koncové body všech fat-line obrysů
+    (`LineSegments2`) pod `root` - to je vizuálně přesně to, co se kreslí
+    (viz komentář u FIT_MARGIN níž, proč to NENÍ totéž co Box3 8 rohů).
+    Každé `ArchElement.addSolid()` staví `LineSegments2` z `EdgesGeometry`
+    PŮVODNÍHO tělesa (`fromEdgesGeometry` kopíruje `position.array` 1:1 -
+    žádná interpolace), takže hrany nesou přesně rohy původních těles. Prvky
+    bez výplně (rámy oken, `fill:false` v `HouseModel.buildWindows`) mají JEN
+    `LineSegments2`, žádný Mesh - kdybychom sbírali vrcholy jen z Meshů,
+    o tyhle rámy (a tím o kus skutečného obrysu domu) bychom přišli.
+    `instanceStart`/`instanceEnd` jsou surové LOKÁLNÍ xyz
+    (`LineSegmentsGeometry.setPositions`), proto `matrixWorld` (a
+    `updateWorldMatrix(true, true)` PŘED čtením - `true` u druhého argumentu,
+    ať se aktualizují i potomci, ne jen `root` sám). */
+function collectLineVertices(root: THREE.Object3D): THREE.Vector3[] {
+  root.updateWorldMatrix(true, true)
+  const out: THREE.Vector3[] = []
+  const v = new THREE.Vector3()
+  root.traverse((obj) => {
+    if (!(obj instanceof LineSegments2)) return
+    const geo = obj.geometry
+    const start = geo.attributes.instanceStart
+    const end = geo.attributes.instanceEnd
+    if (!start || !end) return
+    for (let i = 0; i < start.count; i++) {
+      out.push(v.fromBufferAttribute(start, i).applyMatrix4(obj.matrixWorld).clone())
+      out.push(v.fromBufferAttribute(end, i).applyMatrix4(obj.matrixWorld).clone())
+    }
+  })
+  return out
+}
+
+/** Najde `mid`, pro které je „nejhorší" bod VLEVO od `mid` (v posunuté ose
+    `x`) stejně daleko (v jednotkách couvnuté vzdálenosti) jako „nejhorší" bod
+    VPRAVO - tj. řeší `left(mid) == right(mid)`, kde `left`/`right` jsou
+    maxima `f + |x-mid|/scale` přes body na dané straně. `left(mid)` roste
+    s `mid` (body vlevo jsou „dál"), `right(mid)` s `mid` klesá → rozdíl je
+    ryze monotónní, bisekce má jediný kořen. Proč tohle NENÍ jen prostý
+    `(min+max)/2` (viz `measureSilhouette`): `f` (hloubka) se liší bod od
+    bodu, a bod blíž kameře (větší `f`) „dosáhne" na obrazovce dál za stejné
+    `|x-mid|` než vzdálenější bod - prostý midpoint syrového rozsahu `x` proto
+    obrazovkové okraje nevyrovná, pokud jsou levé/pravé (nebo horní/dolní)
+    extrémy v různé hloubce (u tohohle domu např. dětské hřiště vpředu-blízko
+    vs. hřeben střechy vzadu-dál). */
+function balanceMidpoint(
+  points: { f: number; x: number }[],
+  scale: number,
+  lo: number,
+  hi: number
+): number {
+  const reach = (mid: number, side: 'left' | 'right') => {
+    let m = -Infinity
+    for (const p of points) {
+      const onLeft = p.x <= mid
+      if ((side === 'left') !== onLeft) continue
+      m = Math.max(m, p.f + Math.abs(p.x - mid) / scale)
+    }
+    return m
+  }
+  let a = lo
+  let b = hi
+  for (let i = 0; i < 40; i++) {
+    const mid = (a + b) / 2
+    const balance = reach(mid, 'left') - reach(mid, 'right')
+    if (balance < 0) a = mid
+    else b = mid
+  }
+  return (a + b) / 2
+}
+
+/** Z world-space vrcholů (`collectLineVertices`) spočítá střed SILUETY (ne
+    AABB roh) a offset každého vrcholu vůči němu v kamerové bázi.
+
+    Střed = vyvážený midpoint rozsahu `f`/`r`/`u` přes všechny vrcholy (viz
+    `balanceMidpoint` - u `u` vždy, u `r` jen když je zadaný `refAspect`,
+    jinak prostý `(min+max)/2`): `{e,right,up}` je ortonormální báze, takže
+    `fMid·e + rMid·right + uMid·up` je PŘESNÁ (ne aproximovaná) rekonstrukce
+    3D bodu se zadanými souřadnicemi v týhle bázi. Volba hloubky (`fMid`) na
+    výsledný obraz ve skutečnosti vůbec nemá vliv - posun cíle o Δ podél `e`
+    posune i couvnutou vzdálenost o Δ (viz `fitDistance`), takže world-space
+    pozice kamery (`cíl + vzdálenost·e`) vyjde stejně; volíme `fMid` prostě
+    proto, aby `houseCenter` byl konzistentní bod „uprostřed" ve všech třech
+    osách, ne mix dvou různých konvencí.
+
+    `refAspect`: když je zadaný, vodorovná osa (`r`) se vyváží (viz
+    `balanceMidpoint`) proti FIXNÍMU poměru stran - má smysl jen tam, kde je
+    poměr stran canvasu vždycky stejný (dekorativní hero, `aspect-[7/5]` v
+    OpenerHouse.tsx - viz `DECOR_ASPECT` u volání níž). Bez něj se `r`
+    centruje prostým `(min+max)/2` - u /nahled-3d se poměr stran mění podle
+    okna, natvrdo zvolený referenční aspect by tam sedl jen náhodou. Svislá
+    osa (`u`) se VŽDY vyvažuje pořádně (`balanceMidpoint`), protože na
+    `tanV` - jen z `CAMERA.fov`, ne z aspectu - takže je vždy korektní bez
+    ohledu na poměr stran canvasu. */
+function measureSilhouette(
+  vertices: THREE.Vector3[],
+  basis: { e: THREE.Vector3; right: THREE.Vector3; up: THREE.Vector3 },
+  refAspect?: number
+): { center: THREE.Vector3; offsets: AxisOffset[] } {
+  const { e, right, up } = basis
+  let fMin = Infinity
+  let fMax = -Infinity
+  let rMin = Infinity
+  let rMax = -Infinity
+  let uMin = Infinity
+  let uMax = -Infinity
+  const proj = vertices.map((vert) => {
+    const f = vert.dot(e)
+    const r = vert.dot(right)
+    const u = vert.dot(up)
+    if (f < fMin) fMin = f
+    if (f > fMax) fMax = f
+    if (r < rMin) rMin = r
+    if (r > rMax) rMax = r
+    if (u < uMin) uMin = u
+    if (u > uMax) uMax = u
+    return { f, r, u }
+  })
+  const fMid = (fMin + fMax) / 2
+
+  const tanV = Math.tan((CAMERA.fov * DEG) / 2)
+  const uMid = balanceMidpoint(
+    proj.map((p) => ({ f: p.f, x: p.u })),
+    tanV,
+    uMin,
+    uMax
+  )
+  const rMid =
+    refAspect !== undefined
+      ? balanceMidpoint(
+          proj.map((p) => ({ f: p.f, x: p.r })),
+          tanV * refAspect,
+          rMin,
+          rMax
+        )
+      : (rMin + rMax) / 2
+
+  const center = e
+    .clone()
+    .multiplyScalar(fMid)
+    .addScaledVector(right, rMid)
+    .addScaledVector(up, uMid)
+  const offsets = proj.map((p) => ({ f: p.f - fMid, r: p.r - rMid, u: p.u - uMid }))
+  return { center, offsets }
+}
+
+/* Rezerva kolem domu při „fitu" do viewportu. `fitDistance` počítá PŘESNOU
+   vzdálenost, na kterou se dům celý vejde do frustumu - viz níže. Tahle
+   konstanta je proto čistý násobitel „vzduchu kolem kresby": 1.0 = kresba
+   přesně na hraně rámu (edge-to-edge, nic navíc), 1.3 = navíc ~30 %
+   vzdálenosti prostoru. Není to kompenzace za podhodnocený odhad rozměrů -
+   žádný odhad, fit je exaktní.
+
+   PŮVODNĚ se fitovalo na 8 rohů Box3 (AABB) - ty jsou ale matematické
+   kombinace min/max, skoro nikdy skutečné body domu, a při pohledu zešikma
+   (azimuth/elevation v CAMERA) trčí citelně dál než skutečná kresba: i
+   margin=1.0 (box přesně na hraně) nechávalo kolem SKUTEČNÉ kresby mezeru
+   (naměřeno ~55-57 % šířky/výšky vrstvy u dekorace, ne 100 %). `fitDistance`
+   teď fituje na SKUTEČNÉ vrcholy obrysů (`collectLineVertices` +
+   `measureSilhouette`), takže margin=1.0 už znamená to, co má - kresba na
+   hraně rámu - a hodnoty níž jsou zas smysluplně blízko svého nominálního
+   významu.
 
    Tři různé hodnoty podle toho, co ten vzduch spotřebuje:
-   - FIT_MARGIN_SOLO: samostatný /nahled-3d, jen tenký okraj, ať dům zabírá
-     co nejvíc rámu.
+   - FIT_MARGIN_SOLO = 1.42: samostatný /nahled-3d. Přesný vrcholový fit je
+     o dost těsnější než starý AABB fit (starý margin 1.08 měřil na nafouklé
+     rohy Box3) - 1.42 je dokalibrováno tak, aby VÝSLEDNÁ vzdálenost kamery
+     (a tím i velikost domu v obraze) na běžných desktopových šířkách
+     (aspect ≳ 1.3, tj. ~1280 px a víc) odpovídala PŮVODNÍMU vzhledu (ověřeno
+     vizuálním porovnáním screenshotů, ne ink-fill boxem - viz níž proč).
+     Zbývá zdravá rezerva na rotaci/zoom OrbitControls (ověřeno na všech 4
+     rozích azimuth/polar × nejbližší zoom, viz report úlohy) - `fitDistance`
+     počítá jen pro VÝCHOZÍ azimuth/elevation, ne pro krajní polohy, takže
+     rezerva musí vzniknout tady, ne v `fitDistance` samotném.
+     POZOR: ink-fill (ořez pozadí na screenshotu) NENÍ na /nahled-3d spolehlivý
+     ukazatel velikosti domu - `MenuOverlay` kreslí labely v PEVNÝCH % pozicích
+     od kraje canvasu (`.h3d-label` v MenuOverlay.ts), takže změřený „inkoust"
+     je prakticky vždy label chip, ne obrys domu - margin 1.0 i 1.42 dají
+     bit-identický ink bbox. Validace proto šla přes shodu vzdálenosti kamery
+     (`fitDistance` dW/dH) + vizuální porovnání, ne přes automatický ink-fill.
+     Při užším poměru stran (~1024 px, aspect ~1.14) vychází dům o něco menší
+     než PŮVODNĚ (starý AABB fit tam byl vázaný na jinak nafouklou šířku než
+     nový vrcholový fit) - žádné oříznutí, jen o trochu menší dům; jednu
+     hodnotu marginu nejde dokalibrovat na shodu v OBOU režimech (width-bound
+     i height-bound) najednou, viz report.
    - FIT_MARGIN_HERO: transparentní A interaktivní varianta (menu labely by
      bydlely v pevných sloupcích u kraje - dnes nepoužito, ale rezervováno).
-   - FIT_MARGIN_DECOR: dekorativní hero dům (`interactive === false`,
-     OpenerHouse) - žádné labely, žádný overlay. Stejná hodnota jako SOLO -
-     bez plotu v boxu (viz `selectHouseGeometry`) je „o kousek víc než SOLO"
-     zbytečné, dům smí zabrat rámu stejně tolik. Menší než 1.08 (zkoušeno
-     1.03/0.68 při ladění) buď ořízlo pergolu/vstup, nebo nedalo žádnou
-     rezervu na antialiasing tlustých čar (`LineMaterial`) při změně velikosti
-     canvasu mezi šířkami.
+   - FIT_MARGIN_DECOR = 1.15: dekorativní hero dům (`interactive === false`,
+     OpenerHouse) - žádné labely, žádný overlay, OrbitControls vypnuté (jen
+     drobný idle float, žádná rotace) - nepotřebuje SOLO rezervu na rotaci,
+     ale přesto NENÍ 1.0: cíl je „ať má dům trochu vzduchu proti textu", ne
+     „edge-to-edge". Naladěno na ~85 % vyplnění vázané osy (výška, viz
+     `DECOR_ASPECT`/`balanceMidpoint` - u tohohle poměru stran vždy váže H)
+     s okraji vyváženými na pár px - naměřeno v `measureHouse`/testech
+     (fillH ≈ 0.846-0.849 při 1024-1920 px).
    Pořadí konstant je: interaktivita (SOLO/HERO) > co je vlastně dekorace
    (DECOR) - viz `this.fitMargin` v konstruktoru. */
 const FIT_MARGIN_HERO = 1.55
-const FIT_MARGIN_SOLO = 1.08
-const FIT_MARGIN_DECOR = 1.08
+const FIT_MARGIN_SOLO = 1.42
+const FIT_MARGIN_DECOR = 1.15
+
+/** Poměr stran dekorativního hero canvasu - musí sedět s `aspect-[7/5]` v
+    OpenerHouse.tsx. Používá se JEN k vyvážení vodorovné osy (`r`) NO_FENCE
+    siluety (viz `measureSilhouette`/`balanceMidpoint`) - /nahled-3d má
+    proměnlivý poměr stran okna, takže tam natvrdo zvolená hodnota nedává
+    smysl a horizontální osa se necentruje takhle. */
+const DECOR_ASPECT = 7 / 5
 
 export interface SceneOptions {
   onMenuSelect: (id: MenuId) => void
@@ -122,25 +300,25 @@ export class SceneManager {
 
   private fitMargin = FIT_MARGIN_SOLO
 
-  // Skutečné hranice domu (world-space Box3 z `house.root`) — měřené DVAKRÁT
-  // v konstruktoru (viz `measureHouse`), ne každý frame: jednou VČETNĚ plotu,
-  // jednou BEZ něj. Plot totiž bývá skrytý (`house.fence.group.visible`,
-  // viz `resize()`, `w > 768`) a `Box3.setFromObject` viditelnost IGNORUJE
-  // (ověřeno testem na three 0.185.0 - schovaný objekt box stejně nafoukne,
-  // zdroj `expandByObject` netestuje `object.visible` vůbec) - fit na skrytou
-  // geometrii je přesně to, co dělalo dekorativní hero dům malým a mimo
-  // střed. `houseCenter`/`houseCorners` = AKTUÁLNÍ výběr z dvojice níž,
-  // přepočítá ho `selectHouseGeometry()` podle právě nastavené viditelnosti
-  // plotu - `fitDistance` i cíl OrbitControls tak vždy čtou ZE STEJNÉHO boxu.
-  private houseBoxFull = new THREE.Box3()
+  // Skutečná silueta domu (world-space vrcholy obrysů z `house.root`, viz
+  // `collectLineVertices`/`measureSilhouette`) — měřená DVAKRÁT v konstruktoru
+  // (viz `measureHouse`), ne každý frame: jednou VČETNĚ plotu, jednou BEZ něj.
+  // Plot totiž bývá skrytý (`house.fence.group.visible`, viz `resize()`,
+  // `w > 768`) a `Box3.setFromObject` (staré řešení, viz git historie)
+  // viditelnost IGNOROVALO (ověřeno testem na three 0.185.0 - schovaný objekt
+  // box stejně nafoukl, zdroj `expandByObject` netestuje `object.visible`
+  // vůbec) - fit na skrytou geometrii je přesně to, co dělalo dekorativní
+  // hero dům malým a mimo střed. `houseCenter`/`houseOffsets` = AKTUÁLNÍ
+  // výběr z dvojice níž, přepočítá ho `selectHouseGeometry()` podle právě
+  // nastavené viditelnosti plotu - `fitDistance` i cíl OrbitControls tak
+  // vždy čtou ZE STEJNÉ siluety.
   private houseCenterFull = new THREE.Vector3()
-  private houseCornersFull: THREE.Vector3[] = []
-  private houseBoxNoFence = new THREE.Box3()
+  private houseOffsetsFull: AxisOffset[] = []
   private houseCenterNoFence = new THREE.Vector3()
-  private houseCornersNoFence: THREE.Vector3[] = []
+  private houseOffsetsNoFence: AxisOffset[] = []
 
   private houseCenter = new THREE.Vector3()
-  private houseCorners: THREE.Vector3[] = []
+  private houseOffsets: AxisOffset[] = []
 
   private lineMats = this.house.lineMaterials()
   private baseFov = CAMERA.fov
@@ -273,83 +451,76 @@ export class SceneManager {
     this.raf = requestAnimationFrame(this.tick)
   }
 
-  /** Spočítá skutečné hranice domu (world-space Box3 z `house.root` - BEZ
-      zemní roviny, ta žije samostatně přímo ve `scene`, ne pod `house.root`,
-      viz `setupGround`) DVAKRÁT: jednou celý dům (plot obepíná CELÝ pozemek,
-      viz komentář u `buildFence` v HouseModelu), jednou bez plotu. Voláno
-      JEDNOU (konstruktor) - dům je po sestavení statická geometrie (intro
-      mění jen opacity materiálů, ne vertexy), takže se cache nikdy
-      neinvaliduje.
+  /** Spočítá skutečnou siluetu domu (world-space vrcholy fat-line obrysů z
+      `house.root` - BEZ zemní roviny, ta žije samostatně přímo ve `scene`,
+      ne pod `house.root`, viz `setupGround` - viz `collectLineVertices`)
+      DVAKRÁT: jednou celý dům (plot obepíná CELÝ pozemek, viz komentář u
+      `buildFence` v HouseModelu), jednou bez plotu. Voláno JEDNOU
+      (konstruktor) - dům je po sestavení statická geometrie (intro mění jen
+      opacity materiálů, ne vertexy), takže se cache nikdy neinvaliduje.
 
       Plot NEJDE vyloučit nastavením `visible = false` a pak změřit -
-      `Box3.setFromObject` viditelnost ignoruje (ověřeno testem, three
-      0.185.0: schovaný objekt daleko od zbytku geometrie box i tak nafoukl -
-      zdroj `expandByObject` nikde netestuje `object.visible`). Plot proto na
-      chvíli fyzicky vyjmeme ze stromu (`root.remove`/`root.add`), ne
-      schováme - a vrátíme přesně na konec, jako při stavbě v HouseModelu
-      (`buildFence` je poslední `this.all.push`, takže `root.add` pořadí
-      dětí/render order nezmění). */
+      `Box3.setFromObject` (a tedy nejspíš i ruční traverzování) viditelnost
+      ignoruje (ověřeno testem, three 0.185.0: schovaný objekt daleko od
+      zbytku geometrie box i tak nafoukl - zdroj `expandByObject` nikde
+      netestuje `object.visible`). Plot proto na chvíli fyzicky vyjmeme ze
+      stromu (`root.remove`/`root.add`), ne schováme - a vrátíme přesně na
+      konec, jako při stavbě v HouseModelu (`buildFence` je poslední
+      `this.all.push`, takže `root.add` pořadí dětí/render order nezmění). */
   private measureHouse(): void {
-    this.houseBoxFull.setFromObject(this.house.root)
-    this.houseBoxFull.getCenter(this.houseCenterFull)
-    this.houseCornersFull = boxCorners(this.houseBoxFull)
+    const basis = cameraBasis()
+
+    const full = measureSilhouette(collectLineVertices(this.house.root), basis)
+    this.houseCenterFull.copy(full.center)
+    this.houseOffsetsFull = full.offsets
 
     this.house.root.remove(this.house.fence.group)
-    this.houseBoxNoFence.setFromObject(this.house.root)
-    this.houseBoxNoFence.getCenter(this.houseCenterNoFence)
-    this.houseCornersNoFence = boxCorners(this.houseBoxNoFence)
+    const noFence = measureSilhouette(collectLineVertices(this.house.root), basis, DECOR_ASPECT)
+    this.houseCenterNoFence.copy(noFence.center)
+    this.houseOffsetsNoFence = noFence.offsets
     this.house.root.add(this.house.fence.group)
 
     this.selectHouseGeometry()
   }
 
-  /** Vybere z dvojice boxů předpočítaných v `measureHouse` ten, který
+  /** Vybere z dvojice siluet předpočítaných v `measureHouse` tu, která
       odpovídá PRÁVĚ NASTAVENÉ viditelnosti plotu (`house.fence.group.visible`
       - `resize()` ji nastavuje TĚSNĚ PŘED voláním této metody, viz tam).
-      `houseCenter`/`houseCorners` pak čtou `fitDistance` i cíl OrbitControls
+      `houseCenter`/`houseOffsets` pak čtou `fitDistance` i cíl OrbitControls
       (`controls.target`), takže fit distance a cíl kamery vždycky sedí na
-      STEJNOU geometrii - míchání dvou různých boxů mezi distance a targetem
+      STEJNOU siluetu - míchání dvou různých měření mezi distance a targetem
       byla původní příčina malého/mimostředého domu v hero. */
   private selectHouseGeometry(): void {
     const withFence = this.house.fence.group.visible
     this.houseCenter.copy(withFence ? this.houseCenterFull : this.houseCenterNoFence)
-    this.houseCorners = withFence ? this.houseCornersFull : this.houseCornersNoFence
+    this.houseOffsets = withFence ? this.houseOffsetsFull : this.houseOffsetsNoFence
   }
 
-  /** Přesná vzdálenost kamery, na kterou se celý dům (všech 8 rohů jeho
-      Box3) vejde do frustumu - žádný odhad poloviční šířky/výšky domu.
+  /** Přesná vzdálenost kamery, na kterou se celá silueta domu (všechny
+      vrcholy obrysů, viz `measureHouse`) vejde do frustumu - žádný odhad,
+      žádná Box3 aproximace (ta při pohledu zešikma trčí za skutečnou kresbu,
+      viz komentář u FIT_MARGIN).
 
-      Pro směr od středu domu ke kameře `e` (dopočítaný z azimuthDeg/
-      elevationDeg) a jeho pravo/nahoru bázi `right`/`up` rozložíme offset
-      každého rohu od středu na `f = v·e` (hloubka), `r = v·right`
-      (vodorovně), `u = v·up` (svisle). Roh je uvnitř frustumu ve vzdálenosti
-      `d`, když `|r| <= tanH·(d-f)` a `|u| <= tanV·(d-f)` (definice
-      perspektivního frustumu), tj. `d >= f + |r|/tanH` a `d >= f + |u|/tanV`.
-      `dW`/`dH` jsou maxima přes všechny rohy odděleně pro šířku/výšku -
-      protože `f` je společné, `max(f+|r|/tanH, f+|u|/tanV) = f + max(...)`,
-      takže `max(dW, dH)` je matematicky shodné s "jedním průchodem" přes obě
-      podmínky najednou (algebraická identita, ne aproximace).
-      PerspectiveCamera.fov je VERTIKÁLNÍ → tanH se dopočítá z aspectu. */
+      Vrcholy jsou už `measureSilhouette` rozložené do kamerové báze a
+      posunuté vůči (rekentrovanému) středu siluety: `f` = hloubka, `r`/`u` =
+      vodorovně/svisle. Vrchol je uvnitř frustumu ve vzdálenosti `d`, když
+      `|r| <= tanH·(d-f)` a `|u| <= tanV·(d-f)` (definice perspektivního
+      frustumu), tj. `d >= f + |r|/tanH` a `d >= f + |u|/tanV`. `dW`/`dH` jsou
+      maxima přes všechny vrcholy odděleně pro šířku/výšku - protože `f` je
+      pro daný vrchol společné oběma podmínkám, `max(f+|r|/tanH, f+|u|/tanV)
+      = f + max(...)`, takže `max(dW, dH)` je matematicky shodné s "jedním
+      průchodem" přes obě podmínky najednou (algebraická identita, ne
+      aproximace). PerspectiveCamera.fov je VERTIKÁLNÍ → tanH se dopočítá
+      z aspectu. */
   private fitDistance(aspect: number): number {
     const tanV = Math.tan((this.baseFov * DEG) / 2)
     const tanH = tanV * aspect
 
-    const az = CAMERA.azimuthDeg * DEG
-    const el = CAMERA.elevationDeg * DEG
-    const e = new THREE.Vector3(Math.cos(el) * Math.sin(az), Math.sin(el), Math.cos(el) * Math.cos(az))
-    const right = new THREE.Vector3().crossVectors(WORLD_UP, e).normalize()
-    const up = new THREE.Vector3().crossVectors(e, right)
-
     let dW = 0
     let dH = 0
-    const v = new THREE.Vector3()
-    for (const corner of this.houseCorners) {
-      v.subVectors(corner, this.houseCenter)
-      const f = v.dot(e)
-      const r = Math.abs(v.dot(right))
-      const u = Math.abs(v.dot(up))
-      dW = Math.max(dW, f + r / tanH)
-      dH = Math.max(dH, f + u / tanV)
+    for (const o of this.houseOffsets) {
+      dW = Math.max(dW, o.f + Math.abs(o.r) / tanH)
+      dH = Math.max(dH, o.f + Math.abs(o.u) / tanV)
     }
 
     // Hero na úzkém (portrét/mobil) viewportu: labely jdou pod dům (viz overlay),
