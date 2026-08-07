@@ -14,7 +14,7 @@
     "footerNavAria": "Navigace patičky",
     "languageSwitcherAria": "Volba jazyka",
     "allRightsReserved": "Všechna práva vyhrazena.",
-    "icoLabel": "IČO"
+    "companyIdLabel": "IČO"
   },
   "nav": {
     "home": "Domů",
@@ -73,7 +73,7 @@
     "errors": {
       "nameRequired": "Vyplňte prosím jméno.",
       "phoneRequired": "Vyplňte prosím telefon.",
-      "phoneInvalid": "Zadejte telefon ve formátu +420 777 123 456.",
+      "phoneInvalid": "Zadejte telefon ve formátu +420 123 456 789.",
       "messageRequired": "Napište prosím krátkou zprávu.",
       "generic": "Zprávu se nepodařilo odeslat. Zavolejte nám prosím přímo na {phone}."
     },
@@ -85,6 +85,7 @@
     "heroTitle": "Kdo to staví",
     "heroQuote": "Nejsme velká firma a nechceme být. Děláme tolik, kolik zvládneme udělat pořádně.",
     "storyAria": "Příběh firmy",
+    "teamHeading": "Lidé ve firmě",
     "story": [
       "Jmenujeme se Jáchim a Kučera a střechám se věnujeme přes patnáct let. Začínali jsme jako vyučení tesaři v Plzeňském kraji a dnes vedeme vlastní partu, na kterou se můžete spolehnout. Každou střechu stavíme tak, jako by byla naše vlastní.",
       "Postupem let jsme k tesařině přidali pokrývačství a klempířství, abychom mohli zákazníkovi předat hotovou střechu od krovu po poslední okap, bez toho, aby musel shánět tři různé firmy a hlídat, kdo za co odpovídá. Vše máme pod jednou střechou, doslova.",
