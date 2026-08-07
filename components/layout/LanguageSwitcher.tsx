@@ -15,10 +15,14 @@ export function LanguageSwitcher({
   const locale = useLocale()
   const pathname = usePathname()
   const router = useRouter()
-  const sep = light ? 'text-wood-medium/30' : 'text-cream/30'
+  const sep = light ? 'text-paper/30' : 'text-slate/30'
   const idle = light
-    ? 'text-wood-medium/60 hover:text-wood-medium'
-    : 'text-cream/60 hover:text-cream'
+    ? 'text-paper/60 hover:text-paper'
+    : 'text-slate/60 hover:text-slate'
+  // On the dark `slate` background (light===true, e.g. the mobile menu), `text-patina`
+  // falls to ~2.8:1 as text and fails AA — use `text-patina-soft` there instead
+  // (5.69:1 on slate). On the light background, `text-patina` (5.14:1 on paper) is fine.
+  const active = light ? 'text-patina-soft' : 'text-patina'
 
   return (
     <div
@@ -34,7 +38,7 @@ export function LanguageSwitcher({
             onClick={() => router.replace(pathname, { locale: loc })}
             aria-current={loc === locale ? 'true' : undefined}
             className={`transition-colors duration-300 ${
-              loc === locale ? 'text-wood-amber' : idle
+              loc === locale ? active : idle
             }`}
           >
             {loc}
