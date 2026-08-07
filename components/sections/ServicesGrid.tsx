@@ -35,7 +35,7 @@ export function ServicesGrid() {
       <div className="container-content">
         <h2
           id="services-heading"
-          className="max-w-xl font-display text-3xl italic text-slate md:text-4xl"
+          className="max-w-xl font-display text-3xl italic text-timber md:text-4xl"
         >
           {t('servicesIntro')}
         </h2>

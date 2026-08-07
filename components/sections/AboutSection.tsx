@@ -32,7 +32,7 @@ export function AboutSection() {
           <h2
             id="about-heading"
             data-reveal-item
-            className="font-display text-4xl italic leading-tight text-slate md:text-5xl"
+            className="font-display text-4xl italic leading-tight text-timber md:text-5xl"
           >
             {t('aboutHeadline')}
           </h2>
@@ -40,7 +40,7 @@ export function AboutSection() {
             <p
               key={p.slice(0, 24)}
               data-reveal-item
-              className="mt-5 max-w-prose font-body text-base leading-relaxed text-slate/75"
+              className="mt-5 max-w-prose font-body text-base leading-relaxed text-timber/75"
             >
               {p}
             </p>
@@ -48,7 +48,7 @@ export function AboutSection() {
 
           <div
             data-reveal-item
-            className="mt-10 grid grid-cols-2 gap-4 border-y border-slate/10 py-8"
+            className="mt-10 grid grid-cols-2 gap-4 border-y border-timber/50 py-8"
           >
             {stats.map((s) => (
               <Counter key={s.label} value={s.value} label={s.label} />

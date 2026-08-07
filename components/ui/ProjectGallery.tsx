@@ -91,8 +91,8 @@ export function ProjectGallery({
                 onClick={() => setFilter(f.key)}
                 className={`rounded-full border px-5 py-2 font-body text-xs uppercase tracking-widest transition-colors duration-300 ${
                   active
-                    ? 'border-patina bg-patina text-paper'
-                    : 'border-slate/20 text-slate/70 hover:border-slate/50 hover:text-slate'
+                    ? 'border-ember bg-ember text-paper'
+                    : 'border-timber/50 text-timber/70 hover:border-timber hover:text-timber'
                 }`}
               >
                 {f.label}
@@ -133,14 +133,14 @@ export function ProjectGallery({
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 />
                 <div className="mt-3 flex items-baseline justify-between gap-4">
-                  <h3 className="font-display text-xl italic text-slate transition-colors group-hover:text-patina">
+                  <h3 className="font-display text-xl italic text-timber transition-colors group-hover:text-ember">
                     {title}
                   </h3>
-                  <span className="shrink-0 font-mono text-xs uppercase tracking-widest text-steel">
+                  <span className="shrink-0 font-mono text-xs uppercase tracking-widest text-oak">
                     {project.year}
                   </span>
                 </div>
-                <p className="mt-1 font-mono text-xs uppercase tracking-widest text-steel">
+                <p className="mt-1 font-mono text-xs uppercase tracking-widest text-oak">
                   {tFull(`services.${project.category}.title`)} · {location}
                 </p>
               </button>
@@ -214,7 +214,7 @@ function ProjectModal({
       aria-label={title}
     >
       <button
-        className="absolute inset-0 bg-slate/70 backdrop-blur-sm"
+        className="absolute inset-0 bg-timber/70 backdrop-blur-sm"
         onClick={onClose}
         aria-label={t('closeDetailAria')}
         tabIndex={-1}
@@ -222,11 +222,11 @@ function ProjectModal({
       <div
         ref={dialogRef}
         tabIndex={-1}
-        className="animate-fade-up relative z-10 max-h-[88vh] w-full max-w-4xl overflow-y-auto rounded-sm border border-slate/10 bg-paper p-6 outline-none md:p-10"
+        className="animate-fade-up relative z-10 max-h-[88vh] w-full max-w-4xl overflow-y-auto rounded-sm border border-timber/50 bg-paper p-6 outline-none md:p-10"
       >
         <button
           onClick={onClose}
-          className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full border border-slate/20 text-slate transition-colors hover:border-patina hover:text-patina"
+          className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full border border-timber/50 text-timber transition-colors hover:border-ember hover:text-ember"
           aria-label={tFull('common.close')}
         >
           <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
@@ -242,10 +242,10 @@ function ProjectModal({
         <span className="eyebrow">
           {tFull(`services.${project.category}.title`)} · {location} · {project.year}
         </span>
-        <h2 className="mt-3 font-display text-4xl italic text-slate">
+        <h2 className="mt-3 font-display text-4xl italic text-timber">
           {title}
         </h2>
-        <p className="mt-4 max-w-2xl font-body text-sm leading-relaxed text-slate/70">
+        <p className="mt-4 max-w-2xl font-body text-sm leading-relaxed text-timber/70">
           {description}
         </p>
 
@@ -260,18 +260,18 @@ function ProjectModal({
           ))}
         </div>
 
-        <dl className="mt-8 flex flex-wrap gap-x-12 gap-y-3 border-t border-slate/10 pt-6 font-body text-sm">
+        <dl className="mt-8 flex flex-wrap gap-x-12 gap-y-3 border-t border-timber/50 pt-6 font-body text-sm">
           <div>
-            <dt className="text-xs uppercase tracking-widest text-steel">
+            <dt className="text-xs uppercase tracking-widest text-oak">
               {t('location')}
             </dt>
-            <dd className="mt-1 text-slate">{location}</dd>
+            <dd className="mt-1 text-timber">{location}</dd>
           </div>
           <div>
-            <dt className="text-xs uppercase tracking-widest text-steel">
+            <dt className="text-xs uppercase tracking-widest text-oak">
               {t('year')}
             </dt>
-            <dd className="mt-1 font-mono text-slate">{project.year}</dd>
+            <dd className="mt-1 font-mono text-timber">{project.year}</dd>
           </div>
         </dl>
       </div>

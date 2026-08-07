@@ -31,10 +31,10 @@ export default async function RealizacePage({
     <div className="bg-paper">
       <header className="container-content pb-12 pt-36 md:pt-44">
         <span className="eyebrow">{tNav('projects')}</span>
-        <h1 className="mt-3 max-w-3xl font-display text-5xl italic leading-tight text-slate md:text-7xl">
+        <h1 className="mt-3 max-w-3xl font-display text-5xl italic leading-tight text-timber md:text-7xl">
           {t('heroTitle')}
         </h1>
-        <p className="mt-5 max-w-xl font-body text-base leading-relaxed text-slate/70">
+        <p className="mt-5 max-w-xl font-body text-base leading-relaxed text-timber/70">
           {t('heroIntro')}
         </p>
       </header>

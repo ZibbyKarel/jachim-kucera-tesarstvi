@@ -9,33 +9,33 @@
   }
 
   body {
-    @apply bg-paper font-body text-slate antialiased;
+    @apply bg-paper font-body text-timber antialiased;
     text-rendering: optimizeLegibility;
   }
 
   ::selection {
-    background-color: theme('colors.patina.DEFAULT');
+    background-color: theme('colors.ember.DEFAULT');
     color: theme('colors.paper.DEFAULT');
   }
 
   /* Viditelný a konzistentní focus ring napříč webem. */
   :focus-visible {
-    outline: 2px solid theme('colors.patina.DEFAULT');
+    outline: 2px solid theme('colors.ember.DEFAULT');
     outline-offset: 3px;
     border-radius: 2px;
   }
 
   /* SVG skupiny / canvas overlaye nemají vlastní border-radius, ale focus ring chceme. */
   [tabindex]:focus-visible {
-    outline: 2px solid theme('colors.patina.DEFAULT');
+    outline: 2px solid theme('colors.ember.DEFAULT');
     outline-offset: 4px;
   }
 
-  /* Dark mobile-menu panel (#mobile-menu, viz Header.tsx) sedí na slate, kde
-     výchozí patina focus ring padá na ~2.8:1 a neprojde AA. Uvnitř panelu
-     přepínáme na patina-soft (5.69:1 na slate). */
+  /* Dark mobile-menu panel (#mobile-menu, viz Header.tsx) sedí na timber, kde
+     výchozí ember focus ring by nemusel projít AA. Uvnitř panelu přepínáme
+     na ember-soft (6.99:1 na timber). */
   #mobile-menu :focus-visible {
-    outline-color: theme('colors.patina.soft');
+    outline-color: theme('colors.ember.soft');
   }
 
   h1,
@@ -67,7 +67,7 @@
 
   /* Kicker label — vyhrazeno pro HERO nadpisy sekcí (rozpočet: cca 1 na 3 sekce). */
   .eyebrow {
-    @apply font-mono text-xs uppercase tracking-widest text-patina;
+    @apply font-mono text-xs uppercase tracking-widest text-ember;
   }
 
   .link-underline {
@@ -82,30 +82,32 @@
   }
 
   /* Technický "konstrukční" rastr — pro ImageFrame placeholder a kontakt mapu.
-     color-mix(in srgb, theme('colors.slate.DEFAULT') N%, transparent) je
-     matematicky ekvivalentní zápisu se stejným RGB a alfa = N/100 (viz
+     Čistě dekorativní plocha (ne text ani hranice UI), kontrastní pravidlo
+     pro /N varianty se na ni nevztahuje. color-mix(in srgb, theme('colors.timber.DEFAULT') N%, transparent)
+     je matematicky ekvivalentní zápisu se stejným RGB a alfa = N/100 (viz
      odůvodnění u .shadow-panel-* níže), takže i tady je barva odvozená
      z tokenu, ne napsaná natvrdo. */
   .tech-grid {
     background-image:
-      linear-gradient(0deg, color-mix(in srgb, theme('colors.slate.DEFAULT') 6%, transparent) 1px, transparent 1px),
-      linear-gradient(90deg, color-mix(in srgb, theme('colors.slate.DEFAULT') 6%, transparent) 1px, transparent 1px);
+      linear-gradient(0deg, color-mix(in srgb, theme('colors.timber.DEFAULT') 6%, transparent) 1px, transparent 1px),
+      linear-gradient(90deg, color-mix(in srgb, theme('colors.timber.DEFAULT') 6%, transparent) 1px, transparent 1px);
     background-size: 24px 24px;
   }
 
   /* Panel-lift stín nad střídavými sekcemi (About/Services/Contact/Projects).
-     Barva vychází vždy z tokenu slate přes color-mix, takže výměna palety
-     (viz D-003) zůstává jednosouborová úprava — mění se jen síla (opacity),
-     ne barva samotná. color-mix(in srgb, theme('colors.slate.DEFAULT') N%, transparent)
+     Čistě dekorativní plocha (stín), kontrastní pravidlo pro /N varianty se
+     na ni nevztahuje. Barva vychází vždy z tokenu timber přes color-mix,
+     takže výměna palety zůstává jednosouborová úprava — mění se jen síla
+     (opacity), ne barva samotná. color-mix(in srgb, theme('colors.timber.DEFAULT') N%, transparent)
      je matematicky ekvivalentní zápisu se stejným RGB a alfa = N/100. */
   .shadow-panel-12 {
-    box-shadow: 0 -30px 60px -30px color-mix(in srgb, theme('colors.slate.DEFAULT') 12%, transparent);
+    box-shadow: 0 -30px 60px -30px color-mix(in srgb, theme('colors.timber.DEFAULT') 12%, transparent);
   }
   .shadow-panel-14 {
-    box-shadow: 0 -30px 60px -30px color-mix(in srgb, theme('colors.slate.DEFAULT') 14%, transparent);
+    box-shadow: 0 -30px 60px -30px color-mix(in srgb, theme('colors.timber.DEFAULT') 14%, transparent);
   }
   .shadow-panel-20 {
-    box-shadow: 0 -30px 60px -30px color-mix(in srgb, theme('colors.slate.DEFAULT') 20%, transparent);
+    box-shadow: 0 -30px 60px -30px color-mix(in srgb, theme('colors.timber.DEFAULT') 20%, transparent);
   }
 }
 

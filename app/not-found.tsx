@@ -23,7 +23,7 @@ export default function GlobalNotFound() {
           alignItems: 'center',
           justifyContent: 'center',
           backgroundColor: PALETTE.paper.DEFAULT,
-          color: PALETTE.slate.DEFAULT,
+          color: PALETTE.timber.DEFAULT,
           fontFamily: 'system-ui, sans-serif',
           textAlign: 'center',
           padding: '0 1.5rem',
@@ -35,7 +35,7 @@ export default function GlobalNotFound() {
             fontSize: '0.85rem',
             textTransform: 'uppercase',
             letterSpacing: '0.2em',
-            color: `color-mix(in srgb, ${PALETTE.slate.DEFAULT} 60%, transparent)`,
+            color: `color-mix(in srgb, ${PALETTE.timber.DEFAULT} 65%, transparent)`,
           }}
         >
           404
@@ -43,7 +43,7 @@ export default function GlobalNotFound() {
         <h1 style={{ fontSize: '2rem', margin: '0.5rem 0 0' }}>Page not found</h1>
         <p
           style={{
-            color: `color-mix(in srgb, ${PALETTE.slate.DEFAULT} 70%, transparent)`,
+            color: `color-mix(in srgb, ${PALETTE.timber.DEFAULT} 70%, transparent)`,
             marginTop: '1rem',
           }}
         >
@@ -53,7 +53,7 @@ export default function GlobalNotFound() {
           href="/"
           style={{
             marginTop: '2rem',
-            backgroundColor: PALETTE.patina.DEFAULT,
+            backgroundColor: PALETTE.ember.DEFAULT,
             color: PALETTE.paper.DEFAULT,
             padding: '0.75rem 1.5rem',
             textDecoration: 'none',

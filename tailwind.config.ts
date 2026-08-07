@@ -10,19 +10,24 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // "Materiály řemesla" paleta — steel/zinek, slate, patina (jediný akcent), paper.
-        // Hex hodnoty a WCAG kontrastní poznámky ke každému tokenu žijí v
-        // lib/palette.ts (jediný zdroj pravdy, viz D-003) — tady se jen mapují
-        // na strukturu Tailwind tokenů, aby zůstaly beze změny utility třídy
-        // jako bg-paper, text-patina, bg-slate-soft apod.
+        // "Dřevo a čas" paleta — paper, timber (tmavá dřevěná), oak (střední
+        // dřevěná), ember (jediný akcent). Hex hodnoty a WCAG kontrastní
+        // poznámky ke každému tokenu žijí v lib/palette.ts (jediný zdroj
+        // pravdy, viz D-024) — tady se jen mapují na strukturu Tailwind
+        // tokenů, aby vznikly utility třídy jako bg-paper, text-ember,
+        // bg-timber-soft apod.
         paper: PALETTE.paper,
-        slate: PALETTE.slate,
-        steel: PALETTE.steel,
-        patina: PALETTE.patina,
+        timber: PALETTE.timber,
+        oak: PALETTE.oak,
+        ember: PALETTE.ember,
       },
       fontFamily: {
-        display: ['var(--font-sans)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-        body: ['var(--font-sans)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        // Fraunces (display) a Archivo (body) a IBM Plex Mono (mono) se
+        // registrují jako next/font/google proměnné na <html> v
+        // app/[locale]/layout.tsx. Fallback stacky jsou jen pro dobu před
+        // hydratací fontu / při selhání načtení.
+        display: ['var(--font-display)', 'Georgia', 'ui-serif', 'serif'],
+        body: ['var(--font-body)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
         mono: ['var(--font-mono)', 'ui-monospace', 'SFMono-Regular', 'monospace'],
       },
       letterSpacing: {

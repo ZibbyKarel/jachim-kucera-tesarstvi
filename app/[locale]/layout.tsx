@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Archivo, IBM_Plex_Mono } from 'next/font/google'
+import { Archivo, Fraunces, IBM_Plex_Mono } from 'next/font/google'
 import { notFound } from 'next/navigation'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server'
@@ -13,7 +13,21 @@ const archivo = Archivo({
   subsets: ['latin', 'latin-ext'],
   weight: ['400', '500', '600', '700'],
   style: ['normal', 'italic'],
-  variable: '--font-sans',
+  variable: '--font-body',
+  display: 'swap',
+})
+
+const fraunces = Fraunces({
+  subsets: ['latin', 'latin-ext'],
+  // next/font/google jen povoluje `axes` u weight: 'variable' (jeden
+  // proměnný soubor na styl, ne devět statických řezů) - viz
+  // node_modules/next/dist/compiled/@next/font/dist/google/validate-google-font-function-call.js.
+  // Optical-size osa (opsz) je jediná zapnutá navíc k výchozím wght/ital,
+  // ať se nestahují zbytečně SOFT/WONK varianty, které nepoužíváme.
+  weight: 'variable',
+  style: ['normal', 'italic'],
+  axes: ['opsz'],
+  variable: '--font-display',
   display: 'swap',
 })
 
@@ -135,7 +149,7 @@ export default async function LocaleLayout({
   return (
     <html
       lang={locale}
-      className={`${archivo.variable} ${plexMono.variable}`}
+      className={`${archivo.variable} ${fraunces.variable} ${plexMono.variable}`}
       suppressHydrationWarning
     >
       <body>
@@ -146,7 +160,7 @@ export default async function LocaleLayout({
         <NextIntlClientProvider messages={messages}>
           <a
             href="#main-content"
-            className="sr-only rounded-md bg-patina px-4 py-2 font-body text-sm font-medium text-paper focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100]"
+            className="sr-only rounded-md bg-ember px-4 py-2 font-body text-sm font-medium text-paper focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100]"
           >
             {t('skipToContent')}
           </a>

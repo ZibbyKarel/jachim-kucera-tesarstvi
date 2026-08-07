@@ -90,14 +90,14 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
     return (
       <div
         role="status"
-        className="animate-fade-up flex flex-col items-start gap-4 rounded-sm border border-patina/40 bg-patina/10 p-8"
+        className="animate-fade-up flex flex-col items-start gap-4 rounded-sm border border-ember bg-ember/10 p-8"
       >
         <svg
           width="40"
           height="40"
           viewBox="0 0 40 40"
           aria-hidden="true"
-          className="text-patina"
+          className="text-ember"
         >
           <circle
             cx="20"
@@ -116,10 +116,10 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
             strokeLinejoin="round"
           />
         </svg>
-        <p className="font-display text-2xl italic text-slate">{t('success')}</p>
+        <p className="font-display text-2xl italic text-timber">{t('success')}</p>
         <button
           onClick={() => setStatus('idle')}
-          className="rounded-sm font-body text-xs uppercase tracking-widest text-patina transition-colors hover:text-patina-dim"
+          className="rounded-sm font-body text-xs uppercase tracking-widest text-ember transition-colors hover:text-ember-dim"
         >
           {t('submitAnother')}
         </button>
@@ -128,12 +128,13 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
   }
 
   const inputClass = (invalid?: boolean) =>
-    // border-slate/25 measured 1.65-1.66:1 against both paper and the
-    // paper-dim/60-over-paper ContactSection card - well under the 3:1 non-text
-    // UI threshold for a field boundary that's the input's only visible edge
-    // (underline style, no fill). /55 clears 3:1 in every context it's used.
-    `w-full rounded-sm border-b bg-transparent py-3 font-body text-slate placeholder-slate/30 outline-none transition-colors duration-300 focus:border-patina ${
-      invalid ? 'border-red-600/85' : 'border-slate/55'
+    // border-timber/N as a border/line on paper needs N≥50 per
+    // docs/superpowers/redesign/PALETTE-WOOD.md - /55 clears that floor
+    // (this is the input's only visible edge: underline style, no fill).
+    // placeholder text is treated as real visible text (timber/N on paper
+    // needs N≥65), not decoration.
+    `w-full rounded-sm border-b bg-transparent py-3 font-body text-timber placeholder-timber/65 outline-none transition-colors duration-300 focus:border-ember ${
+      invalid ? 'border-red-600/85' : 'border-timber/55'
     }`
 
   return (
@@ -154,10 +155,10 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
         <div>
           <label
             htmlFor={fid('name')}
-            className="mb-1 block font-body text-xs uppercase tracking-widest text-slate/70"
+            className="mb-1 block font-body text-xs uppercase tracking-widest text-timber/70"
           >
             {t('name')}{' '}
-            <span aria-hidden="true" className="text-patina">
+            <span aria-hidden="true" className="text-ember">
               *
             </span>
           </label>
@@ -185,10 +186,10 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
         <div>
           <label
             htmlFor={fid('phone')}
-            className="mb-1 block font-body text-xs uppercase tracking-widest text-slate/70"
+            className="mb-1 block font-body text-xs uppercase tracking-widest text-timber/70"
           >
             {t('phone')}{' '}
-            <span aria-hidden="true" className="text-patina">
+            <span aria-hidden="true" className="text-ember">
               *
             </span>
           </label>
@@ -218,10 +219,10 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
       <div>
         <label
           htmlFor={fid('message')}
-          className="mb-1 block font-body text-xs uppercase tracking-widest text-slate/70"
+          className="mb-1 block font-body text-xs uppercase tracking-widest text-timber/70"
         >
           {t('message')}{' '}
-          <span aria-hidden="true" className="text-patina">
+          <span aria-hidden="true" className="text-ember">
             *
           </span>
         </label>
@@ -255,7 +256,7 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
         type="submit"
         disabled={status === 'loading'}
         aria-busy={status === 'loading'}
-        className="inline-flex items-center justify-center gap-2 rounded-sm bg-patina px-8 py-4 font-body text-sm font-medium uppercase tracking-widest text-paper transition-all duration-300 hover:bg-patina-dim disabled:cursor-not-allowed disabled:opacity-70"
+        className="inline-flex items-center justify-center gap-2 rounded-sm bg-ember px-8 py-4 font-body text-sm font-medium uppercase tracking-widest text-paper transition-all duration-300 hover:bg-ember-dim disabled:cursor-not-allowed disabled:opacity-70"
       >
         {status === 'loading' ? (
           <>

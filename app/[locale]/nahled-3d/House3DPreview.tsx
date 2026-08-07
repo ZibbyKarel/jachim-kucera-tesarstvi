@@ -16,18 +16,18 @@ export function House3DPreview() {
       <House3DScene onMenuSelect={setSelected} />
 
       <div className="pointer-events-none absolute inset-x-0 top-0 flex items-start justify-between p-6">
-        <p className="font-display text-lg italic text-slate">
+        <p className="font-display text-lg italic text-timber">
           {t('nahled3d.heading')}
         </p>
         <p
-          className="font-mono text-xs uppercase tracking-widest text-patina transition-opacity duration-300"
+          className="font-mono text-xs uppercase tracking-widest text-ember transition-opacity duration-300"
           style={{ opacity: label ? 1 : 0 }}
         >
           {label ? `onMenuSelect -> ${label}` : ''}
         </p>
       </div>
 
-      <p className="pointer-events-none absolute inset-x-0 bottom-5 text-center font-mono text-[0.65rem] uppercase tracking-[0.2em] text-slate/70">
+      <p className="pointer-events-none absolute inset-x-0 bottom-5 text-center font-mono text-[0.65rem] uppercase tracking-[0.2em] text-timber/70">
         {t('nahled3d.hint')}
       </p>
     </main>

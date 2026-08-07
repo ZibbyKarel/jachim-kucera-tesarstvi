@@ -8,9 +8,9 @@ const base =
   'inline-flex items-center justify-center gap-2 font-body text-sm font-medium uppercase tracking-widest transition-all duration-500 ease-craft disabled:cursor-not-allowed disabled:opacity-60'
 
 const variants: Record<Variant, string> = {
-  primary: 'bg-patina text-paper hover:bg-patina-dim',
-  outline: 'border border-slate/30 text-slate hover:border-patina hover:text-patina',
-  ghost: 'text-slate hover:text-patina',
+  primary: 'bg-ember text-paper hover:bg-ember-dim',
+  outline: 'border border-timber/50 text-timber hover:border-ember hover:text-ember',
+  ghost: 'text-timber hover:text-ember',
 }
 
 const sizes: Record<Size, string> = {
