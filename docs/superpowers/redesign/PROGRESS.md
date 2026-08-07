@@ -257,6 +257,26 @@ prázdný pravý dolní kvadrant, kam by šel dát zmenšený neinteraktivní 3D
       sloupec (D-044). Commity `3df85a8`, `9e2b1ec`, `6644d3f`.
 - [x] **Produkční build** — prošel, 26 stránek, nula warningů.
 
-**Zbývá posoudit uživateli:** jestli je dům v hero dost výrazný. Rozměrový strop je
-300×214 px kvůli svislému pásmu 249 px mezi patou nadpisu a řádkem CTA; víc by
-znamenalo přestavět rozestupy v `Opener.tsx` (viz D-044).
+## Doladění 2 (2026-08-07, po druhé zpětné vazbě)
+
+Uživatel nahlásil: (1) dům je oříznutý, (2) může být trochu větší, (3) hero nadpis
+klidně menší. Navíc dodal skutečné údaje o lidech ve firmě.
+
+- [x] **Skutečné údaje obou OSVČ** — Petr Jáchim a Milan Kučera, obě IČO i telefony.
+      Data žijí v `lib/constants.ts` (`people`), zobrazuje je patička, kontaktní panel,
+      JSON-LD i nová sekce na `/o-nas`. Obě IČO ověřena kontrolní číslicí a v ARES.
+      Vymyšlené `+420 777 123 456` z repa zmizelo. D-046, D-047. Commit `ac7a9e6`.
+- [x] **Neplatné HTML v `<dl>`** — nalezeno při code review, D-048. Commit `947aadd`.
+- [x] **Ořez domu** — tři nezávislé příčiny (ruční odhad rozměrů, fit na skrytý plot,
+      fantomové rohy AABB), viz D-049. Commity `52b4b7f`, `366506c`.
+- [x] **Větší dům** — výplň rámu z 45 %/57 % na 64 %/85 %, okraje vyrovnané.
+      Ověřeno měřením inkoustu ve screenshotech, ne pohledem.
+- [x] **Menší hero nadpis** — `clamp(2.75rem,7vw,6.5rem)` → `clamp(2.5rem,5.5vw,5rem)`.
+- [x] **Vrstva domu** — `w-[clamp(260px,24vw,345px)]`, `bottom-28` (dřívější `bottom-24`
+      nechávalo plátno překrývat řádek CTA o ~8 px, starší vada).
+- [ ] **Popisky vs. dům na `/nahled-3d` při 1024 px** — nedořešeno, viz D-050. Řešitelné
+      jen změnou rozvržení v `MenuOverlay`, ne kamerou. Skrytá URL, netýká se hero.
+
+**Zbývá potvrdit klientovi:** e-mail a doména (poslední vymyšlené údaje), rok založení
+(web tvrdí 2008, ARES uvádí u Petra Jáchima 2003), tvrzení „15+ let praxe" a
+„150+ realizací", „Záruka 10 let" na `/o-nas`.

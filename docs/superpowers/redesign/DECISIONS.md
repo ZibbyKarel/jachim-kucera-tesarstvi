@@ -543,3 +543,43 @@ IČO a mapy (`showMap`, tedy `/kontakt`) — ty definiční páry nejsou vůbec 
 z `<dl>` jako sourozenci.
 **Ověřuje se skriptem**, ne pohledem: projít `dl.children` a `div.children` a ohlásit každý
 tag mimo `DIV`/`DT`/`DD`.
+
+## D-049 — Kamera se fituje na skutečné vrcholy, ne na obalový kvádr
+**Datum:** 2026-08-07 · **Rozhodl:** Claude (opus), implementoval sonnet
+Stížnost „dům je oříznutý a není vidět celý" měla tři nezávislé příčiny, ne jednu:
+1. **Ruční odhad rozměrů.** `fitDistance()` couvala podle konstant `halfW = 4.6`,
+   `halfH = 3.3` a chovala se, jako by kamera koukala podél osy. Nekouká - azimut 30°,
+   elevace 20°. Šikmý pohled promítne kvádr širší (`halfX·cos30 + halfZ·sin30`) i vyšší,
+   než ty konstanty připouštěly, takže rám vyšel krátký. Nahrazeno přesným výpočtem
+   z reálné geometrie.
+2. **Fit na neviditelný plot.** `resize()` schovává plot přes `w > 768`, kde `w` je šířka
+   **plátna**, ne viewportu. Dekorativní plátno má 345 px, takže se plot nikdy nekreslí -
+   ale `Box3.setFromObject` ho měřil dál (ověřeno empiricky: `expandByObject` se na
+   `visible` vůbec nedívá, plot se proto z `root` fyzicky odebírá, neschovává). Kamera
+   couvala kvůli něčemu, co nikdo nevidí. Cachují se dvě krabice, vybírá se podle
+   viditelnosti plotu, a fit i cíl kamery čtou **tutéž** krabici.
+3. **Fantomové rohy.** I s přesnou krabicí se fituje na 8 rohů AABB - kombinace min/max,
+   které pod šikmou kamerou leží daleko mimo siluetu. Naměřeno `fill ≈ 0.567 / margin`:
+   strop 57 % výplně bez ohledu na margin. Fituje se proto na **skutečné vrcholy obrysů**
+   (4212 s plotem, 1140 bez).
+Cíl kamery se navíc nehledá jako střed rozsahu, ale bisekcí (`balanceMidpoint`) - perspektiva
+zkresluje, bod blíž ke kameře doskočí na plátně dál než stejně vzdálený bod vzadu, takže
+střed světových extrémů nedá stejné okraje na plátně.
+**Výsledek na hero:** výplň z 45 %/57 % na 64 %/85 %, okraje vyrovnané. `FIT_MARGIN_*` jsou
+teď skutečný násobek „vzduchu kolem", 1.0 = od kraje ke kraji.
+
+## D-050 — Popisky menu a dům se na úzkém viewportu nevejdou oba (nedořešeno)
+**Datum:** 2026-08-07 · **Zjistil:** Claude (opus) při code review, měřením
+Pokus rezervovat pro menu popisky pevné sloupce (jejich skutečná šířka změřená
+`getBoundingClientRect`, ne odhadnutá z CSS) skončil revertem (`baacb60` ruší `eebc5e3`).
+Naměřené sloupce: 1024 px → 25,4 % vlevo a 24,1 % vpravo; 1920 px → 18,0 % a 17,2 %.
+Na 1024 px tedy popisky spolknou polovinu šířky, dům se vejde jen do zbylého pásu a scvrkne
+se na 40 % šířky a 30 % výšky plátna. To je horší než stav před celou opravou.
+**Zjištění:** požadavky „dům se nesmí překrývat s popiskem" a „dům nesmí být menší než dřív"
+jsou na 1024 px **neslučitelné**. Původní stav totiž kolizi měl - dům sahal 7,6 % / 14,3 %
+od krajů proti popiskům, které potřebují 25,4 % / 24,1 %. Reprodukovat starou velikost
+znamená reprodukovat starou kolizi.
+**Řešit se to dá jen v `MenuOverlay`** (popisky pod dům na úzkém viewportu, jak to už dělá
+větev `transparent && aspect < 0.85`), ne posunem kamery. Necháno nedořešené: jde o skrytou
+URL `/nahled-3d`, drobné překrytí popisku „Tesařství" s plotem na 1024 px je starší než tahle
+session a hero se ho netýká.
