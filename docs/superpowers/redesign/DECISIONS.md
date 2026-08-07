@@ -583,3 +583,17 @@ znamená reprodukovat starou kolizi.
 větev `transparent && aspect < 0.85`), ne posunem kamery. Necháno nedořešené: jde o skrytou
 URL `/nahled-3d`, drobné překrytí popisku „Tesařství" s plotem na 1024 px je starší než tahle
 session a hero se ho netýká.
+
+## D-051 — Potvrzený údaj se od placeholderu nepozná podle hodnoty (DOPLŇUJE D-047)
+**Datum:** 2026-08-07 · **Rozhodl:** uživatel (potvrdil data), zapsal Claude (opus)
+Klient potvrdil e-mail `info@jachim-kucera-tesarstvi.cz` — **přesně tu hodnotu**, kterou
+v repu od prvního commitu držel vymyšlený placeholder. Hodnota se tedy nezměnila, změnil se
+její status. Doména se z potvrzeného e-mailu odvozuje, takže `SITE.url` platí taky.
+Dál potvrzeno: rok založení **2008** (dosud jen odvozený z `about.timeline`) a tvrzení
+„15+ let praxe" / „150+ realizací" v `about.stats`.
+**Pravidlo:** status údaje nese **komentář, ne hodnota**. Kdo najde v `lib/constants.ts`
+povědomý řetězec, nesmí z něj usoudit „to je pořád ten vymyšlený placeholder" a přepsat ho —
+u obou hodnot proto stojí explicitní poznámka o potvrzení včetně data. Zrcadlově platí i to
+opačné: věrohodně vypadající hodnota bez poznámky **není** ověřená (přesně tak se
+`+420 777 123 456` udrželo na webu přes celý redesign, viz D-047).
+**Nedořešeno dál:** tvrzení „Záruka 10 let" na `/o-nas` a reálné fotky.
