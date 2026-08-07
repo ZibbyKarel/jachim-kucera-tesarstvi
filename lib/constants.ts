@@ -27,18 +27,19 @@ export const people: Person[] = [
 export const SITE = {
   name: 'Jáchim & Kučera, tesařství',
   shortName: 'Jáchim & Kučera',
-  // PLACEHOLDER — skutečnou doménu klient zatím nedodal, tohle je vymyšlená
-  // hodnota z prvního commitu redesignu. Nesmí jít do produkce beze změny -
-  // sleduje pre-launch checklist v docs/superpowers/redesign/PROGRESS.md.
+  // Doména odvozená z e-mailu, který klient potvrdil (viz `email` níž) - tedy
+  // už ne placeholder. Kdyby web nakonec běžel jinde, přepsat: `url` živí
+  // canonical odkazy, sitemap, robots i JSON-LD. Přebít se dá i za běhu přes
+  // NEXT_PUBLIC_SITE_URL (app/sitemap.ts, app/robots.ts).
   url: 'https://jachim-kucera-tesarstvi.cz',
   // Hlavní číslo je Petr Jáchim, protože je první ve jméně firmy. Používá se
   // v JSON-LD (app/[locale]/layout.tsx, kde jde navíc pole obou čísel) a jako
   // fallback při chybě odeslání v ContactForm.
   phone: people[0].phone,
   phoneHref: people[0].phoneHref,
-  // PLACEHOLDER — skutečný e-mail klient zatím nedodal, tohle je vymyšlená
-  // hodnota z prvního commitu redesignu. Nesmí jít do produkce beze změny -
-  // sleduje pre-launch checklist v docs/superpowers/redesign/PROGRESS.md.
+  // Potvrzeno klientem 2026-08-07. Shodou okolností stejná hodnota, jakou tu
+  // od prvního commitu držel placeholder - proto ji nepřepisuj se slovy „je to
+  // stejné jako dřív, tedy vymyšlené". Není.
   email: 'info@jachim-kucera-tesarstvi.cz',
 } as const
 

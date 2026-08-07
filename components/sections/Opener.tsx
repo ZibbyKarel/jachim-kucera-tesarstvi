@@ -10,13 +10,15 @@ import { OpenerHouse } from './OpenerHouse'
 /*  dolů (justify-end), ne na střed - dává sekci váhu. Normální dokumentový     */
 /*  tok, žádný pin/scrub.                                                      */
 /*                                                                              */
-/*  Rok založení (2008) je vzatý z about.timeline v messages/cs.json - položka  */
-/*  "Vlastní firma" / „Zakládáme vlastní tesařskou partu" je jediné místo v      */
-/*  obsahu, které mluví o založení firmy. Číslo se odsud nevymýšlí, jen         */
-/*  přebírá; ICU parametr {year} drží text a číslo odděleně v messages.        */
+/*  Rok založení (2008) potvrdil klient 2026-08-07. Předtím to bylo jen číslo   */
+/*  odvozené z about.timeline; potvrzení ho z odvozeniny dělá fakt. Pozor, že   */
+/*  rejstřík uvádí u Petra Jáchima živnost už od roku 2003 - 2008 je tedy rok   */
+/*  vzniku společné party, ne první živnosti. ICU parametr {year} drží text a   */
+/*  číslo odděleně v messages.                                                  */
 /*                                                                              */
 /*  Faktický pás bere hodnoty výhradně z about.stats (dvě položky v obsahu -    */
-/*  dvě položky se zobrazí, žádná třetí/čtvrtá se nedomýšlí).                   */
+/*  dvě položky se zobrazí, žádná třetí/čtvrtá se nedomýšlí). Obě tvrzení       */
+/*  („15+ let praxe", „150+ realizací") klient potvrdil 2026-08-07.             */
 /* -------------------------------------------------------------------------- */
 
 const FOUNDED_YEAR = 2008

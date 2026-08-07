@@ -204,15 +204,18 @@ ne pohledem. **Zbývá zkontrolovat na skutečném telefonu nebo v device toolba
       číslicí i ověřením v ARES (jména sedí, forma 101). Žijí v `lib/constants.ts`
       jako `people`, viz D-046 (ruší D-019). Zobrazuje je patička, kontaktní panel
       i `/o-nas`.
-- [ ] **Skutečný e-mail a doména** — `SITE.email` (`info@jachim-kucera-tesarstvi.cz`)
-      a `SITE.url` (`https://jachim-kucera-tesarstvi.cz`) jsou vymyšlené od prvního
-      commitu. V kódu mají u sebe komentář „nesmí jít do produkce" (D-047).
-      **Poslední vymyšlené údaje na webu.**
-- [ ] **Rok založení** — `FOUNDED_YEAR = 2008` v `components/sections/Opener.tsx` je
-      odvozený z `about.timeline`, není to dodané datum. ARES uvádí u Petra Jáchima
-      vznik živnosti 2003, u Milana Kučery datum výrazně pozdější. Ani jedno neumíme
-      vyložit jako „rok založení firmy". Souvisí s tvrzením „přes patnáct let"
-      v `about.story` a s údaji v `about.stats`. **Potvrdit s klientem.**
+- [x] ~~**Skutečný e-mail a doména**~~ — potvrzeno klientem 2026-08-07:
+      `info@jachim-kucera-tesarstvi.cz`. Shodou okolností **stejná hodnota**, jakou tu
+      od prvního commitu držel placeholder, takže se nic nepřepisovalo, jen zmizel
+      varovný komentář. `SITE.url` je z té domény odvozená a bere se tím taky jako
+      potvrzená (viz komentář v `lib/constants.ts`). Tím na webu **nezůstávají žádné
+      vymyšlené faktické údaje.**
+- [x] ~~**Rok založení**~~ — potvrzeno klientem 2026-08-07: **2008**. `FOUNDED_YEAR`
+      v `components/sections/Opener.tsx` byl dosud jen odvozený z `about.timeline`,
+      teď je to potvrzený fakt. Poznámka pro pořádek: rejstřík uvádí u Petra Jáchima
+      živnost od 2003, takže 2008 je rok vzniku společné party, ne první živnosti.
+      Tvrzení „15+ let praxe" a „150+ realizací" v `about.stats` klient rovněž
+      potvrdil.
 - [ ] **Reálné fotky** — web běží na placeholderech. `ImageFrame` má konstantu
       `hasRealAsset`; po dodání souborů do `public/images/` se přepne.
 - [x] ~~**3D dům se nevykresluje** (D-029)~~ — vyřešeno. Dům se vykresluje postupně,
@@ -277,6 +280,7 @@ klidně menší. Navíc dodal skutečné údaje o lidech ve firmě.
 - [ ] **Popisky vs. dům na `/nahled-3d` při 1024 px** — nedořešeno, viz D-050. Řešitelné
       jen změnou rozvržení v `MenuOverlay`, ne kamerou. Skrytá URL, netýká se hero.
 
-**Zbývá potvrdit klientovi:** e-mail a doména (poslední vymyšlené údaje), rok založení
-(web tvrdí 2008, ARES uvádí u Petra Jáchima 2003), tvrzení „15+ let praxe" a
-„150+ realizací", „Záruka 10 let" na `/o-nas`.
+**Potvrzeno klientem 2026-08-07:** e-mail `info@jachim-kucera-tesarstvi.cz` (a tím
+i doména), rok založení 2008, tvrzení „15+ let praxe" i „150+ realizací".
+
+**Zbývá:** tvrzení „Záruka 10 let" na `/o-nas` a reálné fotky realizací.
