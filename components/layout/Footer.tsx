@@ -13,18 +13,18 @@ export function Footer() {
   const year = 2026
 
   return (
-    <footer className="relative overflow-hidden border-t border-slate/10 bg-paper-dim">
+    <footer className="relative overflow-hidden border-t border-timber/50 bg-paper-dim">
       <div className="grain absolute inset-0" aria-hidden="true" />
       <div className="container-content relative grid gap-12 py-16 md:grid-cols-[1.5fr_1fr_1fr]">
         <div className="space-y-5">
           <Logo size={64} />
-          <p className="max-w-xs font-body text-sm leading-relaxed text-slate/70">
+          <p className="max-w-xs font-body text-sm leading-relaxed text-timber/70">
             {t('common.footerDescription')}
           </p>
         </div>
 
         <nav aria-label={t('common.footerNavAria')} className="space-y-4">
-          <h2 className="font-mono text-xs uppercase tracking-widest text-steel">
+          <h2 className="font-mono text-xs uppercase tracking-widest text-oak">
             {t('common.navigationHeading')}
           </h2>
           <ul className="space-y-2">
@@ -32,7 +32,7 @@ export function Footer() {
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="link-underline font-body text-sm text-slate/70 transition-colors hover:text-slate"
+                  className="link-underline font-body text-sm text-timber/70 transition-colors hover:text-timber"
                 >
                   {navLabel(t, link.textSource)}
                 </Link>
@@ -42,15 +42,15 @@ export function Footer() {
         </nav>
 
         <div className="space-y-4">
-          <h2 className="font-mono text-xs uppercase tracking-widest text-steel">
+          <h2 className="font-mono text-xs uppercase tracking-widest text-oak">
             {t('nav.contact')}
           </h2>
-          <ul className="space-y-2 font-body text-sm text-slate/70">
+          <ul className="space-y-2 font-body text-sm text-timber/70">
             {contacts.map((contact) => (
               <li key={contact.phoneHref}>
                 <a
                   href={`tel:${contact.phoneHref}`}
-                  className="link-underline font-mono transition-colors hover:text-slate"
+                  className="link-underline font-mono transition-colors hover:text-timber"
                 >
                   {contact.name} — {contact.phone}
                 </a>
@@ -59,17 +59,17 @@ export function Footer() {
             <li>
               <a
                 href={`mailto:${SITE.email}`}
-                className="link-underline font-mono transition-colors hover:text-slate"
+                className="link-underline font-mono transition-colors hover:text-timber"
               >
                 {SITE.email}
               </a>
             </li>
-            <li className="pt-2 text-slate/70">{t('common.region')}</li>
+            <li className="pt-2 text-timber/70">{t('common.region')}</li>
           </ul>
         </div>
       </div>
 
-      <div className="container-content relative flex flex-col items-start justify-between gap-2 border-t border-slate/10 py-6 font-body text-xs text-slate/70 sm:flex-row sm:items-center">
+      <div className="container-content relative flex flex-col items-start justify-between gap-2 border-t border-timber/50 py-6 font-body text-xs text-timber/70 sm:flex-row sm:items-center">
         <p>
           © {year} {SITE.name}. {t('common.allRightsReserved')}
         </p>

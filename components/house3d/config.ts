@@ -39,17 +39,16 @@ export interface MenuItem {
   anchor: [number, number, number]
 }
 
-/** "Materiály řemesla" paleta - steel/zinek, břidlice, patina mědi.
- *  emissiveHover/accent = patina token z lib/palette.ts (jediný zdroj pravdy,
- *  viz D-003), WCAG-AA doladěný - tmavší než původní (méně kontrastní) hex
- *  z designového zadání. */
+/** "Dřevo a čas" paleta - timber (tmavá dřevěná), oak (střední dřevěná), ember (rez).
+ *  emissiveHover/accent = ember token z lib/palette.ts (jediný zdroj pravdy,
+ *  viz D-024), WCAG-AA doladěný. */
 export const COLORS = {
   background: toThreeColor(PALETTE.paper.DEFAULT), // paper
-  line: toThreeColor(PALETTE.slate.soft), // slate-soft - obrysové linky
-  lineHover: toThreeColor(PALETTE.slate.DEFAULT), // slate - tmavší při hoveru pro kontrast
-  face: toThreeColor(HOUSE3D_FACE), // paper-dim/steel mix - plochy stěn/střechy
+  line: toThreeColor(PALETTE.timber.soft), // timber-soft - obrysové linky
+  lineHover: toThreeColor(PALETTE.timber.DEFAULT), // timber - tmavší při hoveru pro kontrast
+  face: toThreeColor(HOUSE3D_FACE), // paper/oak mix - plochy stěn/střechy
   faceHover: toThreeColor(PALETTE.paper.DEFAULT), // paper - zesvětlá při hoveru
-  emissiveHover: toThreeColor(PALETTE.patina.DEFAULT), // patina - jediný akcent, hover/aktivní stav
+  emissiveHover: toThreeColor(PALETTE.ember.DEFAULT), // ember - jediný akcent, hover/aktivní stav
   ground: toThreeColor(PALETTE.paper.DEFAULT), // paper
   // Neutrální bílá pro Three.js světla (Hemisphere/Directional/Ambient) - drží
   // je mimo paletu domu, ať zůstanou skutečně bílá i po výměně palety za
@@ -59,9 +58,9 @@ export const COLORS = {
   // palety nesmí změnit.
   white: 0xffffff,
   /* DOM/overlay (CSS) */
-  ink: PALETTE.slate.DEFAULT, // slate
-  inkSoft: toRgba(PALETTE.slate.DEFAULT, 0.55),
-  accent: PALETTE.patina.DEFAULT, // patina - jediný akcent
+  ink: PALETTE.timber.DEFAULT, // timber
+  inkSoft: toRgba(PALETTE.timber.DEFAULT, 0.55),
+  accent: PALETTE.ember.DEFAULT, // ember - jediný akcent
 } as const
 
 export const LINE = {

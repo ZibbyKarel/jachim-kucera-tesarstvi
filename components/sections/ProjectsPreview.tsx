@@ -20,14 +20,14 @@ export function ProjectsPreview() {
           <div>
             <h2
               id="projects-heading"
-              className="max-w-xl font-display text-4xl italic text-slate md:text-5xl"
+              className="max-w-xl font-display text-4xl italic text-timber md:text-5xl"
             >
               {t('projectsIntro')}
             </h2>
           </div>
           <Link
             href="/realizace"
-            className="group inline-flex shrink-0 items-center gap-3 font-body text-xs uppercase tracking-widest text-patina transition-colors hover:text-patina-dim"
+            className="group inline-flex shrink-0 items-center gap-3 font-body text-xs uppercase tracking-widest text-ember transition-colors hover:text-ember-dim"
           >
             {tFull('common.allProjects')}
             <Arrow className="transition-transform duration-500 ease-craft group-hover:translate-x-1" />
@@ -52,10 +52,10 @@ export function ProjectsPreview() {
                   sizes="(max-width: 768px) 50vw, 33vw"
                 />
                 <div className="mt-3">
-                  <h3 className="font-display text-lg italic text-slate transition-colors group-hover:text-patina">
+                  <h3 className="font-display text-lg italic text-timber transition-colors group-hover:text-ember">
                     {title}
                   </h3>
-                  <p className="mt-1 font-mono text-[0.65rem] uppercase tracking-widest text-steel">
+                  <p className="mt-1 font-mono text-[0.65rem] uppercase tracking-widest text-oak">
                     {tFull(`services.${project.category}.title`)} · {location}
                   </p>
                 </div>

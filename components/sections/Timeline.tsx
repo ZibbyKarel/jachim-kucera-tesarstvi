@@ -57,20 +57,20 @@ export function Timeline() {
       <span
         data-timeline-line
         aria-hidden="true"
-        className="absolute left-0 top-2 h-[calc(100%-1rem)] w-px bg-steel/50"
+        className="absolute left-0 top-2 h-[calc(100%-1rem)] w-px bg-oak"
       />
       {timeline.map((m) => (
         <li key={m.year} data-milestone className="relative">
           {/* technická značka bodu (kolmá kóta), ne dekorativní tečka */}
           <span
             aria-hidden="true"
-            className="absolute -left-[2.6rem] top-2 h-3 w-3 -rotate-45 border border-patina bg-paper md:-left-[3.1rem]"
+            className="absolute -left-[2.6rem] top-2 h-3 w-3 -rotate-45 border border-ember bg-paper md:-left-[3.1rem]"
           />
-          <span className="font-mono text-2xl text-patina">{m.year}</span>
-          <h3 className="mt-1 font-display text-2xl italic text-slate">
+          <span className="font-mono text-2xl text-ember">{m.year}</span>
+          <h3 className="mt-1 font-display text-2xl italic text-timber">
             {m.title}
           </h3>
-          <p className="mt-2 max-w-xl font-body text-sm leading-relaxed text-slate/70">
+          <p className="mt-2 max-w-xl font-body text-sm leading-relaxed text-timber/70">
             {m.description}
           </p>
         </li>

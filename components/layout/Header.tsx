@@ -58,7 +58,7 @@ export function Header() {
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-colors duration-500 ${
         solid
-          ? 'border-b border-slate/10 bg-paper/85 backdrop-blur-md'
+          ? 'border-b border-timber/50 bg-paper/85 backdrop-blur-md'
           : 'bg-transparent'
       }`}
     >
@@ -89,7 +89,7 @@ export function Header() {
                 aria-current={active ? 'page' : undefined}
                 tabIndex={showNav ? undefined : -1}
                 className={`link-underline font-body text-xs uppercase tracking-widest transition-colors duration-300 ${
-                  active ? 'text-patina' : 'text-slate/80 hover:text-slate'
+                  active ? 'text-ember' : 'text-timber/80 hover:text-timber'
                 }`}
               >
                 {navLabel(tFull, link.textSource)}
@@ -114,17 +114,17 @@ export function Header() {
             <div className="flex w-6 flex-col items-end gap-[6px]">
               <span
                 className={`h-px transition-all duration-300 ${
-                  menuOpen ? 'w-6 translate-y-[7px] rotate-45 bg-paper' : 'w-6 bg-slate'
+                  menuOpen ? 'w-6 translate-y-[7px] rotate-45 bg-paper' : 'w-6 bg-timber'
                 }`}
               />
               <span
                 className={`h-px transition-all duration-300 ${
-                  menuOpen ? 'w-0 opacity-0 bg-paper' : 'w-4 bg-slate'
+                  menuOpen ? 'w-0 opacity-0 bg-paper' : 'w-4 bg-timber'
                 }`}
               />
               <span
                 className={`h-px transition-all duration-300 ${
-                  menuOpen ? 'w-6 -translate-y-[7px] -rotate-45 bg-paper' : 'w-5 bg-slate'
+                  menuOpen ? 'w-6 -translate-y-[7px] -rotate-45 bg-paper' : 'w-5 bg-timber'
                 }`}
               />
             </div>
@@ -135,7 +135,7 @@ export function Header() {
       {/* Fullscreen overlay menu (mobil) — tmavé pozadí přes celou obrazovku */}
       <div
         id="mobile-menu"
-        className={`fixed inset-0 z-40 flex h-[100dvh] w-screen flex-col bg-slate transition-opacity duration-300 lg:hidden ${
+        className={`fixed inset-0 z-40 flex h-[100dvh] w-screen flex-col bg-timber transition-opacity duration-300 lg:hidden ${
           menuOpen
             ? 'pointer-events-auto opacity-100'
             : 'pointer-events-none opacity-0'
@@ -150,14 +150,14 @@ export function Header() {
               key={link.href}
               href={link.href}
               tabIndex={menuOpen ? undefined : -1}
-              className="font-display text-4xl italic text-paper transition-colors duration-300 hover:text-patina-soft"
+              className="font-display text-4xl italic text-paper transition-colors duration-300 hover:text-ember-soft"
             >
               {navLabel(tFull, link.textSource)}
             </Link>
           ))}
         </nav>
-        <div className="flex items-center justify-between border-t border-paper/10 px-8 py-6">
-          <span className="font-mono text-xs uppercase tracking-widest text-steel-soft">
+        <div className="flex items-center justify-between border-t border-paper/40 px-8 py-6">
+          <span className="font-mono text-xs uppercase tracking-widest text-oak-soft">
             {t('region')}
           </span>
           <LanguageSwitcher light />

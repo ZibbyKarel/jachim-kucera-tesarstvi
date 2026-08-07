@@ -30,7 +30,7 @@ export function MobileServiceGrid({ className = '' }: { className?: string }) {
         <Link
           key={label.id}
           href={label.href}
-          className="group flex min-h-[44px] items-center gap-3 rounded-sm border border-slate/12 bg-paper/90 px-3.5 py-3 backdrop-blur-sm transition-colors hover:border-patina"
+          className="group flex min-h-[44px] items-center gap-3 rounded-sm border border-timber/50 bg-paper/90 px-3.5 py-3 backdrop-blur-sm transition-colors hover:border-ember"
         >
           <svg
             width="22"
@@ -42,11 +42,11 @@ export function MobileServiceGrid({ className = '' }: { className?: string }) {
             strokeLinecap="round"
             strokeLinejoin="round"
             aria-hidden="true"
-            className="shrink-0 text-steel transition-colors group-hover:text-patina"
+            className="shrink-0 text-oak transition-colors group-hover:text-ember"
           >
             {ICONS[label.key]}
           </svg>
-          <span className="font-body text-sm leading-tight text-slate">
+          <span className="font-body text-sm leading-tight text-timber">
             {labelText(t, label.textSource)}
           </span>
         </Link>

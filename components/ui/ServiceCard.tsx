@@ -24,7 +24,7 @@ export function ServiceCard({ service }: { service: Service }) {
   const title = t(`services.${service.slug}.title`)
 
   return (
-    <article className="group relative flex h-full flex-col justify-between overflow-hidden rounded-sm border border-slate/10 bg-paper-dim p-8 transition-colors duration-500 hover:border-patina md:p-10">
+    <article className="group relative flex h-full flex-col justify-between overflow-hidden rounded-sm border border-timber/50 bg-paper-dim p-8 transition-colors duration-500 hover:border-ember md:p-10">
       <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-700 ease-craft group-hover:opacity-100">
         <ImageFrame
           src={service.heroImage}
@@ -37,7 +37,7 @@ export function ServiceCard({ service }: { service: Service }) {
       </div>
 
       <div className="relative">
-        <span className="font-mono text-xs uppercase tracking-widest text-steel">
+        <span className="font-mono text-xs uppercase tracking-widest text-oak">
           {t('common.serviceLabel')}
         </span>
         <svg
@@ -50,25 +50,25 @@ export function ServiceCard({ service }: { service: Service }) {
           strokeLinecap="round"
           strokeLinejoin="round"
           aria-hidden="true"
-          className="mt-6 text-patina"
+          className="mt-6 text-ember"
         >
           {icons[service.slug]}
         </svg>
         <h3
-          className={`mt-6 font-display italic leading-[0.95] text-slate ${
+          className={`mt-6 font-display italic leading-[0.95] text-timber ${
             service.featured ? 'text-5xl md:text-6xl' : 'text-3xl md:text-4xl'
           }`}
         >
           {title}
         </h3>
-        <p className="mt-4 max-w-sm font-body text-sm leading-relaxed text-slate/70">
+        <p className="mt-4 max-w-sm font-body text-sm leading-relaxed text-timber/70">
           {t(`services.${service.slug}.shortDescription`)}
         </p>
       </div>
 
       <Link
         href={`/sluzby/${service.slug}`}
-        className="relative mt-8 inline-flex items-center gap-3 font-body text-xs uppercase tracking-widest text-patina transition-colors hover:text-patina-dim"
+        className="relative mt-8 inline-flex items-center gap-3 font-body text-xs uppercase tracking-widest text-ember transition-colors hover:text-ember-dim"
       >
         {t('common.moreAbout')} {title}
         <Arrow className="transition-transform duration-500 ease-craft group-hover:translate-x-1" />

@@ -50,7 +50,7 @@ export function HeroScroll() {
           className="pointer-events-none absolute inset-x-0 top-0 z-10 flex flex-col items-center px-6 pt-[5.5rem] text-center md:pointer-events-auto md:static md:z-auto md:w-[42%] md:shrink-0 md:items-start md:justify-center md:px-12 md:pt-0 md:text-left lg:px-16"
         >
           <span className="eyebrow">{t('heroEyebrow')}</span>
-          <h1 className="mt-3 max-w-2xl font-display text-3xl italic leading-[1.05] text-slate sm:text-4xl md:text-5xl lg:text-6xl">
+          <h1 className="mt-3 max-w-2xl font-display text-3xl italic leading-[1.05] text-timber sm:text-4xl md:text-5xl lg:text-6xl">
             {t('heroTitle')}
           </h1>
           <Button href="/kontakt" size="md" className="pointer-events-auto mt-6">
@@ -64,7 +64,7 @@ export function HeroScroll() {
         </div>
 
         {/* mobilní kartový seznam služeb - jediná garantovaná navigace pod 768px */}
-        <div className="flex-1 overflow-y-auto border-t border-slate/8 bg-paper-dim px-4 py-4 md:hidden">
+        <div className="flex-1 overflow-y-auto border-t border-timber/50 bg-paper-dim px-4 py-4 md:hidden">
           <MobileServiceGrid />
         </div>
       </div>

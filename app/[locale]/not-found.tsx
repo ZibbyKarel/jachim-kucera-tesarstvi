@@ -4,8 +4,8 @@ import { Link } from '@/i18n/routing'
 export default async function NotFound() {
   const t = await getTranslations('notFound')
   return (
-    <div className="flex min-h-[80vh] flex-col items-center justify-center bg-slate px-6 text-center">
-      <span className="font-display text-7xl italic text-patina-soft md:text-9xl">
+    <div className="flex min-h-[80vh] flex-col items-center justify-center bg-timber px-6 text-center">
+      <span className="font-display text-7xl italic text-ember-soft md:text-9xl">
         404
       </span>
       <h1 className="mt-4 font-display text-3xl italic text-paper md:text-4xl">
@@ -16,7 +16,7 @@ export default async function NotFound() {
       </p>
       <Link
         href="/"
-        className="mt-8 inline-flex items-center gap-2 bg-patina px-6 py-3 font-body text-sm font-medium uppercase tracking-widest text-paper transition-colors hover:bg-patina-dim"
+        className="mt-8 inline-flex items-center gap-2 bg-ember px-6 py-3 font-body text-sm font-medium uppercase tracking-widest text-paper transition-colors hover:bg-ember-dim"
       >
         {t('backHome')}
       </Link>
