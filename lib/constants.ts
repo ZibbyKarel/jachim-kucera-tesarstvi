@@ -84,7 +84,14 @@ export const services: Service[] = [
   },
   {
     slug: 'klempirstvi',
-    heroImage: '/images/placeholder/okap-mer-01.jpg',
+    // Pozor: `heroImage` NENÍ součástí placeholder konvence, protože se nikdy
+    // nevykresluje přes `ImageFrame`. Jediný jeho konzument je `openGraph.images`
+    // v app/[locale]/sluzby/<slug>/page.tsx, tedy náhledový obrázek při sdílení
+    // odkazu. Placeholder cesta by tam znamenala rozbitý náhled na Facebooku
+    // i v messengerech (soubor vrací 404), takže i služby bez vlastní fotky
+    // ukazují skutečnou fotku firmy. Na střeše jsou vidět okapy a hřeben, což
+    // klempířině odpovídá; nic se tím netvrdí o konkrétní zakázce.
+    heroImage: '/images/realizace/krytina-02.jpg',
     gallery: [
       { src: '/images/placeholder/okap-med.jpg' },
       { src: '/images/placeholder/okap-titanzinek.jpg' },
@@ -97,7 +104,8 @@ export const services: Service[] = [
   },
   {
     slug: 'cisteni-strech',
-    heroImage: '/images/placeholder/cisteni-strecha-01.jpg',
+    // Totéž co u klempířství: náhledový obrázek pro sdílení, ne obsah stránky.
+    heroImage: '/images/realizace/strechy-novostavby.jpg',
     gallery: [
       { src: '/images/placeholder/cisteni-pred-po.jpg' },
       { src: '/images/placeholder/cisteni-mech.jpg' },

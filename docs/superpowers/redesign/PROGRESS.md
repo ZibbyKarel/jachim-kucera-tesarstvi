@@ -216,8 +216,14 @@ ne pohledem. **Zbývá zkontrolovat na skutečném telefonu nebo v device toolba
       živnost od 2003, takže 2008 je rok vzniku společné party, ne první živnosti.
       Tvrzení „15+ let praxe" a „150+ realizací" v `about.stats` klient rovněž
       potvrdil.
-- [ ] **Reálné fotky** — web běží na placeholderech. `ImageFrame` má konstantu
-      `hasRealAsset`; po dodání souborů do `public/images/` se přepne.
+- [x] ~~**Reálné fotky**~~ — vyřešeno 2026-08-07. Klient poslal jako zdroj svůj starý web
+      `sikovnytesar.cz`; staženo, zoptimalizováno (max 1600 px, mozjpeg q74, EXIF
+      odstraněn) a nasazeno **28 skutečných fotek** v `public/images/realizace/`.
+      Zároveň se přepsala data realizací, protože fotky ukazují jinou práci, než si
+      vymyslelo těch původních dvanáct položek. Roky jsou z EXIF, lokality zmizely
+      (neznáme je). Viz D-052. Globální `hasRealAsset` nahradila konvence cest, D-053.
+      **Klempířství a čištění střech reálnou fotku nemají** - v celé galerii nebyla ani
+      jedna klempířská ani čisticí; obě sekce zůstávají na placeholderu.
 - [x] ~~**3D dům se nevykresluje** (D-029)~~ — vyřešeno. Dům se vykresluje postupně,
       potvrdil uživatel. Z homepage odešel na `/nahled-3d` (redesign v2) a na titulní
       stránku se vrátil jen jako neinteraktivní dekorace vpravo dole (D-043, D-044).
@@ -227,8 +233,16 @@ ne pohledem. **Zbývá zkontrolovat na skutečném telefonu nebo v device toolba
       naše. Povinné identifikační údaje nese patička (obě jména + obě IČO), takže
       právní minimum je splněné, viz D-046. Zbývá jen potvrdit s klientem, že chce
       web prezentovat pod tímhle společným označením.
-- [ ] **„Záruka 10 let"** v certifikátech na stránce O nás — neověřené tvrzení, může být
-      pozůstatek staršího textu. Potvrdit s klientem, nebo odstranit.
+- [ ] **Celý seznam „Certifikáty a reference"** na stránce O nás — ne jen „Záruka 10 let".
+      `about.certificates` je `["ČKAIT", "Zelená úsporám", "Pojištění odpovědnosti",
+      "Záruka 10 let"]` a pochází z prvního commitu, tedy ze stejné dílny jako vymyšlené
+      realizace a vymyšlené telefonní číslo. Nejzávažnější je **ČKAIT** — komora
+      autorizovaných inženýrů, členství je veřejně dohledatelné a u OSVČ tesaře
+      nepravděpodobné. Potvrdit položku po položce, jinak seznam odstranit. Viz D-055.
+- [ ] **Ohlasy zákazníků** — sekce „Co říkají zákazníci" přebírá texty ze starého webu
+      klienta doslova, ale jejich pravost není doložená (bez zdroje, bez značkování,
+      autoři jen iniciály, šablonový web). Do JSON-LD se záměrně nepromítají. Potvrdit,
+      nebo nahradit skutečnými. Viz D-054.
 - [x] ~~**Mobilní zobrazení pohledem**~~ — ověřeno na viewportu 281 px (užší než
       iPhone SE): žádné horizontální přetečení, rejstřík služeb funguje jako navigace,
       logo v hlavičce čitelné, dotykové cíle 44 px.
@@ -283,4 +297,30 @@ klidně menší. Navíc dodal skutečné údaje o lidech ve firmě.
 **Potvrzeno klientem 2026-08-07:** e-mail `info@jachim-kucera-tesarstvi.cz` (a tím
 i doména), rok založení 2008, tvrzení „15+ let praxe" i „150+ realizací".
 
-**Zbývá:** tvrzení „Záruka 10 let" na `/o-nas` a reálné fotky realizací.
+## Doladění 3 (2026-08-07) — skutečné fotky a ohlasy zákazníků
+
+Uživatel poslal starý firemní web `sikovnytesar.cz` jako zdroj fotek a vyžádal si sekci
+s ohlasy zákazníků z `#recenze`.
+
+- [x] **28 skutečných fotek** stažených, zoptimalizovaných a nasazených. Kategorie práce,
+      které fotky ukazují: krovy a laťování, skládaná krytina, přístřešky, pergoly,
+      venkovní kuchyně, roubené stavby, zastřešená tribuna, dětská hřiště, zastřešení
+      studní. Commit `a75f725`.
+- [x] **Data realizací přepsána podle fotek**, ne naopak. Dvanáct vymyšlených položek
+      i s lokalitami nahradilo dvanáct skutečných bez lokalit. Roky z EXIF. D-052.
+- [x] **`hasRealAsset` nahrazeno konvencí cest** (`/images/placeholder/…`). D-053.
+- [x] **Sekce „Co říkají zákazníci"** na homepage mezi `Process` a `AboutSection`.
+      Texty převzaté doslova, pravost neověřená, do JSON-LD se nepromítají. D-054.
+- [ ] **Truhlářina a CAD vizualizace zůstaly nevyužité.** Ve zdroji je 7 fotek nábytku
+      (postele, patrové postele, vestavěné skříně, šatna) a 4 vizualizace přístřešků.
+      Web žádnou takovou službu nenabízí. Rozhodnutí, jestli truhlářinu přidat jako
+      službu, je na klientovi.
+- [ ] **Klempířství a čištění střech nemají fotku.** Ve zdroji nebyla ani jedna.
+
+**Nález mimo zadání:** starý web uvádí u Petra Jáchima e-mail `sikovny-tesar@email.cz`
+a adresu Smrková 137, Kyšice 33001. Nic z toho se na nový web nepřeneslo - e-mail proto,
+že klient potvrdil jiný, adresu proto, že o ni nikdo nežádal a jde o bydliště OSVČ.
+Adresa ale potvrzuje tvrzení „Plzeňský kraj" v textech, které do teď doložené nebylo.
+
+**Zbývá:** seznam certifikátů na `/o-nas` (celý, ne jen záruka), potvrzení ohlasů,
+rozhodnutí o truhlářině.

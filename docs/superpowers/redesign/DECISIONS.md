@@ -597,3 +597,62 @@ u obou hodnot proto stojí explicitní poznámka o potvrzení včetně data. Zrc
 opačné: věrohodně vypadající hodnota bez poznámky **není** ověřená (přesně tak se
 `+420 777 123 456` udrželo na webu přes celý redesign, viz D-047).
 **Nedořešeno dál:** tvrzení „Záruka 10 let" na `/o-nas` a reálné fotky.
+
+## D-052 — Realizace se přepsaly podle fotek, ne naopak
+**Datum:** 2026-08-07 · **Rozhodl:** uživatel (dodal zdroj), provedl Claude (opus + sonnet)
+Klient poslal starý firemní web `sikovnytesar.cz` jako zdroj skutečných fotek. Do té doby
+běžel web na placeholderech a `lib/constants.ts` držel **12 kompletně vymyšlených realizací**
+i s lokalitami (Plzeň-sever, Klatovy, Domažlice, Sušice…), roky a popisy. Nešlo o zbytek po
+klientovi: všech dvanáct vzniklo v prvním commitu `fc31dad` spolu se zbytkem webu.
+Fotky ukazují jinou práci, než co si těch dvanáct položek vymyslelo. Přepsala se proto
+**data podle fotek**, ne fotky nacpané do existujících škatulek.
+- **Roky jsou z EXIF originálů** (`DateTimeOriginal`), ne odhad. Ověřeno u každého souboru
+  zvlášť; pozor, že v EXIF jsou dvě data - to novější (2025-09-03) je re-export pro starý
+  web, ne pořízení.
+- **Lokality zmizely z datového modelu i z UI.** V EXIF nebyla GPS a jinak je neznáme.
+  Popiska pod kartou je teď `ROK / KATEGORIE`, `Project.year` je volitelný (sady z více let
+  rok neuvádějí).
+- **Nic se nedomýšlelo**: žádný materiál, který z fotky nejde poznat (proto `krytina-01.jpg`,
+  ne `krytina-betonova-01.jpg` - betonová vs. pálená se z fotky nepozná), žádné plochy,
+  žádná jména zákazníků.
+- Filtr kategorií se odvozuje z reálně přítomných kategorií. Klempířství žádnou realizaci
+  nemá, jeho záložka se proto nevykreslí; dřív byla natvrdo a ukázala by prázdnou mřížku.
+**Poznatek pro příště:** EXIF je levný a spolehlivý zdroj faktů. Stálo za to sáhnout po něm
+dřív, než se začaly psát popisky.
+
+## D-053 — Placeholder se pozná podle cesty, ne podle globálního přepínače
+**Datum:** 2026-08-07 · **Rozhodl:** Claude (opus)
+`ImageFrame` měl `const hasRealAsset = false` pro **celý web**. To fungovalo, dokud nebyla
+ani jedna skutečná fotka. Teď má tesařství a pokrývačství fotky skutečné, klempířství
+a čištění střech žádné.
+Zavedena konvence: **`/images/placeholder/…` = záměrně neexistující soubor**, cokoli jiného
+je skutečný obrázek. `ImageFrame` si to odvodí z `src`, žádný globální přepínač.
+Výhoda proti seznamu reálných souborů: nejde rozejít. Cesta v `lib/constants.ts` je jediné
+místo, kde se rozhoduje, a ověřovací skript porovná obojí proti obsahu `public/`.
+
+## D-054 — Ohlasy zákazníků jsou převzaté, ale neověřené (a do JSON-LD nesmí)
+**Datum:** 2026-08-07 · **Rozhodl:** uživatel (zadal zdroj), zapsal Claude (opus)
+Klient si vyžádal sekci „Co říkají zákazníci" a jako zdroj určil `sikovnytesar.cz/#recenze`.
+Texty se přebírají doslova. **Pravost ale doložená není** a v kódu je to poznamenané:
+- u citací na původním webu není žádný zdroj, žádné schema.org značkování ani odkaz na
+  Google či Firmy.cz,
+- autoři jsou pouhé iniciály plus jeden „Obecní úřad",
+- celý ten web je šablonový: pod všemi pěti službami se opakují tytéž tři odrážky, texty mají
+  rukopis generovaného obsahu a fotky byly hromadně re-exportovány jeden den v září 2025.
+Může tedy jít o výplňový text, ne o skutečné ohlasy.
+**Proto se ohlasy nepromítají do strukturovaných dat.** Žádné `Review` ani `AggregateRating`
+v JSON-LD, dokud je klient nepotvrdí - vymyšlené recenze ve strukturovaných datech jsou
+porušení pravidel vyhledávačů, a na rozdíl od textu na stránce je to strojově vytěžitelné
+tvrzení. Výměna je levná: přepsat `testimonials.items` v messages.
+
+## D-055 — Seznam „Certifikáty a reference" je vymyšlený celý, nejen záruka
+**Datum:** 2026-08-07 · **Zjistil:** Claude (opus)
+Pre-launch checklist dosud hlídal jen tvrzení „Záruka 10 let". Při kontrole se ukázalo, že
+celý `about.certificates` je `["ČKAIT", "Zelená úsporám", "Pojištění odpovědnosti",
+"Záruka 10 let"]` a pochází z prvního commitu, tedy ze stejné dílny jako vymyšlené realizace
+a vymyšlené telefonní číslo.
+Nejzávažnější je **ČKAIT**: to je Česká komora autorizovaných inženýrů a techniků činných ve
+výstavbě, členství je veřejně dohledatelné a u OSVČ tesaře nepravděpodobné. Tvrdit členství
+v profesní komoře, kde není, není marketingová nadsázka.
+**Nedořešeno - čeká na klienta.** Doporučení: dokud nepotvrdí položku po položce, seznam ze
+stránky pryč. Prázdno je lepší než nedoložitelné tvrzení.
