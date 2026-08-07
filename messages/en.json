@@ -239,11 +239,11 @@
         { "title": "Ridges, hips, valleys", "description": "The details where roofs leak most often. We build them to hold water back even in extreme weather." }
       ],
       "galleryAlt": [
-        "Concrete roof tiles on a new-build roof",
+        "Interlocking roof tiles on a new-build roof",
         "Ridge and gutter system on a finished roof",
         "Roof covering of a timber carport",
         "Roof truss ready for roofing",
-        "Detail of battens before roofing",
+        "Roof battens before roofing",
         "Roof of a log building"
       ],
       "seoTitle": "Roofing | Roof Covering Installation | Pilsen Region",
@@ -313,6 +313,10 @@
       "title": "Roofing on a New Build",
       "description": "Finished roof envelope of the same house. Dark interlocking tiles, ridge and gutter system."
     },
+    "krytina-rekonstrukce": {
+      "title": "Roofing on a Reconstruction",
+      "description": "New interlocking tiles on a reconstructed house, including the chimney and gutter system."
+    },
     "pristresek-pro-auta": {
       "title": "Carport",
       "description": "Freestanding timber carport. The first photo shows the bare truss with battens, the second the same structure after the roofing was laid."
@@ -328,6 +332,10 @@
     "zastreseni-vstupu": {
       "title": "Entrance and Terrace Roof",
       "description": "Timber roof structure at a family home, connecting to the terrace. Posts with carpentry joints and exposed rafters."
+    },
+    "zastresena-tribuna": {
+      "title": "Covered Grandstand",
+      "description": "Timber roof over a grandstand at a sports field. Posts with carpentry joints and a long purlin structure."
     },
     "roubena-stavba": {
       "title": "Log Building",
