@@ -66,7 +66,7 @@ export function Footer() {
       </div>
 
       <div className="container-content flex flex-col gap-4 border-t border-paper/15 py-6 font-body text-xs text-oak-soft sm:flex-row sm:items-center sm:justify-between">
-        {/* Skutečné IČO dodal klient (viz D-019), hodnoty žijí v lib/constants.ts. */}
+        {/* Skutečné IČO dodal klient (viz D-019), hodnota žije v lib/constants.ts. */}
         <div className="flex flex-col gap-1">
           {people.map((person) => (
             <p key={person.key}>

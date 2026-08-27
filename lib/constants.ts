@@ -1,10 +1,9 @@
 import type { NavLink, Person, Project, Service } from './types'
 
 /* -------------------------------------------------------------------------- */
-/*  Lidé — firma jsou dva OSVČ, každý s vlastním IČO, ne jedna právnická       */
-/*  osoba. Pořadí odpovídá jménu firmy „Jáchim & Kučera" - Petr Jáchim první.  */
-/*  Údaje dodal klient, opisují se znak po znaku (žádné role, tituly, e-maily  */
-/*  ani biografie - nikdo neřekl, kdo je „šéf").                               */
+/*  Lidé — firma je jeden OSVČ, Petr Jáchim. Druhý dřívější partner (Milan     */
+/*  Kučera) ve firmě už není a jeho údaje byly z webu odstraněny (rozpad       */
+/*  partnerství, 2026-08). Údaje dodal klient, opisují se znak po znaku.       */
 /* -------------------------------------------------------------------------- */
 
 export const people: Person[] = [
@@ -15,32 +14,21 @@ export const people: Person[] = [
     phone: '+420 608 212 410',
     phoneHref: '+420608212410',
   },
-  {
-    key: 'kucera',
-    name: 'Milan Kučera',
-    companyId: '29640113',
-    phone: '+420 725 443 271',
-    phoneHref: '+420725443271',
-  },
 ]
 
 export const SITE = {
-  name: 'Jáchim & Kučera, tesařství',
-  shortName: 'Jáchim & Kučera',
-  // Doména odvozená z e-mailu, který klient potvrdil (viz `email` níž) - tedy
-  // už ne placeholder. Kdyby web nakonec běžel jinde, přepsat: `url` živí
+  name: 'Petr Jáchim, tesařství',
+  shortName: 'Petr Jáchim',
+  // Nová doména po odchodu druhého partnera (viz `email` níž). `url` živí
   // canonical odkazy, sitemap, robots i JSON-LD. Přebít se dá i za běhu přes
   // NEXT_PUBLIC_SITE_URL (app/sitemap.ts, app/robots.ts).
-  url: 'https://jachim-kucera-tesarstvi.cz',
-  // Hlavní číslo je Petr Jáchim, protože je první ve jméně firmy. Používá se
-  // v JSON-LD (app/[locale]/layout.tsx, kde jde navíc pole obou čísel) a jako
-  // fallback při chybě odeslání v ContactForm.
+  url: 'https://tesarjachim.cz',
+  // Jediné číslo ve firmě je Petr Jáchim. Používá se v JSON-LD
+  // (app/[locale]/layout.tsx) a jako fallback při chybě odeslání v ContactForm.
   phone: people[0].phone,
   phoneHref: people[0].phoneHref,
-  // Potvrzeno klientem 2026-08-07. Shodou okolností stejná hodnota, jakou tu
-  // od prvního commitu držel placeholder - proto ji nepřepisuj se slovy „je to
-  // stejné jako dřív, tedy vymyšlené". Není.
-  email: 'info@jachim-kucera-tesarstvi.cz',
+  // Nová kontaktní adresa po odchodu druhého partnera.
+  email: 'info@tesarjachim.cz',
 } as const
 
 /* -------------------------------------------------------------------------- */

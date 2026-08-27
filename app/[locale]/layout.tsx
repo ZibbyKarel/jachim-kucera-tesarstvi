@@ -101,15 +101,15 @@ function buildJsonLd(tSeo: SeoTranslator, locale: string) {
     '@id': `${SITE.url}/#business`,
     // Záměrně shortName, ne name: schema.org/LocalBusiness.name má nést jméno
     // podniku, ne jméno s připojeným popisem oboru. `SITE.name` obsahuje
-    // interpunkci („Jáchim & Kučera, tesařství"), kterou jsme si při redesignu
+    // interpunkci („Petr Jáchim, tesařství"), kterou jsme si při redesignu
     // sami vymysleli — neznáme oficiální znění názvu firmy (v repu není ani
     // IČO) — a nechceme ji cpát do strukturovaných dat, odkud si ji tahají
     // vyhledávače a mapové služby. Obor je vyjádřen jinými poli (serviceType).
     name: SITE.shortName,
     description: tSeo('jsonLdDescription'),
     url: SITE.url,
-    // Firma jsou dva OSVČ, každý s vlastním číslem - schema.org/telephone
-    // přijímá pole, takže se publikují obě, ne jen to hlavní ze SITE.phone.
+    // Firma je jeden OSVČ - schema.org/telephone přijímá pole, `people` má
+    // teď jednu položku, takže pole obsahuje jediné číslo.
     telephone: people.map((person) => person.phone),
     email: SITE.email,
     image: `${SITE.url}/logo.jpg`,

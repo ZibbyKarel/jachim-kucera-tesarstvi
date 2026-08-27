@@ -111,8 +111,8 @@
     "storyAria": "Příběh firmy",
     "teamHeading": "Lidé ve firmě",
     "story": [
-      "Jmenujeme se Jáchim a Kučera a střechám se věnujeme přes patnáct let. Začínali jsme jako vyučení tesaři v Plzeňském kraji a dnes vedeme vlastní partu, na kterou se můžete spolehnout. Každou střechu stavíme tak, jako by byla naše vlastní.",
-      "Postupem let jsme k tesařině přidali pokrývačství a klempířství, abychom mohli zákazníkovi předat hotovou střechu od krovu po poslední okap, bez toho, aby musel shánět tři různé firmy a hlídat, kdo za co odpovídá. Vše máme pod jednou střechou, doslova.",
+      "Jmenuji se Petr Jáchim a střechám se věnuji přes patnáct let. Začínal jsem jako vyučený tesař v Plzeňském kraji a dnes vedu vlastní partu, na kterou se můžete spolehnout. Každou střechu stavíme tak, jako by byla naše vlastní.",
+      "Postupem let jsem k tesařině přidal pokrývačství a klempířství, abych mohl zákazníkovi předat hotovou střechu od krovu po poslední okap, bez toho, aby musel shánět tři různé firmy a hlídat, kdo za co odpovídá. Vše máme pod jednou střechou, doslova.",
       "Nejsme velká firma a nechceme být. Děláme tolik zakázek, kolik zvládneme udělat pořádně. Na stavbu chodíme my, ne anonymní poddodavatelé, a stojíme si za svou prací i po letech. Když něco slíbíme, platí to."
     ],
     "stats": [
@@ -187,7 +187,7 @@
     "heroIntro": "Výběr z toho, na čem jsme za poslední roky pracovali. Od krovů přes kompletní střechy až po klempířské detaily, vše v Plzeňském kraji a okolí."
   },
   "nahled3d": {
-    "heading": "Jáchim & Kučera: 3D rozcestník",
+    "heading": "Petr Jáchim: 3D rozcestník",
     "hint": "Najeďte na prvek nebo label · klik vybere"
   },
   "notFound": {
@@ -220,8 +220,8 @@
       "description": "Napište nebo zavolejte. Domluvíme se na nezávazné prohlídce střechy v Plzeňském kraji. Tesařství, pokrývačství a klempířství."
     },
     "onas": {
-      "title": "O nás | Tesaři z Plzeňského kraje",
-      "description": "Jsme Jáchim a Kučera. Tesařině, pokrývačství a klempířství se věnujeme přes patnáct let. Poctivá řemeslná práce v Plzeňském kraji."
+      "title": "O nás | Tesař z Plzeňského kraje",
+      "description": "Jsem Petr Jáchim. Tesařině, pokrývačství a klempířství se věnuji přes patnáct let. Poctivá řemeslná práce v Plzeňském kraji."
     },
     "realizace": {
       "title": "Realizace | Naše střechy v Plzeňském kraji",

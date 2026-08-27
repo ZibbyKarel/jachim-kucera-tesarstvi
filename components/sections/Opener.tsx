@@ -12,11 +12,13 @@ import { OpenerHouse } from './OpenerHouse'
 /*  dolů (justify-end), ne na střed - dává sekci váhu. Normální dokumentový     */
 /*  tok, žádný pin/scrub.                                                      */
 /*                                                                              */
-/*  Rok založení (2008) potvrdil klient 2026-08-07. Předtím to bylo jen číslo   */
-/*  odvozené z about.timeline; potvrzení ho z odvozeniny dělá fakt. Pozor, že   */
-/*  rejstřík uvádí u Petra Jáchima živnost už od roku 2003 - 2008 je tedy rok   */
-/*  vzniku společné party, ne první živnosti. ICU parametr {year} drží text a   */
-/*  číslo odděleně v messages.                                                  */
+/*  Rok založení (2008) potvrdil klient 2026-08-07, PŘED rozpadem partnerství   */
+/*  Jáchim & Kučera (2026-08). Tehdy šlo o rok vzniku SPOLEČNÉ party (rejstřík   */
+/*  uvádí u Petra Jáchima živnost už od roku 2003). Teď, kdy web mluví jen o     */
+/*  Petru Jáchimovi, je potřeba si u klienta ověřit, jestli má „založeno" dál    */
+/*  ukazovat 2008, nebo přejít na 2003 (jeho vlastní živnost) - viz souhrn       */
+/*  rozhodnutí v PR popisu, neměněno bez potvrzení. ICU parametr {year} drží     */
+/*  text a číslo odděleně v messages.                                           */
 /*                                                                              */
 /*  Faktický pás bere hodnoty výhradně z about.stats (dvě položky v obsahu -    */
 /*  dvě položky se zobrazí, žádná třetí/čtvrtá se nedomýšlí). Obě tvrzení       */

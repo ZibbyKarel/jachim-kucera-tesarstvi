@@ -10,9 +10,14 @@ import Image from "next/image";
 export const LOGO_ASPECT_RATIO = 867 / 463;
 
 /**
- * Logo Jáchim & Kučera — širokoúhlý lockup (kresba domu + vysázené jméno
- * firmy + "TESAŘSTVÍ"), ne kulatý odznak. Jméno firmy je součástí obrázku
- * samotného, takže se vedle něj už nevysazuje žádný samostatný text.
+ * Logo firmy — širokoúhlý lockup (kresba domu + vysázené jméno firmy +
+ * "TESAŘSTVÍ"), ne kulatý odznak. Jméno firmy je součástí obrázku samotného,
+ * takže se vedle něj už nevysazuje žádný samostatný text.
+ *
+ * POZOR: zdrojové PNG (public/logo_2.png, public/logo-paper.png) mají jméno
+ * firmy vysázené přímo v obrázku jako „Jáchim & Kučera" - textový přerod na
+ * webu (SITE.name/shortName) tohle nezmění. Dokud web běží pod jménem Petr
+ * Jáchim, je potřeba nechat překreslit i tato PNG s novým nápisem.
  *
  * Sizuje se podle výšky (`height`), ne podle hrany čtverce — při fixní
  * výšce next/image dopočítá šířku podle LOGO_ASPECT_RATIO, takže lockup

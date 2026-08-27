@@ -83,9 +83,9 @@ export default async function ONasPage({
         </div>
       </section>
 
-      {/* Lidé ve firmě — dva OSVČ, jen jméno, IČO a telefon. Žádné role, tituly
-          ani vymyšlené životopisy - klient neřekl, kdo dělá co. Stejný rytmus
-          hairline řádků jako sekce „Hodnoty" níže, ne karty. */}
+      {/* Lidé ve firmě — jeden OSVČ, jen jméno, IČO a telefon. Žádné role,
+          tituly ani vymyšlené životopisy. Stejný rytmus hairline řádků jako
+          sekce „Hodnoty" níže, ne karty. */}
       <section aria-labelledby="team-heading" className="bg-paper py-20 md:py-28">
         <div className="container-content">
           <h2 id="team-heading" className="font-mono text-xs uppercase tracking-widest text-oak">

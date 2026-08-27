@@ -1,4 +1,4 @@
-# Jáchim &amp; Kučera — Tesařství
+# Petr Jáchim — Tesařství
 
 Web tesařsko-pokrývačsko-klempířské firmy z Plzeňského kraje. Postavený na
 Next.js 14 (App Router), Reactu 18 s TypeScriptem, Tailwind CSS a GSAP.
@@ -133,4 +133,4 @@ parallax běží přes `ScrollTrigger` s `scrub`.
 
 ## Licence
 
-© Jáchim &amp; Kučera. Veškerý obsah a kód k privátnímu použití klienta.
+© Petr Jáchim. Veškerý obsah a kód k privátnímu použití klienta.

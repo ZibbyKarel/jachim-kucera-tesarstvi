@@ -111,8 +111,8 @@
     "storyAria": "Company story",
     "teamHeading": "The people behind it",
     "story": [
-      "We're Jáchim and Kučera, and we've been working on roofs for over fifteen years. We started out as trained carpenters in the Pilsen region, and today we run our own crew you can rely on. We build every roof as if it were our own.",
-      "Over the years we added roofing and tinsmithing to our carpentry work, so we can hand a customer a finished roof from the truss to the last gutter, without them having to chase down three different companies and keep track of who's responsible for what. It's all under one roof, literally.",
+      "I'm Petr Jáchim, and I've been working on roofs for over fifteen years. I started out as a trained carpenter in the Pilsen region, and today I run my own crew you can rely on. We build every roof as if it were our own.",
+      "Over the years I added roofing and tinsmithing to my carpentry work, so I can hand a customer a finished roof from the truss to the last gutter, without them having to chase down three different companies and keep track of who's responsible for what. It's all under one roof, literally.",
       "We're not a big company, and we don't want to be. We take on only as much work as we can do properly. We show up on site ourselves, not anonymous subcontractors, and we stand behind our work for years afterwards. When we promise something, it holds."
     ],
     "stats": [
@@ -187,7 +187,7 @@
     "heroIntro": "A selection of what we've worked on in recent years. From roof trusses through complete roofs to tinsmith details, all across the Pilsen region and beyond."
   },
   "nahled3d": {
-    "heading": "Jáchim & Kučera: 3D site map",
+    "heading": "Petr Jáchim: 3D site map",
     "hint": "Hover an element or label · click to select"
   },
   "notFound": {
@@ -215,8 +215,8 @@
       "description": "Write or call. We'll arrange a free, no-obligation roof inspection in the Pilsen region. Carpentry, roofing and tinsmithing."
     },
     "onas": {
-      "title": "About Us | Carpenters from the Pilsen Region",
-      "description": "We're Jáchim and Kučera. We've been doing carpentry, roofing and tinsmithing for over fifteen years. Honest craftsmanship in the Pilsen region."
+      "title": "About Us | Carpenter from the Pilsen Region",
+      "description": "I'm Petr Jáchim. I've been doing carpentry, roofing and tinsmithing for over fifteen years. Honest craftsmanship in the Pilsen region."
     },
     "realizace": {
       "title": "Projects | Our Roofs in the Pilsen Region",
