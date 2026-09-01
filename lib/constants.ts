@@ -251,6 +251,6 @@ export const navLinks: NavLink[] = [
   { href: '/sluzby/pokryvacstvi', textSource: { ns: 'service', slug: 'pokryvacstvi' } },
   { href: '/sluzby/klempirstvi', textSource: { ns: 'service', slug: 'klempirstvi' } },
   { href: '/realizace', textSource: { ns: 'nav', key: 'projects' } },
-  { href: '/o-nas', textSource: { ns: 'nav', key: 'about' } },
+  { href: '/o-mne', textSource: { ns: 'nav', key: 'about' } },
   { href: '/kontakt', textSource: { ns: 'nav', key: 'contact' } },
 ]

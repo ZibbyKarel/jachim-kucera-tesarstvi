@@ -98,12 +98,12 @@ export class HouseModel {
     slopeLen: number,
     slab: number
   ): void {
-    const tex = new THREE.TextureLoader().load('/logo_2.png')
+    const tex = new THREE.TextureLoader().load('/logo2_clean.svg')
     tex.colorSpace = THREE.SRGBColorSpace
     tex.anisotropy = 8 // čitelnost pod ostrým úhlem pohledu na střechu
 
-    const LOGO_AR = 867 / 463 // poměr stran zdrojového PNG
-    const planeW = slabW * 0.72 // ~72 % šířky střešní roviny (vzduch po stranách)
+    const LOGO_AR = 706 / 256 // poměr stran zdrojového SVG (logo2_clean.svg)
+    const planeW = slabW * 0.84 // ~84 % šířky střešní roviny (vzduch po stranách)
     const planeH = planeW / LOGO_AR
     // pojistka, ať se výška vejde do délky slaby (od okapu ke hřebeni)
     const h = Math.min(planeH, slopeLen * 0.82)

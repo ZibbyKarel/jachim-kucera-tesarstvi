@@ -22,7 +22,7 @@ import { Reveal } from '@/components/ui/Reveal'
 /*  `testimonials.items` v messages/{locale}.json, komponenta se nemění.        */
 /*                                                                              */
 /*  Vizuálně stejný rytmus hairline řádků jako sekce „Hodnoty" na               */
-/*  app/[locale]/o-nas/page.tsx - žádné hvězdičky, hodnocení, avatary, fotky,   */
+/*  app/[locale]/o-mne/page.tsx - žádné hvězdičky, hodnocení, avatary, fotky,   */
 /*  data ani lokality, protože nic z toho nemáme.                              */
 /* -------------------------------------------------------------------------- */
 

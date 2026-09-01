@@ -4,7 +4,7 @@ import { Arrow } from '@/components/ui/Button'
 import { Reveal } from '@/components/ui/Reveal'
 
 /* -------------------------------------------------------------------------- */
-/*  AboutSection — o nás, timber pole                                           */
+/*  AboutSection — o mně, timber pole                                           */
 /*                                                                              */
 /*  Velký výrok (home.aboutHeadline) přes ~8 sloupců, vedle krátký odstavec     */
 /*  (about.heroQuote - existující, krátká, úderná věta, ne nový text) v         */
@@ -54,7 +54,7 @@ export function AboutSection() {
 
         <div className="mt-10">
           <Link
-            href="/o-nas"
+            href="/o-mne"
             className="group link-underline inline-flex items-center gap-2 font-body text-paper"
           >
             {t('aboutCta')}

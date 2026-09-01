@@ -2,7 +2,7 @@ import { Link } from "@/i18n/routing";
 import { SITE, navLinks, people } from "@/lib/constants";
 import type { NavLink } from "@/lib/types";
 import { useTranslations } from "next-intl";
-import { Logo } from "./Logo";
+import { FooterLogo } from "./Logo";
 
 function navLabel(t: (key: string) => string, source: NavLink["textSource"]) {
   return source.ns === "service"
@@ -24,10 +24,11 @@ export function Footer() {
   return (
     <footer aria-label={t("common.siteFooterAria")} className="bg-timber">
       <div className="container-content flex flex-col gap-8 py-10 md:flex-row md:items-center md:justify-between md:gap-6">
-        {/* height=60 → šířka ~112px (LOGO_ASPECT_RATIO). Patička je bg-timber,
-            takže logo jede v paper variantě (light) — jinak by antracitový
-            inkoust na tmavém poli prakticky zmizel (~1,2:1 kontrast). */}
-        <Logo height={60} light />
+        {/* height=60 → šířka ~165px (FOOTER_LOGO_ASPECT_RATIO). Patička je
+            bg-timber, takže logo jede v invertované variantě (viz
+            logo2_clean_inverted.svg) — jinak by antracitový inkoust na
+            tmavém poli prakticky zmizel. */}
+        <FooterLogo height={60} />
 
         <nav
           aria-label={t("common.footerNavAria")}

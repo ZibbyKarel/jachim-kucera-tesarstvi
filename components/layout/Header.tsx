@@ -91,18 +91,16 @@ export function Header() {
   // Zúžení headeru: na začátku stránky (nebo pokud je otevřené mobilní menu,
   // které má vlastní tmavé pozadí) zůstává plně průhledný.
   const solid = !menuOpen && scrolled
-  // Logo je širokoúhlý lockup (867×463) - vysázené jméno firmy uvnitř
-  // obrázku zabírá jen 21 % jeho výšky (naměřeno v public/logo_2.png), takže
-  // lockup musí být citelně vyšší, než by naznačovala "výška loga v headeru"
-  // u čtvercového odznaku, jinak je jméno firmy prakticky nečitelné.
+  // Logo je lockup (742×686, public/logo1_clean.svg) - dům + vysázené jméno
+  // firmy na dvou řádcích pod ním, skoro čtvercový poměr stran, ne
+  // širokoúhlý odznak.
   //
-  // Na mobilu to ale naráží na šířku: na 281px viewportu (nejužší testovaný,
-  // vedle jazykového přepínače a hamburgeru) se do řady vejde lockup vysoký
-  // nejvýš ~40px, než by řádek přetekl - to je i dnešní strop. Nad `sm`
-  // (640px) je místa dost na cílových 52-60px (nescrollováno) / 44-48px
-  // (scrollováno), viz DECISIONS - proto je výška responzivní, ne jedno
-  // číslo: pod `sm` zůstává na dnešní hranici, od `sm` skáče na cílový pás.
-  // `h-14`/`h-12` apod. jsou skutečné vykreslené rozměry (viz Logo.tsx
+  // Výškové stropy (`h-8`/`h-10` pod `sm`, `h-12`/`h-14` od `sm`) byly
+  // doladěné na 281px viewportu (nejužší testovaný, vedle jazykového
+  // přepínače a hamburgeru) pro starší širokoúhlý lockup - u skoro
+  // čtvercového logo1_clean.svg je teď šířky spíš nazbyt, ne málo, hodnoty
+  // ale zůstávají zachované jako bezpečná spodní hranice. `h-14`/`h-12`
+  // apod. jsou skutečné vykreslené rozměry (viz Logo.tsx
   // `heightClassName`); `height` prop níž slouží next/image jen jako
   // intrinsic atribut pro srcset (bere se z největší použité velikosti, ať
   // se retina desktop nedočká zvětšeného, rozmazaného downscalu).

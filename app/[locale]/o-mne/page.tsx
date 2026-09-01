@@ -12,15 +12,15 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>
 }): Promise<Metadata> {
   const { locale } = await params
-  const t = await getTranslations({ locale, namespace: 'seo.onas' })
+  const t = await getTranslations({ locale, namespace: 'seo.omne' })
   return {
     title: t('title'),
     description: t('description'),
-    alternates: { canonical: '/o-nas' },
+    alternates: { canonical: '/o-mne' },
   }
 }
 
-export default async function ONasPage({
+export default async function OMnePage({
   params,
 }: {
   params: Promise<{ locale: string }>

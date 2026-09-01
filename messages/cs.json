@@ -20,40 +20,39 @@
     "home": "Domů",
     "services": "Služby",
     "projects": "Realizace",
-    "about": "O nás",
+    "about": "O mně",
     "contact": "Kontakt"
   },
   "home": {
     "openerEyebrowFounded": "založeno {year}",
-    "openerTitle": "Krov, střecha, okap. Tři řemesla, jedna parta.",
-    "openerLead": "Tesařství, pokrývačství a klempířství v Plzeňském kraji.",
+    "openerTitle": "Krov, střecha, okap. Tři řemesla, jeden řemeslník.",
     "openerCtaInquiry": "Nezávazně poptat",
     "openerCtaProjects": "Prohlédnout realizace",
     "serviceIndexHeading": "Řemesla",
-    "projectsIntro": "Část toho, co jsme za poslední roky postavili.",
+    "projectsIntro": "Část toho, co jsem za poslední roky postavil.",
     "process": {
       "heading": "Jak zakázka probíhá",
       "steps": [
         {
           "title": "Prohlídka a zaměření",
-          "text": "Přijedeme na místo, prohlédneme střechu nebo krov a zaměříme, co je potřeba opravit nebo postavit."
+          "text": "Přijedu na místo, prohlédnu střechu nebo krov a zaměřím, co je potřeba opravit nebo postavit."
         },
         {
           "title": "Návrh a cenová nabídka",
-          "text": "Navrhneme řešení, které sedí na váš dům, a připravíme cenovou nabídku."
+          "text": "Navrhnu řešení, které sedí na váš dům, a připravím cenovou nabídku."
         },
         {
           "title": "Realizace",
-          "text": "Na stavbu chodíme my, naše vlastní parta, ne anonymní subdodavatelé."
+          "text": "Na stavbu chodím se svou vlastní partou, ne anonymní subdodavatelé."
         },
         {
           "title": "Předání a záruka",
-          "text": "Dílo vám předáme a stojíme si za svou prací i po letech."
+          "text": "Dílo vám předám a stojím si za svou prací i po letech."
         }
       ]
     },
-    "aboutHeadline": "Stavíme střechy, jako by byly naše vlastní",
-    "aboutCta": "Náš příběh",
+    "aboutHeadline": "Stavím střechy, jako by byly moje vlastní",
+    "aboutCta": "Můj příběh",
     "contactHeadline": "Zavolejte nebo napište. Domluvíme se."
   },
   "testimonials": {
@@ -85,7 +84,7 @@
   "contact": {
     "title": "Kontakt",
     "heroTitle": "Pojďme se domluvit",
-    "intro": "Napište nám pár slov o vaší střeše. Ozveme se a domluvíme se na prohlídce, nezávazně a zdarma.",
+    "intro": "Napište mi pár slov o vaší střeše. Ozvu se a domluvíme se na prohlídce, nezávazně a zdarma.",
     "name": "Jméno",
     "phone": "Telefon",
     "emailLabel": "E-mail",
@@ -94,67 +93,67 @@
     "submitting": "Odesílám…",
     "submitAnother": "Odeslat další poptávku",
     "namePlaceholder": "Jan Novák",
-    "messagePlaceholder": "Co byste potřebovali? Napište nám pár slov o střeše…",
-    "success": "Děkujeme! Ozveme se vám co nejdříve.",
+    "messagePlaceholder": "Co byste potřebovali? Napište mi pár slov o střeše…",
+    "success": "Děkuji! Ozvu se vám co nejdříve.",
     "errors": {
       "nameRequired": "Vyplňte prosím jméno.",
       "phoneRequired": "Vyplňte prosím telefon.",
       "phoneInvalid": "Zadejte telefon ve formátu +420 123 456 789.",
       "messageRequired": "Napište prosím krátkou zprávu.",
-      "generic": "Zprávu se nepodařilo odeslat. Zavolejte nám prosím přímo na {phone}."
+      "generic": "Zprávu se nepodařilo odeslat. Zavolejte mi prosím přímo na {phone}."
     },
     "areaLabel": "Provozní oblast"
   },
   "about": {
     "heroTitle": "Kdo to staví",
-    "heroQuote": "Nejsme velká firma a nechceme být. Děláme tolik, kolik zvládneme udělat pořádně.",
+    "heroQuote": "Nejsem velká firma a nechci být. Dělám tolik, kolik zvládnu udělat pořádně.",
     "storyAria": "Příběh firmy",
     "teamHeading": "Lidé ve firmě",
     "story": [
-      "Jmenuji se Petr Jáchim a střechám se věnuji přes patnáct let. Začínal jsem jako vyučený tesař v Plzeňském kraji a dnes vedu vlastní partu, na kterou se můžete spolehnout. Každou střechu stavíme tak, jako by byla naše vlastní.",
-      "Postupem let jsem k tesařině přidal pokrývačství a klempířství, abych mohl zákazníkovi předat hotovou střechu od krovu po poslední okap, bez toho, aby musel shánět tři různé firmy a hlídat, kdo za co odpovídá. Vše máme pod jednou střechou, doslova.",
-      "Nejsme velká firma a nechceme být. Děláme tolik zakázek, kolik zvládneme udělat pořádně. Na stavbu chodíme my, ne anonymní poddodavatelé, a stojíme si za svou prací i po letech. Když něco slíbíme, platí to."
+      "Jmenuji se Petr Jáchim a střechám se věnuji přes patnáct let. Začínal jsem jako vyučený tesař v Plzeňském kraji a dnes vedu vlastní partu, na kterou se můžete spolehnout. Každou střechu stavím tak, jako by byla moje vlastní.",
+      "Postupem let jsem k tesařině přidal pokrývačství a klempířství, abych mohl zákazníkovi předat hotovou střechu od krovu po poslední okap, bez toho, aby musel shánět tři různé firmy a hlídat, kdo za co odpovídá. Vše mám pod jednou střechou, doslova.",
+      "Nejsem velká firma a nechci být. Dělám tolik zakázek, kolik zvládnu udělat pořádně. Na stavbu chodím se svou partou, ne anonymní poddodavatelé, a stojím si za svou prací i po letech. Když něco slíbím, platí to."
     ],
     "stats": [
       { "value": "15+", "label": "let praxe" },
       { "value": "150+", "label": "realizací" }
     ],
-    "valuesHeading": "Na čem si zakládáme",
+    "valuesHeading": "Na čem si zakládám",
     "values": [
       {
         "title": "Poctivost",
-        "description": "Říkáme férově, co dává smysl a co ne. Neúčtujeme zbytečnou práci a nepoužíváme materiál, kterému sami nevěříme. Co slíbíme, to platí."
+        "description": "Říkám férově, co dává smysl a co ne. Neúčtuji zbytečnou práci a nepoužívám materiál, kterému sám nevěřím. Co slíbím, to platí."
       },
       {
         "title": "Spolehlivost",
-        "description": "Přijdeme, kdy řekneme, a dokončíme, co začneme. Za svou prací si stojíme i po letech a vždy se k ní rádi vrátíme, kdyby bylo potřeba."
+        "description": "Přijdu, kdy řeknu, a dokončím, co začnu. Za svou prací si stojím i po letech a vždy se k ní rád vrátím, kdyby bylo potřeba."
       },
       {
         "title": "Lokální znalost",
-        "description": "Známe Plzeňský kraj, jeho počasí i typické domy. Víme, co na zdejší střechy sedí a co tu vydrží. Jsme od vás kousek, ne z druhého konce republiky."
+        "description": "Znám Plzeňský kraj, jeho počasí i typické domy. Vím, co na zdejší střechy sedí a co tu vydrží. Jsem od vás kousek, ne z druhého konce republiky."
       }
     ],
-    "timelineHeading": "Naše cesta",
+    "timelineHeading": "Moje cesta",
     "timeline": [
       {
         "year": "2003",
-        "title": "Vyučeni jako tesaři",
-        "description": "Začínáme jako vyučení tesaři u zavedených mistrů v Plzeňském kraji. Učíme se řemeslo od základu: od ručního opracování dřeva po čtení statiky krovu."
+        "title": "Vyučen tesařem",
+        "description": "Začínám jako vyučený tesař u zavedených mistrů v Plzeňském kraji. Učím se řemeslo od základu: od ručního opracování dřeva po čtení statiky krovu."
       },
       {
         "year": "2008",
         "title": "Vlastní firma",
-        "description": "Zakládáme vlastní tesařskou partu. První velké zakázky na krovy rodinných domů a rekonstrukce historických střech v okolí Plzně."
+        "description": "Zakládám vlastní tesařskou partu. První velké zakázky na krovy rodinných domů a rekonstrukce historických střech v okolí Plzně."
       },
       {
         "year": "2015",
         "title": "Rozšíření o klempířství",
-        "description": "Přidáváme pokrývačství a klempířství, abychom mohli předávat kompletní střechu. Investujeme do vybavení i do lidí, kteří řemeslo umí."
+        "description": "Přidávám pokrývačství a klempířství, abych mohl předávat kompletní střechu. Investuji do vybavení i do lidí, kteří řemeslo umí."
       },
       {
         "year": "2024",
         "title": "150+ realizací",
-        "description": "Za sebou máme přes sto padesát hotových střech po celém Plzeňském kraji. A pořád nás to baví stejně jako na začátku."
+        "description": "Za sebou mám přes sto padesát hotových střech po celém Plzeňském kraji. A pořád mě to baví stejně jako na začátku."
       }
     ],
     "certificatesHeading": "Certifikáty a reference",
@@ -165,14 +164,14 @@
       "Záruka 10 let"
     ],
     "ctaText": "Potřebujete střechu, na kterou se dá spolehnout?",
-    "ctaButton": "Ozvěte se nám"
+    "ctaButton": "Ozvěte se mi"
   },
   "service": {
     "descriptionAria": "Popis služby",
     "includesHeading": "Co zahrnuje",
-    "galleryHeading": "Z naší práce",
+    "galleryHeading": "Z mé práce",
     "ctaHeading": "Potřebujete poradit?",
-    "ctaText": "Napište nám a domluvíme se na prohlídce. Nezávazně a zdarma."
+    "ctaText": "Napište mi a domluvíme se na prohlídce. Nezávazně a zdarma."
   },
   "projects": {
     "filterAll": "Vše",
@@ -183,8 +182,8 @@
     "year": "Rok"
   },
   "realizacePage": {
-    "heroTitle": "Co jsme postavili",
-    "heroIntro": "Výběr z toho, na čem jsme za poslední roky pracovali. Od krovů přes kompletní střechy až po klempířské detaily, vše v Plzeňském kraji a okolí."
+    "heroTitle": "Co jsem postavil",
+    "heroIntro": "Výběr z toho, na čem jsem za poslední roky pracoval. Od krovů přes kompletní střechy až po klempířské detaily, vše v Plzeňském kraji a okolí."
   },
   "nahled3d": {
     "heading": "Petr Jáchim: 3D rozcestník",
@@ -192,11 +191,11 @@
   },
   "notFound": {
     "title": "Tahle střecha tu není",
-    "description": "Stránku, kterou hledáte, jsme nenašli. Třeba ji odnesl vítr. Vraťte se prosím na začátek.",
+    "description": "Stránku, kterou hledáte, jsem nenašel. Třeba ji odnesl vítr. Vraťte se prosím na začátek.",
     "backHome": "Zpět domů"
   },
   "seo": {
-    "siteDescription": "Tesařství, pokrývačství a klempířství v Plzeňském kraji. Stavíme krovy, pokládáme střechy a děláme okapy. Přes 15 let poctivé řemeslné práce.",
+    "siteDescription": "Tesařství, pokrývačství a klempířství v Plzeňském kraji. Stavím krovy, pokládám střechy a dělám okapy. Přes 15 let poctivé řemeslné práce.",
     "keywords": [
       "tesařství",
       "pokrývačství",
@@ -219,12 +218,12 @@
       "title": "Kontakt | Nezávazná poptávka",
       "description": "Napište nebo zavolejte. Domluvíme se na nezávazné prohlídce střechy v Plzeňském kraji. Tesařství, pokrývačství a klempířství."
     },
-    "onas": {
-      "title": "O nás | Tesař z Plzeňského kraje",
+    "omne": {
+      "title": "O mně | Tesař z Plzeňského kraje",
       "description": "Jsem Petr Jáchim. Tesařině, pokrývačství a klempířství se věnuji přes patnáct let. Poctivá řemeslná práce v Plzeňském kraji."
     },
     "realizace": {
-      "title": "Realizace | Naše střechy v Plzeňském kraji",
+      "title": "Realizace | Moje střechy v Plzeňském kraji",
       "description": "Vybrané realizace tesařských, pokrývačských a klempířských prací po celém Plzeňském kraji. Krovy, střechy, okapy a rekonstrukce."
     },
     "nahled3d": {
@@ -240,12 +239,12 @@
     "tesarstvi": {
       "title": "Tesařství",
       "tagline": "Krovy, které drží generace",
-      "shortDescription": "Stavíme a rekonstruujeme krovy, dřevěné stropy a pergoly. Každý spoj řešíme tak, aby vydržel desítky let: od ručního opracování po moderní tesařské kování.",
+      "shortDescription": "Stavím a rekonstruuji krovy, dřevěné stropy a pergoly. Každý spoj řeším tak, aby vydržel desítky let: od ručního opracování po moderní tesařské kování.",
       "longDescription": [
-        "Tesařina je řemeslo, u kterého jsme začínali a které nás drží dodnes. Stavíme nové krovy na rodinné domy i rekonstruujeme historické konstrukce, kde je potřeba cit pro původní práci a zároveň znalost dnešních norem. Než položíme první trám, projdeme s vámi projekt a navrhneme řešení, které sedí na váš dům i rozpočet.",
-        "Dřevo vybíráme s rozmyslem: sušené, kvalitní řezivo s certifikátem, které se nekroutí a nepraská. Spoje navrhujeme tak, aby přenášely zatížení tam, kam mají, a aby konstrukce dýchala. U rekonstrukcí citlivě vyměníme jen to, co je opravdu napadené, a zbytek zachováme.",
-        "Pracujeme s tesařským kováním i klasickými plátovanými spoji. U pohledových krovů a stropů dbáme na detail: hrany, fazety i povrchovou úpravu, protože takový strop pak v interiéru zůstává na očích roky.",
-        "Postavíme vám i pergolu, carport nebo přístřešek na míru. Od jednoduchého zastřešení terasy po samostatně stojící konstrukci, která vydrží sníh i vítr a hezky zestárne."
+        "Tesařina je řemeslo, u kterého jsem začínal a které mě drží dodnes. Stavím nové krovy na rodinné domy i rekonstruuji historické konstrukce, kde je potřeba cit pro původní práci a zároveň znalost dnešních norem. Než položím první trám, projdu s vámi projekt a navrhnu řešení, které sedí na váš dům i rozpočet.",
+        "Dřevo vybírám s rozmyslem: sušené, kvalitní řezivo s certifikátem, které se nekroutí a nepraská. Spoje navrhuji tak, aby přenášely zatížení tam, kam mají, a aby konstrukce dýchala. U rekonstrukcí citlivě vyměním jen to, co je opravdu napadené, a zbytek zachovám.",
+        "Pracuji s tesařským kováním i klasickými plátovanými spoji. U pohledových krovů a stropů dbám na detail: hrany, fazety i povrchovou úpravu, protože takový strop pak v interiéru zůstává na očích roky.",
+        "Postavím vám i pergolu, carport nebo přístřešek na míru. Od jednoduchého zastřešení terasy po samostatně stojící konstrukci, která vydrží sníh i vítr a hezky zestárne."
       ],
       "workItems": [
         {
@@ -274,17 +273,17 @@
         "Dřevěné zastřešení studny s kamenným pláštěm"
       ],
       "seoTitle": "Tesařství | Krovy a dřevěné konstrukce | Plzeňský kraj",
-      "seoDescription": "Stavíme a rekonstruujeme krovy, dřevěné stropy a pergoly v Plzeňském kraji. Přes 15 let zkušeností, poctivá práce, férová cena."
+      "seoDescription": "Stavím a rekonstruuji krovy, dřevěné stropy a pergoly v Plzeňském kraji. Přes 15 let zkušeností, poctivá práce, férová cena."
     },
     "pokryvacstvi": {
       "title": "Pokrývačství",
       "tagline": "Střecha, která vás přečká",
-      "shortDescription": "Pokládáme pálenou i betonovou krytinu, plech i šindel. Postaráme se o hydroizolaci, parotěsné zábrany i čisté detaily hřebenů a úžlabí.",
+      "shortDescription": "Pokládám pálenou i betonovou krytinu, plech i šindel. Postarám se o hydroizolaci, parotěsné zábrany i čisté detaily hřebenů a úžlabí.",
       "longDescription": [
-        "Střecha je to, co dům chrání nejvíc, a taky to, na čem se nejvíc šetří špatně. My pokládáme krytinu tak, aby pod ní bylo sucho i za třicet let. Začínáme správně navrženou skladbou: pojistná hydroizolace, kontralatě, laťování a teprve potom krytina.",
-        "Pracujeme se vším, co dnešní střechy potřebují: pálené tašky, betonová krytina, falcovaný plech i tradiční šindel. Poradíme, co se hodí na váš sklon střechy, lokalitu i styl domu, a řekneme férově, co dává smysl a co je zbytečný luxus.",
-        "Velký důraz klademe na detaily, kde střechy nejčastěji zatékají: úžlabí, nároží, prostupy a napojení na komín. Tady se pozná rozdíl mezi rychlou prací a poctivým řemeslem. Parotěsné a difuzní fólie řešíme tak, aby konstrukce neplesnivěla a střecha dýchala.",
-        "U rekonstrukcí nejdřív zjistíme stav bednění a laťování a vyměníme, co je potřeba. Nepokládáme novou krytinu na shnilé latě jen proto, aby to bylo rychle hotové."
+        "Střecha je to, co dům chrání nejvíc, a taky to, na čem se nejvíc šetří špatně. Krytinu pokládám tak, aby pod ní bylo sucho i za třicet let. Začínám správně navrženou skladbou: pojistná hydroizolace, kontralatě, laťování a teprve potom krytina.",
+        "Pracuji se vším, co dnešní střechy potřebují: pálené tašky, betonová krytina, falcovaný plech i tradiční šindel. Poradím, co se hodí na váš sklon střechy, lokalitu i styl domu, a řeknu férově, co dává smysl a co je zbytečný luxus.",
+        "Velký důraz kladu na detaily, kde střechy nejčastěji zatékají: úžlabí, nároží, prostupy a napojení na komín. Tady se pozná rozdíl mezi rychlou prací a poctivým řemeslem. Parotěsné a difuzní fólie řeším tak, aby konstrukce neplesnivěla a střecha dýchala.",
+        "U rekonstrukcí nejdřív zjistím stav bednění a laťování a vyměním, co je potřeba. Nepokládám novou krytinu na shnilé latě jen proto, aby to bylo rychle hotové."
       ],
       "workItems": [
         {
@@ -301,7 +300,7 @@
         },
         {
           "title": "Hřebeny, nároží, úžlabí",
-          "description": "Detaily, kde střechy zatékají nejčastěji. Děláme je tak, aby držely vodu i za extrémního počasí."
+          "description": "Detaily, kde střechy zatékají nejčastěji. Dělám je tak, aby držely vodu i za extrémního počasí."
         }
       ],
       "galleryAlt": [
@@ -313,17 +312,17 @@
         "Střecha roubené stavby"
       ],
       "seoTitle": "Pokrývačství | Pokládka střešní krytiny | Plzeňský kraj",
-      "seoDescription": "Pokládáme pálenou a betonovou krytinu, plech i šindel v Plzeňském kraji. Hydroizolace, detaily hřebenů a úžlabí. Střecha, která vydrží."
+      "seoDescription": "Pokládám pálenou a betonovou krytinu, plech i šindel v Plzeňském kraji. Hydroizolace, detaily hřebenů a úžlabí. Střecha, která vydrží."
     },
     "klempirstvi": {
       "title": "Klempířství",
       "tagline": "Detail, který odvede vodu",
-      "shortDescription": "Vyrábíme a montujeme okapové systémy, oplechování komínů, parapetů a říms. Pracujeme s pozinkem, titanzinkem i mědí.",
+      "shortDescription": "Vyrábím a montuji okapové systémy, oplechování komínů, parapetů a říms. Pracuji s pozinkem, titanzinkem i mědí.",
       "longDescription": [
-        "Klempířina je o detailech, které nejsou vidět, dokud nezačnou zlobit. My je děláme tak, aby zlobit nezačaly. Okapy, svody, oplechování a lemování jsou to, co střechu doplňuje a chrání zdivo i základy před vodou.",
-        "Okapové systémy montujeme z pozinkovaného plechu, titanzinku i mědi, podle toho, co se hodí k domu a jak dlouho mají vydržet. Titanzinek i měď nabízíme i v provedení, které krásně stárne a získává patinu. Spády a dimenze žlabů navrhujeme podle plochy střechy, ne od oka.",
-        "Oplechování komínů, atik, parapetů a říms vyrábíme na míru přímo na stavbě. Spoje falcujeme a lepíme tak, aby byly těsné a zároveň umožnily dilataci plechu při změnách teploty.",
-        "Postaráme se i o klempířské detaily kolem střešních prostupů, ventilací a prostupů antén. Jsou to maličkosti, ale právě ony rozhodují o tom, jestli střecha těsní."
+        "Klempířina je o detailech, které nejsou vidět, dokud nezačnou zlobit. Dělám je tak, aby zlobit nezačaly. Okapy, svody, oplechování a lemování jsou to, co střechu doplňuje a chrání zdivo i základy před vodou.",
+        "Okapové systémy montuji z pozinkovaného plechu, titanzinku i mědi, podle toho, co se hodí k domu a jak dlouho mají vydržet. Titanzinek i měď nabízím i v provedení, které krásně stárne a získává patinu. Spády a dimenze žlabů navrhuji podle plochy střechy, ne od oka.",
+        "Oplechování komínů, atik, parapetů a říms vyrábím na míru přímo na stavbě. Spoje falcuji a lepím tak, aby byly těsné a zároveň umožnily dilataci plechu při změnách teploty.",
+        "Postarám se i o klempířské detaily kolem střešních prostupů, ventilací a prostupů antén. Jsou to maličkosti, ale právě ony rozhodují o tom, jestli střecha těsní."
       ],
       "workItems": [
         {
@@ -357,12 +356,12 @@
     "cisteni-strech": {
       "title": "Čištění střech",
       "tagline": "Vraťte střeše roky života",
-      "shortDescription": "Odstraníme mech, lišejníky a nečistoty, ošetříme krytinu a vyčistíme okapy. Údržba, která prodlouží životnost střechy bez nutnosti rekonstrukce.",
+      "shortDescription": "Odstraním mech, lišejníky a nečistoty, ošetřím krytinu a vyčistím okapy. Údržba, která prodlouží životnost střechy bez nutnosti rekonstrukce.",
       "longDescription": [
         "Ne každá zašlá střecha potřebuje vyměnit. Často stačí ji pořádně vyčistit a ošetřit. Klidně tím získá dalších deset let života. Mech a lišejníky zadržují vlhkost a postupně rozrušují povrch krytiny; čím dřív se odstraní, tím líp.",
-        "Krytinu čistíme tlakovou vodou s ohledem na její typ a stáří, abychom povrch nepoškodili. Po vyčištění naneseme preventivní nátěr nebo impregnaci, která zpomalí opětovný růst mechu a obnoví barvu i hydrofobní vlastnosti tašek.",
-        "Při čištění vždy zkontrolujeme stav krytiny, hřebenů a oplechování a upozorníme vás na místa, která by mohla v budoucnu dělat problém. Levnější je opravit detail včas než řešit zatékání.",
-        "Nezapomínáme ani na okapy, protože zanesené žlaby přetékají a vlhko pak putuje do fasády a základů. Vyčištění okapů zařadíme rovnou do prohlídky střechy."
+        "Krytinu čistím tlakovou vodou s ohledem na její typ a stáří, abych povrch nepoškodil. Po vyčištění nanesu preventivní nátěr nebo impregnaci, která zpomalí opětovný růst mechu a obnoví barvu i hydrofobní vlastnosti tašek.",
+        "Při čištění vždy zkontroluji stav krytiny, hřebenů a oplechování a upozorním vás na místa, která by mohla v budoucnu dělat problém. Levnější je opravit detail včas než řešit zatékání.",
+        "Nezapomínám ani na okapy, protože zanesené žlaby přetékají a vlhko pak putuje do fasády a základů. Vyčištění okapů zařadím rovnou do prohlídky střechy."
       ],
       "workItems": [
         {
@@ -391,7 +390,7 @@
         "Vyčištěná střecha rodinného domu"
       ],
       "seoTitle": "Čištění střech | Mech, mytí a impregnace | Plzeňský kraj",
-      "seoDescription": "Odstraníme mech a lišejníky, vyčistíme krytinu i okapy a ošetříme střechu preventivním nátěrem. Údržba střech v Plzeňském kraji."
+      "seoDescription": "Odstraním mech a lišejníky, vyčistím krytinu i okapy a ošetřím střechu preventivním nátěrem. Údržba střech v Plzeňském kraji."
     }
   },
   "projectsData": {

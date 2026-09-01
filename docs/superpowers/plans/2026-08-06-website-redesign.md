@@ -401,10 +401,10 @@ and the skip-link (was `bg-wood-amber ... text-charcoal`):
 export const SITE = {
   name: "Jáchim & Kučera - Tesařství",
   shortName: "Jáchim & Kučera",
-  url: "https://jachim-kucera-tesarstvi.cz",
+  url: "https://tesarjachim.cz",
   phone: "+420 777 123 456",
   phoneHref: "+420777123456",
-  email: "info@jachim-kucera-tesarstvi.cz",
+  email: "info@tesarjachim.cz",
 } as const;
 ```
 
