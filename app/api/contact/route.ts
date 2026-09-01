@@ -51,7 +51,7 @@ export async function POST(req: Request) {
       body: JSON.stringify({
         access_key: accessKey,
         subject: `Nová poptávka: ${name}`,
-        from_name: 'Web Jáchim & Kučera',
+        from_name: 'Web Petr Jáchim',
         name,
         phone,
         message,

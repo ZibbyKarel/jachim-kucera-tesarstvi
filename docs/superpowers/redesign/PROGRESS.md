@@ -16,54 +16,38 @@ faktické údaje. Řídící dokumenty:
 
 - [x] **v2/T0** — spec, plán, dřevěná paleta (14/14 kontrastních dvojic ověřeno
       výpočtem a nezávisle přepočítáno) · `af54b51`, `7b663ba`, `90e4fb3`
-- [x] **v2/T1** — dřevěná paleta a písma napříč repem · `bf7523f`
-      - tokeny přejmenovány `slate→timber`, `steel→oak`, `patina→ember`
-      - Fraunces přidán jako display; česká diakritika ověřena cmap inspekcí (28/28 znaků)
-      - review našel dvě věci, opraveno v `f123f36`:
-        `--font-sans` utržený v `MenuOverlay.ts` (D-034) a plošné zvednutí
-        dekorativních linek na `timber/50` (D-035, rozsah pravidla upřesněn ve specu)
+- [x] **v2/T1** — dřevěná paleta a písma napříč repem · `bf7523f` - tokeny přejmenovány `slate→timber`, `steel→oak`, `patina→ember` - Fraunces přidán jako display; česká diakritika ověřena cmap inspekcí (28/28 znaků) - review našel dvě věci, opraveno v `f123f36`:
+      `--font-sans` utržený v `MenuOverlay.ts` (D-034) a plošné zvednutí
+      dekorativních linek na `timber/50` (D-035, rozsah pravidla upřesněn ve specu)
 - [x] **v2/T2+T3** — hlavička, patička, otvírák, rejstřík služeb, přepis `page.tsx`
-      (sloučeno do jednoho tasku, je to jedna obrazovka) · `ea3c333`
-      - review v prohlížeči našlo tři věci, opraveno v `4ceeed1`:
-        mrtvá utilita `border-timber/12` (D-036), Fraunces s vlasovými tahy kvůli
-        `font-optical-sizing: auto` (D-037), nečitelná značka v hlavičce (D-038)
-- [x] **v2/T4** — homepage: realizace, postup (nová sekce), o nás, kontakt (split) · `34c1f67`
-      - ověřeno v prohlížeči: všechny čtyři kroky postupu, split kontakt, faktické
-        údaje v mono na tmavém poli
-- [x] **v2/T5** — podstránky (služby, realizace, o nás, kontakt) · `a99b9f9`
-      - `ContactSection` se stal sdílenou komponentou (volitelné `heading`,
-        `description`, `showMap`); homepage ji volá bez props
-      - `ServiceCard` smazán (nikdo neimportoval), `Timeline` přepsán do jazyka
-        sekce Postup, filtr realizací z pilulek na textové odkazy
-      - **k ověření:** že se výchozí render `ContactSection` na homepage nezměnil
+      (sloučeno do jednoho tasku, je to jedna obrazovka) · `ea3c333` - review v prohlížeči našlo tři věci, opraveno v `4ceeed1`:
+      mrtvá utilita `border-timber/12` (D-036), Fraunces s vlasovými tahy kvůli
+      `font-optical-sizing: auto` (D-037), nečitelná značka v hlavičce (D-038)
+- [x] **v2/T4** — homepage: realizace, postup (nová sekce), o nás, kontakt (split) · `34c1f67` - ověřeno v prohlížeči: všechny čtyři kroky postupu, split kontakt, faktické
+      údaje v mono na tmavém poli
+- [x] **v2/T5** — podstránky (služby, realizace, o nás, kontakt) · `a99b9f9` - `ContactSection` se stal sdílenou komponentou (volitelné `heading`,
+      `description`, `showMap`); homepage ji volá bez props - `ServiceCard` smazán (nikdo neimportoval), `Timeline` přepsán do jazyka
+      sekce Postup, filtr realizací z pilulek na textové odkazy - **k ověření:** že se výchozí render `ContactSection` na homepage nezměnil
 - [x] **v2/T6+T7** — 404, `/nahled-3d`, úklid mrtvého kódu + závěrečný audit
       (kontrasty všech reálně použitých dvojic, mrtvé utility a proměnné, pomlčky,
-      přístupnost, konzistence) · `7cf01d1` (A), viz report (B)
-      - A1/A2: `app/[locale]/not-found.tsx`, `app/not-found.tsx` a `/nahled-3d`
-        + `components/house3d/*` už byly v souladu, beze změny.
-      - A3: smazán `Counter.tsx`, mrtvá komponenta `Button` z `Button.tsx`, prop
-        `aged` z `ImageFrame`, nepoužívané exporty z `Reveal.tsx`/`lib/gsap.ts`,
-        `HouseLabel`/`houseLabels`, `houseGroup`/`featured` ze `Service`, 9
-        osiřelých i18n klíčů (mj. `about.heroAlt`, `about.teamAlt`) z obou jazyků.
-      - B1: přeměřeny všechny reálně použité dvojice barev včetně průhledných
-        variant, žádný nález nevyžadoval opravu.
-      - B3: pomlčky beze změny (D-027/D-028 se nevrátily), jediné nalezené
-        em/en-dashe byly v českých/jednom anglickém komentáři (D-021 výjimka).
-      - B4: zobecněn focus ring na tmavém pozadí z `#mobile-menu` na
-        `.bg-timber :focus-visible` (dřív 2,54:1, teď `ember-soft`), doplněny
-        chybějící `aria-label` na landmarky (header, main, footer), opraveny tři
-        dotykové cíle pod 44px (`LanguageSwitcher`, `ProjectGallery` zavírací
-        tlačítko, `ContactForm` „odeslat další"), opraven i18n bug v
-        `LanguageSwitcher` (aria-label byl natvrdo česky bez ohledu na locale).
-      - B5: žádný hex mimo `lib/palette.ts`, žádné `slate`/`steel`/`patina`,
-        sady klíčů `cs.json`/`en.json` identické, SEO/JSON-LD beze změny.
-      - **Nalezeno, neopraveno (mimo rozsah):** vnořený `<main>` na `/nahled-3d`
-        (`House3DPreview` má vlastní `<main>` uvnitř layoutového `<main>`) - mimo
-        rozsah „jen barvy a písma" pro tuto stránku. `text-red-700` v
-        `ContactForm.tsx` pro chybové stavy formuláře čerpá z Tailwind výchozí
-        palety, ne z `lib/palette.ts` - kontrast ověřen (5,65:1 na `paper`), ale
-        formálně mimo jediný zdroj pravdy; ponecháno, protože sémantická barva
-        chyby by neměla splývat s dřevěnou paletou.
+      přístupnost, konzistence) · `7cf01d1` (A), viz report (B) - A1/A2: `app/[locale]/not-found.tsx`, `app/not-found.tsx` a `/nahled-3d` + `components/house3d/*` už byly v souladu, beze změny. - A3: smazán `Counter.tsx`, mrtvá komponenta `Button` z `Button.tsx`, prop
+      `aged` z `ImageFrame`, nepoužívané exporty z `Reveal.tsx`/`lib/gsap.ts`,
+      `HouseLabel`/`houseLabels`, `houseGroup`/`featured` ze `Service`, 9
+      osiřelých i18n klíčů (mj. `about.heroAlt`, `about.teamAlt`) z obou jazyků. - B1: přeměřeny všechny reálně použité dvojice barev včetně průhledných
+      variant, žádný nález nevyžadoval opravu. - B3: pomlčky beze změny (D-027/D-028 se nevrátily), jediné nalezené
+      em/en-dashe byly v českých/jednom anglickém komentáři (D-021 výjimka). - B4: zobecněn focus ring na tmavém pozadí z `#mobile-menu` na
+      `.bg-timber :focus-visible` (dřív 2,54:1, teď `ember-soft`), doplněny
+      chybějící `aria-label` na landmarky (header, main, footer), opraveny tři
+      dotykové cíle pod 44px (`LanguageSwitcher`, `ProjectGallery` zavírací
+      tlačítko, `ContactForm` „odeslat další"), opraven i18n bug v
+      `LanguageSwitcher` (aria-label byl natvrdo česky bez ohledu na locale). - B5: žádný hex mimo `lib/palette.ts`, žádné `slate`/`steel`/`patina`,
+      sady klíčů `cs.json`/`en.json` identické, SEO/JSON-LD beze změny. - **Nalezeno, neopraveno (mimo rozsah):** vnořený `<main>` na `/nahled-3d`
+      (`House3DPreview` má vlastní `<main>` uvnitř layoutového `<main>`) - mimo
+      rozsah „jen barvy a písma" pro tuto stránku. `text-red-700` v
+      `ContactForm.tsx` pro chybové stavy formuláře čerpá z Tailwind výchozí
+      palety, ne z `lib/palette.ts` - kontrast ověřen (5,65:1 na `paper`), ale
+      formálně mimo jediný zdroj pravdy; ponecháno, protože sémantická barva
+      chyby by neměla splývat s dřevěnou paletou.
 
 ---
 
@@ -160,8 +144,8 @@ Seznam se doplní po finalizaci plánu.
       `text-red-700` pro validační chyby je legální výjimka, plán ji uvádí s kontrastem
       5,65:1 na `paper`. Sémantická barva chyby nemá jít s paletou.
 - [~] Task 11 — Content sweep: pomlčky, zbylé hex literály, mrtvý kód
-      Pozor na dva různé soubory: `app/[locale]/not-found.tsx` **i** `app/not-found.tsx`
-      v kořeni. Oba mají vlastní legacy paletu, plán zmiňuje jen ten první.
+  Pozor na dva různé soubory: `app/[locale]/not-found.tsx` **i** `app/not-found.tsx`
+  v kořeni. Oba mají vlastní legacy paletu, plán zmiňuje jen ten první.
 - [x] Task 12 — Závěrečný pass → `f7223ae`, `fcba70e`, `c89523c`
       **Nejcennější nález celého redesignu:** přeměření kontrastu odhalilo ~20 padajících
       dvojic. Task 1 ověřoval jen plné tokeny, jenže Tasky 2-11 zavedly průhledné varianty
@@ -181,6 +165,7 @@ Seznam se doplní po finalizaci plánu.
 Kontrolováno na `localhost:4317`, Chrome, skutečná GPU (Apple M5 přes Metal, 4× MSAA, DPR 2).
 
 **Funguje podle návrhu:**
+
 - Hero, typografie (Archivo kurzíva v nadpisu), akcent patiny na CTA.
 - Header je na hero záměrně skrytý (`nav` má `opacity: 0`) a naskakuje při scrollu. Není to
   vada, je to chování `HeroScroll`.
@@ -205,7 +190,7 @@ ne pohledem. **Zbývá zkontrolovat na skutečném telefonu nebo v device toolba
       jako `people`, viz D-046 (ruší D-019). Zobrazuje je patička, kontaktní panel
       i `/o-nas`.
 - [x] ~~**Skutečný e-mail a doména**~~ — potvrzeno klientem 2026-08-07:
-      `info@jachim-kucera-tesarstvi.cz`. Shodou okolností **stejná hodnota**, jakou tu
+      `info@tesarjachim.cz`. Shodou okolností **stejná hodnota**, jakou tu
       od prvního commitu držel placeholder, takže se nic nepřepisovalo, jen zmizel
       varovný komentář. `SITE.url` je z té domény odvozená a bere se tím taky jako
       potvrzená (viz komentář v `lib/constants.ts`). Tím na webu **nezůstávají žádné
@@ -235,7 +220,7 @@ ne pohledem. **Zbývá zkontrolovat na skutečném telefonu nebo v device toolba
       web prezentovat pod tímhle společným označením.
 - [ ] **Celý seznam „Certifikáty a reference"** na stránce O nás — ne jen „Záruka 10 let".
       `about.certificates` je `["ČKAIT", "Zelená úsporám", "Pojištění odpovědnosti",
-      "Záruka 10 let"]` a pochází z prvního commitu, tedy ze stejné dílny jako vymyšlené
+    "Záruka 10 let"]` a pochází z prvního commitu, tedy ze stejné dílny jako vymyšlené
       realizace a vymyšlené telefonní číslo. Nejzávažnější je **ČKAIT** — komora
       autorizovaných inženýrů, členství je veřejně dohledatelné a u OSVČ tesaře
       nepravděpodobné. Potvrdit položku po položce, jinak seznam odstranit. Viz D-055.
@@ -255,7 +240,6 @@ ne pohledem. **Zbývá zkontrolovat na skutečném telefonu nebo v device toolba
   na spouštěcí tlačítko po zavření. Je to stav zděděný z původního kódu, ne regrese
   redesignu. `role="dialog"`, `aria-modal`, `aria-label`, Escape a zamčený scroll fungují.
   K dořešení v Tasku 12.
-
 
 ---
 
@@ -294,7 +278,7 @@ klidně menší. Navíc dodal skutečné údaje o lidech ve firmě.
 - [ ] **Popisky vs. dům na `/nahled-3d` při 1024 px** — nedořešeno, viz D-050. Řešitelné
       jen změnou rozvržení v `MenuOverlay`, ne kamerou. Skrytá URL, netýká se hero.
 
-**Potvrzeno klientem 2026-08-07:** e-mail `info@jachim-kucera-tesarstvi.cz` (a tím
+**Potvrzeno klientem 2026-08-07:** e-mail `info@tesarjachim.cz` (a tím
 i doména), rok založení 2008, tvrzení „15+ let praxe" i „150+ realizací".
 
 ## Doladění 3 (2026-08-07) — skutečné fotky a ohlasy zákazníků
