@@ -59,10 +59,16 @@ export async function POST(req: Request) {
       }),
     })
 
-    const data = await res.json().catch(() => null)
+    const raw = await res.text()
+    let data: { success?: boolean } | null = null
+    try {
+      data = JSON.parse(raw)
+    } catch {
+      data = null
+    }
 
     if (!res.ok || !data?.success) {
-      console.error('[contact] Web3Forms error:', data)
+      console.error('[contact] Web3Forms error:', res.status, data ?? raw.slice(0, 500))
       return Response.json({ error: 'send_failed' }, { status: 502 })
     }
 
