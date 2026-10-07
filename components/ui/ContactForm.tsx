@@ -69,14 +69,33 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
     setStatus('loading')
     setServerError(null)
     try {
-      const res = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(values),
-      })
-      if (!res.ok) {
-        const data = await res.json().catch(() => null)
-        throw new Error(data?.error || 'send_failed')
+      // Honeypot — bot vyplnil skryté pole. Tváříme se úspěšně, ale nic neposíláme.
+      if (!values.website.trim()) {
+        const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_KEY
+        if (!accessKey) {
+          if (process.env.NODE_ENV === 'production') throw new Error('not_configured')
+          console.info('[contact] NEXT_PUBLIC_WEB3FORMS_KEY chybí — poptávka:', values)
+        } else {
+          // Web3Forms blokuje volání ze serveru (Cloudflare), proto posíláme z prohlížeče.
+          const res = await fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Accept: 'application/json',
+            },
+            body: JSON.stringify({
+              access_key: accessKey,
+              subject: `Nová poptávka: ${values.name.trim()}`,
+              from_name: 'Web Petr Jáchim',
+              name: values.name.trim(),
+              phone: values.phone.trim(),
+              message: values.message.trim(),
+              botcheck: '', // Web3Forms honeypot must be empty
+            }),
+          })
+          const data = await res.json().catch(() => null)
+          if (!res.ok || !data?.success) throw new Error('send_failed')
+        }
       }
       setStatus('success')
       setValues({ name: '', phone: '', message: '', website: '' })

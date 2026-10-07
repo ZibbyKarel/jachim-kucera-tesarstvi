@@ -27,7 +27,7 @@ sekce webu.
 
 ```bash
 npm install
-cp .env.example .env.local   # doplň WEB3FORMS_KEY
+cp .env.example .env.local   # doplň NEXT_PUBLIC_WEB3FORMS_KEY
 npm run dev                  # http://localhost:3000
 ```
 
@@ -48,17 +48,17 @@ Zkopíruj `.env.example` do `.env.local` a vyplň:
 
 | Proměnná               | Popis                                                        |
 | ---------------------- | ------------------------------------------------------------ |
-| `WEB3FORMS_KEY`        | Access Key z [web3forms.com](https://web3forms.com).         |
+| `NEXT_PUBLIC_WEB3FORMS_KEY`        | Access Key z [web3forms.com](https://web3forms.com).         |
 | `NEXT_PUBLIC_SITE_URL` | Veřejná URL webu (sitemap, robots, canonical).               |
 
-> **Bez `WEB3FORMS_KEY` ve vývoji** se formulář tváří úspěšně a poptávku jen
+> **Bez `NEXT_PUBLIC_WEB3FORMS_KEY` ve vývoji** se formulář tváří úspěšně a poptávku jen
 > vypíše do konzole, takže jde testovat UI bez nastaveného klíče.
 
 ### Nastavení Web3Forms
 
 1. Zaregistruj se na [web3forms.com](https://web3forms.com) — stačí e-mail,
    na který mají chodit notifikace z formuláře.
-2. Z dashboardu zkopíruj **Access Key** a vlož ho do `WEB3FORMS_KEY` v
+2. Z dashboardu zkopíruj **Access Key** a vlož ho do `NEXT_PUBLIC_WEB3FORMS_KEY` v
    `.env.local` (a do prostředí produkce).
 3. Žádná konfigurace domény ani DNS záznamy nejsou potřeba.
 
@@ -76,7 +76,7 @@ app/
     o-nas/page.tsx          příběh, timeline, hodnoty
     kontakt/page.tsx        formulář + kontaktní info + mapa
     not-found.tsx           lokalizovaná 404
-  api/contact/route.ts      odeslání formuláře přes Web3Forms
+  components/ui/ContactForm.tsx   odeslání formuláře přes Web3Forms
   sitemap.ts / robots.ts    technické SEO
 components/
   house/                    IsometricHouse, HouseSection, useHouseRotation
